@@ -30,14 +30,14 @@ jobs:
         pip install -r requirements.txt
     
     - name: Set up Julia
-        uses: julia-actions/setup-julia@v1
-        with:
-          version: 1.9
-      - name: Install IJulia and Setup Project
-        shell: bash
-        run: |
-          julia -e 'using Pkg; Pkg.add("IJulia");'
-          julia --project=lectures --threads auto -e 'using Pkg; Pkg.instantiate();'
+      uses: julia-actions/setup-julia@v1
+      with:
+        version: 1.9
+    - name: Install IJulia and Setup Project
+      shell: bash
+      run: |
+        julia -e 'using Pkg; Pkg.add("IJulia");'
+        julia --project=lectures --threads auto -e 'using Pkg; Pkg.instantiate();'
 
     - name: Build the book
       run: |
