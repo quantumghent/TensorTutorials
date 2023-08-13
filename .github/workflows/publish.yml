@@ -23,7 +23,7 @@ jobs:
 
     - name: Install Python dependencies
       run: |
-        pip install -r requirements.txt
+        pip install -r lectures/requirements.txt
     
     - name: Set up Julia
       uses: julia-actions/setup-julia@v1
