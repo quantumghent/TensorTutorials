@@ -7,8 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; TensorTutorials</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>6. Matrix Product States &#8212; TensorTutorials</title>
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -59,44 +60,44 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/quantecon-book-theme.5378fd3a70a129d690fd5fc99fb75ef7.css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantecon-book-theme.5378fd3a70a129d690fd5fc99fb75ef7.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script src="_static/quantecon-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantecon-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
     <script>
                 window.dataLayer = window.dataLayer || [];
@@ -109,10 +110,12 @@ const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" />
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3-MatrixProductStates/MatrixProductStates';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7. Matrix Product Operators" href="MatrixProductOperators.html" />
+    <link rel="prev" title="5. TensorOperations.jl" href="../2-Tensors/TensorOperations.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="QuantumGhent" />
@@ -122,13 +125,13 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@" />
-<meta name="twitter:title" content="Index"/>
+<meta name="twitter:title" content="Matrix Product States"/>
 <meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
 <meta name="twitter:creator" content="@">
 <meta name="twitter:image" content="">
 
 <!-- Opengraph tags -->
-<meta property="og:title" content="TensorTutorials" />
+<meta property="og:title" content="Matrix Product States" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="None" />
 <meta property="og:image" content="" />
@@ -146,7 +149,7 @@ const thebe_selector_output = ".output, .cell_output"
 
         <div class="qe-main">
 
-            <div class="qe-page" id=genindex>
+            <div class="qe-page" id=3-MatrixProductStates/MatrixProductStates>
 
                 <div class="qe-page__toc">
 
@@ -160,7 +163,7 @@ const thebe_selector_output = ".output, .cell_output"
                             <p class="logo">
                                 
                                     
-                                    <a href=https://github.com/quantumghent><img src="_static/logo.png" class="logo" alt="logo"></a>
+                                    <a href=https://github.com/quantumghent><img src="../_static/logo.png" class="logo" alt="logo"></a>
                                     
                                 
                             </p>
@@ -183,9 +186,9 @@ const thebe_selector_output = ".output, .cell_output"
 
                     <div class="qe-page__header-copy">
 
-                        <p class="qe-page__header-heading"><a href="intro.html">TensorTutorials</a></p>
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
 
-                        <p class="qe-page__header-subheading"></p>
+                        <p class="qe-page__header-subheading">Matrix Product States</p>
 
                     </div>
 
@@ -200,13 +203,40 @@ const thebe_selector_output = ".output, .cell_output"
                     
                     <div>
                         
+  <section class="tex2jax_ignore mathjax_ignore" id="matrix-product-states">
+<h1><span class="section-number">6. </span>Matrix Product States<a class="headerlink" href="#matrix-product-states" title="Permalink to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Matrix Product States</p>
+<ul class="simple">
+<li><p>MPS as a polynomial Ansatz</p></li>
+<li><p>entanglement and area laws</p></li>
+<li><p>gauge freedom</p></li>
+<li><p>expectation values</p></li>
+<li><p>correlators</p></li>
+</ul>
+</li>
+</ol>
+</section>
 
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
-</div>
-
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./3-MatrixProductStates"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
 
                     </div>
                     
@@ -244,17 +274,17 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/QuantumManyBody.html">
+  <a class="reference internal" href="../1-Introduction/QuantumManyBody.html">
    1. Quantum Many-Body Theory
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/TensorNetworks.html">
+  <a class="reference internal" href="../1-Introduction/TensorNetworks.html">
    2. Tensor Network Theory
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/Julia.html">
+  <a class="reference internal" href="../1-Introduction/Julia.html">
    3. Getting started with Julia
   </a>
  </li>
@@ -266,12 +296,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="2-Tensors/TensorKit.html">
+  <a class="reference internal" href="../2-Tensors/TensorKit.html">
    4. TensorKit.jl
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2-Tensors/TensorOperations.html">
+  <a class="reference internal" href="../2-Tensors/TensorOperations.html">
    5. TensorOperations.jl
   </a>
  </li>
@@ -281,29 +311,29 @@ const thebe_selector_output = ".output, .cell_output"
   Matrix Product States
  </span>
 </p>
-<ul class="nav bd-sidenav nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="3-MatrixProductStates/MatrixProductStates.html">
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
    6. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="3-MatrixProductStates/MatrixProductOperators.html">
+  <a class="reference internal" href="MatrixProductOperators.html">
    7. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="3-MatrixProductStates/InfiniteMPS.html">
+  <a class="reference internal" href="InfiniteMPS.html">
    8. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="3-MatrixProductStates/Algorithms.html">
+  <a class="reference internal" href="Algorithms.html">
    9. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="3-MatrixProductStates/Applications.html">
+  <a class="reference internal" href="Applications.html">
    10. Applications
   </a>
  </li>
@@ -325,13 +355,13 @@ const thebe_selector_output = ".output, .cell_output"
 
                 <ul class="qe-toolbar__main">
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
-                    <li data-tippy-content="Home"><a href="intro.html"><i data-feather="home"></i></a></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
                     <li class="btn__qelogo"><a href="https://github.com/quantumghent" title=""><span class="show-for-sr">Quantum Ghent</span></a></li>
                 </ul>
 
                 <ul class="qe-toolbar__links">
                     <li class="btn__search">
-                        <form action="search.html" method="get">
+                        <form action="../search.html" method="get">
                             <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
                             <i data-feather="search" id="search-icon"></i>
                         </form>
@@ -342,7 +372,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/3-MatrixProductStates/MatrixProductStates.md" download><i data-feather="github"></i></a></li>
                 </ul>
 
             </div>
@@ -371,18 +401,18 @@ const thebe_selector_output = ".output, .cell_output"
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/genindex.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/MatrixProductStates.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/genindex.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/3-MatrixProductStates/MatrixProductStates.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/genindex.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/MatrixProductStates.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -412,9 +442,9 @@ const thebe_selector_output = ".output, .cell_output"
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "genindex";
+                const pageName = "3-MatrixProductStates/MatrixProductStates";
                 const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/genindex.ipynb";
+                const urlPath = "tree/TensorTutorials/3-MatrixProductStates/MatrixProductStates.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
