@@ -3,5 +3,24 @@
 
 format: jb-book
 root: intro
-chapters:
-- file: markdown
+parts:
+- caption: Introduction
+  numbered: true
+  chapters:
+  - file: 1-Introduction/intro
+  - file: 1-Introduction/QuantumManyBody
+  - file: 1-Introduction/TensorNetworks
+  - file: 1-Introduction/Julia
+- caption: Tensors
+  numbered: true
+  chapters:
+  - file: 2-Tensors/TensorKit
+  - file: 2-Tensors/TensorOperations
+- caption: Matrix Product States
+  numbered: true
+  chapters:
+  - file: 3-MatrixProductStates/MatrixProductStates
+  - file: 3-MatrixProductStates/MatrixProductOperators
+  - file: 3-MatrixProductStates/InfiniteMPS
+  - file: 3-MatrixProductStates/Algorithms
+  - file: 3-MatrixProductStates/Applications
