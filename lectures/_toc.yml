@@ -7,7 +7,6 @@ parts:
 - caption: Introduction
   numbered: true
   chapters:
-  - file: 1-Introduction/intro
   - file: 1-Introduction/QuantumManyBody
   - file: 1-Introduction/TensorNetworks
   - file: 1-Introduction/Julia
