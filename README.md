@@ -6,7 +6,7 @@ https://quantumghent.github.io/TensorTutorials/
 	- who is who?
 	- practicalities during the year
 	- Julia
-	- ...
+	- Git(Hub)
 2. Introduction to Quantum Many-Body theory
 	- context, history, purpose, relevance
 	- second quantization
