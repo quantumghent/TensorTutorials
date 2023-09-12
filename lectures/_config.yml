@@ -61,10 +61,10 @@ sphinx:
      ]
     highlight_language: julia
     html_favicon: _static/lectures-favicon.ico
-    html_theme: quantecon_book_theme
+    html_theme: quantumghent_book_theme
     html_static_path: ['_static']
     html_theme_options:
-      header_organisation_url: https://github.com/quantumghent
+      header_organisation_url: https://quantumghent.github.io/
       header_organisation: Quantum Ghent
       repository_url: https://github.com/quantumghent/TensorTutorials
       repository_branch: main
