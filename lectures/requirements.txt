@@ -1,4 +1,4 @@
 jupyter-book==0.15.1
-quantumghent-book-theme @ git+https://github.com/JCBridgeman/quantumghent-book-theme.git
+quantumghent-book-theme @ git+https://github.com/quantumghent/quantumghent-book-theme@main
 sphinx-tojupyter==0.3.0
 sphinxext.rediraffe==0.2.7
