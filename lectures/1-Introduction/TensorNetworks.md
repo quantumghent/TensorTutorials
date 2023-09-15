@@ -81,7 +81,7 @@ arbitrary vector spaces and linear maps.
 In general, a vector is an object in a vector space, which can be described by a list of
 numbers that correspond to the components of the vector in some basis. For example, a vector
 in a two-dimensional space is in its most general form described by
-$$\vec{v} = \left[v_1, v_2\right]^T$$
+$\vec{v} = \left[v_1, v_2\right]^T$.
 
 As a reminder, the defining properties of vector spaces make sure that the following
 operations are well-defined:
@@ -114,7 +114,7 @@ In particular, it is instructive to think of the columns of the matrix $A$ as la
 components of the input vector space, while the rows label the component of the output
 vector space.
 
-### Multi-linear Algebra: Tensors and Tensor Products
+### Multi-Linear Algebra: Tensors and Tensor Products
 
 Using the same logic as above, it is possible to generalize the notion of a linear map by
 making use of the [tensor product](https://en.wikipedia.org/wiki/Tensor_product), which is
@@ -166,7 +166,7 @@ i_N$. This is a very common and useful trick which allows reinterpreting tensors
 or vice versa.
 ```
 
-### Multi-linear Algebra: Tensors and Multi-linear Maps
+### Multi-Linear Algebra: Tensors and Multi-linear Maps
 
 Due to the fact that the tensor product of vector spaces is a vector space in of itself, it
 is again possible to define linear maps between such vector spaces. Keeping in mind the
@@ -208,7 +208,7 @@ not an equivalence but an isomorphism. This means that it is still possible to r
 object to the other, but the operation is not necessarily trivial.
 ```
 
-### Multi-linear Algebra: Conclusion
+### Multi-Linear Algebra: Conclusion
 
 The entire discussion can be summarized and leads to the following equivalent definitions of a tensor:
 
@@ -224,7 +224,9 @@ notation, which greatly simplifies the expressions involving numerous indices. T
 is based on the idea of representing a single tensor as a node in a graph, where the indices
 of the tensor are depicted by legs sticking out of it, one for each vector space. As an example, a rank-four tensor $R$ can be represented as:
 
-<!-- TODO: insert figure -->
+```{math}
+R^\rho_{\sigma\mu\nu} \Longrightarrow ![R-tensor](assets/1-Introduction/R-tensor.pdf)
+```
 
 Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
 moved around, as long as their number and order is preserved. In some contexts the shape of
@@ -234,11 +236,16 @@ make this distinction.
 
 <!-- TODO: insert figure -->
 
+### Indexing
+
 In this notation, the individual components of the tensor can be recoverd by fixing the open
 legs of a diagram to some value, and the resulting diagram is then a scalar. For example,
 the component $R_{i_1,i_2,i_3,i_4}$ is given by:
 
 <!-- TODO: insert figure -->
+
+### Grouping and Splitting of Indices
+
 
 ### Outer Products
 
@@ -278,11 +285,15 @@ is drawn as:
 
 <!-- TODO: insert figure -->
 
-Famililiar examples of contraction are vector inner products, matrix-vector multiplication, matrix-matrix multiplication, and matrix traces.
+Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
+matrix-matrix multiplication, and matrix traces.
 
 <!-- TODO: insert figure -->
 
 ## Tensor Factorizations
+
+
+
 
 ## Computational Complexity
 
