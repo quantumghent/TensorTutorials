@@ -181,6 +181,7 @@ A 	& : & W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \
 	& 	&= w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
 	& 	&= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j} \\
 	& 	&= \sum_{J} A_{I;J} v_J \\
+\end{array}
 ```
 
 The attentive reader might have already noted that the definition of a linear map as a
