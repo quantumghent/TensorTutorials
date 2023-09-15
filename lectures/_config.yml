@@ -17,7 +17,7 @@ latex:
 
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
-  - references.bib
+  - assets/references.bib
 
 # Information about where the book exists on the web
 repository:
@@ -65,7 +65,7 @@ sphinx:
     html_static_path: ['_static']
     html_theme_options:
       header_organisation_url: https://quantumghent.github.io/
-      header_organisation: Quantum Ghent
+      header_organisation: QuantumGroup@UGent
       repository_url: https://github.com/quantumghent/TensorTutorials
       repository_branch: main
       nb_repository_url: https://github.com/quantumghent/TensorTutorials
