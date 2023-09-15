@@ -226,14 +226,6 @@ of the tensor are depicted by legs sticking out of it, one for each vector space
 
 ![R-tensor](assets/1-Introduction/R-tensor.png)
 
-Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
-moved around, as long as their number and order is preserved. In some contexts the shape of
-the node and the direction of the tensor can imply certain properties, such as making an
-explicit distinction between the isomorphic representations, but in what follows we will not
-make this distinction.
-
-<!-- TODO: insert figure -->
-
 ### Indexing
 
 In this notation, the individual components of the tensor can be recoverd by fixing the open
@@ -244,13 +236,36 @@ the component $R_{i_1,i_2,i_3,i_4}$ is given by:
 
 ### Grouping and Splitting of Indices
 
+Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
+moved around, as long as their order is preserved. In some contexts the shape of
+the node and the direction of the tensor can imply certain properties, such as making an
+explicit distinction between the isomorphic representations, but in what follows we will not
+make this distinction.
+
+Furthermore, this naturally gives a notion of grouping and splitting of indices, which is just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and the inverse operation. For example, the following diagrams are equivalent:
+
 ![grouping](assets/1-Introduction/grouping.png)
+
+Owing to the freedom in choice of basis, the precise details of grouping and splitting are
+not unique. One specific choice of convention is the tensor product basis, which is
+precisely the one we have used in the discussion of multi-linear algebra. More concretely,
+one choice that is often used is the _Kronecker product_, which in the setting of
+column-major ordering is given explicitly by grouping indices as follows:
+
+```{math}
+:label: eq:kronecker_product
+I \coloneq i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots
+```
+
+Here $d_i$ is the dimension of the corresponding vector space, and $I$ is the resulting
+linear index. Note again that so long as the chosen convention is consistent, the precise
+method of grouping and splitting is immaterial.
 
 ### Outer Products
 
 Of course, in order to really consider a tensor *network*, it is necessary to consider
 diagrams that consist of multiple tensors, or in other words of multiple nodes. The simplest
-such diagram represents the *outer product* of two tensors. This is represented by two
+such diagram represents the _outer product_ of two tensors. This is represented by two
 tensors being placed next to eachother. The value of the resulting network is simply the
 product of the constituents. For example, the outer product of a rank three tensor $A$ and a
 rank two tensor $B$ is given by:
@@ -261,9 +276,9 @@ rank two tensor $B$ is given by:
 
 More complicated diagrams can be constructed by joining some of the legs of the
 constituents. In a matter similar to the conventional Einstein notation, this implies a
-summation over the corresponding indices. 
+summation over the corresponding indices.
 
-If two legs from a single tensor are joined, this signifies a (partial) *trace* of a tensor
+If two legs from a single tensor are joined, this signifies a (partial) _trace_ of a tensor
 over these indices. For example, the trace of a rank three tensor $A$ over two of its
 indices is given by:
 
@@ -277,7 +292,7 @@ in the network, and not the value, the graphic proof of $\tr (AB) = \tr (BA)$ is
 
 ### Contractions
 
-The most common tensor operation used is *contraction*, which is the joining of legs from
+The most common tensor operation used is _contraction_, which is the joining of legs from
 different tensors. This can equivalently be thought of as a tensor product followed by a
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
 is drawn as:
@@ -289,10 +304,55 @@ matrix-matrix multiplication, and matrix traces.
 
 <!-- TODO: insert figure -->
 
+## Network Contractions and Computational Complexity
+
+
+
 ## Tensor Factorizations
 
+Linear maps admit various kinds of factorizations, which are instrumental in a variety of
+applications. They can be used to generate orthogonal bases, to find low-rank
+approximations, or to find eigenvalues and vectors. In the context of tensors, the
+established theory for factorizations of matrices can be generalized by interpreting them as
+linear maps, and then applying the same factorization to the corresponding matrix partition
+of the constituent vector spaces in a codomain and domain, after which everything
+representation. Thus, the only additional piece of information needed consists of a carries
+over. In this section we will only discuss the most common factorizations of tensors, but
+the reasoning can be generalized to any factorization of linear maps.
 
+### Eigenvalue Decomposition
 
+The [Eigen decomposition of a matrix](https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix)
+$A$ is a factorization of the form:
+
+```{math}
+A = V \Lambda V^{-1}
+```
+
+where $V$ is a matrix of eigenvectors, and $\Lambda$ is a diagonal matrix of eigenvalues. In
+particular, the set of eigenvectors form a basis for all possible products $Ax$, which is
+the same as the image of the corresponding matrix transformation. For normal matrices, these
+eigenvectors can be made orthogonal and the resulting decomposition is also called the
+_spectral decomposition_.
+
+The eigenvalue decomposition mostly finds it use in the context of linear equations of the form:
+
+```{math}
+Av = \lambda v
+```
+
+where $v$ is an eigenvector of $A$ with eigenvalue $\lambda$.
+
+For tensors, the eigenvalue decomposition is defined similarly, and the equivalent equation
+is diagrammatically represented as:
+
+<!-- TODO: insert image -->
+
+### Singular Value Decomposition
+
+### QR Decomposition
+
+### Nullspaces
 
 ## Computational Complexity
 
