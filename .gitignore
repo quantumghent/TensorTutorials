@@ -1,3 +1,5 @@
 _build/
 Manifest.toml
 .vscode/
+*.bak
+*.sav.tmp
