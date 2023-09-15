@@ -66,3 +66,13 @@ https://quantumghent.github.io/TensorTutorials/
 	- Multi-Site Algorithms
 	- MPS Truncation
 	- MPO-MPS approximation
+
+---
+
+# Local development:
+
+Run the `build.sh` script to build the pages locally. Optionally, you can pass the `-d` flag to update the dependencies.
+
+```bash
+./build.sh [-d]
+```

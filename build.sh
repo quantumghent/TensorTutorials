@@ -3,7 +3,7 @@ echo "Building the project..."
 
 usage() { echo "Usage: $0 [-h] [-d]" 1>&2; exit 1; }
 
-while getopts 'h:d:' arg; do
+while getopts 'hd' arg; do
     case "${arg}" in
         h)
             usage
