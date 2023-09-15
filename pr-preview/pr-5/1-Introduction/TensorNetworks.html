@@ -177,7 +177,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-linear-algebra-conclusion">2.2.4. Multi-linear Algebra: Conclusion</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-notation">2.3. Graphical Notation</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -231,7 +230,6 @@ const thebe_selector_output = ".output, .cell_output"
 <ul>
 <li><p><a class="reference internal" href="#overview" id="id2">Overview</a></p></li>
 <li><p><a class="reference internal" href="#tensors" id="id3">Tensors</a></p></li>
-<li><p><a class="reference internal" href="#graphical-notation" id="id4">Graphical Notation</a></p></li>
 </ul>
 </li>
 </ul>
@@ -354,7 +352,7 @@ vectors in <span class="math notranslate nohighlight">\(V \otimes W\)</span> are
 list of numbers that correspond to the components of the vector in that basis. For example,
 a vector in <span class="math notranslate nohighlight">\(V \otimes W\)</span> is described by:</p>
 <div class="math notranslate nohighlight" id="equation-eq-tensor-basis">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-eq-tensor-basis" title="Permalink to this equation">#</a></span>\[t = \sum_{i_1,i_2} t_{i_1i_2} v_{i_1} \otimes w_{i_2}\]</div>
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-eq-tensor-basis" title="Permalink to this equation">#</a></span>\[t = \sum_{i_1,i_2} t_{i_1i_2} (v_{i_1} \otimes w_{i_2})\]</div>
 <p>Here, the tentative name <span class="math notranslate nohighlight">\(t\)</span> was used to denote that this is in fact a tensor, where
 <span class="math notranslate nohighlight">\(t_{i_1i_2}\)</span> are the components of that tensor <span class="math notranslate nohighlight">\(t\)</span> in the basis <span class="math notranslate nohighlight">\(v_{i_1} \otimes w_{i_2}\)</span>.
 Because of the induced structure of the tensor product, it is more natural and very common
@@ -385,17 +383,18 @@ the components of the input and output vector spaces are themselves comprised of
 combination of basis vectors from the original vector spaces. If a linear order of these
 combinations can be established, the linear map can again be represented by a matrix:</p>
 <div class="math notranslate nohighlight" id="equation-eq-multilinear-map">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-eq-multilinear-map" title="Permalink to this equation">#</a></span>\[A : W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \otimes \cdots \otimes V_N
-A : v_1 \otimes v_2 \otimes \cdots \otimes v_N ↦ A(v) 
-	= w_1 \otimes w_2 \otimes \cdots \otimes w_M
-	= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j}
-	= \sum_{J} A_{I;J} v_J\]</div>
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-eq-multilinear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{array}{lcr}
+A 	&amp; : &amp; W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \otimes \cdots \otimes V_N \\
+	&amp; 	&amp; v_1 \otimes v_2 \otimes \cdots \otimes v_N ↦ A(v) \\
+	&amp; 	&amp;= w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
+	&amp; 	&amp;= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j} \\
+	&amp; 	&amp;= \sum_{J} A_{I;J} v_J \\\end{split}\]</div>
 <p>The attentive reader might have already noted that the definition of a linear map as a
 matrix strongly resembles the definition of a vector in a tensor product vector space. This
 is not a coincidence, and in fact the two can easily be identified by considering the
 following identification (isomorphism):</p>
-<div class="math notranslate nohighlight">
-\[V \leftarrow W \cong V \otimes W^* \]</div>
+<div class="math notranslate nohighlight" id="equation-eq-tensor-isomorphism">
+<span class="eqno">(2.5)<a class="headerlink" href="#equation-eq-tensor-isomorphism" title="Permalink to this equation">#</a></span>\[V \leftarrow W \cong V \otimes W^* \]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For finite-dimensional real or complex vector spaces without additional structure, this
@@ -417,19 +416,6 @@ object to the other, but the operation is not necessarily trivial.</p>
 </ul>
 <p>The equivalence of these two definitions leads to the lifting of many important facets of linear algebra to the multi-linear setting.</p>
 </section>
-</section>
-<section id="graphical-notation">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink"><span class="section-number">2.3. </span>Graphical Notation</a><a class="headerlink" href="#graphical-notation" title="Permalink to this heading">#</a></h2>
-<ol class="arabic simple" start="3">
-<li><p>Tensor Networks</p>
-<ul class="simple">
-<li><p>context, history, purpose, relevance</p></li>
-<li><p>multi-linear algebra</p></li>
-<li><p>graphical notation</p></li>
-<li><p>computational complexity</p></li>
-</ul>
-</li>
-</ol>
 </section>
 </section>
 

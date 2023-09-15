@@ -138,7 +138,8 @@ a vector in $V \otimes W$ is described by:
 
 ```{math}
 :label: eq:tensor_basis
-t = \sum_{i_1,i_2} t_{i_1i_2} v_{i_1} \otimes w_{i_2}
+
+t = \sum_{i_1,i_2} t_{i_1i_2} (v_{i_1} \otimes w_{i_2})
 ```
 
 Here, the tentative name $t$ was used to denote that this is in fact a tensor, where
@@ -174,12 +175,12 @@ combinations can be established, the linear map can again be represented by a ma
 
 ```{math}
 :label: eq:multilinear_map
-
-A : W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \otimes \cdots \otimes V_N
-A : v_1 \otimes v_2 \otimes \cdots \otimes v_N ↦ A(v) 
-	= w_1 \otimes w_2 \otimes \cdots \otimes w_M
-	= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j}
-	= \sum_{J} A_{I;J} v_J
+\begin{array}{lcr}
+A 	& : & W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \otimes \cdots \otimes V_N \\
+	& 	& v_1 \otimes v_2 \otimes \cdots \otimes v_N ↦ A(v) \\
+	& 	&= w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
+	& 	&= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j} \\
+	& 	&= \sum_{J} A_{I;J} v_J \\
 ```
 
 The attentive reader might have already noted that the definition of a linear map as a
@@ -188,6 +189,7 @@ is not a coincidence, and in fact the two can easily be identified by considerin
 following identification (isomorphism):
 
 ```{math}
+:label: eq:tensor_isomorphism
 V \leftarrow W \cong V \otimes W^* 
 ```
 
@@ -210,16 +212,3 @@ The entire discussion can be summarized and leads to the following equivalent de
 * A tensor is a multi-linear map between vector spaces, which can be represented as a matrix that represents the action of the map on the basis vectors of the input vector space. (a tensor is matrix-like)
 
 The equivalence of these two definitions leads to the lifting of many important facets of linear algebra to the multi-linear setting.
-
-## Graphical Notation
-
-
-
-
-
-
-3. Tensor Networks
-	- context, history, purpose, relevance
-	- multi-linear algebra
-	- graphical notation
-	- computational complexity
