@@ -219,99 +219,154 @@ const thebe_selector_output = ".output, .cell_output"
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="time-evolution">
 <h1>Time Evolution<a class="headerlink" href="#time-evolution" title="Permalink to this heading">#</a></h1>
-<p>In the case of quantum many body systems time evolution amounts to solving the time dependent schrodinger equation
-$<span class="math notranslate nohighlight">\(i \frac{\partial}{\partial t} \ket{\Psi(t)}= \hat{H}\ket{\Psi(t)}\)</span><span class="math notranslate nohighlight">\(
-for a given Hamiltonian \)</span>\hat{H}<span class="math notranslate nohighlight">\( with initial condition \)</span>\ket{\Psi_0}=\ket{\Psi(t_0)}<span class="math notranslate nohighlight">\(. For a time independent Hamiltonian the solution is given by \)</span>\ket{\Psi(t)} = \exp(-it\hat{H})\ket{\Psi_0}$. By approximating the time evolution operator in the Tensor Network language, we can also study real-time dynamics.</p>
-<p>One should keep in mind that time evolution in general will increase the entanglement of the state so that in practice time evolution can only be done with Tensor Networks for relatively modest times. In case of a quench the entanglement will grow linearly so that the bond dimension of the MPS would need to grow exponentially in order to accurately follow the time evolved state.</p>
-<p>Below are some time evolution methods for MPS</p>
+<p>In the case of quantum many body systems time evolution amounts to solving the time dependent Schrodinger equation
+$<span class="math notranslate nohighlight">\(i \frac{\partial}{\partial t} \ket{\Psi(t)}= \hat{H}\ket{\Psi(t)}\)</span>$</p>
+<p>for a given Hamiltonian <span class="math notranslate nohighlight">\(\hat{H}\)</span> with initial condition <span class="math notranslate nohighlight">\(\ket{\Psi_0}=\ket{\Psi(t_0)}\)</span>. For a time independent Hamiltonian the solution is given by <span class="math notranslate nohighlight">\(\ket{\Psi(t)} = \exp(-it\hat{H})\ket{\Psi_0}\)</span>. By approximating the time evolution operator in the Tensor Network language, we can also study real-time dynamics.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>One should keep in mind that time evolution in general will increase the entanglement of the state so that in practice time evolution can only be done with Tensor Networks for relatively modest times. For example in case of a quench the entanglement for 1D systems grows as <span class="math notranslate nohighlight">\(S \sim t\)</span> so that the bond dimension <span class="math notranslate nohighlight">\(D \sim exp(at)\)</span> in order to accurately follow the dynamics</p>
+</div>
+<p>In this part of the tutorial we will touch upon the following time evolution methods for MPS</p>
 <ul class="simple">
-<li><p>(i)TEBD</p></li>
-<li><p>TDVP</p></li>
-<li><p>Time Evolution MPO</p></li>
+<li><p><a class="reference internal" href="#tdvp-header"><span class="std std-ref">TDVP</span></a></p></li>
+<li><p><a class="reference internal" href="#tmpo-header"><span class="std std-ref">Time Evolution MPO</span></a></p></li>
+<li><p><a class="reference internal" href="#imag-header"><span class="std std-ref">Imaginary time evolution</span></a></p></li>
+<li><p><a class="reference internal" href="#fintemp-header"><span class="std std-ref">Finite temperature states`</span></a></p></li>
 </ul>
-<p>In this part of the tutorial we will focus on the latter two.</p>
+<p>Another method (i)TEBD is explained in an earlier section.</p>
 <div class="section" id="tdvp">
-<h2>TDVP<a class="headerlink" href="#tdvp" title="Permalink to this heading">#</a></h2>
-<p>The Time-Dependent Variational Principle is an old idea, originaly developed by Dirac and Frenkel in the 1930’s. The idea is to solve the schrodinger equation by minimizing
+<span id="tdvp-header"></span><h2>TDVP<a class="headerlink" href="#tdvp" title="Permalink to this heading">#</a></h2>
+<p>The Time-Dependent Variational Principle is an old concept, originaly developed by Dirac and Frenkel in the 1930’s. The idea is to solve the schrodinger equation by minimizing
 $<span class="math notranslate nohighlight">\(\|i \frac{\partial}{\partial t} \ket{\Psi(t)}- \hat{H}\ket{\Psi(t)}\|^2\)</span><span class="math notranslate nohighlight">\(
 In the case of MPS, we can parametrize the state \)</span>\ket{\Psi(t)}<span class="math notranslate nohighlight">\( by a set of time dependent matrices \)</span>{A_1(t),A_2(t),\dots A_N(t)}<span class="math notranslate nohighlight">\( (where N is the system size for finiteMPS or the size of the unit cell for infinite MPS). In other words the state \)</span>\ket{\Psi(t)}<span class="math notranslate nohighlight">\( lives in a manifold determined by these matrices, the MPS-manifold. Geometrically the solution of the minimization problem is given by the projecting of the RHS of the schrodinger equation onto the MPS manifold 
 \)</span><span class="math notranslate nohighlight">\(\frac{d}{dt} \ket{\Psi(A)} = -i \hat{P}_{T\ket{\Psi(A)}} \hat{H}\ket{\Psi(A)}\)</span><span class="math notranslate nohighlight">\(
 where \)</span>\hat{P}_{T\ket{\Psi(A)}}<span class="math notranslate nohighlight">\( is the operator that projects the state onto the tangent space. As a consequence the time-evolving state will never leave the MPS manifold and parametrization in terms of \)</span>A(t)<span class="math notranslate nohighlight">\( makes sense. One can in principle work out the above equation on the level of the \)</span>A$ matrices and try to solve the above equation. This gives a complicated set of (non-linear) equations that can be solved by one’s favourite finite difference scheme, but requires the inversion of matrices with small singular values (and thus numerical instabilities). Instead, it turns out that a natural and inversion free way of solving this equation is possible if we gauge the mps to mixed form.</p>
-<p>For a finite MPS, one can show that in the mixed gauge the projection operator is given by
-<img alt="" src="../_images/TDVPProjector.png" />
-The projection operation consists of two sums, one acting on the <span class="math notranslate nohighlight">\(AC\)</span> on site <span class="math notranslate nohighlight">\(n\)</span> and the other on the bond tensor <span class="math notranslate nohighlight">\(C\)</span> to the right of it</p>
-<p>where we have brought the tensor on site <span class="math notranslate nohighlight">\(n\)</span> into AC form and one where we only have the . The insight is that we can solve each term seperately (and in fact in any order). For each site <span class="math notranslate nohighlight">\(n\)</span> of the MPS we have
-$<span class="math notranslate nohighlight">\(\dot{A}_C(n) = -i \hat{H}_{eff}^{A_C}[ A_C(n)]\)</span><span class="math notranslate nohighlight">\( 
-and \)</span><span class="math notranslate nohighlight">\(\dot{C}(n) = i \hat{H}_{eff}^{C}[ C(n)]\)</span><span class="math notranslate nohighlight">\(
-Aproximating the effective Hamiltonians as independent of the other \)</span>A_C<span class="math notranslate nohighlight">\( and \)</span>C<span class="math notranslate nohighlight">\( these can be integrated exactly
-\)</span><span class="math notranslate nohighlight">\(A_C(n,t+dt) = \exp(-idt \hat{H}_{\text{eff}}^{A_C}) A_C(n,t) \)</span><span class="math notranslate nohighlight">\( 
-and \)</span><span class="math notranslate nohighlight">\(C(n,t+dt) = \exp(idt \hat{H}_{\text{eff}}^{C}) C(n,t) \)</span>$
-A natural way to solve the set of equations is then, starting from the first site</p>
-<ul class="simple">
-<li><p>update <span class="math notranslate nohighlight">\(A_C(n)\)</span> according to the above formula</p></li>
-<li><p>QR the resulting new <span class="math notranslate nohighlight">\(A_C'\)</span> to get a new updated <span class="math notranslate nohighlight">\(A_L(n,t+dt)\)</span> en <span class="math notranslate nohighlight">\(C(n,t+dt)\)</span></p></li>
-<li><p>Update the new <span class="math notranslate nohighlight">\(C(n,t+dt)\)</span> via the above to get an <span class="math notranslate nohighlight">\(\tilde{C}\)</span></p></li>
-<li><p>Absorb <span class="math notranslate nohighlight">\(\tilde{C}\)</span> into <span class="math notranslate nohighlight">\(A_R(n+1,t)\)</span> to get a new <span class="math notranslate nohighlight">\(A_C(n+1,t)\)</span> and repeat</p></li>
-</ul>
-<p>At the end of the chain one only updates the <span class="math notranslate nohighlight">\(A_C\)</span> since there is no <span class="math notranslate nohighlight">\(C\)</span> there. Doing the above left to right sweep gives a first order integrator i.e. we have solved the time evolution up to order <span class="math notranslate nohighlight">\(\mathcal{O}(dt^2)\)</span>. Since the terms can be solved in any order we can also perform a reverse sweep i.e. working from right to left. Combining this with the left to right sweep yields a second order integrator (because the reverse sweep is the adjoint of the forwards sweep).</p>
-<p>For an infinite MPS one can also do a sweep-like update until some criteria converges to obtain new tensors <span class="math notranslate nohighlight">\(\{A_L,C,A_C,A_R\}\)</span>. However this can be costly since one has to iterate until convergence. Another option is to exploit the translational invariance of the system by demanding that <span class="math notranslate nohighlight">\(C=\tilde{C}=\exp(idt \hat{H}_{\text{eff}}^{C}) C(n,t+dt)\)</span>. This allows us to turn things around and find <span class="math notranslate nohighlight">\(C(n,t+dt)=\exp(-idt \hat{H}_{\text{eff}}^{C}) C(n)\)</span>. Given the newly found <span class="math notranslate nohighlight">\(C(n,t+dt)\)</span> and <span class="math notranslate nohighlight">\(A_C(n,t+dt)\)</span> one can find a new <span class="math notranslate nohighlight">\(A_L\)</span>, giving a MPS for t+dt.</p>
-<p>The TDVP method has a couple of nice properties reminiscent of the Schrodinger equation it is trying to solve. First of all, it acts trivial on (numerical) eigenstates of <span class="math notranslate nohighlight">\(\hat{H}\)</span> since then <span class="math notranslate nohighlight">\(\hat{H}_{\text{eff}}^{A_C}[A_C] \propto A_C\)</span> and the whole MPS picks up a phase equal to <span class="math notranslate nohighlight">\(e^{-i dtE}\)</span>. In addition it conserves energy and is time-reversible for time-independent Hamiltonians.</p>
+<p>For a finite MPS, one can show that in the mixed gauge the projection operator is given by</p>
+<div class="figure align-default" id="mpoham">
+<img alt="../_images/TDVPProjector.png" src="../_images/TDVPProjector.png" />
+</div>
+<p>The projection operation consists of two sums, one acting on the <span class="math notranslate nohighlight">\(AC\)</span> on site <span class="math notranslate nohighlight">\(n\)</span> and the other on the bond tensor <span class="math notranslate nohighlight">\(C\)</span> to the right of it</p>
+<p>where we have brought the tensor on site <span class="math notranslate nohighlight">\(n\)</span> into AC form and one where we only have the . The insight is that we can solve each term seperately (and in fact in any order). For each site <span class="math notranslate nohighlight">\(n\)</span> of the MPS we have</p>
+<div class="math notranslate nohighlight" id="equation-acdot">
+<span class="eqno">()<a class="headerlink" href="#equation-acdot" title="Permalink to this equation">#</a></span>\[\dot{A}_C(n) = -i \hat{H}_{eff}^{A_C}[ A_C(n)]\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-cdot">
+<span class="eqno">()<a class="headerlink" href="#equation-cdot" title="Permalink to this equation">#</a></span>\[\dot{C}(n) = i \hat{H}_{eff}^{C}[ C(n)]\]</div>
+<p>Aproximating the effective Hamiltonians as independent of the other <span class="math notranslate nohighlight">\(A_C\)</span> and <span class="math notranslate nohighlight">\(C\)</span> these can be integrated exactly</p>
+<div class="math notranslate nohighlight" id="equation-acdt">
+<span class="eqno">()<a class="headerlink" href="#equation-acdt" title="Permalink to this equation">#</a></span>\[A_C(n,t+dt) = \exp(-idt \hat{H}_{\text{eff}}^{A_C}) A_C(n,t) \]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-cdt">
+<span class="eqno">()<a class="headerlink" href="#equation-cdt" title="Permalink to this equation">#</a></span>\[C(n,t+dt) = \exp(idt \hat{H}_{\text{eff}}^{C}) C(n,t) \]</div>
+<p>A natural way to solve the set of equations is then, starting from the first site is:</p>
+<div class="admonition-tdvp-algorithm-for-finite-mps admonition">
+<p class="admonition-title">TDVP algorithm for finite MPS</p>
+<ol class="arabic simple">
+<li><p>Update <span class="math notranslate nohighlight">\(A_C(n)\)</span> according to <a class="reference internal" href="#equation-acdt">()</a>.</p></li>
+<li><p>QR the resulting new <span class="math notranslate nohighlight">\(A_C(n,t+dt)\)</span> to get a new updated <span class="math notranslate nohighlight">\(A_L(n,t+dt)\)</span> en <span class="math notranslate nohighlight">\(C(n,t+dt)\)</span>.</p></li>
+<li><p>Update the new <span class="math notranslate nohighlight">\(C(n,t+dt)\)</span> via <a class="reference internal" href="#equation-cdt">()</a> to get an <span class="math notranslate nohighlight">\(\tilde{C}\)</span>.</p></li>
+<li><p>Absorb <span class="math notranslate nohighlight">\(\tilde{C}\)</span> into <span class="math notranslate nohighlight">\(A_R(n+1,t)\)</span> to get a new <span class="math notranslate nohighlight">\(A_C(n+1,t)\)</span></p></li>
+<li><p>Repeat for n+1</p></li>
+</ol>
+</div>
+<p>At the end of the chain one only updates the <span class="math notranslate nohighlight">\(A_C\)</span> since there is no <span class="math notranslate nohighlight">\(C\)</span> there.</p>
+<p>Doing the above left to right sweep gives a first order integrator i.e. we have solved the time evolution up to order <span class="math notranslate nohighlight">\(\mathcal{O}(dt^2)\)</span>. Since the terms can be solved in any order we can also perform a reverse sweep i.e. working from right to left. Combining this with the left to right sweep yields a second order integrator (because the reverse sweep is the adjoint of the forwards sweep).</p>
+<p>For an infinite MPS one could also do a sweep-like update until some criteria converges to obtain new tensors <span class="math notranslate nohighlight">\(\{A_L,C,A_C,A_R\}\)</span>. However this can be costly since one has to iterate until convergence. Instead we can exploit the translational invariance of the system by demanding that <span class="math notranslate nohighlight">\(C=\tilde{C}\)</span>. Since <span class="math notranslate nohighlight">\(\tilde{C}=\exp(idt \hat{H}_{\text{eff}}^{C}) C(n,t+dt)\)</span> we can turn things around and find <span class="math notranslate nohighlight">\(C(n,t+dt)=\exp(-idt \hat{H}_{\text{eff}}^{C}) C(n)\)</span>. Given the newly found <span class="math notranslate nohighlight">\(C(n,t+dt)\)</span> and <span class="math notranslate nohighlight">\(A_C(n,t+dt)\)</span> one can determine a new <span class="math notranslate nohighlight">\(A_L\)</span>, giving a MPS for <span class="math notranslate nohighlight">\(t+dt\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike other time evolution methods, TDVP retains some of the physical
+properties of the Schrodinger equation it is trying to solve. First of all, it acts trivial on (numerical) eigenstates of <span class="math notranslate nohighlight">\(\hat{H}\)</span> since then <span class="math notranslate nohighlight">\(\hat{H}_{\text{eff}}^{A_C}[A_C] \propto A_C\)</span> and the whole MPS picks up a phase equal to <span class="math notranslate nohighlight">\(e^{-i dtE}\)</span>. In addition it conserves energy and is time-reversible for time-independent Hamiltonians.</p>
+</div>
 </div>
 <div class="section" id="time-evolution-mpo">
-<h2>Time Evolution MPO<a class="headerlink" href="#time-evolution-mpo" title="Permalink to this heading">#</a></h2>
-<p>Perhaps the most natural way to perform the time evolution would be to write the time evolution operator as a MPO. The evolved state would then simply be the contraction of this MPO onto an MPS. The exponential can be approximated up to any order by its trunctated Taylor series
+<span id="tmpo-header"></span><h2>Time Evolution MPO<a class="headerlink" href="#time-evolution-mpo" title="Permalink to this heading">#</a></h2>
+<p>Perhaps the most natural way to perform the time evolution would be to write the time evolution operator as a MPO. The evolved state would then simply be the contraction of this MPO onto an MPS (see ref). The exponential implementing the time evolution can be approximated up to any order by its trunctated Taylor series
 $<span class="math notranslate nohighlight">\(\exp(-\tau\hat{H}) = \hat{1} + \tau\hat{H} + \frac{\tau^2}{2}\hat{H}^2 + \mathcal{O}(\tau^3)\)</span><span class="math notranslate nohighlight">\(
-The MPO approximation of the time evolution operator then boils down to implementing powers of \)</span>\hat{H}$ in an efficient (i.e. with the lowest possible MPO bond dimension) and size-extensive way. For example, for a MPO Hamiltonian of the form
-<img alt="" src="../_images/MPOHam.png" /></p>
+The MPO approximation of the time evolution operator then boils down to implementing powers of \)</span>\hat{H}$ in an efficient (i.e. with the lowest possible MPO bond dimension) and size-extensive way. For example, for a MPO Hamiltonian of the form</p>
+<div class="figure align-default" id="id1">
+<img alt="../_images/MPOHam.png" src="../_images/MPOHam.png" />
+</div>
 <p>which corresponds to the Hamiltonian
 $<span class="math notranslate nohighlight">\(\hat{H} = \sum_i \hat{D}_i + \hat{C}_i \hat{B}_{i+1}\)</span><span class="math notranslate nohighlight">\(
-The first order appriximation of \)</span>\exp(-\tau\hat{H})$ is given in table form by</p>
-<p><img alt="" src="../_images/FirstOrderMPO.png" /></p>
+The first order approximation of \)</span>\exp(-\tau\hat{H})$ is given in MPO form by</p>
+<div class="figure align-default" id="firstorder">
+<img alt="../_images/TimeMPO_1stOrder.png" src="../_images/TimeMPO_1stOrder.png" />
+</div>
 <p>Doing the matrix multiplcation (and remembering that for MPO the boundary conditions are so the we need the left upper expression) we find
 $<span class="math notranslate nohighlight">\(\exp(-\tau\hat{H}) \approx \hat{1} + \tau \left(\sum_i D_i + C_i B_{i+1}\right) = \hat{1} + \tau \hat{H}\)</span>$
 as desired.</p>
 <p>The trick for generating the first order approximation involves removing the third “level” from the MPO form of H and multiplying with the appropriate factor of τ. This can be visualised as follows</p>
-<p><img alt="" src="../_images/FirstOrderTrick.png" /></p>
-<p>This method can be extended to any desired order in <span class="math notranslate nohighlight">\(\tau\)</span> thus allowing us to represent <span class="math notranslate nohighlight">\(\exp(-\tau\hat{H})\)</span> as an MPO.</p>
+<div class="figure align-default" id="firstordertrick">
+<img alt="../_images/FirstOrderTrick.png" src="../_images/FirstOrderTrick.png" />
+</div>
+<p>This method can be extended to any desired order in <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
 </div>
 <div class="section" id="imaginary-time-evolution">
-<h2>Imaginary time evolution<a class="headerlink" href="#imaginary-time-evolution" title="Permalink to this heading">#</a></h2>
-<p>Besides simulating dynamics, any time evolution method can also be used to find the groundstate of <span class="math notranslate nohighlight">\(\hat{H}\)</span> by taking <span class="math notranslate nohighlight">\(t\)</span> to be imaginary. The basis for this idea is the fact that
-$<span class="math notranslate nohighlight">\(\ket{\Psi_0} = \lim_{\tau-&gt;+\infty} \frac{e^{-\tau \hat{H}} \ket{\Psi}}{\sqrt{\braket{\Psi|e^{-2\tau \hat{H}} |\Psi}}}\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\ket{\Psi}<span class="math notranslate nohighlight">\( is any initial state not orthogonal to the ground state. Indeed expanding the initial state in the eigenbasis of \)</span>\hat{H}<span class="math notranslate nohighlight">\( we have \)</span>\ket{\Psi} = \sum_i c_i \ket{E_i}<span class="math notranslate nohighlight">\( with \)</span>\ket{E_i}<span class="math notranslate nohighlight">\( the eigenstate with energy \)</span>E_i<span class="math notranslate nohighlight">\( and \)</span>E_0 &lt; E_1 &lt; E_2 &lt; \dots<span class="math notranslate nohighlight">\(. Then
-\)</span><span class="math notranslate nohighlight">\(e^{-\tau \hat{H}} \ket{\Psi} = \sum_i c_i e^{-\tau E_i} \ket{E_i}\)</span>$</p>
+<span id="imag-header"></span><h2>Imaginary time evolution<a class="headerlink" href="#imaginary-time-evolution" title="Permalink to this heading">#</a></h2>
+<p>Besides simulating dynamics, any time evolution method can also be used to find the groundstate of <span class="math notranslate nohighlight">\(\hat{H}\)</span> by taking <span class="math notranslate nohighlight">\(t\)</span> to be imaginary. The basis for this idea is the fact that</p>
+<div class="math notranslate nohighlight">
+\[\ket{\Psi_0} = \lim_{\tau-&gt;+\infty} \frac{e^{-\tau \hat{H}} \ket{\Psi}}{\sqrt{\braket{\Psi|e^{-2\tau \hat{H}} |\Psi}}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> is any initial state not orthogonal to the ground state. Indeed expanding the initial state in the eigenbasis of <span class="math notranslate nohighlight">\(\hat{H}\)</span> we have <span class="math notranslate nohighlight">\(\ket{\Psi} = \sum_i c_i \ket{E_i}\)</span> with <span class="math notranslate nohighlight">\(\ket{E_i}\)</span> the eigenstate corresponding to energy <span class="math notranslate nohighlight">\(E_i\)</span> with ordering <span class="math notranslate nohighlight">\(E_0 &lt; E_1 &lt; E_2 &lt; \dots\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[e^{-\tau \hat{H}} \ket{\Psi} = \sum_i c_i e^{-\tau E_i} \ket{E_i}\]</div>
 <p>In taking the limit <span class="math notranslate nohighlight">\(\tau\to+\infty\)</span> the slowest vanishing exponential is that of <span class="math notranslate nohighlight">\(E_0\)</span>. In this way the ground state gets projected out of the initial state. Demanding that the state is normalized gives
 $<span class="math notranslate nohighlight">\(\lim_{\tau-&gt;+\infty} \frac{e^{-\tau \hat{H}} \ket{\Psi}}{\sqrt{\braket{\Psi|e^{-2\tau \hat{H}} |\Psi}}} = \lim_{\tau-&gt;+\infty} \frac{\sum_i c_i e^{-\tau E_i} \ket{E_i}}{\sqrt{\sum_i |c_i|^2 e^{-2\tau E_i}}} = \frac{c_0 }{|c_0|} \ket{E_0}\)</span>$
 which gives the ground state up to an irrelevant phase factor.</p>
 </div>
 <div class="section" id="finite-temperature">
-<h2>Finite Temperature<a class="headerlink" href="#finite-temperature" title="Permalink to this heading">#</a></h2>
-<p>It is possible to use time evolution methods to construct thermal density operators i.e. <span class="math notranslate nohighlight">\(\rho = \frac{1}{Z}e^{-\beta \hat{H}}\)</span> with <span class="math notranslate nohighlight">\(\beta=1/T\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> a normalization constant. The idea here is to write <span class="math notranslate nohighlight">\(\rho\)</span> as an MPO
-<img alt="" src="../_images/DensityMatrix.png" />
-with the constraint that
-<img alt="" src="../_images/Mconstraint.png" />
-This particula form ensures that <span class="math notranslate nohighlight">\(\rho\)</span> is a positive semi-definite and thus physical. Note that for <span class="math notranslate nohighlight">\(d_k=1\)</span> we obtain the density matrix of a pure state. We can represent <span class="math notranslate nohighlight">\(\rho\)</span> as the desnity matrix of pure state (i.e. a MPS) by introducing ancilla’s (i.e. ) <span class="math notranslate nohighlight">\(\{\ket{a_k}\}\)</span> so that
-<img alt="" src="../_images/AncillaMPS.png" />
-One immedeatly sees that <span class="math notranslate nohighlight">\(\rho=\text{Tr}_a({\ket{\Psi}\bra{\Psi}})\)</span>. The thermal density operators <span class="math notranslate nohighlight">\(\rho(\beta)\)</span> for any <span class="math notranslate nohighlight">\(\beta\)</span> can then be found by starting from the <span class="math notranslate nohighlight">\(\beta=0\)</span> state <span class="math notranslate nohighlight">\(\rho(0)=\mathbf{1}\)</span> and performing imaginary time evolution
+<span id="fintemp-header"></span><h2>Finite Temperature<a class="headerlink" href="#finite-temperature" title="Permalink to this heading">#</a></h2>
+<p>It is possible to use time evolution methods to construct thermal density operators i.e. <span class="math notranslate nohighlight">\(\rho = \frac{1}{Z}e^{-\beta \hat{H}}\)</span> with <span class="math notranslate nohighlight">\(\beta=1/T\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> a normalization constant. The idea here is to write <span class="math notranslate nohighlight">\(\rho\)</span> as an MPO</p>
+<div class="figure align-default" id="densitymatrix">
+<img alt="../_images/DensityMatrix.png" src="../_images/DensityMatrix.png" />
+</div>
+<p>with the constraint that</p>
+<div class="figure align-default" id="mconstraint">
+<img alt="../_images/Mconstraint.png" src="../_images/Mconstraint.png" />
+</div>
+<p>This particula form ensures that <span class="math notranslate nohighlight">\(\rho\)</span> is a positive semi-definite and thus physical. Note that for <span class="math notranslate nohighlight">\(d_k=1\)</span> we obtain the density matrix of a pure state. We can represent <span class="math notranslate nohighlight">\(\rho\)</span> as the density matrix of pure state (i.e. a MPS) by introducing ancillas (i.e. ) <span class="math notranslate nohighlight">\(\{\ket{a_k}\}\)</span> so that</p>
+<div class="figure align-default" id="ancillamps">
+<img alt="../_images/AncillaMPS.png" src="../_images/AncillaMPS.png" />
+</div>
+<p>where the thicker physical legs indicate that they contain both the spins and the ancillas. One immediately sees that <span class="math notranslate nohighlight">\(\rho=\text{Tr}_a({\ket{\Psi}\bra{\Psi}})\)</span>. The thermal density operators <span class="math notranslate nohighlight">\(\rho(\beta)\)</span> for any <span class="math notranslate nohighlight">\(\beta\)</span> can then be found by starting from the <span class="math notranslate nohighlight">\(\beta=0\)</span> state <span class="math notranslate nohighlight">\(\rho(0)=\mathbf{1}\)</span> and performing imaginary time evolution
 $<span class="math notranslate nohighlight">\(e^{-\beta H} = (e^{-\Delta \tau \hat{H}})^M\rho(0)(e^{-\Delta \tau \hat{H}})^M\)</span><span class="math notranslate nohighlight">\(
- with \)</span>\Delta \tau = \frac{\beta}{2M}<span class="math notranslate nohighlight">\(. Or in terms of the purification state \)</span>\ket{\Psi(\beta)}=(e^{-\Delta \tau \hat{H}})^M \ket{\Psi(0)}$.</p>
+ with \)</span>\Delta \tau = \frac{\beta}{2M}$.</p>
 </div>
 <div class="section" id="out-of-the-box-code">
 <h2>Out-of-the-box code<a class="headerlink" href="#out-of-the-box-code" title="Permalink to this heading">#</a></h2>
 <p>Below is some code on how MPSKit and MPSKitModels can be used out-of-the-box to perform time evolution.</p>
-<p><code class="docutils literal notranslate"><span class="pre">H₀</span> <span class="pre">=</span> <span class="pre">transverse_field_ising(;J=1.0,g=0.0)</span></code></p>
-<p>#Create a MPS with physical bond dimension d=2 and virtual D=50 and optimize it</p>
-<p><code class="docutils literal notranslate"><span class="pre">gs</span> <span class="pre">=</span> <span class="pre">InfiniteMPS([2],[50]);</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">(gs,envs,_)</span> <span class="pre">=</span> <span class="pre">find_groundstate(gs,H₀,VUMPS(maxiter=400));</span></code></p>
-<p>#Let’s check some expectation values</p>
-<p><code class="docutils literal notranslate"><span class="pre">sx_gs</span> <span class="pre">=</span> <span class="pre">sum(expectation_value(gs,σₓ))/length(gs)</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">E_gs</span> <span class="pre">=</span> <span class="pre">sum(expectation_value(gs,H₀,envs))/length(gs)</span></code></p>
-<p>#Let’s define the algorithm for time evolution and the Hamiltonian for it</p>
-<p><code class="docutils literal notranslate"><span class="pre">alg</span> <span class="pre">=</span> <span class="pre">TDVP()</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">Ht</span> <span class="pre">=</span> <span class="pre">transverse_field_ising(;J=1.0,g=0.0)</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">=</span> <span class="pre">0.01</span></code></p>
-<p>Do the quench</p>
-<p><code class="docutils literal notranslate"><span class="pre">(st_t,envs)</span> <span class="pre">=</span> <span class="pre">timestep(gs,Ht,dt,alg)</span></code></p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">H₀</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transverse_field_ising</span><span class="p">(;</span><span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">g</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="c">#Create a MPS with physical bond dimension d=2 and virtual D=50 and optimize it</span>
+
+<span class="n">Ψ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteMPS</span><span class="p">([</span><span class="mi">2</span><span class="p">],[</span><span class="mi">50</span><span class="p">]);</span>
+<span class="p">(</span><span class="n">gs</span><span class="p">,</span><span class="n">envs</span><span class="p">,</span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find_groundstate</span><span class="p">(</span><span class="n">gs</span><span class="p">,</span><span class="n">H₀</span><span class="p">);</span>
+
+<span class="c">#Let&#39;s check some expectation values</span>
+<span class="n">sx_gs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">expectation_value</span><span class="p">(</span><span class="n">gs</span><span class="p">,</span><span class="n">σₓ</span><span class="p">))</span>
+<span class="n">E_gs</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">expectation_value</span><span class="p">(</span><span class="n">gs</span><span class="p">,</span><span class="n">H₀</span><span class="p">,</span><span class="n">envs</span><span class="p">))</span>
+
+<span class="c">#Let&#39;s choose the algorithm for time evolution and the Hamiltonian for it</span>
+
+<span class="n">Ht</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">transverse_field_ising</span><span class="p">(;</span><span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">g</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">alg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TDVP</span><span class="p">()</span>
+<span class="n">dt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span>
+
+<span class="c">#Do the time evolution</span>
+<span class="p">(</span><span class="n">st_t</span><span class="p">,</span><span class="n">envs</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timestep</span><span class="p">(</span><span class="n">gs</span><span class="p">,</span><span class="n">Ht</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">alg</span><span class="p">)</span>
+
+<span class="c">#do something on time MPO</span>
+
+<span class="c"># We can also find the groundstate using imaginary time evolution</span>
+<span class="n">Ψ</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteMPS</span><span class="p">([</span><span class="mi">2</span><span class="p">],[</span><span class="mi">50</span><span class="p">]);</span>
+<span class="n">Ψenv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">environments</span><span class="p">(</span><span class="n">Ψ</span><span class="p">,</span><span class="n">H₀</span><span class="p">)</span><span class="w"> </span>
+<span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">50</span>
+<span class="w">    </span><span class="p">(</span><span class="n">Ψ</span><span class="p">,</span><span class="n">Ψenv</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timestep</span><span class="p">(</span><span class="n">Ψ</span><span class="p">,</span><span class="n">H₀</span><span class="p">,</span><span class="mi">1</span><span class="nb">im</span><span class="o">*</span><span class="n">dt</span><span class="p">,</span><span class="n">alg</span><span class="p">,</span><span class="n">Ψenv</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="c"># Let&#39;s check the groundstate energy</span>
+<span class="n">E_Ψ</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">expectation_value</span><span class="p">(</span><span class="n">Ψ</span><span class="p">,</span><span class="n">H₀</span><span class="p">,</span><span class="n">Ψenv</span><span class="p">))</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -324,16 +379,16 @@ $<span class="math notranslate nohighlight">\(e^{-\beta H} = (e^{-\Delta \tau \h
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "julia-1.9"
         },
         kernelOptions: {
-            name: "python3",
+            name: "julia-1.9",
             path: "./3-MatrixProductStates"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'julia-1.9'</script>
 
                     </div>
                     
