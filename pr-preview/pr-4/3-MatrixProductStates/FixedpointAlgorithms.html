@@ -1,15 +1,18 @@
 
 
+
+
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-theme="light 
+">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
-    <title>Fixed-Point algorithms &#8212; TensorTutorials</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10. Fixed-Point algorithms &#8212; TensorTutorials</title>
+    
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -55,7 +58,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
@@ -117,6 +121,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '3-MatrixProductStates/FixedpointAlgorithms';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11. Algorithms" href="Algorithms.html" />
+    <link rel="prev" title="9. Infinite Matrix Product States" href="InfiniteMPS.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="QuantumGhent" />
@@ -164,8 +170,16 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dmrg">DMRG</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vumps">VUMPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dmrg">10.1. DMRG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm">10.1.1. Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">10.1.2. Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vumps">10.2. VUMPS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.2.1. Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.2.2. Example</a></li>
+</ul>
+</li>
 </ul>
                             <p class="logo">
                                 
@@ -210,39 +224,91 @@ const thebe_selector_output = ".output, .cell_output"
                     
                     <div>
                         
-  <section class="tex2jax_ignore mathjax_ignore" id="fixed-point-algorithms">
-<h1>Fixed-Point algorithms<a class="headerlink" href="#fixed-point-algorithms" title="Permalink to this heading">#</a></h1>
-<p>In this section we introduce two algorithms for approximating the ground state of local gapped Hamiltonians using matrix product state techniques. Approximating ground states in a variational manner boils down to minimizing
-$<span class="math notranslate nohighlight">\(
-    \min_{\ket{\psi}\in D} \frac{\braket{\psi|H|\psi}}{\braket{\psi|\psi}},
-\)</span><span class="math notranslate nohighlight">\(
-over a restricted class of states \)</span>D$. In the algorithms discussed below we optimize over matrix product states of a fixed finite bond dimension. In the first algorithm known as DMRG (density matrix renormalization group) the states we consider are finite MPS, whereas the second algorithm VUMPS (variational uniform matrix product state algorithm), as the name suggests, optimizes over uniform MPS. Hence, VUMPS allows for direct optimization in the thermodynamic limit and does not break translation invariance.</p>
-<section id="dmrg">
-<h2>DMRG<a class="headerlink" href="#dmrg" title="Permalink to this heading">#</a></h2>
+  <div class="tex2jax_ignore mathjax_ignore section" id="fixed-point-algorithms">
+<h1><span class="section-number">10. </span>Fixed-Point algorithms<a class="headerlink" href="#fixed-point-algorithms" title="Permalink to this heading">#</a></h1>
+<p>In this section we introduce two algorithms for approximating the ground state of local gapped Hamiltonians using matrix product state techniques. Approximating ground states in a variational manner boils down to minimizing</p>
+<div class="math notranslate nohighlight">
+\[    \min_{\ket{\psi}\in D} \frac{\braket{\psi|H|\psi}}{\braket{\psi|\psi}},\]</div>
+<p>over a restricted class of states <span class="math notranslate nohighlight">\(D\)</span>. For simplicity, we will restrict ourselves to Hamiltonians that consist of a sum of local nearest-neighbor terms, i.e.</p>
+<div class="math notranslate nohighlight">
+\[    H = \sum_i h_{i,i+1}.\]</div>
+<p>It is understood that <span class="math notranslate nohighlight">\(h_{i,i+1}\)</span> only acts non-trivially on sites <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(i+1\)</span>. In the algorithms discussed below we optimize over matrix product states of a fixed finite bond dimension. In the first algorithm known as DMRG (density matrix renormalization group) the states we consider are finite MPS, whereas the second algorithm VUMPS (variational uniform matrix product state algorithm), as the name suggests, optimizes over uniform MPS. Hence, VUMPS enables direct optimization in the thermodynamic limit, without breaking translation invariance.</p>
+<p>Our exposition of DMRG closes follows the one in <span id="id1">[]</span>, and that of VUMPS closely follows the excellent set of lecture notes <span id="id2">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+<div class="section" id="dmrg">
+<h2><span class="section-number">10.1. </span>DMRG<a class="headerlink" href="#dmrg" title="Permalink to this heading">#</a></h2>
 <p>Starting from a random MPS ansatz, DMRG tries to approximate the ground state by sequentially optimizing over all the MPS tensors one by one and sweeping through the chain, until convergence is reached. Let us discuss this algorithm in a bit more detail step by step.</p>
-<p>Fixing all tensors but the one at site <span class="math notranslate nohighlight">\(i\)</span>, the local tensor <span class="math notranslate nohighlight">\(A_i\)</span> is updated according to</p>
-<p>(5.4)</p>
-<p>Though seemingly daunting we can turn this problem in a simple eigenvalue problem by making full use of the center gauge. By bringing all tensors on the right of <span class="math notranslate nohighlight">\(A_i\)</span> in the right canonical form and those to the left in left canonical form, the denominator simply becomes <span class="math notranslate nohighlight">\(\braket{A_i|A_i}\)</span>.</p>
+<div class="section" id="algorithm">
+<h3><span class="section-number">10.1.1. </span>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this heading">#</a></h3>
+<p>Let us consider a random ansatz, by taking random tensors <span class="math notranslate nohighlight">\(\{A_1,A_2,...,A_L\}\)</span>, <span class="math notranslate nohighlight">\(L\)</span> being the number of sites. Fixing all tensors but the one at site <span class="math notranslate nohighlight">\(i\)</span>, the local tensor <span class="math notranslate nohighlight">\(A_i\)</span> is updated according to</p>
+<p>(5.4, Hand waving)</p>
+<p>Though seemingly daunting we can turn this problem in a simple eigenvalue problem by making full use of the mixed gauge. By bringing all tensors on the right of <span class="math notranslate nohighlight">\(A_i\)</span> in the right canonical form and those to the left in left canonical form, the denominator simply becomes <span class="math notranslate nohighlight">\(\braket{A_i|A_i}\)</span>.</p>
 <p>The numerator then reduces to</p>
-<p>(5.7),</p>
-<p>So that in the end the problem we have to solve is to find the minimum eigenvector of <span class="math notranslate nohighlight">\(\mathcal{H}_i\)</span>, and this repeatedly for every site, sweeping back and forth through the chain.</p>
-<p>Notice however that DMRG manifestly breaks translation invariance by updating one tensor at a time. VUMPS does not suffer from this artefact.</p>
-<p>From this brief explanation it should be clear that DMRG is a surprisingly simple algorithm. Nevertheless DMRG has proven itself time and time again, and is the most succesful algorithm for variationally approximating the ground state of local gapped (1+1)d Hamiltonians. DMRG is implemented in MPSKit and can be called by <code class="docutils literal notranslate"><span class="pre">DMRG()</span></code>.</p>
-<p>Let us illustrate the use of DMRG in MPSKit by approximating the ground state of the transverse field Ising model. The Ising model is implemented in MPSKitModels as follows
-$<span class="math notranslate nohighlight">\(
-    H = -J\left(\sum_{&lt;i,j&gt;} Z_i Z_j + \sum_i h_x X_i + h_z Z_i\right),
-\)</span><span class="math notranslate nohighlight">\(
-where we are free to choose the parameters \)</span>J<span class="math notranslate nohighlight">\(, \)</span>h_x<span class="math notranslate nohighlight">\( and \)</span>h_z$.</p>
-<p>Let us consider 16 lattice sites, bond dimension 12, open boundary conditions and let’s stick to the default critical values of <span class="math notranslate nohighlight">\(h_x=.5\)</span> and <span class="math notranslate nohighlight">\(h_z=0\)</span>. Finding the ground state using DMRG then only takes a handful of iterations!</p>
-</section>
-<section id="vumps">
-<h2>VUMPS<a class="headerlink" href="#vumps" title="Permalink to this heading">#</a></h2>
-<p>As mentioned above, VUMPS optimizes uniform MPS directly in the thermodynamic limit. By construction VUMPS respects translational invariance. As will become clear below, VUMPS can be thought of as a generalization of DMRG and we will consider this point of view in these notes.</p>
-<p>Let us demonstrate the algorithm by estimating the ground state energy density of the spin 1 XXX model. The VUMPS algorithm is called in the same way as we called DMRG. We initialize a random initial MPS with bond dimension 12 and physical dimension 3 (because the spin 1 representation of SU(2) is <span class="math notranslate nohighlight">\(2\cdot1+1=3\)</span>-dimensional). Obviously we don’t have to specify a sytsem size because we work directly in the thermodynamic limit.</p>
-<p>It takes about 30 iterations and a couple of seconds to reach convergence. Let us gauge how well the ground state energy density was approximated by calling</p>
-<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in [TDVP Jutho].</p>
-</section>
-</section>
+<p>(Numerator 5.7, Hand waving),</p>
+<p>So that in the end the problem we have to solve is to find the minimum eigenvector of <span class="math notranslate nohighlight">\(\mathcal{H}_i\)</span>, and this repeatedly for every site, sweeping back and forth through the chain. Notice however that DMRG manifestly breaks translation invariance by updating one tensor at a time. As we will see, VUMPS does not suffer from this artefact.</p>
+<p>From this brief explanation it should be clear that DMRG is a surprisingly simple algorithm. Nevertheless DMRG has proven itself time and time again, and is the most successful algorithm for variationally approximating the ground state of local gapped (1+1)d Hamiltonians. DMRG is implemented in MPSKit and can be called by <code class="docutils literal notranslate"><span class="pre">DMRG()</span></code>.</p>
+</div>
+<div class="section" id="example">
+<h3><span class="section-number">10.1.2. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<p>Let us illustrate the use of DMRG in MPSKit by approximating the ground state of the transverse field Ising model. The Ising model is implemented in MPSKitModels as follows</p>
+<div class="math notranslate nohighlight">
+\[    H = -J\left(\sum_{&lt;i,j&gt;} Z_i Z_j + \sum_i h_x X_i + h_z Z_i\right),\]</div>
+<p>where we are free to choose the parameters <span class="math notranslate nohighlight">\(J\)</span>, <span class="math notranslate nohighlight">\(h_x\)</span> and <span class="math notranslate nohighlight">\(h_z\)</span>, and <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> are the generators of <span class="math notranslate nohighlight">\(\mathfrak{su}(2)\)</span>, and thus differ from the usual Pauli matrices by a factor of <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span>.</p>
+<p>Let us consider 16 lattice sites, bond dimension 12, open boundary conditions and let’s stick to the default critical values of <span class="math notranslate nohighlight">\(h_x=0.5\)</span> and <span class="math notranslate nohighlight">\(h_z=0\)</span>. Finding the ground state using DMRG then only takes a handful of iterations!</p>
+</div>
+</div>
+<div class="section" id="vumps">
+<h2><span class="section-number">10.2. </span>VUMPS<a class="headerlink" href="#vumps" title="Permalink to this heading">#</a></h2>
+<p>As mentioned above, VUMPS optimizes uniform MPS directly in the thermodynamic limit. Since the total energy becomes unbounded in this limit, our objective should be to rather minimize the energy density. Pictorially:</p>
+<p>(105, Tangent space methods).</p>
+<p>The VUMPS algorithm offers the advantage of global optimalization by design, since the algorithm, contrary to DMRG, does not rely on updates of local tensors.</p>
+<p>Given a local Hamiltonian of the form mentioned above and an intial random uniform MPS defined by <span class="math notranslate nohighlight">\(\{A_L, A_R,C\}\)</span>, VUMPS approximates the ground state by finding an approximate solution to the fixed-point equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    A_C' = H_{A_C}(A_C), \\
+    C' = H_C(C), \\
+    A_C = A_LC = CA_R.\end{split}\]</div>
+<p>A detailed derivation that these equations characterize the variational minimum in the manifold of uniform MPS is beyond the scope of these notes, but see <span id="id3">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+<p>In these equations the effective Hamiltonian <span class="math notranslate nohighlight">\(H_{A_C}\)</span> acting on <span class="math notranslate nohighlight">\(A_C\)</span> is given by</p>
+<p>(131, Tangent space methods).</p>
+<p>Where <span class="math notranslate nohighlight">\(h\)</span> is the local Hamiltonian term, and <span class="math notranslate nohighlight">\(H_{L/R}\)</span> are environments that capture the contributions of all local terms acting on the left/right. The other effective Hamiltonian <span class="math notranslate nohighlight">\(H_C\)</span> acting on the bond tensor <span class="math notranslate nohighlight">\(C\)</span> can then be represented by the network</p>
+<p>(132, Tangent space methods).</p>
+<p>The last equation then simply states that <span class="math notranslate nohighlight">\(C\)</span> intertwines the left - and right-orthonormal form of the tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="section" id="id4">
+<h3><span class="section-number">10.2.1. </span>Algorithm<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>Let us now explain step-by-step how VUMPS finds an approximate solution to the fixed-point equations in an iterative way.</p>
+<ol class="arabic">
+<li><p>We initialize the algorithm with the random guess <span class="math notranslate nohighlight">\(\{A_L, A_R,C\}\)</span>, and chose a tolerance <span class="math notranslate nohighlight">\(\eta\)</span>.</p></li>
+<li><p>We first solve the first two eigenvalue equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    A_C = H_{A_C}(A_C), \\
+    C = H_C(C),\end{split}\]</div>
+<p>using for example an Arnoldi algorithm with the previous approximations of <span class="math notranslate nohighlight">\(A_C\)</span> and <span class="math notranslate nohighlight">\(C\)</span> as initial guess. This yields two tensors <span class="math notranslate nohighlight">\(\tilde A_C\)</span> and <span class="math notranslate nohighlight">\(\tilde C\)</span>.</p>
+</li>
+<li><p>From <span class="math notranslate nohighlight">\(\tilde A_C\)</span> and <span class="math notranslate nohighlight">\(\tilde C\)</span> we compute <span class="math notranslate nohighlight">\(\tilde A_L\)</span> and <span class="math notranslate nohighlight">\(\tilde A_R\)</span> that minimize following two-norms</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    \epsilon_L = \min_{A_L^\dagger A_L=1} ||\tilde A_C-\tilde A_L\tilde C||_2, \\
+    \epsilon_R = \min_{A_R A_R^\dagger=1} ||\tilde A_C-\tilde C\tilde A_R||_2,\end{split}\]</div>
+<p>and thus approximately solve the last equation. Note that the minimum is taken over respectively left - and right isometric matrices. We comment below on the analytic soltuion of these equations and how this analytic solution can be approximated efficiently.</p>
+</li>
+<li><p>Update <span class="math notranslate nohighlight">\(A_L\leftarrow\tilde A_L\)</span>, <span class="math notranslate nohighlight">\(A_R\leftarrow\tilde A_R\)</span> and <span class="math notranslate nohighlight">\(C\leftarrow\tilde C\)</span>.</p></li>
+<li><p>Evaluate <span class="math notranslate nohighlight">\(\epsilon=\max(\epsilon_L,\epsilon_R)\)</span> and repeat until <span class="math notranslate nohighlight">\(\epsilon\)</span> is below the tolerance <span class="math notranslate nohighlight">\(\eta\)</span>.</p></li>
+</ol>
+<p>Let us finally comment on solving the minimization problem to approximate <span class="math notranslate nohighlight">\(\tilde A_{L/R}\)</span>.</p>
+<p>A beautiful result in linear algebra states that the minimum is exactly given by <span class="math notranslate nohighlight">\(\tilde A_L=U_lV_l^\dagger\)</span> where <span class="math notranslate nohighlight">\(U_l\)</span> and <span class="math notranslate nohighlight">\(V_l\)</span> are the isometries arising from the singular value decomposition of <span class="math notranslate nohighlight">\(\tilde A_C\tilde C^\dagger=U_l\Sigma_lV_l^\dagger\)</span>, and similarly <span class="math notranslate nohighlight">\(\tilde A_R=U_rV_r^\dagger\)</span>, where <span class="math notranslate nohighlight">\(\tilde C^\dagger\tilde  A_C=U_r\Sigma_rV_r^\dagger\)</span>. Even though this approach will work well for the first iteration steps, this might not be the best solution close to convergence. When approaching the exact solution <span class="math notranslate nohighlight">\(A^s_C=A^s_LC=CA^s_R\)</span> the singular values in <span class="math notranslate nohighlight">\(\Sigma_{l/r}\)</span> become really small so that in finite precision arithmetic the singular vector in the isometries <span class="math notranslate nohighlight">\(U_{l/r}\)</span> and <span class="math notranslate nohighlight">\(V_{l/r}\)</span> are poor approximations of the exact singular vectors. A robust and close to optimal solution turns out to be</p>
+<div class="math notranslate nohighlight">
+\[    \tilde A_L = U^l_{A_C}(U^l_C)^\dagger,\qquad \tilde A_R = (U^r_C)^\dagger U^r_{A_C},\]</div>
+<p>where the <span class="math notranslate nohighlight">\(U\)</span>’s are the unitaries appearing in the polar decomposition of</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    \tilde A_C = U^l_{A_C}P^l_{A_C},\qquad \tilde C = U^l_CP^l_C,\\
+    \tilde A^r_C = P^r_{A_C}U^r_{A_C},\qquad \tilde C = P^r_CU^r_C.\end{split}\]</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">10.2.2. </span>Example<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p>Let us demonstrate the algorithm using MPSKit by estimating the ground state energy density of the spin 1 XXX model. The VUMPS algorithm is called in the same way as we called DMRG. We initialize a random initial MPS with bond dimension 12 and physical dimension 3 (because the spin 1 representation of SU(2) is <span class="math notranslate nohighlight">\(2\cdot1+1=3\)</span>-dimensional). Obviously we don’t have to specify a system size because we work directly in the thermodynamic limit.</p>
+<p>It takes about 30 iterations and a second or two to reach convergence. Let us gauge how well the ground state energy density was approximated by calling</p>
+<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in <span id="id6">[]</span>. As you can see, even with such a small bond dimension we can easily approximate the ground state energy up to 3 decimals.</p>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -314,6 +380,11 @@ where we are free to choose the parameters \)</span>J<span class="math notransla
    3. Getting started with Julia
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Symmetries.html">
+   4. Symmetries in quantum many-body physics
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -323,12 +394,12 @@ where we are free to choose the parameters \)</span>J<span class="math notransla
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   4. TensorKit.jl
+   5. TensorKit.jl
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   5. TensorOperations.jl
+   6. TensorOperations.jl
   </a>
  </li>
 </ul>
@@ -337,30 +408,47 @@ where we are free to choose the parameters \)</span>J<span class="math notransla
   Matrix Product States
  </span>
 </p>
-<ul class="nav bd-sidenav nav sidenav_l1">
+<ul class="current nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductOperators.html">
-   7. Matrix Product Operators
+   8. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="InfiniteMPS.html">
-   8. Infinite Matrix Product States
+   9. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   10. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Algorithms.html">
-   9. Algorithms
+   11. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Applications.html">
-   10. Applications
+   12. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   13. References
   </a>
  </li>
 </ul>

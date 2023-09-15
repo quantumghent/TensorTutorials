@@ -1,15 +1,18 @@
 
 
+
+
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-theme="light 
+">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
-    <title>Symmetries in quantum many-body physics &#8212; TensorTutorials</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Symmetries in quantum many-body physics &#8212; TensorTutorials</title>
+    
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -55,7 +58,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
@@ -117,6 +121,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/Symmetries';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. TensorKit.jl" href="../2-Tensors/TensorKit.html" />
+    <link rel="prev" title="3. Getting started with Julia" href="Julia.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="QuantumGhent" />
@@ -164,23 +170,23 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-and-applications">Examples and applications</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetry-breaking-order-parameters-and-phases">Symmetry breaking, order parameters and phases</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noether-and-conserved-quantitites">Noether and conserved quantitites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-and-applications">4.1. Examples and applications</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetry-breaking-order-parameters-and-phases">4.1.1. Symmetry breaking, order parameters and phases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noether-and-conserved-quantitites">4.1.2. Noether and conserved quantitites</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-and-representation-theory">Group - and representation theory</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-theory">Group theory</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-and-representation-theory">4.2. Group - and representation theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-theory">4.2.1. Group theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">4.2.1.1. Examples</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-theory">Representation theory</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-theory">4.2.2. Representation theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.2.2.1. Examples</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outlook-and-generalizations">Outlook and generalizations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outlook-and-generalizations">4.3. Outlook and generalizations</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -225,13 +231,13 @@ const thebe_selector_output = ".output, .cell_output"
                     
                     <div>
                         
-  <section class="tex2jax_ignore mathjax_ignore" id="symmetries-in-quantum-many-body-physics">
-<h1>Symmetries in quantum many-body physics<a class="headerlink" href="#symmetries-in-quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="symmetries-in-quantum-many-body-physics">
+<h1><span class="section-number">4. </span>Symmetries in quantum many-body physics<a class="headerlink" href="#symmetries-in-quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
 <p>The goal of this section is to give a very gentle introduction to the concept of symmetries in quantum many-body physics. The general mathematical framework of symmetries in physics (or at least the framework we will restrict to) is that of group - and representation theory. Our goal is not to take this framework as a given and illustrate it, but rather to first discuss a couple of important applications of symmetries in the context of some concrete models and gradually build up to the more general framework. We will finish our discussion with an outlook to generalizations of the framework presented here. It goes without saying that we will only scratch the surface of this vast topic. The interested reader is referred to the immense literature on this topic, or to a more specialized course.</p>
-<section id="examples-and-applications">
-<h2>Examples and applications<a class="headerlink" href="#examples-and-applications" title="Permalink to this heading">#</a></h2>
-<section id="symmetry-breaking-order-parameters-and-phases">
-<h3>Symmetry breaking, order parameters and phases<a class="headerlink" href="#symmetry-breaking-order-parameters-and-phases" title="Permalink to this heading">#</a></h3>
+<div class="section" id="examples-and-applications">
+<h2><span class="section-number">4.1. </span>Examples and applications<a class="headerlink" href="#examples-and-applications" title="Permalink to this heading">#</a></h2>
+<div class="section" id="symmetry-breaking-order-parameters-and-phases">
+<h3><span class="section-number">4.1.1. </span>Symmetry breaking, order parameters and phases<a class="headerlink" href="#symmetry-breaking-order-parameters-and-phases" title="Permalink to this heading">#</a></h3>
 <p>Recall the one-dimensional transverse field Ising model defined above. Its degrees of freedom are qubits ordered on a one-dimensional lattice, and its Hamiltonian reads
 $<span class="math notranslate nohighlight">\(
     H = -\sum_{i} \sigma^z_i\sigma^z_{i+1} -h_x\sum_i\sigma^x_i.
@@ -246,9 +252,9 @@ Let us simply consider periodic boundary conditions. Besides the obvious transla
 <p>Since the ground state degeneracy is necessarily an integer, it is clear that it can not change smoothly from 2 to 1 when the magnetic field is slowly turned on from <span class="math notranslate nohighlight">\(h_x=0\rightarrow \infty\)</span>. Therefore the Ising model for small <span class="math notranslate nohighlight">\(h_x\)</span> and large <span class="math notranslate nohighlight">\(h_x\)</span> are said to belong to different phases, and for some finite value of <span class="math notranslate nohighlight">\(h_x\)</span> a phase transition where the ground state degeneracy changes abruptly is expected to take place. As it turns out, this change happens for <span class="math notranslate nohighlight">\(h_x=1\)</span>, at which the Ising model becomes critical.</p>
 <p>Inspired by the credo of symmetry we can introduce a local operator which  probes the phase and can witness the phase transition. In the case of the Ising model this order paramter is the local magnetisation on every site: <span class="math notranslate nohighlight">\(O=\sum_i\sigma^z_i\)</span>. It is clear that this order parameter anticommutes with the symmetry, <span class="math notranslate nohighlight">\(P^\dagger OP=-O\)</span>, from which it follows that in the symmetric phase the expectiation value of the order paramter vanishes, <span class="math notranslate nohighlight">\(\braket{\Psi_+|O|\Psi_+}=0\)</span>, while in the ferromagnetic phase <span class="math notranslate nohighlight">\(\braket{\Psi_\uparrow|O|\Psi_\uparrow}&gt;0\)</span> and <span class="math notranslate nohighlight">\(\braket{\Psi_\downarrow|O|\Psi_\downarrow}&lt;0\)</span>. Notice however that for the latter we could also have chosen the ground state <span class="math notranslate nohighlight">\(\ket{\Psi_\uparrow}+\ket{\Psi_\downarrow}\)</span> in which case the expectation value of <span class="math notranslate nohighlight">\(O\)</span> becomes 0. This can be remedied by first adding a small symmetry breaking term <span class="math notranslate nohighlight">\(\lambda\sum_i\sigma^z_i\)</span> to the Hamiltonian which depending on the sign of <span class="math notranslate nohighlight">\(\lambda\)</span> selects one of the ground states <span class="math notranslate nohighlight">\(\ket{\Psi_{\uparrow/\downarrow}}\)</span> after which the limit <span class="math notranslate nohighlight">\(\lambda\rightarrow 0\)</span> is taken.</p>
 <p>The synopsis of this example is thus the following. Symmetries in quantum many-body physics (but also in single-particle quantum mechanics) are represented by unitary operators which are closed under multiplication. Depending on the paramters in the Hamiltonian, part of these symmetries can be broken by the ground state subspace, and this pattern of symmetry breaking is a hallmark feature of different phases of the model. Different phases can be probed by a local order paramter which does not commute with the symmetries. This paradigm of classifying phases based on symmetry principles was first put forward by Landau, and since then bears his name.</p>
-</section>
-<section id="noether-and-conserved-quantitites">
-<h3>Noether and conserved quantitites<a class="headerlink" href="#noether-and-conserved-quantitites" title="Permalink to this heading">#</a></h3>
+</div>
+<div class="section" id="noether-and-conserved-quantitites">
+<h3><span class="section-number">4.1.2. </span>Noether and conserved quantitites<a class="headerlink" href="#noether-and-conserved-quantitites" title="Permalink to this heading">#</a></h3>
 <p>You might remember Noether’s theorem from a course on field theory. It states that every continuous symmetry of a system (often defined via its Lagrangian) gives rise to a conserved current. In the context of quantum physics Noether’s theorem becomes almost trivial and states that the expectation value of every operator that commutes with the Hamiltonian has a conserved expectation value:
 $<span class="math notranslate nohighlight">\(
     [H,O] = 0 \implies \frac{d}{dt}\braket{\Psi(t)|O|\Psi(t)} = 0.
@@ -273,13 +279,13 @@ Let us define the total spin
 From a direct computation it follows that in the case where \)</span>\Delta=1<span class="math notranslate nohighlight">\(, and the model thus reduces to the Heisenberg XXX model, H commutes with all \)</span>S^a<span class="math notranslate nohighlight">\(, \)</span>[H,S^a]=0<span class="math notranslate nohighlight">\(, \)</span>a=x,y,z<span class="math notranslate nohighlight">\(. However, when \)</span>\Delta\neq 1<span class="math notranslate nohighlight">\( only the Z component \)</span>S^z<span class="math notranslate nohighlight">\( commutes with H, \)</span>[H, S^z]=0<span class="math notranslate nohighlight">\(. Notice the difference with the Ising model where the same symmetry was present for all values of \)</span>h_x$.</p>
 <p>This means that in the <span class="math notranslate nohighlight">\(\Delta=1\)</span> case the Hamiltonian is symmetric under the full <span class="math notranslate nohighlight">\(SU(2)\)</span> (half integer s) or <span class="math notranslate nohighlight">\(SO(3)\)</span> (integer s) symmetry (see below), whereas when <span class="math notranslate nohighlight">\(\Delta\neq 1\)</span> only an <span class="math notranslate nohighlight">\(SO(2)\simeq U(1)\)</span> symmetry generated by <span class="math notranslate nohighlight">\(S^z\)</span> is retained. If <span class="math notranslate nohighlight">\(H\)</span> commutes with <span class="math notranslate nohighlight">\(S^z\)</span> it follows that it automatically also commutes with <span class="math notranslate nohighlight">\(\exp(i\theta S^z)\)</span>, <span class="math notranslate nohighlight">\(\theta\in[0,2\pi)\)</span>. This operator has an interpretation as a rotation around the Z-axis with an angle <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
 <p>According to Noether the Heisenberg model thus has conserved quantities associated with these operators. Regardless of <span class="math notranslate nohighlight">\(\Delta\)</span> the Z component of the total spin is conserved, and for <span class="math notranslate nohighlight">\(\Delta=1\)</span> all components of the total spin are conserved. In particular this means that the eigenvalue <span class="math notranslate nohighlight">\(M_z\)</span> of <span class="math notranslate nohighlight">\(S^z\)</span> and <span class="math notranslate nohighlight">\(S(S+1)\)</span> of <span class="math notranslate nohighlight">\(\vec{S}\cdot\vec{S}\)</span> are good quantum numbers to label the eigenstates of the Heisenberg Hamiltonian.</p>
-</section>
-</section>
-<section id="group-and-representation-theory">
-<h2>Group - and representation theory<a class="headerlink" href="#group-and-representation-theory" title="Permalink to this heading">#</a></h2>
+</div>
+</div>
+<div class="section" id="group-and-representation-theory">
+<h2><span class="section-number">4.2. </span>Group - and representation theory<a class="headerlink" href="#group-and-representation-theory" title="Permalink to this heading">#</a></h2>
 <p>Motivated by the examples from above, we will gently introduce some notions of group - and representation theory that form the backbone of a general theory of symmetries.</p>
-<section id="group-theory">
-<h3>Group theory<a class="headerlink" href="#group-theory" title="Permalink to this heading">#</a></h3>
+<div class="section" id="group-theory">
+<h3><span class="section-number">4.2.1. </span>Group theory<a class="headerlink" href="#group-theory" title="Permalink to this heading">#</a></h3>
 <p>Roughly speaking a group <span class="math notranslate nohighlight">\(G\)</span> is a set of symmetry operators and a multiplication rule on how to compose them. Let us motivate the definition one step a time.</p>
 <p>First of all notice that a model can have a finite or infinite (discrete or continuous) number of symmetries. Clearly, the spin flip symmetry of the Ising model consists of only one non-trivial symmetry operation, namely flipping all spins. The operator carrying out this transformation is <span class="math notranslate nohighlight">\(P=\bigotimes_i\sigma^x_i\)</span> The XXZ model however has a continuous symmetry, namely rotations around the Z axis, that is implemented via <span class="math notranslate nohighlight">\(\exp(i\theta S^z)\)</span>, <span class="math notranslate nohighlight">\(\theta\in[0,2\pi)\)</span>, where we should really think about every value of <span class="math notranslate nohighlight">\(\theta\)</span> as labeling a different symmetry operation.</p>
 <p>These symmetries can be composed or multiplied to form a new symmetry operation. Take for example flipping all the spins. Flipping all spins twice results in not flipping any spins at all, which is trivially also a symmetry of the Hamiltonian. Consider for example also the <span class="math notranslate nohighlight">\(U(1)\)</span> symmetry of the XXZ model. First rotating over <span class="math notranslate nohighlight">\(\theta_2\)</span> and then over <span class="math notranslate nohighlight">\(\theta_1\)</span> gives a new rotation over <span class="math notranslate nohighlight">\(\theta_1+\theta_2\)</span>: <span class="math notranslate nohighlight">\(\exp(i\theta_1 S^z)\exp(i\theta_2 S^z)=\exp(i(\theta_1+\theta_2) S^z)\)</span>. This leads to the first part of the definition of what a group is.</p>
@@ -296,8 +302,8 @@ From a direct computation it follows that in the case where \)</span>\Delta=1<sp
 </ol>
 <p>Together 1. 2. and 3. constitute the definition of a group. Before mentioning some examples let us also introduce the concept of a subgroup. As the name suggests, a subgroup is a subset of a group which itself constitutes a group. Note for example that a rotation over <span class="math notranslate nohighlight">\(\pi\)</span>, <span class="math notranslate nohighlight">\(\exp(i\pi S^z)\)</span>, together with the identity, generates a subgroup of <span class="math notranslate nohighlight">\(\{\exp(2\pi i\theta S^z|\theta\in[0,2\pi)\}\)</span> with two elements.</p>
 <p>The concept of subgroups lies at the heart of symmetry breaking. Recall that in the ferromagnetic phase, the Ising model breaks the spin flip symmetry. In Landau’s paradigm we say that the pattern of symmetry breaking is <span class="math notranslate nohighlight">\(\mathbb{Z}_2\rightarrow \{1\}\)</span> (see below for an explanation of the notation). In other words, the full symmetry group is broken in the ferromagnetic phase. More generally, a theory with a <span class="math notranslate nohighlight">\(G\)</span> symmetry can undergo a pattern of symmetry breaking <span class="math notranslate nohighlight">\(G\rightarrow H\)</span> where <span class="math notranslate nohighlight">\(H\)</span> is a subgroup of <span class="math notranslate nohighlight">\(G\)</span>. The meaning of this symbolic expression is that in this particular case the ground states keep an H symmetry, and the ground state degeneracy is <span class="math notranslate nohighlight">\(|G|/|H|\)</span>.</p>
-<section id="examples">
-<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h4>
+<div class="section" id="examples">
+<h4><span class="section-number">4.2.1.1. </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p>The trivial group is a group with only one element that is than automatically also the identity, and a trivial multiplication law.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbb{Z}_N\)</span> is the additive group of integers modulo <span class="math notranslate nohighlight">\(N\)</span>. The group elements are the integers <span class="math notranslate nohighlight">\(\{0,1,...,N-1\}\)</span> and the group multiplication is addition modulo <span class="math notranslate nohighlight">\(N\)</span>. Hence it is clearly a finite group. In particular, the spin flip symmetry from above corresponds to the group <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>. Notice that for all <span class="math notranslate nohighlight">\(N\)</span> <span class="math notranslate nohighlight">\(\mathbb{Z}_N\)</span> is abelian.</p></li>
@@ -313,24 +319,24 @@ $<span class="math notranslate nohighlight">\(
   \)</span><span class="math notranslate nohighlight">\( 
   Similarly, one defines \)</span>SO(N),N\geq 2<span class="math notranslate nohighlight">\(. Note that only \)</span>SO(2)$ is abelian.</p></li>
 </ul>
-</section>
-</section>
-<section id="representation-theory">
-<h3>Representation theory<a class="headerlink" href="#representation-theory" title="Permalink to this heading">#</a></h3>
-<section id="id1">
-<h4>Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
-</section>
-</section>
-</section>
-<section id="outlook-and-generalizations">
-<h2>Outlook and generalizations<a class="headerlink" href="#outlook-and-generalizations" title="Permalink to this heading">#</a></h2>
+</div>
+</div>
+<div class="section" id="representation-theory">
+<h3><span class="section-number">4.2.2. </span>Representation theory<a class="headerlink" href="#representation-theory" title="Permalink to this heading">#</a></h3>
+<div class="section" id="id1">
+<h4><span class="section-number">4.2.2.1. </span>Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+</div>
+</div>
+</div>
+<div class="section" id="outlook-and-generalizations">
+<h2><span class="section-number">4.3. </span>Outlook and generalizations<a class="headerlink" href="#outlook-and-generalizations" title="Permalink to this heading">#</a></h2>
 <p>Let us conclude with an outlook and some generalizations.</p>
 <ul class="simple">
 <li><p>Besides the “global” symmetries we considered here, you might also be familiar with gauge symmetries from another course. Gauge theories are ubiquitous in physics and describe a plethora of interesting physical phenomena. Gauge symmetries should however not be thought of as actual symmetries transforming physically different states into each other, but rather describe a redundancy in the description of the system. Nevertheless, group theory also lies at the heart of these theories.</p></li>
 <li><p>In this brief overview we mostly neglected spatial symmetries. Spatial symmetries can be understood as transformations that translate, rotate or reflect the lattice. These kind of symmetries thus don’t act “on site” anymore. The full classification of spatial symmetry groups is notoriously rich and beautiful, especially in higher dimensions, and exploiting them in algorithms can result in tremendous speedup and stability. We already encountered the example of translation symmetry. One of the benefits of exploiting this symmetry in tensor networks is e.g. that if the ground state of an infinite one-dimensional model does not break translation invariance, this ground state can be well modelled by a uniform matrix product state, a matrix product state consiting of one tensor repeated indefinitely.</p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -386,7 +392,7 @@ $<span class="math notranslate nohighlight">\(
   Introduction
  </span>
 </p>
-<ul class="nav bd-sidenav nav sidenav_l1">
+<ul class="current nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="QuantumManyBody.html">
    1. Quantum Many-Body Theory
@@ -402,6 +408,11 @@ $<span class="math notranslate nohighlight">\(
    3. Getting started with Julia
   </a>
  </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   4. Symmetries in quantum many-body physics
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -411,12 +422,12 @@ $<span class="math notranslate nohighlight">\(
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   4. TensorKit.jl
+   5. TensorKit.jl
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   5. TensorOperations.jl
+   6. TensorOperations.jl
   </a>
  </li>
 </ul>
@@ -428,27 +439,44 @@ $<span class="math notranslate nohighlight">\(
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
-   7. Matrix Product Operators
+   8. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
-   8. Infinite Matrix Product States
+   9. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/FixedpointAlgorithms.html">
+   10. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
-   9. Algorithms
+   11. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/Applications.html">
-   10. Applications
+   12. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   13. References
   </a>
  </li>
 </ul>
