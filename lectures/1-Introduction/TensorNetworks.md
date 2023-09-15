@@ -25,6 +25,8 @@ including multi-linear algebra and graphical notation. Finally, we will discuss 
 computational complexity of tensor networks and their relevance to quantum many-body
 physics.
 
+This discussion is largely based on {cite}`bridgeman2017handwaving`.
+
 ### History
 
 The history of tensor networks is a fascinating journey through the evolution of profound
@@ -101,6 +103,7 @@ construction, where $v_i$ are the basis vectors of $V$ and $w_i$ are the basis v
 \begin{align}
 A &:& W \leftarrow V\\
 A &:& v ↦ w = A(v) = \sum_j A_{ij} v_j
+\end{align}
 ```
 
 where $A_{ij}$ are the components of the matrix $A$ in the basis $v_i$ and $w_j$. In other
@@ -213,3 +216,79 @@ The entire discussion can be summarized and leads to the following equivalent de
 * A tensor is a multi-linear map between vector spaces, which can be represented as a matrix that represents the action of the map on the basis vectors of the input vector space. (a tensor is matrix-like)
 
 The equivalence of these two definitions leads to the lifting of many important facets of linear algebra to the multi-linear setting.
+
+## Graphical Notation and Tensor Operations
+
+One of the main advantages of tensor networks is that they admit a very intuitive graphical
+notation, which greatly simplifies the expressions involving numerous indices. This notation
+is based on the idea of representing a single tensor as a node in a graph, where the indices
+of the tensor are depicted by legs sticking out of it, one for each vector space. As an example, a rank-four tensor $R$ can be represented as:
+
+<!-- TODO: insert figure -->
+
+Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
+moved around, as long as their number and order is preserved. In some contexts the shape of
+the node and the direction of the tensor can imply certain properties, such as making an
+explicit distinction between the isomorphic representations, but in what follows we will not
+make this distinction.
+
+<!-- TODO: insert figure -->
+
+In this notation, the individual components of the tensor can be recoverd by fixing the open
+legs of a diagram to some value, and the resulting diagram is then a scalar. For example,
+the component $R_{i_1,i_2,i_3,i_4}$ is given by:
+
+<!-- TODO: insert figure -->
+
+### Outer Products
+
+Of course, in order to really consider a tensor *network*, it is necessary to consider
+diagrams that consist of multiple tensors, or in other words of multiple nodes. The simplest
+such diagram represents the *outer product* of two tensors. This is represented by two
+tensors being placed next to eachother. The value of the resulting network is simply the
+product of the constituents. For example, the outer product of a rank three tensor $A$ and a
+rank two tensor $B$ is given by:
+
+<!-- TODO: insert figure -->
+
+### Traces
+
+More complicated diagrams can be constructed by joining some of the legs of the
+constituents. In a matter similar to the conventional Einstein notation, this implies a
+summation over the corresponding indices. 
+
+If two legs from a single tensor are joined, this signifies a (partial) *trace* of a tensor
+over these indices. For example, the trace of a rank three tensor $A$ over two of its
+indices is given by:
+
+<!-- TODO: insert figure -->
+
+In this notation, the cyclic property of the trace follows trivially by sliding one of the
+matrices around the loop of the diagram. As this only changes the placement of the tensors
+in the network, and not the value, the graphic proof of $\Tr (AB) = \Tr (BA)$ is found.
+
+<!-- TODO: insert figure -->
+
+### Contractions
+
+The most common tensor operation used is *contraction*, which is the joining of legs from
+different tensors. This can equivalently be thought of as a tensor product followed by a
+trace. For example, the contraction between two pairs of indices of two rank-three tensors
+is drawn as:
+
+<!-- TODO: insert figure -->
+
+Famililiar examples of contraction are vector inner products, matrix-vector multiplication, matrix-matrix multiplication, and matrix traces.
+
+<!-- TODO: insert figure -->
+
+## Tensor Factorizations
+
+## Computational Complexity
+
+
+3. Tensor Networks
+	- context, history, purpose, relevance
+	- multi-linear algebra
+	- graphical notation
+	- computational complexity
