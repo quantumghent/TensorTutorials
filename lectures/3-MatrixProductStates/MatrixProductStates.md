@@ -20,7 +20,7 @@ So for a general state we need the values of all the different $C_{s_1,s_2,...,s
 ```{math}
 C_{s_1,s_2,...,s_N} = \sum_{k\in{0,D-1}} U_{s_1,k}C_{k,s_2,...,s_N}',
 ```
-where $U$ is a $d$ by $D$ matrix and $C'$ is a $D$ by $d^(N-1)$ matrix. One can find such a matrix by performing an **Singular-Value-Decomposition (SVD)** on the original matrix $C$. A SVD decomposes the original matrix $C$ as $U\Sigma V^\dagger$ with $U$ and $V$ unitaries and $\Sigma$ a diagonal matrix containing the singular values of $C$. $\Sigma$ will be a $d$ by $d^{N-1}$ matrix with rank($C$) non-zero elements. One can then define $C'$ as $\Sigma V^\dagger$.
+where $U$ is a $d$ by $D$ matrix and $C'$ is a $D$ by $d^{N-1}$ matrix. One can find such a matrix by performing an **Singular-Value-Decomposition (SVD)** on the original matrix $C$. A SVD decomposes the original matrix $C$ as $U\Sigma V^\dagger$ with $U$ and $V$ unitaries and $\Sigma$ a diagonal matrix containing the singular values of $C$. $\Sigma$ will be a $d$ by $d^{N-1}$ matrix with rank($C$) non-zero elements. One can then define $C'$ as $\Sigma V^\dagger$.
 
 So far it seems that we made things worse, we now need to store $d^2$ elements of $U$ and $d^N$ elements of $C'$. We can make things better by making a **low rank approximation** of the state instead of representing the full state. This low rank approximation can be made by **truncating** $\Sigma$ by only retaining the largest $D$ singular values. This truncates $C'$ to a $D$ by $d^{N-1}$ matrix. $D$ is called the bond dimension and increasing $D$ will give you a better approximation of the original state. 
 
@@ -40,7 +40,7 @@ Another approach to construct a MPS is by using projected entangled pairs. Consi
 ```{math}
 \ket{\psi} = \bigotimes_i=1^{N}\sum_{j=0}^{D-1}\ket{jj}.
 ```
-Next we construct a map $f:\mathbb{C}^D\otimes\mathbb{C}^D\xrightarrow \mathbb{C}^d$ acting on a local site. This map projects the $D^2$-dimensional "virtual" Hilbert space onto a "physical" $d$-dimensional Hilbert space. Acting with $f$ on each site gives a $d$-dimensional quantum chain with entanglement shared between neighbouring sites. Since the state is fully determined by the map $f$, which can be represented as a $D$ by $d$ by $D$ three leg tensor it is clear that this construction indeed gives rise to a MPS. One advantage of this construction is that it allows for easy generalization to higher dimensions.
+Next we construct a map $f$:$\mathbb{C}^D\otimes\mathbb{C}^D\xrightarrow\mathbb{C}^d$ acting on a local site. This map projects the $D^2$-dimensional "virtual" Hilbert space onto a "physical" $d$-dimensional Hilbert space. Acting with $f$ on each site gives a $d$-dimensional quantum chain with entanglement shared between neighbouring sites. Since the state is fully determined by the map $f$, which can be represented as a $D$ by $d$ by $D$ three leg tensor it is clear that this construction indeed gives rise to a MPS. One advantage of this construction is that it allows for easy generalization to higher dimensions.
 
 # Entanglement of Matrix product states
 One important question is which states can be represented by an MPS and what are their properties. To answer this question we will look at the entanglement structure of a MPS. Consider a MPS with a fixed bond dimension $D$. We can choose any bond of the MPS to make a bipartition of the MPS, where all sites to the left of the bond are in one partition and all sites to the right of the partition are in the other partition. One can now calculate the entanglement entropy $S$ between these two partitions. To calculate this we will use the SVD decomposition. If we perform an SVD along the bond, then the singular values will completely determine the entanglement structure between the two partitions. The entanglement entropy is then given by
@@ -54,7 +54,7 @@ Not all MPS describe different physical states. One can perform a set of transof
 
 A physical state can be described by many different MPS by using the gauge freedom. One can wonder if the same state can be described by two MPS that are not related by a gauge transform. This question is answered by the **fundamental theorem of MPS**, which states that any two translationally invariant MPS are equal if and only if their tensors are related by a gauge transform. So the gauge freedom is the only freedom we have in describing a physical state by an MPS.
 
-This gauge transform can be exploited in various algorithms by defining canoncial forms. One common canonical form is the left-canonical form given by the condition $\sum_{s_i=0}^{d-1}U^\dagger_{s_i}U_{s_i} = \textbf{id}_{D\times D}.
+This gauge transform can be exploited in various algorithms by defining canoncial forms. One common canonical form is the left-canonical form given by the condition $\sum_{s_i=0}^{d-1}U^\dagger_{s_i}U_{s_i} = \textbf{id}_{D\times D}$.
 
 # Expectation values of Matrix product states
 It is important to know how to compute expectation values of operators acting on a MPS. Consider an operator $O_i$ acting on site i of a state given by a MPS $\ket{\psi[U]}$. To calculate this expectation value we introduce the object 
