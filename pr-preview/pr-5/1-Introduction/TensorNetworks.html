@@ -323,8 +323,9 @@ linearity, such a map is completely determined by its action on the basis vector
 This leads in a very natural way to the notion of a matrix by considering the following
 construction, where <span class="math notranslate nohighlight">\(v_i\)</span> are the basis vectors of <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(w_i\)</span> are the basis vectors of <span class="math notranslate nohighlight">\(W\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-linear-map">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-eq-linear-map" title="Permalink to this equation">#</a></span>\[A : W \leftarrow V
-A : v ↦ w = A(v) = \sum_j A_{ij} v_j\]</div>
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-eq-linear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
+A &amp;:&amp; W \leftarrow V\\
+A &amp;:&amp; v ↦ w = A(v) = \sum_j A_{ij} v_j\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_{ij}\)</span> are the components of the matrix <span class="math notranslate nohighlight">\(A\)</span> in the basis <span class="math notranslate nohighlight">\(v_i\)</span> and <span class="math notranslate nohighlight">\(w_j\)</span>. In other
 words, the abstract notion of a linear map between vector spaces can be represented by a
 concrete matrix, and the action of the map is nothing but the usual matrix product.</p>
@@ -383,13 +384,13 @@ the components of the input and output vector spaces are themselves comprised of
 combination of basis vectors from the original vector spaces. If a linear order of these
 combinations can be established, the linear map can again be represented by a matrix:</p>
 <div class="math notranslate nohighlight" id="equation-eq-multilinear-map">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-eq-multilinear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{array}{lcr}
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-eq-multilinear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
 A 	&amp; : &amp; W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \otimes \cdots \otimes V_N \\
 	&amp; 	&amp; v_1 \otimes v_2 \otimes \cdots \otimes v_N ↦ A(v) \\
 	&amp; 	&amp;= w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
 	&amp; 	&amp;= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j} \\
 	&amp; 	&amp;= \sum_{J} A_{I;J} v_J \\
-\end{array}\end{split}\]</div>
+\end{align}\end{split}\]</div>
 <p>The attentive reader might have already noted that the definition of a linear map as a
 matrix strongly resembles the definition of a vector in a tensor product vector space. This
 is not a coincidence, and in fact the two can easily be identified by considering the
