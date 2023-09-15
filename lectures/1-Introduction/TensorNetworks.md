@@ -98,9 +98,9 @@ construction, where $v_i$ are the basis vectors of $V$ and $w_i$ are the basis v
 
 ```{math}
 :label: eq:linear_map
-
-A : W \leftarrow V
-A : v ↦ w = A(v) = \sum_j A_{ij} v_j
+\begin{align}
+A &:& W \leftarrow V\\
+A &:& v ↦ w = A(v) = \sum_j A_{ij} v_j
 ```
 
 where $A_{ij}$ are the components of the matrix $A$ in the basis $v_i$ and $w_j$. In other
@@ -175,13 +175,13 @@ combinations can be established, the linear map can again be represented by a ma
 
 ```{math}
 :label: eq:multilinear_map
-\begin{array}{lcr}
+\begin{align}
 A 	& : & W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \otimes \cdots \otimes V_N \\
 	& 	& v_1 \otimes v_2 \otimes \cdots \otimes v_N ↦ A(v) \\
 	& 	&= w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
 	& 	&= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j} \\
 	& 	&= \sum_{J} A_{I;J} v_J \\
-\end{array}
+\end{align}
 ```
 
 The attentive reader might have already noted that the definition of a linear map as a
