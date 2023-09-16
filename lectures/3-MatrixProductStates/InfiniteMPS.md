@@ -125,7 +125,7 @@ In the uniform gauge, we can use the fixed points of the transfer matrix to cont
 Correlation functions are computed similarly. Let us look at
 
 ```{math}
-c^{\alpha\beta}(m,n) = \bra{\Psi(\bar A)} (O^\beta_m)\dagger O^\alpha_n \ket{\Psi(A)},
+c^{\alpha\beta}(m,n) = \bra{\Psi(\bar A)} (O^\beta_m)^\dagger O^\alpha_n \ket{\Psi(A)},
 ```
 
 where $m$ and $n$ are abritrary locations in the chain, and, because of translation invariance, the correlation function only depends on the difference $m-n$. Again, we contract everything to the left and right of the operators by inserting the fixed points $l$ and $r$, so that
@@ -142,7 +142,7 @@ From this expression, we learn that it is the transfer matrix that determines th
 :align: center
 ```
 
-The first part is just the product of the expectation values of $O^\alpha$ and $O^\beta$, called the disconnected part of the correlation function, and the rest is an exponentially decaying part. This expression implies that connected correlation functions of an MPS *always* decay exponentially, which is one of the reasons why MPS are not well suited for capturing critical states. The correlation length $\xi is determined by the second largest eigenvalue of the transfer matrix $\lambda_1$ as
+The first part is just the product of the expectation values of $O^\alpha$ and $O^\beta$, called the disconnected part of the correlation function, and the rest is an exponentially decaying part. This expression implies that connected correlation functions of an MPS *always* decay exponentially, which is one of the reasons why MPS are not well suited for capturing critical states. The correlation length $\xi$ is determined by the second largest eigenvalue of the transfer matrix $\lambda_1$ as
 
 ```{math}
 \xi = -\frac{1}{\log|\lambda_\mathrm{max}|}.
@@ -246,7 +246,7 @@ Note that in the mixed gauge the normalization of the MPS is entirely determined
 :align: center
 ```
 
-or alternatively we require ${\rm tr}(C^\dagger C) = 1$
+or alternatively we require ${\rm tr}(C^\dagger C) = 1$.
 
 
 ### Expectation values revisited
