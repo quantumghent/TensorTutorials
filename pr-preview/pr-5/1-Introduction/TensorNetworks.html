@@ -1,14 +1,18 @@
 
 
+
+
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-theme="light 
+">
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2. Tensor Network Theory &#8212; TensorTutorials</title>
+    
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -54,7 +58,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
@@ -184,8 +189,15 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contractions">2.3.5. Contractions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-factorizations">2.4. Tensor Factorizations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-complexity">2.5. Computational Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-contractions-and-computational-complexity">2.4. Network Contractions and Computational Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-factorizations">2.5. Tensor Factorizations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eigenvalue-decomposition">2.5.1. Eigenvalue Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">2.5.2. Singular Value Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qr-decomposition">2.5.3. QR Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nullspaces">2.5.4. Nullspaces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-complexity">2.6. Computational Complexity</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -240,8 +252,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#tensors" id="id4">Tensors</a></p></li>
 <li><p><a class="reference internal" href="#graphical-notation-and-tensor-operations" id="id5">Graphical Notation and Tensor Operations</a></p></li>
-<li><p><a class="reference internal" href="#tensor-factorizations" id="id6">Tensor Factorizations</a></p></li>
-<li><p><a class="reference internal" href="#computational-complexity" id="id7">Computational Complexity</a></p></li>
+<li><p><a class="reference internal" href="#network-contractions-and-computational-complexity" id="id6">Network Contractions and Computational Complexity</a></p></li>
+<li><p><a class="reference internal" href="#tensor-factorizations" id="id7">Tensor Factorizations</a></p></li>
+<li><p><a class="reference internal" href="#computational-complexity" id="id8">Computational Complexity</a></p></li>
 </ul>
 </li>
 </ul>
@@ -337,8 +350,8 @@ This leads in a very natural way to the notion of a matrix by considering the fo
 construction, where <span class="math notranslate nohighlight">\(v_i\)</span> are the basis vectors of <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(w_i\)</span> are the basis vectors of <span class="math notranslate nohighlight">\(W\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-linear-map">
 <span class="eqno">(2.1)<a class="headerlink" href="#equation-eq-linear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
-A &amp;:&amp; W \leftarrow V\\
-A &amp;:&amp; v ↦ w = A(v) = \sum_j A_{ij} v_j
+A &amp; : &amp; W \leftarrow V\\
+A &amp; : &amp; v ↦ w = A(v) = \sum_j A_{ij} v_j
 \end{align}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_{ij}\)</span> are the components of the matrix <span class="math notranslate nohighlight">\(A\)</span> in the basis <span class="math notranslate nohighlight">\(v_i\)</span> and <span class="math notranslate nohighlight">\(w_j\)</span>. In other
 words, the abstract notion of a linear map between vector spaces can be represented by a
@@ -439,15 +452,7 @@ object to the other, but the operation is not necessarily trivial.</p>
 notation, which greatly simplifies the expressions involving numerous indices. This notation
 is based on the idea of representing a single tensor as a node in a graph, where the indices
 of the tensor are depicted by legs sticking out of it, one for each vector space. As an example, a rank-four tensor <span class="math notranslate nohighlight">\(R\)</span> can be represented as:</p>
-<div class="math notranslate nohighlight">
-\[R^\rho_{\sigma\mu\nu} \Longrightarrow ![R-tensor](assets/1-Introduction/R-tensor.pdf)\]</div>
-<p>Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
-moved around, as long as their number and order is preserved. In some contexts the shape of
-the node and the direction of the tensor can imply certain properties, such as making an
-explicit distinction between the isomorphic representations, but in what follows we will not
-make this distinction.</p>
-<!-- TODO: insert figure -->
-<div class="section" id="indexing">
+<img alt="../_images/R-tensor.svg" class="align-center" id="r-tensor" src="../_images/R-tensor.svg" /><div class="section" id="indexing">
 <h3><span class="section-number">2.3.1. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h3>
 <p>In this notation, the individual components of the tensor can be recoverd by fixing the open
 legs of a diagram to some value, and the resulting diagram is then a scalar. For example,
@@ -456,6 +461,22 @@ the component <span class="math notranslate nohighlight">\(R_{i_1,i_2,i_3,i_4}\)
 </div>
 <div class="section" id="grouping-and-splitting-of-indices">
 <h3><span class="section-number">2.3.2. </span>Grouping and Splitting of Indices<a class="headerlink" href="#grouping-and-splitting-of-indices" title="Permalink to this heading">#</a></h3>
+<p>Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
+moved around, as long as their order is preserved. In some contexts the shape of
+the node and the direction of the tensor can imply certain properties, such as making an
+explicit distinction between the isomorphic representations, but in what follows we will not
+make this distinction.</p>
+<p>Furthermore, this naturally gives a notion of grouping and splitting of indices, which is just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and the inverse operation. For example, the following diagrams are equivalent:</p>
+<img alt="../_images/grouping.svg" class="align-center" id="grouping" src="../_images/grouping.svg" /><p>Owing to the freedom in choice of basis, the precise details of grouping and splitting are
+not unique. One specific choice of convention is the tensor product basis, which is
+precisely the one we have used in the discussion of multi-linear algebra. More concretely,
+one choice that is often used is the <em>Kronecker product</em>, which in the setting of
+column-major ordering is given explicitly by grouping indices as follows:</p>
+<div class="math notranslate nohighlight" id="equation-eq-kronecker-product">
+<span class="eqno">(2.6)<a class="headerlink" href="#equation-eq-kronecker-product" title="Permalink to this equation">#</a></span>\[I \coloneq i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots\]</div>
+<p>Here <span class="math notranslate nohighlight">\(d_i\)</span> is the dimension of the corresponding vector space, and <span class="math notranslate nohighlight">\(I\)</span> is the resulting
+linear index. Note again that so long as the chosen convention is consistent, the precise
+method of grouping and splitting is immaterial.</p>
 </div>
 <div class="section" id="outer-products">
 <h3><span class="section-number">2.3.3. </span>Outer Products<a class="headerlink" href="#outer-products" title="Permalink to this heading">#</a></h3>
@@ -465,8 +486,7 @@ such diagram represents the <em>outer product</em> of two tensors. This is repre
 tensors being placed next to eachother. The value of the resulting network is simply the
 product of the constituents. For example, the outer product of a rank three tensor <span class="math notranslate nohighlight">\(A\)</span> and a
 rank two tensor <span class="math notranslate nohighlight">\(B\)</span> is given by:</p>
-<!-- TODO: insert figure -->
-</div>
+<img alt="../_images/outer-product.svg" class="align-center" id="outer-product" src="../_images/outer-product.svg" /></div>
 <div class="section" id="traces">
 <h3><span class="section-number">2.3.4. </span>Traces<a class="headerlink" href="#traces" title="Permalink to this heading">#</a></h3>
 <p>More complicated diagrams can be constructed by joining some of the legs of the
@@ -475,29 +495,66 @@ summation over the corresponding indices.</p>
 <p>If two legs from a single tensor are joined, this signifies a (partial) <em>trace</em> of a tensor
 over these indices. For example, the trace of a rank three tensor <span class="math notranslate nohighlight">\(A\)</span> over two of its
 indices is given by:</p>
-<!-- TODO: insert figure -->
-<p>In this notation, the cyclic property of the trace follows trivially by sliding one of the
+<img alt="../_images/trace.svg" class="align-center" id="trace" src="../_images/trace.svg" /><p>In this notation, the cyclic property of the trace follows trivially by sliding one of the
 matrices around the loop of the diagram. As this only changes the placement of the tensors
-in the network, and not the value, the graphic proof of <span class="math notranslate nohighlight">\(\Tr (AB) = \Tr (BA)\)</span> is found.</p>
-<!-- TODO: insert figure -->
-</div>
+in the network, and not the value, the graphic proof of <span class="math notranslate nohighlight">\(\tr (AB) = \tr (BA)\)</span> is found.</p>
+<img alt="../_images/trace-cyclic.svg" class="align-center" id="trace-cyclic" src="../_images/trace-cyclic.svg" /></div>
 <div class="section" id="contractions">
 <h3><span class="section-number">2.3.5. </span>Contractions<a class="headerlink" href="#contractions" title="Permalink to this heading">#</a></h3>
 <p>The most common tensor operation used is <em>contraction</em>, which is the joining of legs from
 different tensors. This can equivalently be thought of as a tensor product followed by a
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
 is drawn as:</p>
-<!-- TODO: insert figure -->
-<p>Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
+<img alt="../_images/contraction.svg" class="align-center" id="contraction" src="../_images/contraction.svg" /><p>Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.</p>
 <!-- TODO: insert figure -->
 </div>
 </div>
+<div class="section" id="network-contractions-and-computational-complexity">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">2.4. </span>Network Contractions and Computational Complexity</a><a class="headerlink" href="#network-contractions-and-computational-complexity" title="Permalink to this heading">#</a></h2>
+</div>
 <div class="section" id="tensor-factorizations">
-<h2><a class="toc-backref" href="#id6"><span class="section-number">2.4. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id7"><span class="section-number">2.5. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
+<p>Linear maps admit various kinds of factorizations, which are instrumental in a variety of
+applications. They can be used to generate orthogonal bases, to find low-rank
+approximations, or to find eigenvalues and vectors. In the context of tensors, the
+established theory for factorizations of matrices can be generalized by interpreting them as
+linear maps, and then applying the same factorization to the corresponding matrix partition
+of the constituent vector spaces in a codomain and domain, after which everything
+representation. Thus, the only additional piece of information needed consists of a carries
+over. In this section we will only discuss the most common factorizations of tensors, but
+the reasoning can be generalized to any factorization of linear maps.</p>
+<div class="section" id="eigenvalue-decomposition">
+<h3><span class="section-number">2.5.1. </span>Eigenvalue Decomposition<a class="headerlink" href="#eigenvalue-decomposition" title="Permalink to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix">Eigen decomposition of a matrix</a>
+<span class="math notranslate nohighlight">\(A\)</span> is a factorization of the form:</p>
+<div class="math notranslate nohighlight">
+\[A = V \Lambda V^{-1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(V\)</span> is a matrix of eigenvectors, and <span class="math notranslate nohighlight">\(\Lambda\)</span> is a diagonal matrix of eigenvalues. In
+particular, the set of eigenvectors form a basis for all possible products <span class="math notranslate nohighlight">\(Ax\)</span>, which is
+the same as the image of the corresponding matrix transformation. For normal matrices, these
+eigenvectors can be made orthogonal and the resulting decomposition is also called the
+<em>spectral decomposition</em>.</p>
+<p>The eigenvalue decomposition mostly finds it use in the context of linear equations of the form:</p>
+<div class="math notranslate nohighlight">
+\[Av = \lambda v\]</div>
+<p>where <span class="math notranslate nohighlight">\(v\)</span> is an eigenvector of <span class="math notranslate nohighlight">\(A\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<p>For tensors, the eigenvalue decomposition is defined similarly, and the equivalent equation
+is diagrammatically represented as:</p>
+<!-- TODO: insert image -->
+</div>
+<div class="section" id="singular-value-decomposition">
+<h3><span class="section-number">2.5.2. </span>Singular Value Decomposition<a class="headerlink" href="#singular-value-decomposition" title="Permalink to this heading">#</a></h3>
+<img alt="../_images/svd.svg" class="align-center" id="svd" src="../_images/svd.svg" /></div>
+<div class="section" id="qr-decomposition">
+<h3><span class="section-number">2.5.3. </span>QR Decomposition<a class="headerlink" href="#qr-decomposition" title="Permalink to this heading">#</a></h3>
+</div>
+<div class="section" id="nullspaces">
+<h3><span class="section-number">2.5.4. </span>Nullspaces<a class="headerlink" href="#nullspaces" title="Permalink to this heading">#</a></h3>
+</div>
 </div>
 <div class="section" id="computational-complexity">
-<h2><a class="toc-backref" href="#id7"><span class="section-number">2.5. </span>Computational Complexity</a><a class="headerlink" href="#computational-complexity" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id8"><span class="section-number">2.6. </span>Computational Complexity</a><a class="headerlink" href="#computational-complexity" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple" start="3">
 <li><p>Tensor Networks</p>
 <ul class="simple">
