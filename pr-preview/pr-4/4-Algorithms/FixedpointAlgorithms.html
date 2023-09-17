@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>10. Fixed-Point algorithms &#8212; TensorTutorials</title>
+    <title>12. Fixed-Point algorithms &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -118,11 +118,11 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '3-MatrixProductStates/FixedpointAlgorithms';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-Algorithms/FixedpointAlgorithms';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="11. Algorithms" href="Algorithms.html" />
-    <link rel="prev" title="9. Infinite Matrix Product States" href="InfiniteMPS.html" />
+    <link rel="next" title="13. References" href="../References.html" />
+    <link rel="prev" title="11. Applications" href="../3-MatrixProductStates/Applications.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="QuantumGhent" />
@@ -156,7 +156,7 @@ const thebe_selector_output = ".output, .cell_output"
 
         <div class="qe-main">
 
-            <div class="qe-page" id=3-MatrixProductStates/FixedpointAlgorithms>
+            <div class="qe-page" id=4-Algorithms/FixedpointAlgorithms>
 
                 <div class="qe-page__toc">
 
@@ -170,14 +170,14 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dmrg">10.1. DMRG</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm">10.1.1. Algorithm</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">10.1.2. Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dmrg">12.1. DMRG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm">12.1.1. Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">12.1.2. Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vumps">10.2. VUMPS</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.2.1. Algorithm</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.2.2. Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vumps">12.2. VUMPS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.2.1. Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.2.2. Example</a></li>
 </ul>
 </li>
 </ul>
@@ -225,55 +225,106 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="fixed-point-algorithms">
-<h1><span class="section-number">10. </span>Fixed-Point algorithms<a class="headerlink" href="#fixed-point-algorithms" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">12. </span>Fixed-Point algorithms<a class="headerlink" href="#fixed-point-algorithms" title="Permalink to this heading">#</a></h1>
 <p>In this section we introduce two algorithms for approximating the ground state of local gapped Hamiltonians using matrix product state techniques. Approximating ground states in a variational manner boils down to minimizing</p>
 <div class="math notranslate nohighlight">
 \[    \min_{\ket{\psi}\in D} \frac{\braket{\psi|H|\psi}}{\braket{\psi|\psi}},\]</div>
-<p>over a restricted class of states <span class="math notranslate nohighlight">\(D\)</span>. For simplicity, we will restrict ourselves to Hamiltonians that consist of a sum of local nearest-neighbor terms, i.e.</p>
-<div class="math notranslate nohighlight">
-\[    H = \sum_i h_{i,i+1}.\]</div>
-<p>It is understood that <span class="math notranslate nohighlight">\(h_{i,i+1}\)</span> only acts non-trivially on sites <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(i+1\)</span>. In the algorithms discussed below we optimize over matrix product states of a fixed finite bond dimension. In the first algorithm known as DMRG (density matrix renormalization group) the states we consider are finite MPS, whereas the second algorithm VUMPS (variational uniform matrix product state algorithm), as the name suggests, optimizes over uniform MPS. Hence, VUMPS enables direct optimization in the thermodynamic limit, without breaking translation invariance.</p>
-<p>Our exposition of DMRG closes follows the one in <span id="id1">[]</span>, and that of VUMPS closely follows the excellent set of lecture notes <span id="id2">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+<p>over a restricted class of states <span class="math notranslate nohighlight">\(D\)</span>. For simplicity, we will assume the Hamiltonian under consideration has an MPO representation of the form</p>
+<img alt="../_images/mpoHam.svg" class="align-center" id="mpoham" src="../_images/mpoHam.svg" /><p>which can encode interactions of arbitrary range as discussed in the previous section.</p>
+<p>In the algorithms discussed below we optimize over matrix product states of a fixed finite bond dimension. In the first algorithm known as DMRG (density matrix renormalization group) the states we consider are finite MPS, whereas the second algorithm VUMPS (variational uniform matrix product state algorithm), as the name suggests, optimizes over uniform MPS. Hence, VUMPS enables direct optimization in the thermodynamic limit, without breaking translation invariance.</p>
+<p>Our exposition of DMRG closes follows the one in <span id="id1">[<a class="reference internal" href="../References.html#id5" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, may 2017. URL: https://dx.doi.org/10.1088/1751-8121/aa6dc3, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>, and that of VUMPS closely follows the excellent set of lecture notes <span id="id2">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
 <div class="section" id="dmrg">
-<h2><span class="section-number">10.1. </span>DMRG<a class="headerlink" href="#dmrg" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">12.1. </span>DMRG<a class="headerlink" href="#dmrg" title="Permalink to this heading">#</a></h2>
 <p>Starting from a random MPS ansatz, DMRG tries to approximate the ground state by sequentially optimizing over all the MPS tensors one by one and sweeping through the chain, until convergence is reached. Let us discuss this algorithm in a bit more detail step by step.</p>
 <div class="section" id="algorithm">
-<h3><span class="section-number">10.1.1. </span>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">12.1.1. </span>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this heading">#</a></h3>
 <p>Let us consider a random ansatz, by taking random tensors <span class="math notranslate nohighlight">\(\{A_1,A_2,...,A_L\}\)</span>, <span class="math notranslate nohighlight">\(L\)</span> being the number of sites. Fixing all tensors but the one at site <span class="math notranslate nohighlight">\(i\)</span>, the local tensor <span class="math notranslate nohighlight">\(A_i\)</span> is updated according to</p>
-<p>(5.4, Hand waving)</p>
-<p>Though seemingly daunting we can turn this problem in a simple eigenvalue problem by making full use of the mixed gauge. By bringing all tensors on the right of <span class="math notranslate nohighlight">\(A_i\)</span> in the right canonical form and those to the left in left canonical form, the denominator simply becomes <span class="math notranslate nohighlight">\(\braket{A_i|A_i}\)</span>.</p>
-<p>The numerator then reduces to</p>
-<p>(Numerator 5.7, Hand waving),</p>
-<p>So that in the end the problem we have to solve is to find the minimum eigenvector of <span class="math notranslate nohighlight">\(\mathcal{H}_i\)</span>, and this repeatedly for every site, sweeping back and forth through the chain. Notice however that DMRG manifestly breaks translation invariance by updating one tensor at a time. As we will see, VUMPS does not suffer from this artefact.</p>
+<img alt="../_images/localUpdate.svg" class="align-center" id="localupdate" src="../_images/localUpdate.svg" /><p>Though seemingly daunting we can turn this problem in a simple eigenvalue problem by making full use of the mixed gauge. By bringing all tensors on the right of <span class="math notranslate nohighlight">\(A_i\)</span> in the right canonical form and those to the left in left canonical form the denominator simply becomes <span class="math notranslate nohighlight">\(\braket{A_i|A_i}\)</span> and the update reduces to</p>
+<img alt="../_images/localUpdate2.svg" class="align-center" id="localupdate2" src="../_images/localUpdate2.svg" /><!-- TODO: simplify denominator in diagram -->
+<p>Here the <em>effective Hamiltonian</em> <span class="math notranslate nohighlight">\(\mathcal H_i\)</span>, defined as</p>
+<img alt="../_images/effHam.svg" class="align-center" id="effham" src="../_images/effHam.svg" /><p>encodes the effect of the full system Hamiltonian on the current center site <span class="math notranslate nohighlight">\(i\)</span>. The variational problem of the local update can then be solved by finding the eigenvector of <span class="math notranslate nohighlight">\(\mathcal{H}_i\)</span> corresponding to the smallest real eigenvalue, and this repeatedly for every site sweeping back and forth through the chain, each time moving the orthogonality center of the MPS. At each update step a large part of the effective Hamiltonian can simply be reused, making the routine very efficient. Notice however that DMRG manifestly breaks translation invariance by updating one tensor at a time. As we will see, VUMPS does not suffer from this artefact.</p>
 <p>From this brief explanation it should be clear that DMRG is a surprisingly simple algorithm. Nevertheless DMRG has proven itself time and time again, and is the most successful algorithm for variationally approximating the ground state of local gapped (1+1)d Hamiltonians. DMRG is implemented in MPSKit and can be called by <code class="docutils literal notranslate"><span class="pre">DMRG()</span></code>.</p>
 </div>
 <div class="section" id="example">
-<h3><span class="section-number">10.1.2. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">12.1.2. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
 <p>Let us illustrate the use of DMRG in MPSKit by approximating the ground state of the transverse field Ising model. The Ising model is implemented in MPSKitModels as follows</p>
 <div class="math notranslate nohighlight">
 \[    H = -J\left(\sum_{&lt;i,j&gt;} Z_i Z_j + \sum_i h_x X_i + h_z Z_i\right),\]</div>
 <p>where we are free to choose the parameters <span class="math notranslate nohighlight">\(J\)</span>, <span class="math notranslate nohighlight">\(h_x\)</span> and <span class="math notranslate nohighlight">\(h_z\)</span>, and <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> are the generators of <span class="math notranslate nohighlight">\(\mathfrak{su}(2)\)</span>, and thus differ from the usual Pauli matrices by a factor of <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span>.</p>
 <p>Let us consider 16 lattice sites, bond dimension 12, open boundary conditions and let’s stick to the default critical values of <span class="math notranslate nohighlight">\(h_x=0.5\)</span> and <span class="math notranslate nohighlight">\(h_z=0\)</span>. Finding the ground state using DMRG then only takes a handful of iterations!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">TensorKit</span><span class="p">,</span><span class="w"> </span><span class="n">MPSKit</span><span class="p">,</span><span class="w"> </span><span class="n">MPSKitModels</span>
+
+<span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="c"># Length spin chain</span>
+<span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="c"># Bond dimension</span>
+
+<span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transverse_field_ising</span><span class="p">()</span>
+
+<span class="n">algorithm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMRG</span><span class="p">();</span><span class="w"> </span><span class="c"># Summon DMRG</span>
+<span class="n">Ψ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FiniteMPS</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="n">D</span><span class="p">)</span><span class="w"> </span><span class="c"># Random MPS ansatz with bond dimension D</span>
+<span class="n">Ψ₀</span><span class="p">,</span><span class="n">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find_groundstate</span><span class="p">(</span><span class="n">Ψ</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">algorithm</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 0 error 0.011114923693879458
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 1 error 2.4637346451057343e-6
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 2 error 5.661619352693845e-7
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 3 error 2.081280521870695e-7
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 4 error 7.705945289434661e-8
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 5 error 2.851851550994938e-8
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 6 error 1.055005308307608e-8
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 7 error 3.901947127528263e-9
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 8 error 1.4429481691406584e-9
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 9 error 5.335726740664163e-10
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 10 error 1.973032747495975e-10
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 11 error 7.296108402656169e-11
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 12 error 2.698021708406557e-11
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 13 error 9.981696071010728e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 14 error 3.6866220365201644e-12
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 15 error 1.4909615851014126e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 16 error 9.418806354852853e-13
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="vumps">
-<h2><span class="section-number">10.2. </span>VUMPS<a class="headerlink" href="#vumps" title="Permalink to this heading">#</a></h2>
-<p>As mentioned above, VUMPS optimizes uniform MPS directly in the thermodynamic limit. Since the total energy becomes unbounded in this limit, our objective should be to rather minimize the energy density. Pictorially:</p>
-<p>(105, Tangent space methods).</p>
-<p>The VUMPS algorithm offers the advantage of global optimalization by design, since the algorithm, contrary to DMRG, does not rely on updates of local tensors.</p>
-<p>Given a local Hamiltonian of the form mentioned above and an intial random uniform MPS defined by <span class="math notranslate nohighlight">\(\{A_L, A_R,C\}\)</span>, VUMPS approximates the ground state by finding an approximate solution to the fixed-point equations</p>
+<h2><span class="section-number">12.2. </span>VUMPS<a class="headerlink" href="#vumps" title="Permalink to this heading">#</a></h2>
+<p>As mentioned above, VUMPS optimizes uniform MPS directly in the thermodynamic limit. Since the total energy becomes unbounded in this limit, our objective should be to rather minimize the energy density. When working in the mixed gauge, this minimization problem can be represented diagrammatically as</p>
+<img alt="../_images/energyOpt.svg" class="align-center" id="energyopt" src="../_images/energyOpt.svg" /><p>where we have introduced the left- and right fixed points <span class="math notranslate nohighlight">\(F_L\)</span> and <span class="math notranslate nohighlight">\(F_R\)</span> defined as</p>
+<img alt="../_images/env.svg" class="align-center" id="env" src="../_images/env.svg" /><p>which obey the normalization condition</p>
+<img alt="../_images/envNorm.svg" class="align-center" id="id3" src="../_images/envNorm.svg" /><p>The VUMPS algorithm offers the advantage of global optimalization by design, since the algorithm, contrary to DMRG, does not rely on individual updates of local tensors.</p>
+<p>Given a Hamiltonian of the form mentioned above and an intial random uniform MPS defined by <span class="math notranslate nohighlight">\(\{A_L, A_R,C\}\)</span>, VUMPS approximates the ground state by finding an approximate solution to the fixed-point equations</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}    A_C' = H_{A_C}(A_C), \\
     C' = H_C(C), \\
     A_C = A_LC = CA_R.\end{split}\]</div>
-<p>A detailed derivation that these equations characterize the variational minimum in the manifold of uniform MPS is beyond the scope of these notes, but see <span id="id3">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
-<p>In these equations the effective Hamiltonian <span class="math notranslate nohighlight">\(H_{A_C}\)</span> acting on <span class="math notranslate nohighlight">\(A_C\)</span> is given by</p>
-<p>(131, Tangent space methods).</p>
-<p>Where <span class="math notranslate nohighlight">\(h\)</span> is the local Hamiltonian term, and <span class="math notranslate nohighlight">\(H_{L/R}\)</span> are environments that capture the contributions of all local terms acting on the left/right. The other effective Hamiltonian <span class="math notranslate nohighlight">\(H_C\)</span> acting on the bond tensor <span class="math notranslate nohighlight">\(C\)</span> can then be represented by the network</p>
-<p>(132, Tangent space methods).</p>
-<p>The last equation then simply states that <span class="math notranslate nohighlight">\(C\)</span> intertwines the left - and right-orthonormal form of the tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
-<div class="section" id="id4">
-<h3><span class="section-number">10.2.1. </span>Algorithm<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>A detailed derivation that these equations characterize the variational minimum in the manifold of uniform MPS is beyond the scope of these notes, but see <span id="id4">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+<p>In these equations the effective Hamiltonians <span class="math notranslate nohighlight">\(H_{A_C}\)</span> and <span class="math notranslate nohighlight">\(H_{C}\)</span> acting on <span class="math notranslate nohighlight">\(A_C\)</span> and <span class="math notranslate nohighlight">\(C\)</span> respectively are given by is given by</p>
+<img alt="../_images/H_AC.svg" class="align-center" id="h-ac" src="../_images/H_AC.svg" /><img alt="../_images/H_C.svg" class="align-center" id="h-c" src="../_images/H_C.svg" /><p>The last equation then simply states that <span class="math notranslate nohighlight">\(C\)</span> intertwines the left - and right-orthonormal form of the tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="section" id="id5">
+<h3><span class="section-number">12.2.1. </span>Algorithm<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>Let us now explain step-by-step how VUMPS finds an approximate solution to the fixed-point equations in an iterative way.</p>
 <ol class="arabic">
 <li><p>We initialize the algorithm with the random guess <span class="math notranslate nohighlight">\(\{A_L, A_R,C\}\)</span>, and chose a tolerance <span class="math notranslate nohighlight">\(\eta\)</span>.</p></li>
@@ -301,11 +352,76 @@ const thebe_selector_output = ".output, .cell_output"
 \[\begin{split}    \tilde A_C = U^l_{A_C}P^l_{A_C},\qquad \tilde C = U^l_CP^l_C,\\
     \tilde A^r_C = P^r_{A_C}U^r_{A_C},\qquad \tilde C = P^r_CU^r_C.\end{split}\]</div>
 </div>
-<div class="section" id="id5">
-<h3><span class="section-number">10.2.2. </span>Example<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<div class="section" id="id6">
+<h3><span class="section-number">12.2.2. </span>Example<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p>Let us demonstrate the algorithm using MPSKit by estimating the ground state energy density of the spin 1 XXX model. The VUMPS algorithm is called in the same way as we called DMRG. We initialize a random initial MPS with bond dimension 12 and physical dimension 3 (because the spin 1 representation of SU(2) is <span class="math notranslate nohighlight">\(2\cdot1+1=3\)</span>-dimensional). Obviously we don’t have to specify a system size because we work directly in the thermodynamic limit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heisenberg_XYZ</span><span class="p">()</span>
+
+<span class="n">Ψ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteMPS</span><span class="p">(</span><span class="n">ℂ</span><span class="o">^</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="n">D</span><span class="p">)</span>
+<span class="n">algorithm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VUMPS</span><span class="p">()</span>
+<span class="n">Ψ₀</span><span class="p">,</span><span class="w"> </span><span class="n">envs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find_groundstate</span><span class="p">(</span><span class="n">Ψ</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">algorithm</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 1 galerkin = 1.2545956909669826
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 2 galerkin = 0.6324329534182653
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 3 galerkin = 0.09454037972237382
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 4 galerkin = 0.021160457335353402
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 5 galerkin = 0.01091474633873448
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 6 galerkin = 0.0033646989745927747
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 7 galerkin = 0.0011911337847245378
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 8 galerkin = 0.0004008280908047453
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 9 galerkin = 0.00014082132828434238
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 10 galerkin = 4.991064045192094e-5
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 11 galerkin = 1.7963065374560184e-5
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 12 galerkin = 6.568342878875688e-6
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 13 galerkin = 2.406777177906728e-6
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 14 galerkin = 8.988789140486543e-7
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 15 galerkin = 3.336531277395773e-7
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 16 galerkin = 1.2642697293786469e-7
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 17 galerkin = 4.7398608978129865e-8
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 18 galerkin = 1.813865793097305e-8
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 19 galerkin = 6.855732458201684e-9
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 20 galerkin = 2.641420396528648e-9
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 21 galerkin = 1.005115926507515e-9
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 22 galerkin = 3.8906957628361986e-10
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 23 galerkin = 1.4887098011042127e-10
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 24 galerkin = 5.78161572200825e-11
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 25 galerkin = 2.222937295315571e-11
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 26 galerkin = 8.654720471609126e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 27 galerkin = 3.3441614509301628e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 28 galerkin = 1.3163826443003023e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 29 galerkin = 5.477043329169302e-13
+</pre></div>
+</div>
+</div>
+</div>
 <p>It takes about 30 iterations and a second or two to reach convergence. Let us gauge how well the ground state energy density was approximated by calling</p>
-<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in <span id="id6">[]</span>. As you can see, even with such a small bond dimension we can easily approximate the ground state energy up to 3 decimals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_value</span><span class="p">(</span><span class="n">Ψ₀</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element PeriodicArray{ComplexF64, 1}:
+ -1.4013806435182499 + 8.673617379884035e-18im
+</pre></div>
+</div>
+</div>
+</div>
+<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in <span id="id7">[<a class="reference internal" href="../References.html#id4" title="Jutho Haegeman, J Ignacio Cirac, Tobias J Osborne, Iztok Pižorn, Henri Verschelde, and Frank Verstraete. Time-dependent variational principle for quantum lattices. Physical review letters, 107(7):070601, 2011.">HCO+11</a>]</span>. As you can see, even with such a small bond dimension we can easily approximate the ground state energy up to 3 decimals.</p>
 </div>
 </div>
 </div>
@@ -319,16 +435,16 @@ const thebe_selector_output = ".output, .cell_output"
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "julia-1.9"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./3-MatrixProductStates"
+            name: "julia-1.9",
+            path: "./4-Algorithms"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'julia-1.9'</script>
 
                     </div>
                     
@@ -408,35 +524,42 @@ const thebe_selector_output = ".output, .cell_output"
   Matrix Product States
  </span>
 </p>
-<ul class="current nav bd-sidenav nav sidenav_l1">
+<ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="MatrixProductStates.html">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
    7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="MatrixProductOperators.html">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
    8. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="InfiniteMPS.html">
+  <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
    9. Infinite Matrix Product States
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
+   10. Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/Applications.html">
+   11. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1 current active active">
   <a class="current reference internal" href="#">
-   10. Fixed-Point algorithms
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Algorithms.html">
-   11. Algorithms
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Applications.html">
-   12. Applications
+   12. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -487,7 +610,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/3-MatrixProductStates/FixedpointAlgorithms.md" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/4-Algorithms/FixedpointAlgorithms.md" download><i data-feather="github"></i></a></li>
                 </ul>
 
             </div>
@@ -516,18 +639,18 @@ const thebe_selector_output = ".output, .cell_output"
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/FixedpointAlgorithms.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/4-Algorithms/FixedpointAlgorithms.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/3-MatrixProductStates/FixedpointAlgorithms.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/4-Algorithms/FixedpointAlgorithms.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/FixedpointAlgorithms.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/4-Algorithms/FixedpointAlgorithms.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -557,9 +680,9 @@ const thebe_selector_output = ".output, .cell_output"
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "3-MatrixProductStates/FixedpointAlgorithms";
+                const pageName = "4-Algorithms/FixedpointAlgorithms";
                 const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/3-MatrixProductStates/FixedpointAlgorithms.ipynb";
+                const urlPath = "tree/TensorTutorials/4-Algorithms/FixedpointAlgorithms.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
