@@ -1,5 +1,17 @@
-Symmetries in quantum many-body physics
-=======================================
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Julia
+  language: julia
+  name: julia-1.9
+---
+
+# Symmetries in quantum many-body physics
+
 
 The goal of this section is to give a very gentle introduction to the concept of symmetries in quantum many-body physics, and the notion of symmetric tensors. The general mathematical framework of symmetries in physics (or at least the framework we will restrict to) is that of group - and representation theory. Our goal is not to take this framework as a given and illustrate it, but rather to first discuss a couple of important applications of symmetries in the context of some concrete models and gradually build up to the more general framework. We will finish our discussion with an outlook to generalizations of the framework presented here. It goes without saying that we will only scratch the surface of this vast topic. The interested reader is referred to the immense literature on this topic, or to a more specialized course.
 
@@ -102,9 +114,11 @@ This immediately raises a plethora of questions such as if we can classify all r
 #### Definition
 
 For the sake of these notes, a representation of a group $G$ is thus a set of matrices indexed by the group elements, $\{X_g|g\in G\}$ that multiply according to the multiplication rule of $G$:
-$$
+
+```{math}
     X_gX_h = X_{gh}
-$$
+```
+
 Note that the identity is always mapped to the identity matrix!
 
 We call the dimension of the matrices $X_g$ the dimension of the representation.
@@ -121,15 +135,15 @@ Given a representation $\{X_g|g\in G\}$, the complex conjugate representation $\
 Given two representations of $G$, $X\equiv\{X_g|g\in G\}$ and $Y\equiv\{Y_g|g\in G\}$, there are two obvious ways to construct a new representation.
 
 The first one is the tensor product representation defined via the Kronecker product of matrices:
-$$
+```{math}
 \{X_g\otimes Y_g|g\in G\}.
-$$
+```
 You should check that these still satisfy the defining property of a representation. The dimension of the tensor product is the product of the dimensions of the two representations $X$ and $Y$.
 
 The other one is the direct sum:
-$$
+```{math}
 \{X_g\oplus Y_g|g\in G\}.
-$$
+```
 Its dimension is that the sum of the dimensions of $X$ and $Y$.
 
 #### Irreducible representations
@@ -196,34 +210,38 @@ This has strong implications for the structure of the tensor $T$. Notice that we
 
 TensorKit is particularly well suited for dealing with symmetric tensors. What TensorKit does is exactly what was described in the previous paragraph, it keeps track of the block structure of the symmetric tensor, hereby drastically reducing the amount of memory it takes to store these objects, and is able to efficiently manipulate them by exploiting its structure to the maximum.
 As a simple exercise, let us construct a rank 3 $SU(2)$ symmetric tensor as above. For example the spin $1/2$ and spin $1$ representation can be called via respectively
-```{julia}
-    s = SU₂Space(1/2=>1);
-    l = SU₂Space(1=>1);
+```{code-cell} julia
+:tags: ["hide-output"]
+using TensorKit
+
+s = SU₂Space(1/2 => 1)
+l = SU₂Space(1 => 1)
 ```
-Here, ``=>1`` essentially means that we consider only one copy (direct summand) of these representations. If we would want to consider the direct sum $\frac{1}{2}\oplus\frac{1}{2}$ we would write
-```{julia}
-    ss = SU₂Space(1/2=>2);
+Here, `` => 1`` essentially means that we consider only one copy (direct summand) of these representations. If we would want to consider the direct sum $\frac{1}{2}\oplus\frac{1}{2}$ we would write
+```{code-cell} julia
+:tags: ["hide-output"]
+ss = SU₂Space(1/2 => 2)
 ```
 A symmetric tensor can now be constructed as
-```{julia}
-    A = TensorMap(l,s⊗s);
+```{code-cell} julia
+A = TensorMap(l ← s ⊗ s)
 ```
 This tensor then has, by construction, the symmetry property that it transforms trivially under $1\otimes\bar{\frac{1}{2}}\otimes\bar{\frac{1}{2}}$.
 The blocks can then be inspected by calling ``blocks`` on the tensor, and we can also check that the dimensions of the domain and codomain are as expected:
-```{julia}
-    @assert dim(domain(A)) == 4
-    @assert dim(codomain(A)) == 3
-    blocks(A)
+```{code-cell} julia
+@assert dim(domain(A)) == 4
+@assert dim(codomain(A)) == 3
+blocks(A)
 ```
 We see that this tensor has one block that we can fill up with some data of our liking. Let us consider another example
-```{julia}
-    B = TensorMap(s,s⊗s)
-    blocks(B)
+```{code-cell} julia
+B = TensorMap(s ← s ⊗ s)
+blocks(B)
 ```
 This tensor does not have any blocks! This is compatible with the fact that two spin 1/2's cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more blocks:
-```{julia}
-    C = TensorMap(ss,ss)
-    blocks(C)
+```{code-cell} julia
+C = TensorMap(ss ← ss)
+blocks(C)
 ```
 This tensor has four non-trivial entries.
 

@@ -22,9 +22,12 @@ parts:
   - file: 3-MatrixProductStates/MatrixProductStates
   - file: 3-MatrixProductStates/MatrixProductOperators
   - file: 3-MatrixProductStates/InfiniteMPS
-  - file: 3-MatrixProductStates/FixedpointAlgorithms
   - file: 3-MatrixProductStates/Algorithms
   - file: 3-MatrixProductStates/Applications
+- caption: Tensor Network Algorithms
+  numbered: true
+  chapters:
+  - file: 4-Algorithms/FixedpointAlgorithms
 - caption: Other
   numbered: true
   chapters:
