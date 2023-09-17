@@ -224,7 +224,10 @@ notation, which greatly simplifies the expressions involving numerous indices. T
 is based on the idea of representing a single tensor as a node in a graph, where the indices
 of the tensor are depicted by legs sticking out of it, one for each vector space. As an example, a rank-four tensor $R$ can be represented as:
 
-![R-tensor](assets/1-Introduction/R-tensor.png)
+```{image} /_static/1-Introduction/R-tensor.svg
+:name: R-tensor
+:align: center
+```
 
 ### Indexing
 
@@ -244,7 +247,10 @@ make this distinction.
 
 Furthermore, this naturally gives a notion of grouping and splitting of indices, which is just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and the inverse operation. For example, the following diagrams are equivalent:
 
-![grouping](assets/1-Introduction/grouping.png)
+```{image} /_static/1-Introduction/grouping.svg
+:name: grouping
+:align: center
+```
 
 Owing to the freedom in choice of basis, the precise details of grouping and splitting are
 not unique. One specific choice of convention is the tensor product basis, which is
@@ -270,7 +276,10 @@ tensors being placed next to eachother. The value of the resulting network is si
 product of the constituents. For example, the outer product of a rank three tensor $A$ and a
 rank two tensor $B$ is given by:
 
-![outer-product](assets/1-Introduction/outer-product.png)
+```{image} /_static/1-Introduction/outer-product.svg
+:name: outer-product
+:align: center
+```
 
 ### Traces
 
@@ -282,13 +291,19 @@ If two legs from a single tensor are joined, this signifies a (partial) _trace_ 
 over these indices. For example, the trace of a rank three tensor $A$ over two of its
 indices is given by:
 
-![trace](assets/1-Introduction/trace.png)
+```{image} /_static/1-Introduction/trace.svg
+:name: trace
+:align: center
+```
 
 In this notation, the cyclic property of the trace follows trivially by sliding one of the
 matrices around the loop of the diagram. As this only changes the placement of the tensors
 in the network, and not the value, the graphic proof of $\tr (AB) = \tr (BA)$ is found.
 
-![trace-cyclic](assets/1-Introduction/trace-cyclic.png)
+```{image} /_static/1-Introduction/trace-cyclic.svg
+:name: trace-cyclic
+:align: center
+```
 
 ### Contractions
 
@@ -297,7 +312,10 @@ different tensors. This can equivalently be thought of as a tensor product follo
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
 is drawn as:
 
-![contraction](assets/1-Introduction/contraction.png)
+```{image} /_static/1-Introduction/contraction.svg
+:name: contraction
+:align: center
+```
 
 Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.
@@ -349,6 +367,11 @@ is diagrammatically represented as:
 <!-- TODO: insert image -->
 
 ### Singular Value Decomposition
+
+```{image} /_static/1-Introduction/svd.svg
+:name: svd
+:align: center
+```
 
 ### QR Decomposition
 
