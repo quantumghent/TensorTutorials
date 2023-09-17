@@ -322,9 +322,78 @@ matrix-matrix multiplication, and matrix traces.
 
 <!-- TODO: insert figure -->
 
-## Network Contractions and Computational Complexity
+## Network Contractions
 
+Combining the operations defined above, it is possible to construct arbitrarily complicated
+_tensor networks_, which can then be evaluated by a sequence of pair-wise operations. The
+result then reduces to a tensor which has a rank equal to the number of open legs in the
+network. For example, the following diagram represents a generic tensor network:
 
+```{image} /_static/1-Introduction/network.svg
+:name: network
+:align: center
+```
+
+### Notation
+
+In order to evaluate such networks, it is necessary to define a notational convention for
+specifying a network with text. One of the most common conventions is that of
+[Einstein notation](https://en.wikipedia.org/wiki/Einstein_notation), where each indix of a
+tensor is assigned a label, and repeated labels are implicitly summed over. For example, the
+previous diagram can be written as:
+
+```{math}
+A[i, j] = B[i, \alpha, \beta, \gamma] * C[\gamma, \epsilon, \zeta, \eta, j] * 
+	D[\beta, \delta, \epsilon] * E[\alpha, \delta] * F[\zeta, \eta]
+```
+
+This notation is very useful indeed, but quickly becomes unwieldy when one wishes to specify
+in what order the pairwise operations should be carried out. Thus, in the same spirit but
+with a minor modification, the [NCON](https://arxiv.org/abs/1402.0939) notation was
+introduced. In this notation, the indices of a tensor are assigned integers, and pairwise
+operations happen in increasing order. Similarly, negative integers are assigned to open
+legs, which determine their resulting position. For example, the previous diagram can be
+written as:
+
+```{math}
+A[-1,-2] = B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
+```
+
+### Contraction Order and Complexity
+
+While tensor networks are defined in such a way that their values are independent of the order of pairwise operations, the computational complexity of evaluating a network can vary wildly. Even for simple matrix-matrix-vector multiplication, the problem can easily be illustrated by considering the following two equivalent operations:
+
+```{math}
+w = A * (B * v) = (A * B) * v
+```
+
+If both $A$ and $B$ are square matrices of size $N \times N$, and $v$ and $w$ are vectors of
+length $N$, the first operation requires $2N^2$ floating point operations (flops), while the
+second requires $N^3 + N^2$ flops. This is a substantial difference, and it is clear that
+the first operation is to be preferred.
+
+More generally, the amount of flops required for contracting a pair of tensors can be
+determined by considering the fact that the amount of elements to compute is equal to the
+product of the dimensions of the open indices, and the amount of flops required to compute
+each element is equal to the product of the dimensions of the contracted indices. Due to
+this fact, it is typically the most efficient to _minimize the surface area of contraction_,
+which boils down to the heuristic of minimizing the amount of legs that are cut, also known
+as _bubbling_.
+
+Many networks admit both efficient and inefficient contraction orders, and often it is
+infeasible to compute the optimal order. Take for example a ladder-shaped network, which is
+of particular relevance in the context of Matrix Product States, we can highlight a few
+possible contraction orders, for which we leave it as an exercise to determine the
+computational complexity:
+
+<!-- ladder1 -->
+<!-- ladder2 -->
+
+Determining the optimal order however is a problem that is known to be NP-hard, and thus no
+algorithm exists that can efficiently compute optimal orders for larger networks.
+Nevertheless, efficient implementations allows finding optimal orders for networks of up to
+30-40 tensors {cite}`pfeifer2014faster`, but other methods exist that can be used to
+determine good (not necessarily optimal) contraction orders.
 
 ## Tensor Factorizations
 
@@ -353,7 +422,8 @@ the same as the image of the corresponding matrix transformation. For normal mat
 eigenvectors can be made orthogonal and the resulting decomposition is also called the
 _spectral decomposition_.
 
-The eigenvalue decomposition mostly finds it use in the context of linear equations of the form:
+The eigenvalue decomposition mostly finds it use in the context of linear equations of the
+form:
 
 ```{math}
 Av = \lambda v
@@ -368,20 +438,69 @@ is diagrammatically represented as:
 
 ### Singular Value Decomposition
 
+The
+[Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition)
+(SVD) can be seen as a generalization of the eigendecomposition of a square normal matrix to
+any rectangular matrix $A$. Specifically, it is a factorization of the form
+$A = U \Sigma V^\dagger$ where $U$ and $V$ are isometric matrices
+($U^\dagger U = V^\dagger V = \mathbb{1}$), and $\Sigma$ is a diagonal matrix of singular
+values. The SVD is typically used to find low-rank approximations for matrices, and it was
+shown {cite}`eckart1936approximation` that the best rank-$k$ approximation is given by the
+SVD, where $\Sigma$ is truncated to the first (largest) $k$ singular values.
+
+Again, a tensorial version is defined by first grouping indices to form a matrix, and then
+applying the SVD to that matrix.
+
 ```{image} /_static/1-Introduction/svd.svg
 :name: svd
 :align: center
 ```
 
+### Polar decomposition
+
+The [polar decomposition](https://en.wikipedia.org/wiki/Polar_decomposition) of a square
+matrix $A$ is a factorization of the form $A = UP$, where $U$ is a unitary matrix and $P$ is
+a positive semi-definite Hermitian matrix. It can be interpreted as decomposing a linear
+transformation into a rotation/reflection $U$, combined with a scaling $P$. The polar
+decopmosition is unique for all matrices that are full rank.
+
+<!-- TODO: insert image polar -->
+
 ### QR Decomposition
+
+The [QR decomposition](https://en.wikipedia.org/wiki/QR_decomposition) is a factorization of
+the form $A = QR$, where $Q$ is an orthogonal matrix and $R$ is an upper triangular matrix.
+It is typically used to solve linear equations of the form $Ax = b$, which admits a solution
+of the form $x = R^{-1} Q^\dagger b$. Here $R^{-1}$ is particularly easy to compute because
+of the triangular structure (for example by Gaussian elimination). Additionally, for
+overdetermined linear systems, the QR decomposition can be used to find the least-squares
+solution.
+
+<!-- TODO: insert image QR -->
+
+The QR decomposition is unique up to a diagonal matrix of phases, and can thus be made
+unique by requiring that the diagonal elements of $R$ are positive. This variant is often
+called QRpos. Additional variants exist that are flipped and/or transposed, such as the RQ,
+QL, and LQ decompositions.
+
+```{note}
+Often it is useful to make a distinction between factorizations that are _rank revealing_,
+and factorizations that are not. A factorization is rank revealing if the rank of the matrix
+can be determined from the factorization. For example, the SVD is rank revealing, while the
+QR decomposition is not. However, the trade-off being that the SVD decomposition is
+substantially more expensive, the QR decomposition is often preferred in practice.
+```
 
 ### Nullspaces
 
-## Computational Complexity
+Finally, the nullspace of a matrix $A$ is the set of vectors $x$ such that $Ax = 0$. This is
+typically determined via the SVD, where the nullspace is given by the right singular vectors
+corresponding to zero singular values.
 
+## Conclusion
 
-3. Tensor Networks
-	- context, history, purpose, relevance
-	- multi-linear algebra
-	- graphical notation
-	- computational complexity
+In this lecture we have introduced the basic concepts of tensor network theory. We have
+defined tensors and the operations that are commonly performed, as well as the graphical
+notation that is used to represent them. We have also discussed the computational complexity
+of tensor networks, and the importance of finding efficient contraction orders. Finally, we
+have discussed the most common tensor factorizations, and how they can be used.
