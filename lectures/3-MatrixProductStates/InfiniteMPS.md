@@ -41,12 +41,16 @@ For infinite systems which are invariant under translations, it is natural to al
 :align: center
 ```
 
+````{note}
 In some cases, instead of assuming an MPS has the same tensor at each site it is more natural to use a state with a non-trivial repeating unit cell. A uniform MPS with a unit cell of size three would for example correspond to the state
 
 ```{image} /_static/figures/imps/umps3.svg
 :name: mps_state3
 :align: center
 ```
+
+While we will restrict our discussion to MPS with a single-site unit cell, most concepts and techniques apply just as well to the multi-site unit cell case.
+````
 
 One of the central objects in any unform MPS calculation is the transfer operator or *transfer matrix*, defined in our case as
 
@@ -55,7 +59,7 @@ One of the central objects in any unform MPS calculation is the transfer operato
 :align: center
 ```
 
-The transfer matrix corresponds to an operator acting on the space of $D\times D$ matrices, and can be interpreted as a 4-leg tensor $\mathbb C^D \otimes \mathbb C^D \leftarrow \mathbb C^D \otimes \mathbb C^D$. The transfer matrix can be shown to be a completely positive map, such that its leading eigenvalue is a positive number. The eigenvaluesof the transfer matrix characterize the normalization and correlation length of a uniform MPS, while its eigenvectors can be used to evaluate expectation values of local observables.
+The transfer matrix corresponds to an operator acting on the space of $D\times D$ matrices, and can be interpreted as a 4-leg tensor $\mathbb C^D \otimes \mathbb C^D \leftarrow \mathbb C^D \otimes \mathbb C^D$. The transfer matrix can be shown to be a completely positive map, such that its leading eigenvalue is a positive number. The eigenvalues of the transfer matrix characterize the normalization and correlation length of a uniform MPS, while its eigenvectors can be used to evaluate expectation values of local observables.
 
 
 ### Normalization
@@ -142,13 +146,15 @@ From this expression, we learn that it is the transfer matrix that determines th
 :align: center
 ```
 
-The first part is just the product of the expectation values of $O^\alpha$ and $O^\beta$, called the disconnected part of the correlation function, and the rest is an exponentially decaying part. This expression implies that connected correlation functions of an MPS *always* decay exponentially, which is one of the reasons why MPS are not well suited for capturing critical states. The correlation length $\xi$ is determined by the second largest eigenvalue of the transfer matrix $\lambda_1$ as
+The first part is just the product of the expectation values of $O^\alpha$ and $O^\beta$, called the disconnected part of the correlation function, and the rest is an exponentially decaying part. This expression implies that connected correlation functions of an MPS *always* decay exponentially, which is one of the reasons why MPS generally have a harder time dealing with critical states. The correlation length $\xi$ is determined by the second largest eigenvalue of the transfer matrix $\lambda_1$ as
 
 ```{math}
 \xi = -\frac{1}{\log|\lambda_\mathrm{max}|}.
 ```
 
-The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of *finite entanglement scaling* for infinite MPS {cite}`rams2018precise`.
+```{note}
+The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of *finite entanglement scaling* for infinite MPS {cite}`rams2018precise`. Using this framework we can accurately capture critical phenomena using MPS, despite the ansatz inherently having exponentially decaying correlations.
+```
 
 
 ## Gauging revisited
@@ -239,15 +245,14 @@ Finally we may bring $C$ into diagonal form by performing a singular value decom
 :align: center
 ```
 
-Note that in the mixed gauge the normalization of the MPS is entirely determined by that of the center tensors $A_C$ and $C$. Requiring that an MPS is normalized now reduces to
-
+````{note}
+When working in the mixed gauge, the normalization of the MPS is entirely determined by that of the center tensors $A_C$ and $C$. Indeed, it is easily seen that requiring that an MPS is normalized now reduces to
 ```{image} /_static/figures/imps/normAC.svg
 :name: norm_mixed
 :align: center
 ```
-
-or alternatively we require ${\rm tr}(C^\dagger C) = 1$.
-
+or alternatively to ${\rm tr}(C^\dagger C) = 1$.
+````
 
 ### Expectation values revisited
 
@@ -298,8 +303,8 @@ We can construct an [`MPSKit.InfiniteMPS`](https://maartenvd.github.io/MPSKit.jl
 using MPSKit, TensorKit
 
 d = 3 # physical dimension
-D = 5 # 
-mps = InfiniteMPS([ℂ^d], [ℂ^D])
+D = 5 # bond dimension
+mps = InfiniteMPS(ℂ^d, ℂ^D)
 ```
 
 The infinite MPS is automatically stored in the mixed canonical form introduced above. For example, we can check that its normalization is indeed characterized by the center gauge tensors $A_C$ and $C$.
