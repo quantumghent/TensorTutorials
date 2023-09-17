@@ -268,9 +268,13 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- TODO: uniformize notation, conventions and discussion with finite MPS section -->
 <p>Here, each <span class="math notranslate nohighlight">\(A[m]^s\)</span> is a <span class="math notranslate nohighlight">\(D \times D\)</span> matrix for every value of the physical index <span class="math notranslate nohighlight">\(s\)</span>. As before, we can alternatively view <span class="math notranslate nohighlight">\(A[m]\)</span> as a tensor with three indices of dimensions <span class="math notranslate nohighlight">\(D \times d \times D\)</span>, where <span class="math notranslate nohighlight">\(D\)</span> is the the so-called <em>bond dimension</em>, which we assume to be same at every site. As in the case of finite systems, this bond dimension controls the entanglement of the corresponding state, where in the limit <span class="math notranslate nohighlight">\(D\to\infty\)</span> the MPS <a class="reference internal" href="#equation-inf-mps-formula">(8.1)</a> can represent any quantum state up to arbitrary accuracy. For certain classes of quantum states such low-energy states of gapped systems however we expect that we can accurately approximate these states using a much smaller bond dimension. Note that while in Eq. <a class="reference internal" href="#equation-inf-mps-formula">(8.1)</a> we have also introduced two boundary vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_L\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{v}_R\)</span>, but, as we work on an infinite system, the boundary conditions will never have any physical meaning. These can therefore safely be ignored in the following, and all bulk properties of the states are faithfully captured by the MPS tensors <span class="math notranslate nohighlight">\(A[m]\)</span>.</p>
 <p>For infinite systems which are invariant under translations, it is natural to also impose transation-invariance on the MPS <a class="reference internal" href="#equation-inf-mps-formula">(8.1)</a>. This leads to a <em>uniform</em> MPS which has the same tensor <span class="math notranslate nohighlight">\(A[m] := A\)</span> at every site. In the diagramatic notation introduced in the <span class="xref myst">first section</span>, a uniform MPS can be represented as</p>
-<img alt="../_images/umps.svg" class="align-center" id="mps-state" src="../_images/umps.svg" /><p>In some cases, instead of assuming an MPS has the same tensor at each site it is more natural to use a state with a non-trivial repeating unit cell. A uniform MPS with a unit cell of size three would for example correspond to the state</p>
-<img alt="../_images/umps3.svg" class="align-center" id="mps-state3" src="../_images/umps3.svg" /><p>One of the central objects in any unform MPS calculation is the transfer operator or <em>transfer matrix</em>, defined in our case as</p>
-<img alt="../_images/tm.svg" class="align-center" id="transfer-matrix" src="../_images/tm.svg" /><p>The transfer matrix corresponds to an operator acting on the space of <span class="math notranslate nohighlight">\(D\times D\)</span> matrices, and can be interpreted as a 4-leg tensor <span class="math notranslate nohighlight">\(\mathbb C^D \otimes \mathbb C^D \leftarrow \mathbb C^D \otimes \mathbb C^D\)</span>. The transfer matrix can be shown to be a completely positive map, such that its leading eigenvalue is a positive number. The eigenvaluesof the transfer matrix characterize the normalization and correlation length of a uniform MPS, while its eigenvectors can be used to evaluate expectation values of local observables.</p>
+<img alt="../_images/umps.svg" class="align-center" id="mps-state" src="../_images/umps.svg" /><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In some cases, instead of assuming an MPS has the same tensor at each site it is more natural to use a state with a non-trivial repeating unit cell. A uniform MPS with a unit cell of size three would for example correspond to the state</p>
+<img alt="../_images/umps3.svg" class="align-center" id="mps-state3" src="../_images/umps3.svg" /><p>While we will restrict our discussion to MPS with a single-site unit cell, most concepts and techniques apply just as well to the multi-site unit cell case.</p>
+</div>
+<p>One of the central objects in any unform MPS calculation is the transfer operator or <em>transfer matrix</em>, defined in our case as</p>
+<img alt="../_images/tm.svg" class="align-center" id="transfer-matrix" src="../_images/tm.svg" /><p>The transfer matrix corresponds to an operator acting on the space of <span class="math notranslate nohighlight">\(D\times D\)</span> matrices, and can be interpreted as a 4-leg tensor <span class="math notranslate nohighlight">\(\mathbb C^D \otimes \mathbb C^D \leftarrow \mathbb C^D \otimes \mathbb C^D\)</span>. The transfer matrix can be shown to be a completely positive map, such that its leading eigenvalue is a positive number. The eigenvalues of the transfer matrix characterize the normalization and correlation length of a uniform MPS, while its eigenvectors can be used to evaluate expectation values of local observables.</p>
 </div>
 <div class="section" id="normalization">
 <h3><a class="toc-backref" href="#id7"><span class="section-number">8.1.2. </span>Normalization</a><a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h3>
@@ -296,10 +300,13 @@ const thebe_selector_output = ".output, .cell_output"
 \[c^{\alpha\beta}(m,n) = \bra{\Psi(\bar A)} (O^\beta_m)^\dagger O^\alpha_n \ket{\Psi(A)},\]</div>
 <p>where <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(n\)</span> are abritrary locations in the chain, and, because of translation invariance, the correlation function only depends on the difference <span class="math notranslate nohighlight">\(m-n\)</span>. Again, we contract everything to the left and right of the operators by inserting the fixed points <span class="math notranslate nohighlight">\(l\)</span> and <span class="math notranslate nohighlight">\(r\)</span>, so that</p>
 <img alt="../_images/corrFunc.svg" class="align-center" id="corr-func" src="../_images/corrFunc.svg" /><p>From this expression, we learn that it is the transfer matrix that determines the correlations in the ground state. Indeed, if we again use the spectral decomposition of the transfer matrix, recalling that now <span class="math notranslate nohighlight">\(\lambda_0 = 0\)</span>, we can see that the correlation function reduces to</p>
-<img alt="../_images/corrFunc2.svg" class="align-center" id="corr-func2" src="../_images/corrFunc2.svg" /><p>The first part is just the product of the expectation values of <span class="math notranslate nohighlight">\(O^\alpha\)</span> and <span class="math notranslate nohighlight">\(O^\beta\)</span>, called the disconnected part of the correlation function, and the rest is an exponentially decaying part. This expression implies that connected correlation functions of an MPS <em>always</em> decay exponentially, which is one of the reasons why MPS are not well suited for capturing critical states. The correlation length <span class="math notranslate nohighlight">\(\xi\)</span> is determined by the second largest eigenvalue of the transfer matrix <span class="math notranslate nohighlight">\(\lambda_1\)</span> as</p>
+<img alt="../_images/corrFunc2.svg" class="align-center" id="corr-func2" src="../_images/corrFunc2.svg" /><p>The first part is just the product of the expectation values of <span class="math notranslate nohighlight">\(O^\alpha\)</span> and <span class="math notranslate nohighlight">\(O^\beta\)</span>, called the disconnected part of the correlation function, and the rest is an exponentially decaying part. This expression implies that connected correlation functions of an MPS <em>always</em> decay exponentially, which is one of the reasons why MPS generally have a harder time dealing with critical states. The correlation length <span class="math notranslate nohighlight">\(\xi\)</span> is determined by the second largest eigenvalue of the transfer matrix <span class="math notranslate nohighlight">\(\lambda_1\)</span> as</p>
 <div class="math notranslate nohighlight">
 \[\xi = -\frac{1}{\log|\lambda_\mathrm{max}|}.\]</div>
-<p>The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of <em>finite entanglement scaling</em> for infinite MPS <span id="id3">[<a class="reference internal" href="../References.html#id4" title="Marek M. Rams, Piotr Czarnik, and Lukasz Cincio. Precise extrapolation of the correlation function asymptotics in uniform tensor network states with application to the Bose-Hubbard and XXZ models. Physical Review X, 8(4):041033, November 2018. URL: http://arxiv.org/abs/1801.08554, arXiv:1801.08554, doi:10.1103/PhysRevX.8.041033.">RCC18</a>]</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of <em>finite entanglement scaling</em> for infinite MPS <span id="id3">[<a class="reference internal" href="../References.html#id4" title="Marek M. Rams, Piotr Czarnik, and Lukasz Cincio. Precise extrapolation of the correlation function asymptotics in uniform tensor network states with application to the Bose-Hubbard and XXZ models. Physical Review X, 8(4):041033, November 2018. URL: http://arxiv.org/abs/1801.08554, arXiv:1801.08554, doi:10.1103/PhysRevX.8.041033.">RCC18</a>]</span>. Using this framework we can accurately capture critical phenomena using MPS, despite the ansatz inherently having exponentially decaying correlations.</p>
+</div>
 </div>
 </div>
 <div class="section" id="gauging-revisited">
@@ -321,8 +328,11 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="../_images/mixedGauge.svg" class="align-center" id="mixed-gauge" src="../_images/mixedGauge.svg" /><p>By contrast, the original representation using the same tensor at every site is commonly referred to as the <em>uniform gauge</em>. The mixed gauge has an intuitive interpretation. Defining <span class="math notranslate nohighlight">\(C = LR\)</span>, this tensor then implements the gauge transform that maps the left-orthonormal tensor to the right-orthonormal one, thereby defining the center-site tensor <span class="math notranslate nohighlight">\(A_C\)</span>:</p>
 <img alt="../_images/mixedGauge2.svg" class="align-center" id="mixed-gauge2" src="../_images/mixedGauge2.svg" /><p>This relation is called the mixed gauge condition and allows us to freely move the center tensor <span class="math notranslate nohighlight">\(A_C\)</span> through the MPS, linking the left- and right orthonormal tensors.</p>
 <p>Finally we may bring <span class="math notranslate nohighlight">\(C\)</span> into diagonal form by performing a singular value decomposition <span class="math notranslate nohighlight">\(C = USV^\dagger\)</span> and absorbing <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V^\dagger\)</span> into the definition of <span class="math notranslate nohighlight">\(A_L\)</span> and <span class="math notranslate nohighlight">\(A_R\)</span> using the residual unitary gauge freedom</p>
-<img alt="../_images/diagC.svg" class="align-center" id="mixed-gauge3" src="../_images/diagC.svg" /><p>Note that in the mixed gauge the normalization of the MPS is entirely determined by that of the center tensors <span class="math notranslate nohighlight">\(A_C\)</span> and <span class="math notranslate nohighlight">\(C\)</span>. Requiring that an MPS is normalized now reduces to</p>
-<img alt="../_images/normAC.svg" class="align-center" id="norm-mixed" src="../_images/normAC.svg" /><p>or alternatively we require <span class="math notranslate nohighlight">\({\rm tr}(C^\dagger C) = 1\)</span>.</p>
+<img alt="../_images/diagC.svg" class="align-center" id="mixed-gauge3" src="../_images/diagC.svg" /><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When working in the mixed gauge, the normalization of the MPS is entirely determined by that of the center tensors <span class="math notranslate nohighlight">\(A_C\)</span> and <span class="math notranslate nohighlight">\(C\)</span>. Indeed, it is easily seen that requiring that an MPS is normalized now reduces to</p>
+<img alt="../_images/normAC.svg" class="align-center" id="norm-mixed" src="../_images/normAC.svg" /><p>or alternatively to <span class="math notranslate nohighlight">\({\rm tr}(C^\dagger C) = 1\)</span>.</p>
+</div>
 </div>
 <div class="section" id="expectation-values-revisited">
 <h3><a class="toc-backref" href="#id12"><span class="section-number">8.2.2. </span>Expectation values revisited</a><a class="headerlink" href="#expectation-values-revisited" title="Permalink to this heading">#</a></h3>
@@ -353,8 +363,8 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">MPSKit</span><span class="p">,</span><span class="w"> </span><span class="n">TensorKit</span>
 
 <span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="c"># physical dimension</span>
-<span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="c"># </span>
-<span class="n">mps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteMPS</span><span class="p">([</span><span class="n">ℂ</span><span class="o">^</span><span class="n">d</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">ℂ</span><span class="o">^</span><span class="n">D</span><span class="p">])</span>
+<span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="c"># bond dimension</span>
+<span class="n">mps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteMPS</span><span class="p">(</span><span class="n">ℂ</span><span class="o">^</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="n">D</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -381,9 +391,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0000000000000002
-norm(mps.AC[1]) = 1.0000000000000002
-norm(mps.CR[1]) = 1.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0000000000000004
+norm(mps.AC[1]) = 1.0000000000000004
+norm(mps.CR[1]) = 1.0000000000000002
 </pre></div>
 </div>
 </div>
@@ -417,7 +427,7 @@ norm(mps.CR[1]) = 1.0
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- -0.6399343089980507 - 0.1780468023337916im
+ 1.0369493409649222 + 0.005947833651735683im
 </pre></div>
 </div>
 </div>
@@ -430,7 +440,7 @@ norm(mps.CR[1]) = 1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5109767322883119
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5765290421004793
 </pre></div>
 </div>
 </div>
