@@ -14,7 +14,7 @@ kernelspec:
 
 # Time Evolution
 
-In this segment of the tutorial, we delve into some time evolution techniques for MPS. In particular we will focus on the [TDVP](TDVP_header) and [Time Evolution MPO](TMPO_header) methods. Another method (i)[TEBD](TEBD) has already been explained in an earlier section. Following this we briefly explain how [imaginary time evolution](Imag_header) can be used to find ground states and how [thermal density matrices][FinTemp_header] can be simulated using MPS.
+In this segment of the tutorial, we delve into some time evolution techniques for MPS. In particular we will focus on the [TDVP](TDVP_header) and [Time Evolution MPO](TMPO_header) methods. Another method (i)[TEBD](tebd) has already been explained in an earlier section. Following this we briefly explain how [imaginary time evolution](Imag_header) can be used to find ground states and how [thermal density matrices][FinTemp_header] can be simulated using MPS.
 At the end of this section we offer some basic [code examples](code_header).
 
 In the case of quantum many body systems time evolution amounts to solving the time dependent Schrodinger equation
