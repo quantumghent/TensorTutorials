@@ -90,7 +90,7 @@ sphinx:
     tojupyter_static_file_path: ["source/_static", "_static"]
     tojupyter_target_html: true
     tojupyter_urlpath: "https://quantumghent.github.io/TensorTutorials/"
-    tojupyter_image_urlpath: "https://quantumghent.github.io/TensorTutorials/_static"
+    tojupyter_image_urlpath: "https://quantumghent.github.io/TensorTutorials/_static/"
     tojupyter_kernels:
       julia:
         kernelspec:
