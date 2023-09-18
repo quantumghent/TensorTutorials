@@ -40,7 +40,7 @@ discussed are defined in terms of thinking of tensors as vectors or matrices.
 
 In what follows, vectors and matrices will be thought of from the viewpoint of computers,
 where they are represented using regular one- and two-dimensional arrays of either real or
-complex numbers. Nevertheless, much of the discussion can be trivially generalized to
+complex numbers. Nevertheless, much of the discussion can be readily generalized to
 arbitrary vector spaces and linear maps.
 
 ## Vectors and Matrices
@@ -76,7 +76,7 @@ A & : & W \leftarrow V\\
 
 where $A_{ij}$ are the components of the matrix $A$ in the basis $v_i$ and $w_j$. In other
 words, the abstract notion of a linear map between vector spaces can be represented by a
-concrete matrix, and the action of the map is nothing but the usual matrix product.
+concrete matrix, and the action of the map is the usual matrix product.
 
 In particular, it is instructive to think of the columns of the matrix $A$ as labelling the
 components of the input vector space, while the rows label the component of the output
@@ -152,7 +152,7 @@ is then by a slight misuse of terminology also called a tensor.
 
 ```{note}
 The reshaping operation of components from a list of numbers into a multi-dimensional array
-is nothing but a mapping between linear indices $I$ and Cartesian indices $i_1, i_2, \cdots,
+is a mapping between linear indices $I$ and Cartesian indices $i_1, i_2, \cdots,
 i_N$. This is a very common and useful trick which allows reinterpreting tensors as vectors,
 or vice versa.
 ```
@@ -219,9 +219,9 @@ space(A, 2) == space(B, 2)
 
 ```{note}
 For finite-dimensional real or complex vector spaces without additional structure, this
-isomorphism is *trivial* and is nothing but the reshaping operation of the components of a
-vector into a matrix. However, note that this is a choice, which is not unique, and already
-differs for
+isomorphism is *trivial* and is just the reshaping operation of the components of a vector
+into a matrix. However, note that this is a choice, which is not unique, and already differs
+for
 [row- and column-major order](https://en.wikipedia.org/wiki/Row-_and_column-major_order). In
 a more general setting, the identification between $V \otimes W^*$ and $V \leftarrow W$ is
 not an equivalence but an isomorphism. This means that it is still possible to relate one

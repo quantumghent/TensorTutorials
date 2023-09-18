@@ -259,7 +259,7 @@ specific cases of tensors. In fact, many of the concepts and ideas that are intr
 discussed are defined in terms of thinking of tensors as vectors or matrices.</p>
 <p>In what follows, vectors and matrices will be thought of from the viewpoint of computers,
 where they are represented using regular one- and two-dimensional arrays of either real or
-complex numbers. Nevertheless, much of the discussion can be trivially generalized to
+complex numbers. Nevertheless, much of the discussion can be readily generalized to
 arbitrary vector spaces and linear maps.</p>
 </div>
 <div class="section" id="vectors-and-matrices">
@@ -290,7 +290,7 @@ A &amp; : &amp; W \leftarrow V\\
 \end{array}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_{ij}\)</span> are the components of the matrix <span class="math notranslate nohighlight">\(A\)</span> in the basis <span class="math notranslate nohighlight">\(v_i\)</span> and <span class="math notranslate nohighlight">\(w_j\)</span>. In other
 words, the abstract notion of a linear map between vector spaces can be represented by a
-concrete matrix, and the action of the map is nothing but the usual matrix product.</p>
+concrete matrix, and the action of the map is the usual matrix product.</p>
 <p>In particular, it is instructive to think of the columns of the matrix <span class="math notranslate nohighlight">\(A\)</span> as labelling the
 components of the input vector space, while the rows label the component of the output
 vector space.</p>
@@ -359,8 +359,8 @@ a vector in <span class="math notranslate nohighlight">\(V \otimes W\)</span> is
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×3 StridedViews.StridedView{Float64, 2, Matrix{Float64}, typeof(identity)}:
- 0.0872901  0.462704  0.355695
- 0.418096   0.738796  0.152291
+ 0.734924  0.754518  0.800525
+ 0.937594  0.535333  0.248799
 </pre></div>
 </div>
 </div>
@@ -380,7 +380,7 @@ is then by a slight misuse of terminology also called a tensor.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The reshaping operation of components from a list of numbers into a multi-dimensional array
-is nothing but a mapping between linear indices <span class="math notranslate nohighlight">\(I\)</span> and Cartesian indices <span class="math notranslate nohighlight">\(i_1, i_2, \cdots,
+is a mapping between linear indices <span class="math notranslate nohighlight">\(I\)</span> and Cartesian indices <span class="math notranslate nohighlight">\(i_1, i_2, \cdots,
 i_N\)</span>. This is a very common and useful trick which allows reinterpreting tensors as vectors,
 or vice versa.</p>
 </div>
@@ -476,9 +476,9 @@ following identification (isomorphism):</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For finite-dimensional real or complex vector spaces without additional structure, this
-isomorphism is <em>trivial</em> and is nothing but the reshaping operation of the components of a
-vector into a matrix. However, note that this is a choice, which is not unique, and already
-differs for
+isomorphism is <em>trivial</em> and is just the reshaping operation of the components of a vector
+into a matrix. However, note that this is a choice, which is not unique, and already differs
+for
 <a class="reference external" href="https://en.wikipedia.org/wiki/Row-_and_column-major_order">row- and column-major order</a>. In
 a more general setting, the identification between <span class="math notranslate nohighlight">\(V \otimes W^*\)</span> and <span class="math notranslate nohighlight">\(V \leftarrow W\)</span> is
 not an equivalence but an isomorphism. This means that it is still possible to relate one
@@ -716,18 +716,18 @@ linear algebra to the multi-linear setting.</p>
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/1-Introduction/LinearAlgebra.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/LinearAlgebra.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/1-Introduction/LinearAlgebra.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/1-Introduction/LinearAlgebra.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/1-Introduction/LinearAlgebra.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/LinearAlgebra.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -758,8 +758,8 @@ linear algebra to the multi-linear setting.</p>
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
                 const pageName = "1-Introduction/LinearAlgebra";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/1-Introduction/LinearAlgebra.ipynb";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
+                const urlPath = "tree/TensorTutorials.notebooks/1-Introduction/LinearAlgebra.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
