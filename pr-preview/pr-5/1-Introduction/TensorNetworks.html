@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. Tensor Network Theory &#8212; TensorTutorials</title>
+    <title>4. Tensor Network Theory &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -121,8 +121,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/TensorNetworks';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Getting started with Julia" href="Julia.html" />
-    <link rel="prev" title="1. Quantum Many-Body Theory" href="QuantumManyBody.html" />
+    <link rel="next" title="5. Symmetries in quantum many-body physics" href="Symmetries.html" />
+    <link rel="prev" title="3. (Multi-) Linear Algebra" href="LinearAlgebra.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="QuantumGhent" />
@@ -170,39 +170,32 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">2.1. Overview</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#history">2.1.1. History</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">4.1. Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#history">4.1.1. History</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensors">2.2. Tensors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-algebra-vectors-and-matrices">2.2.1. Linear Algebra – Vectors and Matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-linear-algebra-tensors-and-tensor-products">2.2.2. Multi-Linear Algebra: Tensors and Tensor Products</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-linear-algebra-tensors-and-multi-linear-maps">2.2.3. Multi-Linear Algebra: Tensors and Multi-linear Maps</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-linear-algebra-conclusion">2.2.4. Multi-Linear Algebra: Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-notation-and-tensor-operations">4.2. Graphical Notation and Tensor Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">4.2.1. Indexing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-and-splitting-of-indices">4.2.2. Grouping and Splitting of Indices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outer-products">4.2.3. Outer Products</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traces">4.2.4. Traces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contractions">4.2.5. Contractions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-notation-and-tensor-operations">2.3. Graphical Notation and Tensor Operations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.3.1. Indexing</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-and-splitting-of-indices">2.3.2. Grouping and Splitting of Indices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outer-products">2.3.3. Outer Products</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traces">2.3.4. Traces</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contractions">2.3.5. Contractions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-contractions">4.3. Network Contractions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">4.3.1. Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contraction-order-and-complexity">4.3.2. Contraction Order and Complexity</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-contractions">2.4. Network Contractions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">2.4.1. Notation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contraction-order-and-complexity">2.4.2. Contraction Order and Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-factorizations">4.4. Tensor Factorizations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eigenvalue-decomposition">4.4.1. Eigenvalue Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">4.4.2. Singular Value Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polar-decomposition">4.4.3. Polar decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qr-decomposition">4.4.4. QR Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nullspaces">4.4.5. Nullspaces</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-factorizations">2.5. Tensor Factorizations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eigenvalue-decomposition">2.5.1. Eigenvalue Decomposition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">2.5.2. Singular Value Decomposition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polar-decomposition">2.5.3. Polar decomposition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qr-decomposition">2.5.4. QR Decomposition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nullspaces">2.5.5. Nullspaces</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">2.6. Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">4.5. Conclusion</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -248,24 +241,23 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-theory">
-<h1><a class="toc-backref" href="#id4"><span class="section-number">2. </span>Tensor Network Theory</a><a class="headerlink" href="#tensor-network-theory" title="Permalink to this heading">#</a></h1>
+<h1><a class="toc-backref" href="#id4"><span class="section-number">4. </span>Tensor Network Theory</a><a class="headerlink" href="#tensor-network-theory" title="Permalink to this heading">#</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#tensor-network-theory" id="id4">Tensor Network Theory</a></p>
 <ul>
 <li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
-<li><p><a class="reference internal" href="#tensors" id="id6">Tensors</a></p></li>
-<li><p><a class="reference internal" href="#graphical-notation-and-tensor-operations" id="id7">Graphical Notation and Tensor Operations</a></p></li>
-<li><p><a class="reference internal" href="#network-contractions" id="id8">Network Contractions</a></p></li>
-<li><p><a class="reference internal" href="#tensor-factorizations" id="id9">Tensor Factorizations</a></p></li>
-<li><p><a class="reference internal" href="#conclusion" id="id10">Conclusion</a></p></li>
+<li><p><a class="reference internal" href="#graphical-notation-and-tensor-operations" id="id6">Graphical Notation and Tensor Operations</a></p></li>
+<li><p><a class="reference internal" href="#network-contractions" id="id7">Network Contractions</a></p></li>
+<li><p><a class="reference internal" href="#tensor-factorizations" id="id8">Tensor Factorizations</a></p></li>
+<li><p><a class="reference internal" href="#conclusion" id="id9">Conclusion</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="overview">
-<h2><a class="toc-backref" href="#id5"><span class="section-number">2.1. </span>Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id5"><span class="section-number">4.1. </span>Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this lecture we will introduce the basic concepts of tensor network theory. We will start
 with a brief overview of the history of tensor networks and their relevance to modern
 physics. We will then introduce the basic mathematical concepts of tensor networks,
@@ -274,7 +266,7 @@ computational complexity of tensor networks and their relevance to quantum many-
 physics.</p>
 <p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id3" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, may 2017. URL: https://dx.doi.org/10.1088/1751-8121/aa6dc3, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
 <div class="section" id="history">
-<h3><span class="section-number">2.1.1. </span>History<a class="headerlink" href="#history" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.1.1. </span>History<a class="headerlink" href="#history" title="Permalink to this heading">#</a></h3>
 <p>The history of tensor networks is a fascinating journey through the evolution of profound
 theoretical ideas and evolutions, as well as the development of computational methods and
 tools. These ideas have been developed in a variety of contexts, but have been especially
@@ -322,150 +314,21 @@ relevant to the study of quantum physics and machine learning.</p>
 </ul>
 </div>
 </div>
-<div class="section" id="tensors">
-<h2><a class="toc-backref" href="#id6"><span class="section-number">2.2. </span>Tensors</a><a class="headerlink" href="#tensors" title="Permalink to this heading">#</a></h2>
-<p>Before discussing tensor networks, it is necessary to understand what tensors are.
-Furthermore, before really understanding tensors, it is instructive to reiterate some basic
-concepts of linear algebra for the case of vectors and matrices, which are nothing but
-specific cases of tensors. In fact, many of the concepts and ideas that are introduced and
-discussed are defined in terms of thinking of tensors as vectors or matrices.</p>
-<p>In what follows, vectors and matrices will be thought of from the viewpoint of computers,
-where they are represented using regular one- and two-dimensional arrays of either real or
-complex numbers. Nevertheless, much of the discussion can be trivially generalized to
-arbitrary vector spaces and linear maps.</p>
-<div class="section" id="linear-algebra-vectors-and-matrices">
-<h3><span class="section-number">2.2.1. </span>Linear Algebra – Vectors and Matrices<a class="headerlink" href="#linear-algebra-vectors-and-matrices" title="Permalink to this heading">#</a></h3>
-<p>In general, a vector is an object in a vector space, which can be described by a list of
-numbers that correspond to the components of the vector in some basis. For example, a vector
-in a two-dimensional space is in its most general form described by
-<span class="math notranslate nohighlight">\(\vec{v} = \left[v_1, v_2\right]^T\)</span>.</p>
-<p>As a reminder, the defining properties of vector spaces make sure that the following
-operations are well-defined:</p>
-<ul class="simple">
-<li><p>Vectors can be added together, i.e. <span class="math notranslate nohighlight">\(\vec{v} + \vec{w}\)</span> is a vector.</p></li>
-<li><p>Vectors can be multiplied by scalars, i.e. <span class="math notranslate nohighlight">\(\alpha \vec{v}\)</span> is a vector.</p></li>
-<li><p>These operations behave as expected, i.e. there is a notion of associativity, commutativity, and distributivity.</p></li>
-</ul>
-<p>Given two such vector spaces (not necessarily distinct) it is possible to define a linear
-map between them, which is just a function that preserves the vector space structure. In
-other words, a linear map <span class="math notranslate nohighlight">\(A \colon W ← V\)</span> maps vectors from one vector space <span class="math notranslate nohighlight">\(V\)</span> to another
-vector space <span class="math notranslate nohighlight">\(W\)</span>. Because of the structure of vector spaces, and the requirement of
-linearity, such a map is completely determined by its action on the basis vectors of <span class="math notranslate nohighlight">\(V\)</span>.
-This leads in a very natural way to the notion of a matrix by considering the following
-construction, where <span class="math notranslate nohighlight">\(v_i\)</span> are the basis vectors of <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(w_i\)</span> are the basis vectors of <span class="math notranslate nohighlight">\(W\)</span>:</p>
-<div class="math notranslate nohighlight" id="equation-eq-linear-map">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-eq-linear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
-A &amp; : &amp; W \leftarrow V\\
-A &amp; : &amp; v ↦ w = A(v) = \sum_j A_{ij} v_j
-\end{align}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(A_{ij}\)</span> are the components of the matrix <span class="math notranslate nohighlight">\(A\)</span> in the basis <span class="math notranslate nohighlight">\(v_i\)</span> and <span class="math notranslate nohighlight">\(w_j\)</span>. In other
-words, the abstract notion of a linear map between vector spaces can be represented by a
-concrete matrix, and the action of the map is nothing but the usual matrix product.</p>
-<p>In particular, it is instructive to think of the columns of the matrix <span class="math notranslate nohighlight">\(A\)</span> as labelling the
-components of the input vector space, while the rows label the component of the output
-vector space.</p>
-</div>
-<div class="section" id="multi-linear-algebra-tensors-and-tensor-products">
-<h3><span class="section-number">2.2.2. </span>Multi-Linear Algebra: Tensors and Tensor Products<a class="headerlink" href="#multi-linear-algebra-tensors-and-tensor-products" title="Permalink to this heading">#</a></h3>
-<p>Using the same logic as above, it is possible to generalize the notion of a linear map by
-making use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Tensor_product">tensor product</a>, which is
-nothing but an operation that can combine two vector spaces <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(W\)</span> into a new vector
-space <span class="math notranslate nohighlight">\(V \otimes W\)</span>. The tensor product is defined in such a way that the combination of
-vectors from the original vector spaces preserves a natural notion of linearity, i.e. the
-following equality holds for all vectors <span class="math notranslate nohighlight">\(v \in V\)</span>, <span class="math notranslate nohighlight">\(w \in W\)</span>, and scalars <span class="math notranslate nohighlight">\(\lambda\)</span>:</p>
-<div class="math notranslate nohighlight" id="equation-eq-tensor-product">
-<span class="eqno">(2.2)<a class="headerlink" href="#equation-eq-tensor-product" title="Permalink to this equation">#</a></span>\[(\lambda v) \otimes w = v \otimes (\lambda w) = \lambda (v \otimes w)\]</div>
-<p>This new vector space can be equipped with a canonical basis, which is constructed by taking
-the tensor product of the basis vectors of the original vector spaces. For example, if <span class="math notranslate nohighlight">\(V\)</span>
-and <span class="math notranslate nohighlight">\(W\)</span> are two-dimensional vector spaces with basis vectors <span class="math notranslate nohighlight">\(v_i\)</span> and <span class="math notranslate nohighlight">\(w_j\)</span>, respectively,
-then the basis vectors of <span class="math notranslate nohighlight">\(V \otimes W\)</span> are given by <span class="math notranslate nohighlight">\(v_i \otimes w_j\)</span>. In other words, the
-vectors in <span class="math notranslate nohighlight">\(V \otimes W\)</span> are linear combinations of all combinatinos of the basis vectors of
-<span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(W\)</span>.</p>
-<p>When considering how to represent a vector in this new vector space, it can be written as a
-list of numbers that correspond to the components of the vector in that basis. For example,
-a vector in <span class="math notranslate nohighlight">\(V \otimes W\)</span> is described by:</p>
-<div class="math notranslate nohighlight" id="equation-eq-tensor-basis">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-eq-tensor-basis" title="Permalink to this equation">#</a></span>\[t = \sum_{i_1,i_2} t_{i_1i_2} (v_{i_1} \otimes w_{i_2})\]</div>
-<p>Here, the tentative name <span class="math notranslate nohighlight">\(t\)</span> was used to denote that this is in fact a tensor, where
-<span class="math notranslate nohighlight">\(t_{i_1i_2}\)</span> are the components of that tensor <span class="math notranslate nohighlight">\(t\)</span> in the basis <span class="math notranslate nohighlight">\(v_{i_1} \otimes w_{i_2}\)</span>.
-Because of the induced structure of the tensor product, it is more natural and very common
-to express this object not just as a list of numbers, but by reshaping that list into a
-matrix. In this case, the components of the <span class="math notranslate nohighlight">\(i_1\)</span>-th row correspond to basis vectors that
-are built from <span class="math notranslate nohighlight">\(v_{i_1}\)</span>, and similarly the <span class="math notranslate nohighlight">\(i_2\)</span>-th column corresponds to basis vectors
-that are built from <span class="math notranslate nohighlight">\(w_{i_2}\)</span>.</p>
-<p>As the tensor product can be generalized to more than two vector spaces, this finally leads
-to the general definition of a tensor as an element of the vector space that is built up
-from the tensor product of an arbitrary number of vector spaces. Additionally, the
-components of these objects are then naturally laid out in a multi-dimensional array, which
-is then by a slight misuse of terminology also called a tensor.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The reshaping operation of components from a list of numbers into a multi-dimensional array
-is nothing but a mapping between linear indices <span class="math notranslate nohighlight">\(I\)</span> and Cartesian indices <span class="math notranslate nohighlight">\(i_1, i_2, \cdots,
-i_N\)</span>. This is a very common and useful trick which allows reinterpreting tensors as vectors,
-or vice versa.</p>
-</div>
-</div>
-<div class="section" id="multi-linear-algebra-tensors-and-multi-linear-maps">
-<h3><span class="section-number">2.2.3. </span>Multi-Linear Algebra: Tensors and Multi-linear Maps<a class="headerlink" href="#multi-linear-algebra-tensors-and-multi-linear-maps" title="Permalink to this heading">#</a></h3>
-<p>Due to the fact that the tensor product of vector spaces is a vector space in of itself, it
-is again possible to define linear maps between such vector spaces. Keeping in mind the
-definition of a linear map from <a class="reference internal" href="#equation-eq-linear-map">(2.1)</a>, the columns now label components of the
-input vector space, while the rows label components of the output vector space. Now however,
-the components of the input and output vector spaces are themselves comprised of a
-combination of basis vectors from the original vector spaces. If a linear order of these
-combinations can be established, the linear map can again be represented by a matrix:</p>
-<div class="math notranslate nohighlight" id="equation-eq-multilinear-map">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-eq-multilinear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
-A 	&amp; : &amp; W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow V_1 \otimes V_2 \otimes \cdots \otimes V_N \\
-	&amp; 	&amp; v_1 \otimes v_2 \otimes \cdots \otimes v_N ↦ A(v) \\
-	&amp; 	&amp;= w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
-	&amp; 	&amp;= \sum_{j_1,j_2,\cdots,j_N} A_{i_1,i_2,\cdots,i_M;j_1,j_2,\cdots,j_N} v_{1,j} \otimes v_{2,j} \otimes \cdots \otimes v_{N,j} \\
-	&amp; 	&amp;= \sum_{J} A_{I;J} v_J \\
-\end{align}\end{split}\]</div>
-<p>The attentive reader might have already noted that the definition of a linear map as a
-matrix strongly resembles the definition of a vector in a tensor product vector space. This
-is not a coincidence, and in fact the two can easily be identified by considering the
-following identification (isomorphism):</p>
-<div class="math notranslate nohighlight" id="equation-eq-tensor-isomorphism">
-<span class="eqno">(2.5)<a class="headerlink" href="#equation-eq-tensor-isomorphism" title="Permalink to this equation">#</a></span>\[V \leftarrow W \cong V \otimes W^* \]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For finite-dimensional real or complex vector spaces without additional structure, this
-isomorphism is <em>trivial</em> and is nothing but the reshaping operation of the components of a
-vector into a matrix. However, note that this is a choice, which is not unique, and already
-differs for
-<a class="reference external" href="https://en.wikipedia.org/wiki/Row-_and_column-major_order">row- and column-major order</a>. In
-a more general setting, the identification between <span class="math notranslate nohighlight">\(V \otimes W^*\)</span> and <span class="math notranslate nohighlight">\(V \leftarrow W\)</span> is
-not an equivalence but an isomorphism. This means that it is still possible to relate one
-object to the other, but the operation is not necessarily trivial.</p>
-</div>
-</div>
-<div class="section" id="multi-linear-algebra-conclusion">
-<h3><span class="section-number">2.2.4. </span>Multi-Linear Algebra: Conclusion<a class="headerlink" href="#multi-linear-algebra-conclusion" title="Permalink to this heading">#</a></h3>
-<p>The entire discussion can be summarized and leads to the following equivalent definitions of a tensor:</p>
-<ul class="simple">
-<li><p>A tensor is an element of a tensor product of vector spaces, which can be represented as a multi-dimensional array of numbers that indicate the components along the constituent basis vectors. (a tensor is vector-like)</p></li>
-<li><p>A tensor is a multi-linear map between vector spaces, which can be represented as a matrix that represents the action of the map on the basis vectors of the input vector space. (a tensor is matrix-like)</p></li>
-</ul>
-<p>The equivalence of these two definitions leads to the lifting of many important facets of linear algebra to the multi-linear setting.</p>
-</div>
-</div>
 <div class="section" id="graphical-notation-and-tensor-operations">
-<h2><a class="toc-backref" href="#id7"><span class="section-number">2.3. </span>Graphical Notation and Tensor Operations</a><a class="headerlink" href="#graphical-notation-and-tensor-operations" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id6"><span class="section-number">4.2. </span>Graphical Notation and Tensor Operations</a><a class="headerlink" href="#graphical-notation-and-tensor-operations" title="Permalink to this heading">#</a></h2>
 <p>One of the main advantages of tensor networks is that they admit a very intuitive graphical
 notation, which greatly simplifies the expressions involving numerous indices. This notation
 is based on the idea of representing a single tensor as a node in a graph, where the indices
 of the tensor are depicted by legs sticking out of it, one for each vector space. As an example, a rank-four tensor <span class="math notranslate nohighlight">\(R\)</span> can be represented as:</p>
 <img alt="../_images/R-tensor.svg" class="align-center" id="r-tensor" src="../_images/R-tensor.svg" /><div class="section" id="indexing">
-<h3><span class="section-number">2.3.1. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.2.1. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h3>
 <p>In this notation, the individual components of the tensor can be recoverd by fixing the open
 legs of a diagram to some value, and the resulting diagram is then a scalar. For example,
 the component <span class="math notranslate nohighlight">\(R_{i_1,i_2,i_3,i_4}\)</span> is given by:</p>
 <!-- TODO: insert figure -->
 </div>
 <div class="section" id="grouping-and-splitting-of-indices">
-<h3><span class="section-number">2.3.2. </span>Grouping and Splitting of Indices<a class="headerlink" href="#grouping-and-splitting-of-indices" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.2.2. </span>Grouping and Splitting of Indices<a class="headerlink" href="#grouping-and-splitting-of-indices" title="Permalink to this heading">#</a></h3>
 <p>Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
 moved around, as long as their order is preserved. In some contexts the shape of
 the node and the direction of the tensor can imply certain properties, such as making an
@@ -478,13 +341,13 @@ precisely the one we have used in the discussion of multi-linear algebra. More c
 one choice that is often used is the <em>Kronecker product</em>, which in the setting of
 column-major ordering is given explicitly by grouping indices as follows:</p>
 <div class="math notranslate nohighlight" id="equation-eq-kronecker-product">
-<span class="eqno">(2.6)<a class="headerlink" href="#equation-eq-kronecker-product" title="Permalink to this equation">#</a></span>\[I \coloneq i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots\]</div>
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-eq-kronecker-product" title="Permalink to this equation">#</a></span>\[I \coloneq i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots\]</div>
 <p>Here <span class="math notranslate nohighlight">\(d_i\)</span> is the dimension of the corresponding vector space, and <span class="math notranslate nohighlight">\(I\)</span> is the resulting
 linear index. Note again that so long as the chosen convention is consistent, the precise
 method of grouping and splitting is immaterial.</p>
 </div>
 <div class="section" id="outer-products">
-<h3><span class="section-number">2.3.3. </span>Outer Products<a class="headerlink" href="#outer-products" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.2.3. </span>Outer Products<a class="headerlink" href="#outer-products" title="Permalink to this heading">#</a></h3>
 <p>Of course, in order to really consider a tensor <em>network</em>, it is necessary to consider
 diagrams that consist of multiple tensors, or in other words of multiple nodes. The simplest
 such diagram represents the <em>outer product</em> of two tensors. This is represented by two
@@ -493,7 +356,7 @@ product of the constituents. For example, the outer product of a rank three tens
 rank two tensor <span class="math notranslate nohighlight">\(B\)</span> is given by:</p>
 <img alt="../_images/outer-product.svg" class="align-center" id="outer-product" src="../_images/outer-product.svg" /></div>
 <div class="section" id="traces">
-<h3><span class="section-number">2.3.4. </span>Traces<a class="headerlink" href="#traces" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.2.4. </span>Traces<a class="headerlink" href="#traces" title="Permalink to this heading">#</a></h3>
 <p>More complicated diagrams can be constructed by joining some of the legs of the
 constituents. In a matter similar to the conventional Einstein notation, this implies a
 summation over the corresponding indices.</p>
@@ -505,7 +368,7 @@ matrices around the loop of the diagram. As this only changes the placement of t
 in the network, and not the value, the graphic proof of <span class="math notranslate nohighlight">\(\tr (AB) = \tr (BA)\)</span> is found.</p>
 <img alt="../_images/trace-cyclic.svg" class="align-center" id="trace-cyclic" src="../_images/trace-cyclic.svg" /></div>
 <div class="section" id="contractions">
-<h3><span class="section-number">2.3.5. </span>Contractions<a class="headerlink" href="#contractions" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.2.5. </span>Contractions<a class="headerlink" href="#contractions" title="Permalink to this heading">#</a></h3>
 <p>The most common tensor operation used is <em>contraction</em>, which is the joining of legs from
 different tensors. This can equivalently be thought of as a tensor product followed by a
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
@@ -516,13 +379,13 @@ matrix-matrix multiplication, and matrix traces.</p>
 </div>
 </div>
 <div class="section" id="network-contractions">
-<h2><a class="toc-backref" href="#id8"><span class="section-number">2.4. </span>Network Contractions</a><a class="headerlink" href="#network-contractions" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id7"><span class="section-number">4.3. </span>Network Contractions</a><a class="headerlink" href="#network-contractions" title="Permalink to this heading">#</a></h2>
 <p>Combining the operations defined above, it is possible to construct arbitrarily complicated
 <em>tensor networks</em>, which can then be evaluated by a sequence of pair-wise operations. The
 result then reduces to a tensor which has a rank equal to the number of open legs in the
 network. For example, the following diagram represents a generic tensor network:</p>
 <img alt="_static/1-Introduction/network.svg" class="align-center" id="network" src="_static/1-Introduction/network.svg" /><div class="section" id="notation">
-<h3><span class="section-number">2.4.1. </span>Notation<a class="headerlink" href="#notation" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.3.1. </span>Notation<a class="headerlink" href="#notation" title="Permalink to this heading">#</a></h3>
 <p>In order to evaluate such networks, it is necessary to define a notational convention for
 specifying a network with text. One of the most common conventions is that of
 <a class="reference external" href="https://en.wikipedia.org/wiki/Einstein_notation">Einstein notation</a>, where each indix of a
@@ -542,7 +405,7 @@ written as:</p>
 \[A[-1,-2] = B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]\]</div>
 </div>
 <div class="section" id="contraction-order-and-complexity">
-<h3><span class="section-number">2.4.2. </span>Contraction Order and Complexity<a class="headerlink" href="#contraction-order-and-complexity" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.3.2. </span>Contraction Order and Complexity<a class="headerlink" href="#contraction-order-and-complexity" title="Permalink to this heading">#</a></h3>
 <p>While tensor networks are defined in such a way that their values are independent of the order of pairwise operations, the computational complexity of evaluating a network can vary wildly. Even for simple matrix-matrix-vector multiplication, the problem can easily be illustrated by considering the following two equivalent operations:</p>
 <div class="math notranslate nohighlight">
 \[w = A * (B * v) = (A * B) * v\]</div>
@@ -572,7 +435,7 @@ determine good (not necessarily optimal) contraction orders.</p>
 </div>
 </div>
 <div class="section" id="tensor-factorizations">
-<h2><a class="toc-backref" href="#id9"><span class="section-number">2.5. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id8"><span class="section-number">4.4. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
 <p>Linear maps admit various kinds of factorizations, which are instrumental in a variety of
 applications. They can be used to generate orthogonal bases, to find low-rank
 approximations, or to find eigenvalues and vectors. In the context of tensors, the
@@ -583,7 +446,7 @@ representation. Thus, the only additional piece of information needed consists o
 over. In this section we will only discuss the most common factorizations of tensors, but
 the reasoning can be generalized to any factorization of linear maps.</p>
 <div class="section" id="eigenvalue-decomposition">
-<h3><span class="section-number">2.5.1. </span>Eigenvalue Decomposition<a class="headerlink" href="#eigenvalue-decomposition" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.4.1. </span>Eigenvalue Decomposition<a class="headerlink" href="#eigenvalue-decomposition" title="Permalink to this heading">#</a></h3>
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix">Eigen decomposition of a matrix</a>
 <span class="math notranslate nohighlight">\(A\)</span> is a factorization of the form:</p>
 <div class="math notranslate nohighlight">
@@ -603,7 +466,7 @@ is diagrammatically represented as:</p>
 <!-- TODO: insert image -->
 </div>
 <div class="section" id="singular-value-decomposition">
-<h3><span class="section-number">2.5.2. </span>Singular Value Decomposition<a class="headerlink" href="#singular-value-decomposition" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.4.2. </span>Singular Value Decomposition<a class="headerlink" href="#singular-value-decomposition" title="Permalink to this heading">#</a></h3>
 <p>The
 <a class="reference external" href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Value Decomposition</a>
 (SVD) can be seen as a generalization of the eigendecomposition of a square normal matrix to
@@ -617,7 +480,7 @@ SVD, where <span class="math notranslate nohighlight">\(\Sigma\)</span> is trunc
 applying the SVD to that matrix.</p>
 <img alt="../_images/svd.svg" class="align-center" id="svd" src="../_images/svd.svg" /></div>
 <div class="section" id="polar-decomposition">
-<h3><span class="section-number">2.5.3. </span>Polar decomposition<a class="headerlink" href="#polar-decomposition" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.4.3. </span>Polar decomposition<a class="headerlink" href="#polar-decomposition" title="Permalink to this heading">#</a></h3>
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Polar_decomposition">polar decomposition</a> of a square
 matrix <span class="math notranslate nohighlight">\(A\)</span> is a factorization of the form <span class="math notranslate nohighlight">\(A = UP\)</span>, where <span class="math notranslate nohighlight">\(U\)</span> is a unitary matrix and <span class="math notranslate nohighlight">\(P\)</span> is
 a positive semi-definite Hermitian matrix. It can be interpreted as decomposing a linear
@@ -626,7 +489,7 @@ decopmosition is unique for all matrices that are full rank.</p>
 <!-- TODO: insert image polar -->
 </div>
 <div class="section" id="qr-decomposition">
-<h3><span class="section-number">2.5.4. </span>QR Decomposition<a class="headerlink" href="#qr-decomposition" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.4.4. </span>QR Decomposition<a class="headerlink" href="#qr-decomposition" title="Permalink to this heading">#</a></h3>
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> is a factorization of
 the form <span class="math notranslate nohighlight">\(A = QR\)</span>, where <span class="math notranslate nohighlight">\(Q\)</span> is an orthogonal matrix and <span class="math notranslate nohighlight">\(R\)</span> is an upper triangular matrix.
 It is typically used to solve linear equations of the form <span class="math notranslate nohighlight">\(Ax = b\)</span>, which admits a solution
@@ -649,14 +512,14 @@ substantially more expensive, the QR decomposition is often preferred in practic
 </div>
 </div>
 <div class="section" id="nullspaces">
-<h3><span class="section-number">2.5.5. </span>Nullspaces<a class="headerlink" href="#nullspaces" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">4.4.5. </span>Nullspaces<a class="headerlink" href="#nullspaces" title="Permalink to this heading">#</a></h3>
 <p>Finally, the nullspace of a matrix <span class="math notranslate nohighlight">\(A\)</span> is the set of vectors <span class="math notranslate nohighlight">\(x\)</span> such that <span class="math notranslate nohighlight">\(Ax = 0\)</span>. This is
 typically determined via the SVD, where the nullspace is given by the right singular vectors
 corresponding to zero singular values.</p>
 </div>
 </div>
 <div class="section" id="conclusion">
-<h2><a class="toc-backref" href="#id10"><span class="section-number">2.6. </span>Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id9"><span class="section-number">4.5. </span>Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
 <p>In this lecture we have introduced the basic concepts of tensor network theory. We have
 defined tensors and the operations that are commonly performed, as well as the graphical
 notation that is used to represent them. We have also discussed the computational complexity
@@ -725,19 +588,24 @@ have discussed the most common tensor factorizations, and how they can be used.<
    1. Quantum Many-Body Theory
   </a>
  </li>
- <li class="toctree-l1 current active active">
-  <a class="current reference internal" href="#">
-   2. Tensor Network Theory
+ <li class="toctree-l1">
+  <a class="reference internal" href="Software.html">
+   2. Getting started with Julia
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Julia.html">
-   3. Getting started with Julia
+  <a class="reference internal" href="LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   4. Tensor Network Theory
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Symmetries.html">
-   4. Symmetries in quantum many-body physics
+   5. Symmetries in quantum many-body physics
   </a>
  </li>
 </ul>
@@ -749,12 +617,12 @@ have discussed the most common tensor factorizations, and how they can be used.<
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   5. TensorKit.jl
+   6. TensorKit.jl
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   6. TensorOperations.jl
+   7. TensorOperations.jl
   </a>
  </li>
 </ul>
@@ -766,27 +634,27 @@ have discussed the most common tensor factorizations, and how they can be used.<
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
-   7. Matrix Product States
+   8. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
-   8. Matrix Product Operators
+   9. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
-   9. Infinite Matrix Product States
+   10. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
-   10. Algorithms
+   11. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/Applications.html">
-   11. Applications
+   12. Applications
   </a>
  </li>
 </ul>
@@ -798,7 +666,7 @@ have discussed the most common tensor factorizations, and how they can be used.<
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
-   12. Fixed-Point algorithms
+   13. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -810,7 +678,7 @@ have discussed the most common tensor factorizations, and how they can be used.<
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>
