@@ -49,19 +49,30 @@ The Time-Dependent Variational Principle is an old concept, originaly developed 
 ```
 In the case of MPS, we can parametrize the state $\ket{\Psi(t)}$ by a set of time dependent matrices $\{A_1(t),A_2(t),\dots A_N(t)\}$ (where N is the system size for finiteMPS or the size of the unit cell for infinite MPS). In other words the state $\ket{\Psi(t)}$ lives in a manifold determined by these matrices, the MPS-manifold. Geometrically the solution of the minimization problem is given by the projection of the RHS of the schrodinger equation onto the MPS manifold 
 ```{math}
+:label: TDVPeq
 \frac{d}{dt} \ket{\Psi(A)} = -i \hat{P}_{T\ket{\Psi(A)}} \hat{H}\ket{\Psi(A)}
 ```
 where $\hat{P}_{T\ket{\Psi(A)}}$ is the operator that projects the state onto the tangent space. As a consequence the time-evolving state will never leave the MPS manifold and parametrization in terms of $A(t)$ makes sense. One can in principle work out the above equation on the level of the $A$ matrices and try to solve the above equation. This gives a complicated set of (non-linear) equations that can be solved by one's favourite finite difference scheme, but requires the inversion of matrices with small singular values (and thus numerical instabilities) {cite}`haegeman2011time`, {cite}`HaegemanTDVP`. Instead, it turns out that a natural and inversion free way of solving this equation is possible if we use the gauge freedom of MPS.
 
-For a finite MPS, one can show that in the mixed gauge the projection operator is given by {cite}`vanderstraeten2019tangentspace`
+For a finite MPS, one can show that in the mixed gauge the action of the projection operator onto $\hat{H}\ket{\Psi(A)}$ is given by {cite}`vanderstraeten2019tangentspace`
 ```{image} /_static/figures/timeev/TDVPProjector.png
 :name: TDVPProjector
 :align: center
 ```
-The projection operation consists of two sums, one acting on the $AC$ on site $n$ and the other on the bond tensor $C$ to the right of it
-
-where we have brought the tensor on site $n$ into AC form and one where we only have the . The insight is that we can solve each term seperately (and in fact in any order) {cite}`Lubich_2015`. For each site $n$ of the MPS we have
-
+The projector action consists of two sums, one where each term acts on the $A_C$ on site $n$ and the other on the bond tensor $C$ to the right of it. As a result {eq}`TDVPeq` now resembles an ODE of the form
+```{math}
+:label: SplittingODE
+\frac{d}{dt} Y = A(Y) + B(Y)
+```
+This type of ODE can be solved by a splitting method {cite}`Lubich_2015` i.e. we solve $\frac{d}{dt} Y = A(Y)$ and $\frac{d}{dt} Y = B(Y)$ seperately and then combine the two results to obtain an approximate solution to {eq}`SplittingODE`. Applying this idea to {eq}`TDVPeq` we thus need to solve equations of the form
+```{math}
+\frac{d}{dt} \ket{\Psi(A)} = -i \hat{H}_{eff}^{A_C}[ A_C(n)]
+```
+end 
+```{math}
+\frac{d}{dt} \ket{\Psi(A)}= i \hat{H}_{eff}^{C}[ C(n)]
+```
+These can be further simplified by noting that we can put all the time dependence inside one tensor, which we choose to be either $A_C(n)$ or $C(n)$. It is then sufficient to solve
 ```{math}
 :label: ACdot
 \dot{A}_C(n) = -i \hat{H}_{eff}^{A_C}[ A_C(n)]
@@ -72,8 +83,7 @@ and
 :label: Cdot
 \dot{C}(n) = i \hat{H}_{eff}^{C}[ C(n)]
 ```
-
-Approximating the effective Hamiltonians as independent of the other $A_C$ and $C$ these can be integrated exactly
+for each site $n$ seperately. These can be integrated exactly to give
 
 ```{math}
 :label: ACdt
@@ -88,7 +98,7 @@ and
 C(n,t+dt) = \exp(idt \hat{H}_{\text{eff}}^{C}) C(n,t)
 ```
 
-A natural way to solve the set of equations is then, starting from the first site:
+A natural way to combine the seperate solutions is to perform a sweep-like update. Starting from the first site we do:
 ```{admonition} TDVP algorithm for finite MPS
  1. Update $A_C(n)$ according to {eq}`ACdt`.
  2. QR the resulting new $A_C(n,t+dt)$ to get a new updated $A_L(n,t+dt)$ en $C(n,t+dt)$.
@@ -117,9 +127,10 @@ Perhaps the most natural way to perform the time evolution would be to write the
 \exp(-\tau\hat{H}) = \hat{1} + \tau\hat{H} + \frac{\tau^2}{2}\hat{H}^2 + \mathcal{O}(\tau^3)
 ```
 The MPO approximation of the time evolution operator then boils down to implementing powers of $\hat{H}$ in an efficient (i.e. with the lowest possible MPO bond dimension) and size-extensive way {cite}`vandamme2023efficient`. For example, for a MPO Hamiltonian of the form
-```{image} /_static/figures/timeev/MPOHam.png
-:name: MPOHam
-:align: center
+```{math}
+:label: MPOHam
+
+to be done
 ```
 
 which corresponds to the Hamiltonian
@@ -223,7 +234,6 @@ E_gs  = expectation_value(gs,H₀,envs)
 
 # time evolution Hamiltonian
 Ht  = transverse_field_ising(;J=1.0,g=0.25);
-alg = TDVP();
 
 dt = 0.1
 Nsteps = 20
@@ -231,33 +241,33 @@ ts = dt .* 1:Nsteps
 
 #Do the time evolution with tdvp
 sz_tdvp = zeros(Nsteps);
-(Ψt,envs) = timestep(gs,Ht,dt,alg);
-sz_tdvp[1] = real(expectation_value(Ψt,σᶻ())[1]);
-for n in 2:Nsteps
-  (Ψt,envs) = timestep(Ψt,Ht,dt,alg,envs);
-  sz_tdvp[n] = real(expectation_value(Ψt,σᶻ())[1])
+let Ψt=gs,envs=environments(gs,Ht),alg=TDVP()
+  for n in 1:Nsteps
+    (Ψt,envs) = timestep(Ψt,Ht,dt,alg,envs);
+    sz_tdvp[n] = real(expectation_value(Ψt,σᶻ())[1])
+  end
 end
 
 # let's make a first order time evolution mpo out of Ht
 Ht_mpo = make_time_mpo(Ht, dt, TaylorCluster{1}());
 
 sz_tmpo = zeros(Nsteps);
-Ψt,_ = approximate(gs, (Ht_mpo, gs), VUMPS(; verbose=false));
-sz_tmpo[1] = real(expectation_value(Ψt,σᶻ())[1]);
-for n in 2:Nsteps
-  Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
-  sz_tmpo[n] = real(expectation_value(Ψt,σᶻ())[1])
+let Ψt=gs
+  for n in 1:Nsteps
+    Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
+    sz_tmpo[n] = real(expectation_value(Ψt,σᶻ())[1])
+  end
 end
 
 # let's make a 2nd order time evolution mpo out of Ht
 Ht_mpo = make_time_mpo(Ht, dt, TaylorCluster{2}());
 
 sz_tmpo2 = zeros(Nsteps);
-Ψt,_ = approximate(gs, (Ht_mpo, gs), VUMPS(; verbose=false));
-sz_tmpo2[1] = real(expectation_value(Ψt,σᶻ())[1]);
-for n in 2:Nsteps
-  Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
-  sz_tmpo2[n] = real(expectation_value(Ψt,σᶻ())[1])
+let Ψt=gs
+  for n in 1:Nsteps
+    Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
+    sz_tmpo2[n] = real(expectation_value(Ψt,σᶻ())[1])
+  end
 end
 
 # Compare the different methods
