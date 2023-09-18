@@ -35,9 +35,9 @@ Another method (i)TEBD is explained in an earlier section.
 
 The Time-Dependent Variational Principle is an old concept, originaly developed by Dirac and Frenkel in the 1930's. The idea is to solve the schrodinger equation by minimizing
 $$\|i \frac{\partial}{\partial t} \ket{\Psi(t)}- \hat{H}\ket{\Psi(t)}\|^2$$
-In the case of MPS, we can parametrize the state $\ket{\Psi(t)}$ by a set of time dependent matrices $\{A_1(t),A_2(t),\dots A_N(t)\}$ (where N is the system size for finiteMPS or the size of the unit cell for infinite MPS). In other words the state $\ket{\Psi(t)}$ lives in a manifold determined by these matrices, the MPS-manifold. Geometrically the solution of the minimization problem is given by the projecting of the RHS of the schrodinger equation onto the MPS manifold 
+In the case of MPS, we can parametrize the state $\ket{\Psi(t)}$ by a set of time dependent matrices $\{A_1(t),A_2(t),\dots A_N(t)\}$ (where N is the system size for finiteMPS or the size of the unit cell for infinite MPS). In other words the state $\ket{\Psi(t)}$ lives in a manifold determined by these matrices, the MPS-manifold. Geometrically the solution of the minimization problem is given by the projection of the RHS of the schrodinger equation onto the MPS manifold 
 $$\frac{d}{dt} \ket{\Psi(A)} = -i \hat{P}_{T\ket{\Psi(A)}} \hat{H}\ket{\Psi(A)}$$
-where $\hat{P}_{T\ket{\Psi(A)}}$ is the operator that projects the state onto the tangent space. As a consequence the time-evolving state will never leave the MPS manifold and parametrization in terms of $A(t)$ makes sense. One can in principle work out the above equation on the level of the $A$ matrices and try to solve the above equation. This gives a complicated set of (non-linear) equations that can be solved by one's favourite finite difference scheme, but requires the inversion of matrices with small singular values (and thus numerical instabilities). Instead, it turns out that a natural and inversion free way of solving this equation is possible if we gauge the mps to mixed form.
+where $\hat{P}_{T\ket{\Psi(A)}}$ is the operator that projects the state onto the tangent space. As a consequence the time-evolving state will never leave the MPS manifold and parametrization in terms of $A(t)$ makes sense. One can in principle work out the above equation on the level of the $A$ matrices and try to solve the above equation. This gives a complicated set of (non-linear) equations that can be solved by one's favourite finite difference scheme, but requires the inversion of matrices with small singular values (and thus numerical instabilities). Instead, it turns out that a natural and inversion free way of solving this equation is possible if we use the gauge freedom of MPS.
 
 For a finite MPS, one can show that in the mixed gauge the projection operator is given by
 ```{figure} ./TimeEvolution/TDVPProjector.png
@@ -157,12 +157,10 @@ $$e^{-\beta H} = (e^{-\Delta \tau \hat{H}})^M\rho(0)(e^{-\Delta \tau \hat{H}})^M
 ## Out-of-the-box code
 Below is some code on how MPSKit and MPSKitModels can be used out-of-the-box to perform time evolution.
 
-%```{code-cell} ipython3
 ```julia
 H₀ = transverse_field_ising(;J=1.0,g=0.0)
 
 #Create a MPS with physical bond dimension d=2 and virtual D=50 and optimize it
-
 Ψ = InfiniteMPS([2],[50]);
 (gs,envs,_) = find_groundstate(gs,H₀);
 
@@ -171,8 +169,7 @@ sx_gs = sum(expectation_value(gs,σₓ))
 E_gs  = sum(expectation_value(gs,H₀,envs))
 
 #Let's choose the algorithm for time evolution and the Hamiltonian for it
-
-Ht  = transverse_field_ising(;J=1.0,g=0.0)
+Ht  = transverse_field_ising(;J=1.0,g=0.25)
 alg = TDVP()
 dt  = 0.01
 
@@ -183,7 +180,7 @@ dt  = 0.01
 
 # We can also find the groundstate using imaginary time evolution
 Ψ    = InfiniteMPS([2],[50]);
-Ψenv = environments(Ψ,H₀) 
+Ψenv = environments(Ψ,H₀) ;
 for n in 1:50
     (Ψ,Ψenv) = timestep(Ψ,H₀,1im*dt,alg,Ψenv)
 end
