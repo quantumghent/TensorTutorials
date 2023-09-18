@@ -1,0 +1,839 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Symmetries in quantum many-body physics &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/Symmetries';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. TensorKit.jl" href="../2-Tensors/TensorKit.html" />
+    <link rel="prev" title="3. Getting started with Julia" href="Julia.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="QuantumGhent" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Symmetries in quantum many-body physics"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Symmetries in quantum many-body physics" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="None" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=1-Introduction/Symmetries>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-and-applications">4.1. Examples and applications</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetry-breaking-order-parameters-and-phases">4.1.1. Symmetry breaking, order parameters and phases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noether-and-conserved-quantitites">4.1.2. Noether and conserved quantitites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-and-representation-theory">4.2. Group - and representation theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-theory">4.2.1. Group theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">4.2.1.1. Examples</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-theory">4.2.2. Representation theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">4.2.2.1. Definition</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.2.2.1.1. Examples</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-conjugate-representation-tensor-product-and-direct-sum-representation">4.2.2.2. Complex conjugate representation, tensor product and direct sum representation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#irreducible-representations">4.2.2.3. Irreducible representations</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#example">4.2.2.3.1. Example</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2.2.4. Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetric-tensors">4.3. Symmetric tensors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outlook-and-generalizations">4.4. Outlook and generalizations</a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Symmetries in quantum many-body physics</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">QuantumGhent</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="symmetries-in-quantum-many-body-physics">
+<h1><span class="section-number">4. </span>Symmetries in quantum many-body physics<a class="headerlink" href="#symmetries-in-quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
+<p>The goal of this section is to give a very gentle introduction to the concept of symmetries in quantum many-body physics, and the notion of symmetric tensors. The general mathematical framework of symmetries in physics (or at least the framework we will restrict to) is that of group - and representation theory. Our goal is not to take this framework as a given and illustrate it, but rather to first discuss a couple of important applications of symmetries in the context of some concrete models and gradually build up to the more general framework. We will finish our discussion with an outlook to generalizations of the framework presented here. It goes without saying that we will only scratch the surface of this vast topic. The interested reader is referred to the immense literature on this topic, or to a more specialized course.</p>
+<div class="section" id="examples-and-applications">
+<h2><span class="section-number">4.1. </span>Examples and applications<a class="headerlink" href="#examples-and-applications" title="Permalink to this heading">#</a></h2>
+<div class="section" id="symmetry-breaking-order-parameters-and-phases">
+<h3><span class="section-number">4.1.1. </span>Symmetry breaking, order parameters and phases<a class="headerlink" href="#symmetry-breaking-order-parameters-and-phases" title="Permalink to this heading">#</a></h3>
+<p>Recall the one-dimensional transverse field Ising model defined above. Its degrees of freedom are qubits ordered on a one-dimensional lattice, and its Hamiltonian reads</p>
+<div class="math notranslate nohighlight">
+\[    H = -\sum_{i} \sigma^z_i\sigma^z_{i+1} -h_x\sum_i\sigma^x_i.\]</div>
+<p>Let us simply consider periodic boundary conditions. Besides the obvious translation symmetry, which we will discuss below, this model is also invariant under flipping all spins simultaneously in the Z-direction, i.e. in the Pauli Z basis: <span class="math notranslate nohighlight">\(\ket{\uparrow}\leftrightarrow\ket{\downarrow}\)</span>. That this operation constitutes a symmetry is clear from the Hamiltonian as the energy of the first term only depends on the neighbouring spins being (anti-)aligned, which is clearly spin flip-invariant. The second spin is trivially invariant as this models an external magnetic field which is orthogonal to the Z-direction.</p>
+<p>This spin flip is “implemented”, or more correctly “represented”, by the unitary operator <span class="math notranslate nohighlight">\(P=\bigotimes_i \sigma^x_i\)</span>. Notice that <span class="math notranslate nohighlight">\(P^2=1\)</span> in accordance with our intuition that flipping all the spins twice is equivalent with leaving all spins untouched. The fact that this operator represents a symmetry of the model then translates to <span class="math notranslate nohighlight">\([H,P]=0\)</span>, or equivalently <span class="math notranslate nohighlight">\(P^\dagger HP=H\)</span>. Notice that the identity operator is also trivially a symmetry (of every model) and thus the set <span class="math notranslate nohighlight">\(\{1,P\}\)</span> is closed under taking the product.</p>
+<p>Even though the Hamiltonian has the symmetry regardless of the value of the parameter <span class="math notranslate nohighlight">\(h_x\)</span>, you might know from a previous course that the ground state or ground state subspace are not necessarily invariant under the symmetry, a phenomenon known as spontanuous symmetry breaking (SSB) or symmetry breaking for short. Let us investigate the ground state subspace of the transverse field Ising model in the extremal case of vanishing and infinite magnetic field.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(h_x\rightarrow \infty\)</span> In this case the model effectly reduces to a paramagnet. The unique ground state is the product state <span class="math notranslate nohighlight">\(\ket{\Psi_+}=\ket{+}^{\otimes N}\)</span> where <span class="math notranslate nohighlight">\(\ket{+}=\frac{1}{\sqrt{2}}(\ket{\uparrow}+\ket{\downarrow})\)</span> is the unique eigenvalue 1 eigenvector of <span class="math notranslate nohighlight">\(\sigma^x\)</span>. Notice that this state is invariant under the symmetry operator <span class="math notranslate nohighlight">\(P\)</span>, <span class="math notranslate nohighlight">\(P\ket{\Psi_+}=\ket{\Psi_+}\)</span>. In other words, the ground state in this case is symmetric. For reasons mentioned below this state is also considered to be disordered.</p></li>
+<li><p><span class="math notranslate nohighlight">\(h_x=0\)</span> In this case the energy is minimized by aligning all the spins and the model behaves as a classical ferromagnet. Obviously, two distinct ground states are <span class="math notranslate nohighlight">\(\ket{\Psi_\uparrow}=\ket{\uparrow\uparrow...\uparrow}\)</span> and <span class="math notranslate nohighlight">\(\ket{\Psi_\downarrow}=\ket{\downarrow\downarrow...\downarrow}\)</span>. Contrary to the previous case they span a two-dimensional ground state subspace, and these states are not symmetric. In fact, under the action of <span class="math notranslate nohighlight">\(P\)</span> they get mapped onto the other: <span class="math notranslate nohighlight">\(P\ket{\Psi_\uparrow}=\ket{\Psi_\downarrow}\)</span> and vice versa. The ground state in this case is thus symmetry broken, or ordered.</p></li>
+</ul>
+<p>Since the ground state degeneracy is necessarily an integer, it is clear that it can not change smoothly from 2 to 1 when the magnetic field is slowly turned on from <span class="math notranslate nohighlight">\(h_x=0\rightarrow \infty\)</span>. Therefore the Ising model for small <span class="math notranslate nohighlight">\(h_x\)</span> and large <span class="math notranslate nohighlight">\(h_x\)</span> are said to belong to different phases, and for some finite value of <span class="math notranslate nohighlight">\(h_x\)</span> a phase transition where the ground state degeneracy changes abruptly is expected to take place. As it turns out, this change happens for <span class="math notranslate nohighlight">\(h_x=1\)</span>, at which the Ising model becomes critical.</p>
+<p>Inspired by the credo of symmetry we can introduce a local operator which  probes the phase and can witness the phase transition. In the case of the Ising model this order parameter is the local magnetisation on every site: <span class="math notranslate nohighlight">\(O=\sum_i\sigma^z_i\)</span>. It is clear that this order parameter anticommutes with the symmetry, <span class="math notranslate nohighlight">\(P^\dagger OP=-O\)</span>, from which it follows that in the symmetric phase the expectiation value of the order parameter vanishes, <span class="math notranslate nohighlight">\(\braket{\Psi_+|O|\Psi_+}=0\)</span>, while in the ferromagnetic phase <span class="math notranslate nohighlight">\(\braket{\Psi_\uparrow|O|\Psi_\uparrow}&gt;0\)</span> and <span class="math notranslate nohighlight">\(\braket{\Psi_\downarrow|O|\Psi_\downarrow}&lt;0\)</span>. Notice however that for the latter we could also have chosen the ground state <span class="math notranslate nohighlight">\(\ket{\Psi_\uparrow}+\ket{\Psi_\downarrow}\)</span> in which case the expectation value of <span class="math notranslate nohighlight">\(O\)</span> becomes 0. So it seems that the expectation value of the order parameter is ill-defined is this phase. This can be remedied by first adding a small symmetry breaking term <span class="math notranslate nohighlight">\(\lambda\sum_i\sigma^z_i\)</span> to the Hamiltonian which, depending on the sign of <span class="math notranslate nohighlight">\(\lambda\)</span> ,selects one of the ground states <span class="math notranslate nohighlight">\(\ket{\Psi_{\uparrow/\downarrow}}\)</span> after which the limit <span class="math notranslate nohighlight">\(\lambda\rightarrow 0\)</span> is taken.</p>
+<p>The synopsis of this example is thus the following. Symmetries in quantum many-body physics (but also in single-particle quantum mechanics) are represented by unitary operators which are closed under multiplication. Depending on the parameters in the Hamiltonian, part of these symmetries can be broken by the ground state subspace, and this pattern of symmetry breaking is a hallmark feature of different phases of the model. Different phases can be probed by a local order parameter which does not commute with the symmetries. This paradigm of classifying phases based on symmetry principles was first put forward by Landau, and since then bears his name.</p>
+</div>
+<div class="section" id="noether-and-conserved-quantitites">
+<h3><span class="section-number">4.1.2. </span>Noether and conserved quantitites<a class="headerlink" href="#noether-and-conserved-quantitites" title="Permalink to this heading">#</a></h3>
+<p>You might remember Noether’s theorem from a course on field theory. It states that every continuous symmetry of a system (in field theory most often defined via its Lagrangian) gives rise to a conserved current. In the context of quantum physics Noether’s theorem becomes almost trivial and states that the expectation value of every operator that commutes with the Hamiltonian has a conserved expectation value:</p>
+<div class="math notranslate nohighlight">
+\[    [H,O] = 0 \implies \frac{d}{dt}\braket{\Psi(t)|O|\Psi(t)} = 0.\]</div>
+<p>The proof is almost trivial and is left as a simple exercise.</p>
+<ul class="simple">
+<li><p>The simplest example of this principle is obviously the Hamiltonain that trivially commutes with itself. The consequence is that the expectation value of the total energy is conserved.</p></li>
+<li><p>Another example is that of translation symmetry. Translation symmetry is implemented by the operator <span class="math notranslate nohighlight">\(T\)</span> that acts on local operators <span class="math notranslate nohighlight">\(O_i\)</span> via <span class="math notranslate nohighlight">\(T^\dagger O_iT=O_{i+1}\)</span>. Since for a system with <span class="math notranslate nohighlight">\(N\)</span> sites we obviously have the identity <span class="math notranslate nohighlight">\(T^N=1\)</span>, and <span class="math notranslate nohighlight">\(T\)</span> is unitary, the eigenvalues of <span class="math notranslate nohighlight">\(T\)</span> are phases <span class="math notranslate nohighlight">\(\exp(2\pi ip/N)\)</span> where the quantum number <span class="math notranslate nohighlight">\(p=0,1,...,N-1\)</span> is the momentum. By virtue of Noether, translation invariance is understood to give rise to conservation of momentum, and thus momentum acts as a good quantum number for the eigenstates of translationally invariant models.</p></li>
+</ul>
+<p>Let us consider another non-trivial example to illustrate the implications of this theorem. Recall the spins s XXZ Heisenberg model whose Hamiltonian reads</p>
+<div class="math notranslate nohighlight">
+\[    H = -J\sum_i S^x_iS^x_{i+1}+S^y_iS^y_{i+1}+\Delta S^z_iS^z_{i+1}.\]</div>
+<p>The spin operators are <span class="math notranslate nohighlight">\(2s+1\)</span>-dimensional and satisfy the <span class="math notranslate nohighlight">\(\mathfrak{su}(2)\)</span> commutation relations</p>
+<div class="math notranslate nohighlight">
+\[    [\sigma^a_i,\sigma^b_j]=i\delta_{i,j}\sum_c \varepsilon_{abc}S^c_i \]</div>
+<p>Let us define the total spin</p>
+<div class="math notranslate nohighlight">
+\[    S^a = \sum_i S^a_i.\]</div>
+<p>From a direct computation it follows that in the case where <span class="math notranslate nohighlight">\(\Delta=1\)</span>, and the model thus reduces to the Heisenberg XXX model, H commutes with all <span class="math notranslate nohighlight">\(S^a\)</span>, <span class="math notranslate nohighlight">\([H,S^a]=0\)</span>, <span class="math notranslate nohighlight">\(a=x,y,z\)</span>. However, when <span class="math notranslate nohighlight">\(\Delta\neq 1\)</span> only the Z component <span class="math notranslate nohighlight">\(S^z\)</span> commutes with H, <span class="math notranslate nohighlight">\([H, S^z]=0\)</span>. Notice the difference with the Ising model where the same symmetry was present for all values of <span class="math notranslate nohighlight">\(h_x\)</span>.</p>
+<p>This means that in the <span class="math notranslate nohighlight">\(\Delta=1\)</span> case the Hamiltonian is symmetric under the full <span class="math notranslate nohighlight">\(SU(2)\)</span> (half integer s) or <span class="math notranslate nohighlight">\(SO(3)\)</span> (integer s) symmetry (see below), whereas when <span class="math notranslate nohighlight">\(\Delta\neq 1\)</span> only an <span class="math notranslate nohighlight">\(SO(2)\simeq U(1)\)</span> symmetry generated by <span class="math notranslate nohighlight">\(S^z\)</span> is retained. If <span class="math notranslate nohighlight">\(H\)</span> commutes with <span class="math notranslate nohighlight">\(S^z\)</span> it follows that it automatically also commutes with <span class="math notranslate nohighlight">\(\exp(i\theta S^z)\)</span>, <span class="math notranslate nohighlight">\(\theta\in[0,2\pi)\)</span>. This operator has an interpretation as a rotation around the Z-axis with an angle <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<p>According to Noether the Heisenberg model thus has conserved quantities associated with these operators. Regardless of <span class="math notranslate nohighlight">\(\Delta\)</span> the Z component of the total spin is conserved, and for <span class="math notranslate nohighlight">\(\Delta=1\)</span> all components of the total spin are conserved. In particular this means that the eigenvalue <span class="math notranslate nohighlight">\(M_z\)</span> of <span class="math notranslate nohighlight">\(S^z\)</span> and <span class="math notranslate nohighlight">\(S(S+1)\)</span> of <span class="math notranslate nohighlight">\(\vec{S}\cdot\vec{S}\)</span> are good quantum numbers to label the eigenstates of the Heisenberg Hamiltonian.</p>
+</div>
+</div>
+<div class="section" id="group-and-representation-theory">
+<h2><span class="section-number">4.2. </span>Group - and representation theory<a class="headerlink" href="#group-and-representation-theory" title="Permalink to this heading">#</a></h2>
+<p>Motivated by the examples from above, we will gently introduce some notions of group - and representation theory that form the backbone of a general theory of symmetries.</p>
+<div class="section" id="group-theory">
+<h3><span class="section-number">4.2.1. </span>Group theory<a class="headerlink" href="#group-theory" title="Permalink to this heading">#</a></h3>
+<p>Roughly speaking a group <span class="math notranslate nohighlight">\(G\)</span> is a set of symmetry operators and a multiplication rule on how to compose them. Let us motivate the definition one step a time.</p>
+<p>First of all notice that a model can have a finite or infinite (discrete or continuous) number of symmetries. Clearly, the spin flip symmetry of the Ising model consists of only one non-trivial symmetry operation, namely flipping all spins. The operator carrying out this transformation is <span class="math notranslate nohighlight">\(P=\bigotimes_i\sigma^x_i\)</span> The XXZ model however has a continuous symmetry, namely rotations around the Z axis, that is implemented via <span class="math notranslate nohighlight">\(\exp(i\theta S^z)\)</span>, <span class="math notranslate nohighlight">\(\theta\in[0,2\pi)\)</span>, where we should really think about every value of <span class="math notranslate nohighlight">\(\theta\)</span> as labeling a different symmetry operation.</p>
+<p>These symmetries can be composed or multiplied to form a new symmetry operation. Take for example flipping all the spins. Flipping all spins twice results in not flipping any spins at all, which is trivially also a symmetry of the Hamiltonian. Next, consider also the <span class="math notranslate nohighlight">\(U(1)\)</span> symmetry of the XXZ model. First rotating over <span class="math notranslate nohighlight">\(\theta_2\)</span> and then over <span class="math notranslate nohighlight">\(\theta_1\)</span> gives a new rotation over <span class="math notranslate nohighlight">\(\theta_1+\theta_2\)</span>: <span class="math notranslate nohighlight">\(\exp(i\theta_1 S^z)\exp(i\theta_2 S^z)=\exp(i(\theta_1+\theta_2) S^z)\)</span>. This leads to the first part of the definition of what a group is.</p>
+<ol class="arabic simple">
+<li><p>A group <span class="math notranslate nohighlight">\(G\)</span> is a set <span class="math notranslate nohighlight">\(G=\{g_1,g_2,...\}\)</span> endowed with a multiplication <span class="math notranslate nohighlight">\(G\times G\rightarrow G\)</span>. There exists an identity <span class="math notranslate nohighlight">\(1\in G\)</span> for the multiplication such that <span class="math notranslate nohighlight">\(1g=g1=g, \forall g\in G\)</span>.</p></li>
+</ol>
+<p>Note that this multiplication is not necessarily abelian. A simple example is the full <span class="math notranslate nohighlight">\(SU(2)\)</span> symmetry of the XXX model defined above. However, the composition of symmetries is still associative:</p>
+<ol class="arabic simple" start="2">
+<li><p>For all group elements <span class="math notranslate nohighlight">\(g,h,k\)</span> we have that <span class="math notranslate nohighlight">\(g(hk)=(gh)k\)</span>.</p></li>
+</ol>
+<p>A property we also would like to formalize is the fact that every symmetry transformation can be undone. Take for example a <span class="math notranslate nohighlight">\(U(1)\)</span> rotation <span class="math notranslate nohighlight">\(\exp(i\theta S^z)\)</span>, if we compose it with the opposite rotation <span class="math notranslate nohighlight">\(\exp(i(2\pi-\theta) S^z)\)</span> we get the identity. Hence:</p>
+<ol class="arabic simple" start="3">
+<li><p>Every group element <span class="math notranslate nohighlight">\(g\)</span> has a unique inverse <span class="math notranslate nohighlight">\(g^{-1}\)</span>: <span class="math notranslate nohighlight">\(gg^{-1}=g^{-1}g=1\)</span>.</p></li>
+</ol>
+<p>Together 1. 2. and 3. constitute the definition of a group. Before mentioning some examples let us also introduce the concept of a subgroup. As the name suggests, a subgroup is a subset of a group which itself constitutes a group. Note for example that a rotation over <span class="math notranslate nohighlight">\(\pi\)</span>, <span class="math notranslate nohighlight">\(\exp(i\pi S^z)\)</span>, together with the identity, generates a subgroup of <span class="math notranslate nohighlight">\(\{\exp(2\pi i\theta S^z|\theta\in[0,2\pi)\}\)</span> with two elements.</p>
+<p>The concept of subgroups lies at the heart of symmetry breaking. Recall that in the ferromagnetic phase, the Ising model breaks the spin flip symmetry. In Landau’s paradigm we say that the pattern of symmetry breaking is <span class="math notranslate nohighlight">\(\mathbb{Z}_2\rightarrow \{1\}\)</span> (see below for an explanation of the notation). In other words, the full symmetry group (<span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>) is broken in the ferromagnetic phase to a subgroup (the trivial group). More generally, a theory with a <span class="math notranslate nohighlight">\(G\)</span> symmetry can undergo a pattern of symmetry breaking <span class="math notranslate nohighlight">\(G\rightarrow H\)</span> where <span class="math notranslate nohighlight">\(H\)</span> is a subgroup of <span class="math notranslate nohighlight">\(G\)</span>. The meaning of this symbolic expression is that the ground states keep an H symmetry, and the ground state degeneracy is <span class="math notranslate nohighlight">\(|G|/|H|\)</span>.</p>
+<div class="section" id="examples">
+<h4><span class="section-number">4.2.1.1. </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h4>
+<ul>
+<li><p>The trivial group is a group with only one element that is than automatically also the identity, and a trivial multiplication law. Above, it was denoted by <span class="math notranslate nohighlight">\(\{1\}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbb{Z}_N\)</span> is the additive group of integers modulo <span class="math notranslate nohighlight">\(N\)</span>. The group elements are the integers <span class="math notranslate nohighlight">\(\{0,1,...,N-1\}\)</span> and the group multiplication is addition modulo <span class="math notranslate nohighlight">\(N\)</span>. Hence it is clearly a finite group. In particular, the spin flip symmetry from above corresponds to the group <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>. Notice that for all <span class="math notranslate nohighlight">\(N\)</span> <span class="math notranslate nohighlight">\(\mathbb{Z}_N\)</span> is abelian.</p></li>
+<li><p>Another abelian group is <span class="math notranslate nohighlight">\(U(1)\)</span>. This group is defined as <span class="math notranslate nohighlight">\(U(1)=\left\{z\in\mathbb{C}:|z|^2 = 1\right\}\)</span>, with group multiplication the multiplication of complex numbers. Note we encountered this group in the XXZ model as being the rotations around the Z axis: <span class="math notranslate nohighlight">\(\{\exp(2\pi i\theta S^z|\theta\in[0,2\pi)\}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(SU(2)\)</span> is the group of unimodular unitary <span class="math notranslate nohighlight">\(2\times 2\)</span> matrices:</p>
+<div class="math notranslate nohighlight">
+\[    SU(2) := \left\{U\in\mathbb{C}^{2\times 2}|\det U=1, UU^\dagger=U^\dagger U=\mathbb{I}\right\}.\]</div>
+<p>The group multiplication is given by group multiplication. Similarly, one defines <span class="math notranslate nohighlight">\(SU(N),N\geq 2\)</span>. Note that none of these groups are abelian.</p>
+</li>
+<li><p>The 3D rotation group or special orthogonal group <span class="math notranslate nohighlight">\(SO(3)\)</span> is the group of real <span class="math notranslate nohighlight">\(3\times 3\)</span> orthogonal matrices with unit determinant:</p>
+<div class="math notranslate nohighlight">
+\[	SO(3) := \left\{M\in\mathbb{R}^{3\times 3}|MM^T=M^TM=\mathbb{I},\det M=1\right\}.\]</div>
+<p>Similarly, one defines <span class="math notranslate nohighlight">\(SO(N),N\geq 2\)</span>. Note that only <span class="math notranslate nohighlight">\(SO(2)\)</span> is abelian.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="representation-theory">
+<h3><span class="section-number">4.2.2. </span>Representation theory<a class="headerlink" href="#representation-theory" title="Permalink to this heading">#</a></h3>
+<p>In the above examples, we were dealing with the question which symmetry transformations leave the Hamiltonian (and in the absence of symmetry breaking also the ground states) invariant. These symmetry representations were implemented (represented) by invertible linear operators, non-singular matrices, that form a closed set under multiplication. This multiplication structure is what we identified as a group. What we could now do, is to take a group as given, and wonder which linear transformations we can come up with that multiply according to these multiplication rules. This is exactly the underlying idea of representation theory. Representation theory deals with the question how groups can linearly act on vector spaces.</p>
+<p>This immediately raises a plethora of questions such as if we can classify all representations (up to some kind of equivalence), if there exists ‘minimal’ representations and how we can construct new representations of known ones. A minimal answer to these questions is the goal of this section.</p>
+<div class="section" id="definition">
+<h4><span class="section-number">4.2.2.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h4>
+<p>For the sake of these notes, a representation of a group <span class="math notranslate nohighlight">\(G\)</span> is thus a set of matrices indexed by the group elements, <span class="math notranslate nohighlight">\(\{X_g|g\in G\}\)</span> that multiply according to the multiplication rule of <span class="math notranslate nohighlight">\(G\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[    X_gX_h = X_{gh}\]</div>
+<p>Note that the identity is always mapped to the identity matrix!</p>
+<p>We call the dimension of the matrices <span class="math notranslate nohighlight">\(X_g\)</span> the dimension of the representation.</p>
+<div class="section" id="id1">
+<h5><span class="section-number">4.2.2.1.1. </span>Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Every group can be trivially represented by mapping every group element to the ‘matrix’ (1). Obviously, this representation is one-dimensional and is called the trivial representation.</p></li>
+<li><p>Probably the simplest non-trivial representation, is the representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> that maps the non-trivial element to -1. Concretely, <span class="math notranslate nohighlight">\(X_0=1, X_1=-1\)</span>, and indeed <span class="math notranslate nohighlight">\(X_1X_1=(-1)^2=X_0\)</span>. This representation is called the sign representation.</p></li>
+<li><p>Let us construct a two-dimensional representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>. Since the Pauli matrix <span class="math notranslate nohighlight">\(\sigma^x\)</span> (as any other Pauli matrix) squares to the identity, <span class="math notranslate nohighlight">\(\sigma^x\)</span> together with the two-dimensional identity matrix constitutes a two-dimensional representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>. In the notation from above, <span class="math notranslate nohighlight">\(X_0=\mathbb{I}_2\)</span>, <span class="math notranslate nohighlight">\(X_1=\sigma^x\)</span>. This representation is called the regular representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="complex-conjugate-representation-tensor-product-and-direct-sum-representation">
+<h4><span class="section-number">4.2.2.2. </span>Complex conjugate representation, tensor product and direct sum representation<a class="headerlink" href="#complex-conjugate-representation-tensor-product-and-direct-sum-representation" title="Permalink to this heading">#</a></h4>
+<p>Given a representation <span class="math notranslate nohighlight">\(\{X_g|g\in G\}\)</span>, the complex conjugate representation <span class="math notranslate nohighlight">\(\bar X\)</span> is defined as <span class="math notranslate nohighlight">\(\bar X=\{\bar X_g|g\in G\}\)</span> which satisfies the defining property of representations via <span class="math notranslate nohighlight">\(\bar X_g\bar X_h= \overline{X_gX_h}=\bar X_{gh}\)</span>.</p>
+<p>Given two representations of <span class="math notranslate nohighlight">\(G\)</span>, <span class="math notranslate nohighlight">\(X\equiv\{X_g|g\in G\}\)</span> and <span class="math notranslate nohighlight">\(Y\equiv\{Y_g|g\in G\}\)</span>, there are two obvious ways to construct a new representation.</p>
+<p>The first one is the tensor product representation defined via the Kronecker product of matrices:</p>
+<div class="math notranslate nohighlight">
+\[\{X_g\otimes Y_g|g\in G\}.\]</div>
+<p>You should check that these still satisfy the defining property of a representation. The dimension of the tensor product is the product of the dimensions of the two representations <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>The other one is the direct sum:</p>
+<div class="math notranslate nohighlight">
+\[\{X_g\oplus Y_g|g\in G\}.\]</div>
+<p>Its dimension is that the sum of the dimensions of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+</div>
+<div class="section" id="irreducible-representations">
+<h4><span class="section-number">4.2.2.3. </span>Irreducible representations<a class="headerlink" href="#irreducible-representations" title="Permalink to this heading">#</a></h4>
+<p>It is clear that physical observables should not depend on any choice of basis. Therefore two representations are (unitarily) equivalent when there is a unitary basis transformation <span class="math notranslate nohighlight">\(U\)</span> such that <span class="math notranslate nohighlight">\(X_g' =UX_gU^\dagger\)</span>. Note that <span class="math notranslate nohighlight">\(U\)</span> is independent of <span class="math notranslate nohighlight">\(g\)</span>.</p>
+<div class="section" id="example">
+<h5><span class="section-number">4.2.2.3.1. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h5>
+<p>Consider again the two-dimensional regular representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> from above. The basis transformation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    H=\frac{1}{\sqrt 2}
+    \begin{pmatrix}
+        1 &amp; 1\\
+        1 &amp; -1
+    \end{pmatrix}\end{split}\]</div>
+<p>shows that this representation is equivalent to one where the non-trivial element of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> is represented by <span class="math notranslate nohighlight">\(H\sigma^x H^\dagger=\sigma^z\)</span>. This illustrates that the regular representation is equivalent to the direct sum of the trivial representation and the sign representation!</p>
+<p>The crux of this example is the following. Some representations can, by an appropriate choice of basis, be brought in a form where all <span class="math notranslate nohighlight">\(X_g\)</span> are simultaneously block-diagonal:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    X_g'=UX_gU^\dagger=
+    \begin{pmatrix}
+    \fbox{$X^1_g$} &amp; 0 &amp;\cdots\\
+    0&amp; \fbox{$X^2_g$} &amp; \cdots\\
+    \vdots &amp; \vdots &amp; \ddots
+  \end{pmatrix}.\end{split}\]</div>
+<p>These blocks correspond to invariant subspaces of the representation, i.e. subspaces that transform amongst themselves under the action of the group.</p>
+<p>An irreducible representation, irrep for short, can then be defined as a representation that can not be brought in a (non-trivial) block-diagonal form by any change of basis.</p>
+<p>It can be shown that every finite group has a finite number of irreps. The sum of the dimensions squared is equal to the number of elements in the group: <span class="math notranslate nohighlight">\(\sum_\alpha d_\alpha^2=|G|\)</span> where the sum is over all irreps labeled by <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(d_\alpha\)</span> denote their respective dimensions.</p>
+<p>One of the key questions of representation theory is what the irreps of a given group are and how the tensor product of irreps (which is in general not an irrep!) decomposes in a direct sum of irreps. The latter are sometimes known as the fusion rules. The basis transformation that reduce a given representation in a direct sum of irreps is sometimes called the Clebsch-Gordan coefficients, and are for some groups known explicitly. Before discussing the example of <span class="math notranslate nohighlight">\(SU(2)\)</span>, let us first state the most important result in representation theory which is due to Schur.</p>
+<p>[Schur’s lemma] If a matrix <span class="math notranslate nohighlight">\(Y\)</span> commutes with all representation matrices of an irreducible representation of a group G, <span class="math notranslate nohighlight">\(X_gY=YX_g\)</span> <span class="math notranslate nohighlight">\(\forall g\in G\)</span>, then <span class="math notranslate nohighlight">\(Y\)</span> is proportional to the identity matrix.</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h4><span class="section-number">4.2.2.4. </span>Example<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
+<p>The answer to the questions posed above is very well understood for the case of <span class="math notranslate nohighlight">\(SU(2)\)</span>. You probably know the answer from a previous course on quantum mechanics.</p>
+<p>The irreps of <span class="math notranslate nohighlight">\(SU(2)\)</span> can be labeled by its spin, let us call it <span class="math notranslate nohighlight">\(s\)</span>, that takes values <span class="math notranslate nohighlight">\(s=0,1/2,1,3/2,...\)</span>. The dimension of the spin <span class="math notranslate nohighlight">\(s\)</span> representation is equal to <span class="math notranslate nohighlight">\(2s+1\)</span>, so there is exactly one irrep of every dimension. The spin <span class="math notranslate nohighlight">\(s=0\)</span> irrep corresponds to the trivial representation.</p>
+<p>The fusion rules can be summarized as</p>
+<div class="math notranslate nohighlight">
+\[    s_1\otimes s_2 \simeq \bigoplus_{s=|s_1-s_2|}^{s_1+s_2}s.\]</div>
+<p>For example: <span class="math notranslate nohighlight">\(\frac{1}{2}\otimes\frac{1}{2}\simeq 0\oplus 1\)</span>. The Clebsch-Gordan coefficients for <span class="math notranslate nohighlight">\(SU(2)\)</span> have been computed analytically, and for low-dimensional irreps have been tabulated for example <a class="reference external" href="https://pdg.lbl.gov/2018/reviews/rpp2018-rev-clebsch-gordan-coefs.pdf">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="symmetric-tensors">
+<h2><span class="section-number">4.3. </span>Symmetric tensors<a class="headerlink" href="#symmetric-tensors" title="Permalink to this heading">#</a></h2>
+<p>In physics we are often dealing with tensors that transform according to the tensor product representation of a given group <span class="math notranslate nohighlight">\(G\)</span>. A symmetric tensor can then be understood as a tensor that transforms trivially under the action of <span class="math notranslate nohighlight">\(G\)</span>, or more concretely under the tensor product representation <span class="math notranslate nohighlight">\(X\otimes\bar Y\otimes\bar Z\)</span>:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">X_g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y_g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">-</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">g</span><span class="o">.</span>
+<span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span>
+<span class="w">        </span><span class="n">Z_g</span>
+<span class="w">         </span><span class="o">|</span>
+</pre></div>
+</div>
+<p>This has strong implications for the structure of the tensor <span class="math notranslate nohighlight">\(T\)</span>. Notice that we didn’t assume the representations <span class="math notranslate nohighlight">\(X,Y\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> to be irreducible. As we argued above, an appropriate change of basis can bring the representations <span class="math notranslate nohighlight">\(X,Y\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> in block-diagonal form where every block corresponds to an irrep of the group and every block can appear multiple times, which we call the multiplicity of an irrep in the representation. Schur’s lemma then implies that in this basis, the tensor becomes block-diagonal. In an appropriate matricization of <span class="math notranslate nohighlight">\(T\)</span> we can thus write <span class="math notranslate nohighlight">\(T=\bigoplus_c B_c\otimes\mathbb{I}_c\)</span>  where the direct sum over <span class="math notranslate nohighlight">\(c\)</span> represents the decomposition of <span class="math notranslate nohighlight">\(X\otimes\bar Y\otimes\bar Z\)</span> in irreps <span class="math notranslate nohighlight">\(c\)</span> that can appear multiple times. In other words, the generic symmetric tensor <span class="math notranslate nohighlight">\(T\)</span> can be stored much more efficiently by only keeping track of the different blocks <span class="math notranslate nohighlight">\(B_c\)</span>.</p>
+<p>TensorKit is particularly well suited for dealing with symmetric tensors. What TensorKit does is exactly what was described in the previous paragraph, it keeps track of the block structure of the symmetric tensor, hereby drastically reducing the amount of memory it takes to store these objects, and is able to efficiently manipulate them by exploiting its structure to the maximum.
+As a simple exercise, let us construct a rank 3 <span class="math notranslate nohighlight">\(SU(2)\)</span> symmetric tensor as above. For example the spin <span class="math notranslate nohighlight">\(1/2\)</span> and spin <span class="math notranslate nohighlight">\(1\)</span> representation can be called via respectively</p>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">TensorKit</span>
+
+<span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SU₂Space</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SU₂Space</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rep[SU₂](1=&gt;1)
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Here, <code class="docutils literal notranslate"> <span class="pre">=&gt;</span> <span class="pre">1</span></code> essentially means that we consider only one copy (direct summand) of these representations. If we would want to consider the direct sum <span class="math notranslate nohighlight">\(\frac{1}{2}\oplus\frac{1}{2}\)</span> we would write</p>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SU₂Space</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rep[SU₂](1/2=&gt;2)
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>A symmetric tensor can now be constructed as</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(ProductSpace(Rep[SU₂](1=&gt;1)) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
+* Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
+[:, :, 1] =
+ 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>This tensor then has, by construction, the symmetry property that it transforms trivially under <span class="math notranslate nohighlight">\(1\otimes\bar{\frac{1}{2}}\otimes\bar{\frac{1}{2}}\)</span>.
+The blocks can then be inspected by calling <code class="docutils literal notranslate"><span class="pre">blocks</span></code> on the tensor, and we can also check that the dimensions of the domain and codomain are as expected:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@assert</span><span class="w"> </span><span class="n">dim</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">A</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span>
+<span class="nd">@assert</span><span class="w"> </span><span class="n">dim</span><span class="p">(</span><span class="n">codomain</span><span class="p">(</span><span class="n">A</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
+<span class="n">blocks</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
+  1 =&gt; [0.0;;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that this tensor has one block that we can fill up with some data of our liking. Let us consider another example</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
+<span class="n">blocks</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}}()
+</pre></div>
+</div>
+</div>
+</div>
+<p>This tensor does not have any blocks! This is compatible with the fact that two spin 1/2’s cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more blocks:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">ss</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">ss</span><span class="p">)</span>
+<span class="n">blocks</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
+  1/2 =&gt; [6.92812e-310 0.0; 6.92811e-310 0.0]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This tensor has four non-trivial entries.</p>
+</div>
+<div class="section" id="outlook-and-generalizations">
+<h2><span class="section-number">4.4. </span>Outlook and generalizations<a class="headerlink" href="#outlook-and-generalizations" title="Permalink to this heading">#</a></h2>
+<p>Let us conclude with an outlook and some generalizations.</p>
+<ul class="simple">
+<li><p>Besides the “global” symmetries we considered here, you might also be familiar with gauge symmetries from another course. Gauge theories are ubiquitous in physics and describe a plethora of interesting physical phenomena. Gauge symmetries should however not be thought of as actual symmetries transforming physically different states into each other, but rather describe a redundancy in the description of the system. Nevertheless, group theory also lies at the heart of these theories.</p></li>
+<li><p>In this brief overview we mostly neglected spatial symmetries. Spatial symmetries can be understood as transformations that translate, rotate or reflect the lattice. These kind of symmetries thus don’t act “on site” anymore. The full classification of spatial symmetry groups is notoriously rich and beautiful, especially in higher dimensions, and exploiting them in algorithms can result in tremendous speedup and stability. We already encountered the example of translation symmetry. One of the benefits of exploiting this symmetry in tensor networks is e.g. that if the ground state of an infinite one-dimensional model does not break translation invariance, this ground state can be well modelled by a uniform matrix product state, a matrix product state consisting of one tensor repeated indefinitely.</p></li>
+<li><p>Inspired by the discovery of topological phases of matter and their anyonic excitations, there has been a growing fascination with the exploration of non-invertible, or categorical symmetries. These symmetries are beyond the scope of these notes. These categorical symmetries are not described by groups but by more general and intricate algebraic structures called fusion categories, of which (finite) groups and their representations are specific examples. For an example of how spin chains with categorical symmetries can be constructed, see for example <span id="id3">[<a class="reference internal" href="../References.html#id6" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical review letters, 98(16):160409, 2007.">FTL+07</a>]</span>. TensorKit allows for an efficient construction and storage of tensors which are symmetric with respect to these more general kind of symmetries.</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./1-Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="QuantumManyBody.html">
+   1. Quantum Many-Body Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworks.html">
+   2. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Julia.html">
+   3. Getting started with Julia
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   4. Symmetries in quantum many-body physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensors
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-Tensors/TensorKit.html">
+   5. TensorKit.jl
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-Tensors/TensorOperations.html">
+   6. TensorOperations.jl
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
+   7. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
+   8. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
+   9. Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
+   10. Matrix Product Operators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/Applications.html">
+   11. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
+   12. Fixed-Point algorithms
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   13. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/1-Introduction/Symmetries.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/1-Introduction/Symmetries.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/1-Introduction/Symmetries.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/1-Introduction/Symmetries.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "1-Introduction/Symmetries";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials";
+                const urlPath = "tree/TensorTutorials/1-Introduction/Symmetries.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>
