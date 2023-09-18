@@ -23,6 +23,7 @@ parts:
   - file: 3-MatrixProductStates/InfiniteMPS
   - file: 3-MatrixProductStates/Algorithms
   - file: 3-MatrixProductStates/Applications
+  - file: 3-MatrixProductStates/TimeEvolution
 - caption: Other
   numbered: true
   chapters:
