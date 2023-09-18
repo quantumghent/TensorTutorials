@@ -26,6 +26,17 @@ computation complexity and their relevance to quantum many-body physics.
 
 This discussion is largely based on {cite}`bridgeman2017handwaving`.
 
+This lecture also serves as a brief introduction to
+[TensorOperations.jl](https://github.com/Jutho/TensorOperations.jl), and showcases some more
+features of [TensorKit.jl](https://github.com/Jutho/TensorKit.jl) as well. Note that
+TensorKit already re-exports the `@tensor` macro from TensorOperations, so it is not
+necessary to import it separately if TensorKit is already loaded.
+
+```{code-cell} julia
+using TensorKit
+using Test # for showcase testing
+```
+
 ### History
 
 The history of tensor networks is a fascinating journey through the evolution of profound
@@ -104,6 +115,19 @@ Here $d_i$ is the dimension of the corresponding vector space, and $I$ is the re
 linear index. Note again that so long as the chosen convention is consistent, the precise
 method of grouping and splitting is immaterial.
 
+This can be conveniently illustrated by the `reshape` function in Julia, which performs
+exactly this operation. For simple arrays, this operation does nothing but change the size
+property of the data structure, as the underlying data necessarily needs to be stored in a
+linear order in memory, as computer adresses are linear. Because of this, in tensor
+networks, these operations are typically left implicit.
+
+```{code-cell} julia
+A = reshape(1:(2^4), (2, 2, 2, 2))
+B = reshape(A, (4, 2, 2))
+C = reshape(A, (2, 4, 2))
+# ...
+```
+
 ### Outer Products
 
 Of course, in order to really consider a tensor *network*, it is necessary to consider
@@ -120,9 +144,9 @@ rank two tensor $B$ is given by:
 
 ### Traces
 
-More complicated diagrams can be constructed by joining some of the legs of the
-constituents. In a matter similar to the conventional Einstein notation, this implies a
-summation over the corresponding indices.
+More complicated diagrams can be constructed by joining some of the legs of the constituent
+tensors. In a matter similar to the conventional Einstein notation, this implies a summation
+over the corresponding indices.
 
 If two legs from a single tensor are joined, this signifies a (partial) _trace_ of a tensor
 over these indices. For example, the trace of a rank three tensor $A$ over two of its
@@ -175,13 +199,22 @@ network. For example, the following diagram represents a generic tensor network:
 
 In order to evaluate such networks, it is necessary to define a notational convention for
 specifying a network with text. One of the most common conventions is that of
-[Einstein notation](https://en.wikipedia.org/wiki/Einstein_notation), where each indix of a
-tensor is assigned a label, and repeated labels are implicitly summed over. For example, the
-previous diagram can be written as:
+[Einstein notation](https://en.wikipedia.org/wiki/Einstein_notation), where each index of a
+tensor is assigned a label, and repeated labels are implicitly summed over. For example, the outer product, trace, and inner product can respectively be obtained as:
 
-```{math}
-A[i, j] = B[i, \alpha, \beta, \gamma] * C[\gamma, \epsilon, \zeta, \eta, j] * 
-	D[\beta, \delta, \epsilon] * E[\alpha, \delta] * F[\zeta, \eta]
+```{code-cell} julia
+A = rand(2, 2, 2)
+B = rand(2, 2)
+@tensor C[i, j, k, l, m] := A[i, j, k] * B[l, m]
+@tensor D[i] := A[i, j, j]
+@tensor E[i, j, l] := A[i, j, k] * B[l, k]
+size(C), size(D), size(E)
+```
+
+```{note}
+The `@tensor` macro can be used to either create new tensors, using the `:=` assignment, or
+to copy data into existing tensors using `=`. In the latter case, the tensor must already
+exist and have the right dimensions, but less additional memory is allocated.
 ```
 
 This notation is very useful indeed, but quickly becomes unwieldy when one wishes to specify
@@ -189,19 +222,26 @@ in what order the pairwise operations should be carried out. Thus, in the same s
 with a minor modification, the [NCON](https://arxiv.org/abs/1402.0939) notation was
 introduced. In this notation, the indices of a tensor are assigned integers, and pairwise
 operations happen in increasing order. Similarly, negative integers are assigned to open
-legs, which determine their resulting position. For example, the previous diagram can be
-written as:
+legs, which determine their resulting position. For example, the diagram from
+{image}`network` can be written as:
 
-```{math}
-A[-1,-2] = B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
+```{code-cell} julia
+B = rand(2, 2, 2, 2)
+C = rand(2, 2, 2, 2, 2)
+D = rand(2, 2, 2)
+E = rand(2, 2)
+F = rand(2, 2)
+@tensor begin
+    A[-1, -2] := B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
+end
 ```
 
 ### Contraction Order and Complexity
 
 While tensor networks are defined in such a way that their values are independent of the
 order of pairwise operations, the computational complexity of evaluating a network can vary
-wildly. Even for simple matrix-matrix-vector multiplication, the problem can easily be
-illustrated by considering the following two equivalent operations:
+wildly based on the chosen order. Even for simple matrix-matrix-vector multiplication, the
+problem can easily be illustrated by considering the following two equivalent operations:
 
 ```{math}
 w = A * (B * v) = (A * B) * v
@@ -235,17 +275,33 @@ Nevertheless, efficient implementations allows finding optimal orders for networ
 30-40 tensors {cite}`pfeifer2014faster`, but other methods exist that can be used to
 determine good (not necessarily optimal) contraction orders.
 
+TensorOperations comes with some built-in tools for facilitating this process, and in
+particular the `opt` keyword can be used to enable the use of the algorithm from
+{cite}`pfeifer2014faster`. Because this uses the Julia macro system, this can be done at
+compilation time, and in other words only needs to be computed once.
+
+```{code-cell} julia
+@tensor opt=true begin
+    A[i, j] := B[i, α, β, γ] * C[γ, ϵ, ζ, η, j] * D[β, δ, ϵ] * E[α, δ] * F[ζ, η]
+end
+```
+
 ## Tensor Factorizations
 
 Linear maps admit various kinds of factorizations, which are instrumental in a variety of
 applications. They can be used to generate orthogonal bases, to find low-rank
 approximations, or to find eigenvalues and vectors. In the context of tensors, the
-established theory for factorizations of matrices can be generalized by interpreting them as
-linear maps, and then applying the same factorization to the corresponding matrix partition
-of the constituent vector spaces in a codomain and domain, after which everything
-representation. Thus, the only additional piece of information needed consists of a carries
-over. In this section we will only discuss the most common factorizations of tensors, but
-the reasoning can be generalized to any factorization of linear maps.
+established theory for factorizations of matrices can be generalized by interpreting tensors
+as linear maps, and then applying the same factorization to the corresponding matrix
+partition of the constituent vector spaces in a codomain and domain, after which everything
+carries over. Thus, the only additional information that is required is the specification of
+this partition. In this section we will discuss the most common factorizations of tensors,
+but the reasoning can be generalized to any factorization of linear maps.
+
+```{code-cell} julia
+S1 = ℂ^2 ⊗ ℂ^2 ⊗ ℂ^2
+S2 = ℂ^2 ⊗ ℂ^3
+```
 
 ### Eigenvalue Decomposition
 
@@ -276,6 +332,13 @@ is diagrammatically represented as:
 
 <!-- TODO: insert image -->
 
+```{code-cell} julia
+A = TensorMap(randn, ComplexF64, S1, S1) # codomain and domain equal for eigendecomposition
+partition = ((1, 5, 3), (4, 2, 6))
+D, V = eig(A, partition)
+@test permute(A, partition) * V ≈ V * D
+```
+
 ### Singular Value Decomposition
 
 The
@@ -296,6 +359,15 @@ applying the SVD to that matrix.
 :align: center
 ```
 
+```{code-cell} julia
+A = TensorMap(randn, ComplexF64, S1, S2)
+partition = ((1, 2), (4, 3, 5))
+U, S, V = tsvd(A, partition)
+@test permute(A, partition) ≈ U * S * V
+@test U' * U ≈ id(domain(U))
+@test V * V' ≈ id(codomain(V))
+```
+
 ### Polar decomposition
 
 The [polar decomposition](https://en.wikipedia.org/wiki/Polar_decomposition) of a square
@@ -305,6 +377,14 @@ transformation into a rotation/reflection $U$, combined with a scaling $P$. The 
 decomposition is unique for all matrices that are full rank.
 
 <!-- TODO: insert image polar -->
+
+```{code-cell} julia
+A = TensorMap(randn, ComplexF64, S1, S2)
+partition = ((1, 2), (4, 3, 5))
+Q, P = leftorth(A, partition; alg=Polar())
+@test permute(A, partition) ≈ Q * P
+@test Q' * Q ≈ id(domain(Q))
+```
 
 ### QR Decomposition
 
@@ -317,6 +397,14 @@ overdetermined linear systems, the QR decomposition can be used to find the leas
 solution.
 
 <!-- TODO: insert image QR -->
+
+```{code-cell} julia
+A = TensorMap(randn, ComplexF64, S1, S2)
+partition = ((1, 2), (4, 3, 5))
+Q, R = leftorth(A, partition; alg=QR())
+@test permute(A, partition) ≈ Q * R
+@test Q' * Q ≈ id(domain(Q))
+```
 
 The QR decomposition is unique up to a diagonal matrix of phases, and can thus be made
 unique by requiring that the diagonal elements of $R$ are positive. This variant is often
@@ -336,6 +424,14 @@ substantially more expensive, the QR decomposition is often preferred in practic
 Finally, the nullspace of a matrix $A$ is the set of vectors $x$ such that $Ax = 0$. This is
 typically determined via the SVD, where the nullspace is given by the right singular vectors
 corresponding to zero singular values.
+
+```{code-cell} julia
+A = TensorMap(randn, ComplexF64, S1, S2)
+partition = ((1, 2), (4, 3, 5))
+N = leftnull(A, partition)
+@test norm(N' * permute(A, partition)) ≈ 0
+@test N * N' ≈ id(codomain(N))
+```
 
 ## Conclusion
 
