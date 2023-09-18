@@ -10,6 +10,7 @@ parts:
   - file: 1-Introduction/QuantumManyBody
   - file: 1-Introduction/TensorNetworks
   - file: 1-Introduction/Julia
+  - file: 1-Introduction/Symmetries
 - caption: Tensors
   numbered: true
   chapters:
@@ -23,7 +24,14 @@ parts:
   - file: 3-MatrixProductStates/InfiniteMPS
   - file: 3-MatrixProductStates/Algorithms
   - file: 3-MatrixProductStates/Applications
+<<<<<<< Updated upstream
   - file: 3-MatrixProductStates/TimeEvolution
+=======
+- caption: Tensor Network Algorithms
+  numbered: true
+  chapters:
+  - file: 4-Algorithms/FixedpointAlgorithms
+>>>>>>> Stashed changes
 - caption: Other
   numbered: true
   chapters:
