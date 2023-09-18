@@ -1,5 +1,5 @@
-Tensor Network Theory
-=====================
+(tensor_networks)=
+# Tensor Network Theory
 
 3. Tensor Networks
 	- context, history, purpose, relevance
