@@ -263,7 +263,7 @@ with a brief overview of the history of tensor networks and their relevance to m
 physics. We will then introduce the graphical notation that is often used to simplify
 expressions, and discuss the relevant operations and decompositions along with their
 computation complexity and their relevance to quantum many-body physics.</p>
-<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id3" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, may 2017. URL: https://dx.doi.org/10.1088/1751-8121/aa6dc3, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
+<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, may 2017. URL: https://dx.doi.org/10.1088/1751-8121/aa6dc3, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
 <div class="section" id="history">
 <h3><span class="section-number">4.1.1. </span>History<a class="headerlink" href="#history" title="Permalink to this heading">#</a></h3>
 <p>The history of tensor networks is a fascinating journey through the evolution of profound
@@ -329,7 +329,7 @@ the component <span class="math notranslate nohighlight">\(R_{i_1,i_2,i_3,i_4}\)
 </div>
 <div class="section" id="grouping-and-splitting-of-indices">
 <h3><span class="section-number">4.2.2. </span>Grouping and Splitting of Indices<a class="headerlink" href="#grouping-and-splitting-of-indices" title="Permalink to this heading">#</a></h3>
-<p>Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
+<p>Because of the isomorphism <a class="reference internal" href="LinearAlgebra.html#equation-eq-tensor-isomorphism">(3.5)</a>, the legs of the tensor can be freely
 moved around, as long as their order is preserved. In some contexts the shape of
 the node and the direction of the tensor can imply certain properties, such as making an
 explicit distinction between the isomorphic representations, but in what follows we will not
@@ -353,7 +353,7 @@ method of grouping and splitting is immaterial.</p>
 <p>Of course, in order to really consider a tensor <em>network</em>, it is necessary to consider
 diagrams that consist of multiple tensors, or in other words of multiple nodes. The simplest
 such diagram represents the <em>outer product</em> of two tensors. This is represented by two
-tensors being placed next to eachother. The value of the resulting network is simply the
+tensors being placed next to each other. The value of the resulting network is simply the
 product of the constituents. For example, the outer product of a rank three tensor <span class="math notranslate nohighlight">\(A\)</span> and a
 rank two tensor <span class="math notranslate nohighlight">\(B\)</span> is given by:</p>
 <img alt="../_images/outer-product.svg" class="align-center" id="outer-product" src="../_images/outer-product.svg" /></div>
@@ -408,7 +408,10 @@ written as:</p>
 </div>
 <div class="section" id="contraction-order-and-complexity">
 <h3><span class="section-number">4.3.2. </span>Contraction Order and Complexity<a class="headerlink" href="#contraction-order-and-complexity" title="Permalink to this heading">#</a></h3>
-<p>While tensor networks are defined in such a way that their values are independent of the order of pairwise operations, the computational complexity of evaluating a network can vary wildly. Even for simple matrix-matrix-vector multiplication, the problem can easily be illustrated by considering the following two equivalent operations:</p>
+<p>While tensor networks are defined in such a way that their values are independent of the
+order of pairwise operations, the computational complexity of evaluating a network can vary
+wildly. Even for simple matrix-matrix-vector multiplication, the problem can easily be
+illustrated by considering the following two equivalent operations:</p>
 <div class="math notranslate nohighlight">
 \[w = A * (B * v) = (A * B) * v\]</div>
 <p>If both <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are square matrices of size <span class="math notranslate nohighlight">\(N \times N\)</span>, and <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(w\)</span> are vectors of
@@ -432,7 +435,7 @@ computational complexity:</p>
 <p>Determining the optimal order however is a problem that is known to be NP-hard, and thus no
 algorithm exists that can efficiently compute optimal orders for larger networks.
 Nevertheless, efficient implementations allows finding optimal orders for networks of up to
-30-40 tensors <span id="id2">[]</span>, but other methods exist that can be used to
+30-40 tensors <span id="id2">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Phys. Rev. E, 90:033315, Sep 2014. URL: https://link.aps.org/doi/10.1103/PhysRevE.90.033315, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>, but other methods exist that can be used to
 determine good (not necessarily optimal) contraction orders.</p>
 </div>
 </div>
@@ -487,7 +490,7 @@ applying the SVD to that matrix.</p>
 matrix <span class="math notranslate nohighlight">\(A\)</span> is a factorization of the form <span class="math notranslate nohighlight">\(A = UP\)</span>, where <span class="math notranslate nohighlight">\(U\)</span> is a unitary matrix and <span class="math notranslate nohighlight">\(P\)</span> is
 a positive semi-definite Hermitian matrix. It can be interpreted as decomposing a linear
 transformation into a rotation/reflection <span class="math notranslate nohighlight">\(U\)</span>, combined with a scaling <span class="math notranslate nohighlight">\(P\)</span>. The polar
-decopmosition is unique for all matrices that are full rank.</p>
+decomposition is unique for all matrices that are full rank.</p>
 <!-- TODO: insert image polar -->
 </div>
 <div class="section" id="qr-decomposition">

@@ -305,7 +305,7 @@ const thebe_selector_output = ".output, .cell_output"
 \[\xi = -\frac{1}{\log|\lambda_\mathrm{max}|}.\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of <em>finite entanglement scaling</em> for infinite MPS <span id="id3">[]</span>. Using this framework we can accurately capture critical phenomena using MPS, despite the ansatz inherently having exponentially decaying correlations.</p>
+<p>The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of <em>finite entanglement scaling</em> for infinite MPS <span id="id3">[<a class="reference internal" href="../References.html#id8" title="Marek M. Rams, Piotr Czarnik, and Lukasz Cincio. Precise extrapolation of the correlation function asymptotics in uniform tensor network states with application to the Bose-Hubbard and XXZ models. Physical Review X, 8(4):041033, November 2018. URL: http://arxiv.org/abs/1801.08554, arXiv:1801.08554, doi:10.1103/PhysRevX.8.041033.">RCC18</a>]</span>. Using this framework we can accurately capture critical phenomena using MPS, despite the ansatz inherently having exponentially decaying correlations.</p>
 </div>
 </div>
 </div>
@@ -391,9 +391,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0000000000000002
-norm(mps.AC[1]) = 1.0000000000000002
-norm(mps.CR[1]) = 1.0000000000000002
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0
+norm(mps.AC[1]) = 1.0
+norm(mps.CR[1]) = 1.0
 </pre></div>
 </div>
 </div>
@@ -427,7 +427,7 @@ norm(mps.CR[1]) = 1.0000000000000002
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- -0.12594290002782813 - 0.04590018022880266im
+ -0.5971579269904201 + 0.051144678333478494im
 </pre></div>
 </div>
 </div>
@@ -440,7 +440,7 @@ norm(mps.CR[1]) = 1.0000000000000002
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5165490768548735
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5466998772872983
 </pre></div>
 </div>
 </div>

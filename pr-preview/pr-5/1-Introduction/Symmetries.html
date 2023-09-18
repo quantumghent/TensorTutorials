@@ -461,7 +461,7 @@ As a simple exercise, let us construct a rank 3 <span class="math notranslate no
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(ProductSpace(Rep[SU₂](1=&gt;1)) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
 * Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
 [:, :, 1] =
- 7.0025861102e-313
+ 6.91134514933087e-310
 </pre></div>
 </div>
 </div>
@@ -478,7 +478,7 @@ The blocks can then be inspected by calling <code class="docutils literal notran
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1 =&gt; [7.00259e-313;;]
+  1 =&gt; [6.91135e-310;;]
 </pre></div>
 </div>
 </div>
@@ -507,7 +507,7 @@ The blocks can then be inspected by calling <code class="docutils literal notran
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [6.92162e-310 6.92162e-310; 0.0 0.0]
+  1/2 =&gt; [6.91134e-310 6.91135e-310; 6.91135e-310 6.91135e-310]
 </pre></div>
 </div>
 </div>
@@ -520,7 +520,7 @@ The blocks can then be inspected by calling <code class="docutils literal notran
 <ul class="simple">
 <li><p>Besides the “global” symmetries we considered here, you might also be familiar with gauge symmetries from another course. Gauge theories are ubiquitous in physics and describe a plethora of interesting physical phenomena. Gauge symmetries should however not be thought of as actual symmetries transforming physically different states into each other, but rather describe a redundancy in the description of the system. Nevertheless, group theory also lies at the heart of these theories.</p></li>
 <li><p>In this brief overview we mostly neglected spatial symmetries. Spatial symmetries can be understood as transformations that translate, rotate or reflect the lattice. These kind of symmetries thus don’t act “on site” anymore. The full classification of spatial symmetry groups is notoriously rich and beautiful, especially in higher dimensions, and exploiting them in algorithms can result in tremendous speedup and stability. We already encountered the example of translation symmetry. One of the benefits of exploiting this symmetry in tensor networks is e.g. that if the ground state of an infinite one-dimensional model does not break translation invariance, this ground state can be well modelled by a uniform matrix product state, a matrix product state consisting of one tensor repeated indefinitely.</p></li>
-<li><p>Inspired by the discovery of topological phases of matter and their anyonic excitations, there has been a growing fascination with the exploration of non-invertible, or categorical symmetries. These symmetries are beyond the scope of these notes. These categorical symmetries are not described by groups but by more general and intricate algebraic structures called fusion categories, of which (finite) groups and their representations are specific examples. For an example of how spin chains with categorical symmetries can be constructed, see for example <span id="id3">[]</span>. TensorKit allows for an efficient construction and storage of tensors which are symmetric with respect to these more general kind of symmetries.</p></li>
+<li><p>Inspired by the discovery of topological phases of matter and their anyonic excitations, there has been a growing fascination with the exploration of non-invertible, or categorical symmetries. These symmetries are beyond the scope of these notes. These categorical symmetries are not described by groups but by more general and intricate algebraic structures called fusion categories, of which (finite) groups and their representations are specific examples. For an example of how spin chains with categorical symmetries can be constructed, see for example <span id="id3">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical review letters, 98(16):160409, 2007.">FTL+07</a>]</span>. TensorKit allows for an efficient construction and storage of tensors which are symmetric with respect to these more general kind of symmetries.</p></li>
 </ul>
 </div>
 </div>
