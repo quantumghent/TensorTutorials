@@ -74,7 +74,7 @@ the component $R_{i_1,i_2,i_3,i_4}$ is given by:
 
 ### Grouping and Splitting of Indices
 
-Because of the isomorphism {eq}{eq:tensor_isomorphism}, the legs of the tensor can be freely
+Because of the isomorphism {eq}`eq:tensor_isomorphism`, the legs of the tensor can be freely
 moved around, as long as their order is preserved. In some contexts the shape of
 the node and the direction of the tensor can imply certain properties, such as making an
 explicit distinction between the isomorphic representations, but in what follows we will not
@@ -109,7 +109,7 @@ method of grouping and splitting is immaterial.
 Of course, in order to really consider a tensor *network*, it is necessary to consider
 diagrams that consist of multiple tensors, or in other words of multiple nodes. The simplest
 such diagram represents the _outer product_ of two tensors. This is represented by two
-tensors being placed next to eachother. The value of the resulting network is simply the
+tensors being placed next to each other. The value of the resulting network is simply the
 product of the constituents. For example, the outer product of a rank three tensor $A$ and a
 rank two tensor $B$ is given by:
 
@@ -198,7 +198,10 @@ A[-1,-2] = B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
 
 ### Contraction Order and Complexity
 
-While tensor networks are defined in such a way that their values are independent of the order of pairwise operations, the computational complexity of evaluating a network can vary wildly. Even for simple matrix-matrix-vector multiplication, the problem can easily be illustrated by considering the following two equivalent operations:
+While tensor networks are defined in such a way that their values are independent of the
+order of pairwise operations, the computational complexity of evaluating a network can vary
+wildly. Even for simple matrix-matrix-vector multiplication, the problem can easily be
+illustrated by considering the following two equivalent operations:
 
 ```{math}
 w = A * (B * v) = (A * B) * v
@@ -299,7 +302,7 @@ The [polar decomposition](https://en.wikipedia.org/wiki/Polar_decomposition) of 
 matrix $A$ is a factorization of the form $A = UP$, where $U$ is a unitary matrix and $P$ is
 a positive semi-definite Hermitian matrix. It can be interpreted as decomposing a linear
 transformation into a rotation/reflection $U$, combined with a scaling $P$. The polar
-decopmosition is unique for all matrices that are full rank.
+decomposition is unique for all matrices that are full rank.
 
 <!-- TODO: insert image polar -->
 

@@ -63,24 +63,23 @@ other words, a linear map $A \colon W ← V$ maps vectors from one vector space 
 vector space $W$. Because of the structure of vector spaces, and the requirement of
 linearity, such a map is completely determined by its action on the basis vectors of $V$.
 This leads in a very natural way to the notion of a matrix by considering the following
-construction, where $v_i$ are the basis vectors of $V$ and $w_i$ are the basis vectors of
-$W$:
+construction, where $v_i$ are the components of $\vec{v}$ and $w_i$ are the components of $\vec{w}$:
 
 ```{math}
 :label: eq:linear_map
 \begin{array}{rcl}
 A & : & W \leftarrow V\\
-  &   & v ↦ A(v) = \sum_j A_{ij} v_j = w_i
+  &   & \vec{v} ↦ A(\vec{v}) \equiv \sum_j A_{ij} v_j = w_i \equiv \vec{w}
 \end{array}
 ```
 
-where $A_{ij}$ are the components of the matrix $A$ in the basis $v_i$ and $w_j$. In other
-words, the abstract notion of a linear map between vector spaces can be represented by a
-concrete matrix, and the action of the map is the usual matrix product.
+where $A_{ij}$ are the components of the matrix $A$ in these bases. In other words, the
+abstract notion of a linear map between vector spaces can be represented by a concrete
+matrix, and the action of the map is the usual matrix product.
 
 In particular, it is instructive to think of the columns of the matrix $A$ as labelling the
-components of the input vector space, while the rows label the component of the output
-vector space.
+components of the input vector space, also called _domain_, while the rows label the
+component of the output vector space, or _codomain_.
 
 In the context of Julia, we can create vector spaces, vectors and matrices through a syntax
 that follows this very closely:
@@ -119,7 +118,7 @@ This new vector space can be equipped with a canonical basis, which is construct
 the tensor product of the basis vectors of the original vector spaces. For example, if $V$
 and $W$ are two-dimensional vector spaces with basis vectors $v_i$ and $w_j$, respectively,
 then the basis vectors of $V \otimes W$ are given by $v_i \otimes w_j$. In other words, the
-vectors in $V \otimes W$ are linear combinations of all combinatinos of the basis vectors of
+vectors in $V \otimes W$ are linear combinations of all combinations of the basis vectors of
 $V$ and $W$.
 
 When considering how to represent a vector in this new vector space, it can be written as a
@@ -233,8 +232,8 @@ object to the other, but the operation is not necessarily trivial.
 The entire discussion can be summarized and leads to the following equivalent definitions of
 a tensor:
 
-* A tensor is an element of a tensor product of vector spaces, which can be represented as a multi-dimensional array of numbers that indicate the components along the constituent basis vectors. (a tensor is vector-like)
-* A tensor is a multi-linear map between vector spaces, which can be represented as a matrix that represents the action of the map on the basis vectors of the input vector space. (a tensor is matrix-like)
+* A tensor is an element of a tensor product of vector spaces, which can be represented as a multi-dimensional array of numbers that indicate the components along the constituent basis vectors. Thus, a tensor is _vector-like_.
+* A tensor is a multi-linear map between vector spaces, which can be represented as a matrix that represents the action of the map on the basis vectors of the input vector space. Thus, a tensor is _matrix-like_.
 
 The equivalence of these two definitions leads to the lifting of many important facets of
 linear algebra to the multi-linear setting.
