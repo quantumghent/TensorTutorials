@@ -133,9 +133,9 @@ indices is given by:
 :align: center
 ```
 
-In this notation, the cyclic property of the trace follows trivially by sliding one of the
-matrices around the loop of the diagram. As this only changes the placement of the tensors
-in the network, and not the value, the graphic proof of $\Tr{AB} = \Tr{BA}$ is found.
+In this notation, the cyclic property of the trace follows by sliding one of the matrices
+around the loop of the diagram. As this only changes the placement of the tensors in the
+network, and not the value, the graphic proof of $\Tr{AB} = \Tr{BA}$ is found.
 
 ```{image} /_static/1-Introduction/trace-cyclic.svg
 :name: trace-cyclic
