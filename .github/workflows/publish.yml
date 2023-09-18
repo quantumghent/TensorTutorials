@@ -15,10 +15,10 @@ jobs:
     - uses: actions/checkout@v4
 
     # Install dependencies
-    - name: Set up Python 3.8
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: 3.9
     - name: Install Python dependencies
       run: |
         pip install -r lectures/requirements.txt
@@ -46,7 +46,27 @@ jobs:
       run: |
         julia -e 'using Pkg; Pkg.add("IJulia");'
         julia --project=lectures --threads auto -e 'using Pkg; Pkg.instantiate();'
-
+    - name: Download "build" folder (cache)
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: cache.yml
+        branch: main
+        name: build-cache
+        path: _build
+    - name: Build Download Notebooks (sphinx-tojupyter)
+      shell: bash -l {0}
+      run: |
+        jb build lectures --path-output ./ --builder=custom --custom-builder=jupyter
+        zip -r download-notebooks.zip _build/jupyter
+    - uses: actions/upload-artifact@v2
+      with:
+        name: download-notebooks
+        path: download-notebooks.zip
+    - name: Copy Download Notebooks for GH-PAGES
+      shell: bash -l {0}
+      run: |
+        mkdir -p _build/html/_notebooks
+        rsync -r  _build/jupyter/ _build/html/_notebooks/
     - name: Build the book
       run: |
         jupyter-book build lectures/
@@ -58,3 +78,26 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         folder: lectures/_build/html
         clean-exclude: pr-preview
+      
+    - name: Prepare notebooks sync
+      shell: bash
+      run: |
+        mkdir -p _build/lecture-julia.notebooks
+        cp -a _notebook_repo/. _build/lecture-julia.notebooks
+        cp -a _build/jupyter/. _build/lecture-julia.notebooks
+        rm -rf _build/lecture-julia.notebooks/_static
+        rm -rf _build/lecture-julia.notebooks/_panels_static
+        cp lectures/Project.toml _build/lecture-julia.notebooks
+        cp lectures/Manifest.toml _build/lecture-julia.notebooks
+        ls -a _build/lecture-julia.notebooks
+        
+    - name: Commit notebooks to lecture-julia.notebooks
+      uses: cpina/github-action-push-to-another-repository@v1.7.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.SOURCE_PAT }}
+      with:
+        source-directory: _build/lecture-julia.notebooks
+        destination-github-username: quantumghent
+        destination-repository-name: TensorTutorials.notebooks
+        user-email: lukas.devos@ugent.be
+        target-branch: main

@@ -8,7 +8,7 @@ logo: logo.png
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
+  execute_notebooks: cache
   timeout: 300
 
 # Define the name of the latex output file for PDF builds
@@ -69,7 +69,7 @@ sphinx:
       header_organisation: QuantumGroup@UGent
       repository_url: https://github.com/quantumghent/TensorTutorials
       repository_branch: main
-      nb_repository_url: https://github.com/quantumghent/TensorTutorials
+      nb_repository_url: https://github.com/quantumghent/TensorTutorials.notebooks
       nb_branch: main
       description: This website presents a set of lectures on Tensor Network methods
       keywords: Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics
