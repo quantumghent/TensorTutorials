@@ -162,7 +162,7 @@ LinearIndices((1:2, 1:3))
 ```
 
 ```{code-cell} julia
-CartesianIndices((1:2, 1:3))
+collect(CartesianIndices((1:2, 1:3))) # collect to force printing
 ```
 
 ## Tensors and Multi-Linear Maps
@@ -183,7 +183,7 @@ A & : & W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow
   &   & v_1 \otimes v_2 \otimes \cdots \otimes v_N \mapsto 
         A(v_1 \otimes v_2 \otimes \cdots \otimes v_N) \\
   &   & = \sum_{j_1, j_2, \cdots, j_N} A_{i_1, i_2, \cdots, i_M; j_1, j_2, \cdots, j_N}
-          v_{1, j} \otimes v_{2, j} \otimes \cdots \otimes v_{N, j} \\
+          v_{1, j_1} \otimes v_{2, j_2} \otimes \cdots \otimes v_{N, j_N} \\
   &   & = \sum_{J} A_{I;J} v_J \\
   &   & = w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
 \end{array}
