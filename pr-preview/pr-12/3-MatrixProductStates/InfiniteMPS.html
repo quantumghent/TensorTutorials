@@ -267,7 +267,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="eqno">(9.1)<a class="headerlink" href="#equation-inf-mps-formula" title="Permalink to this equation">#</a></span>\[\left | \Psi({A}) \right \rangle = \sum_{\{s\}} \boldsymbol{v}_L^\dagger \left[ \prod_{m\in\mathbb{Z}} A[m]^{s_m} \right] \boldsymbol{v}_R \left | \{s\} \right \rangle.\]</div>
 <!-- TODO: uniformize notation, conventions and discussion with finite MPS section -->
 <p>Here, each <span class="math notranslate nohighlight">\(A[m]^s\)</span> is a <span class="math notranslate nohighlight">\(D \times D\)</span> matrix for every value of the physical index <span class="math notranslate nohighlight">\(s\)</span>. As before, we can alternatively view <span class="math notranslate nohighlight">\(A[m]\)</span> as a tensor with three indices of dimensions <span class="math notranslate nohighlight">\(D \times d \times D\)</span>, where <span class="math notranslate nohighlight">\(D\)</span> is the the so-called <em>bond dimension</em>, which we assume to be same at every site. As in the case of finite systems, this bond dimension controls the entanglement of the corresponding state, where in the limit <span class="math notranslate nohighlight">\(D\to\infty\)</span> the MPS <a class="reference internal" href="#equation-inf-mps-formula">(9.1)</a> can represent any quantum state up to arbitrary accuracy. For certain classes of quantum states such low-energy states of gapped systems however we expect that we can accurately approximate these states using a much smaller bond dimension. Note that while in Eq. <a class="reference internal" href="#equation-inf-mps-formula">(9.1)</a> we have also introduced two boundary vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_L\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{v}_R\)</span>, but, as we work on an infinite system, the boundary conditions will never have any physical meaning. These can therefore safely be ignored in the following, and all bulk properties of the states are faithfully captured by the MPS tensors <span class="math notranslate nohighlight">\(A[m]\)</span>.</p>
-<p>For infinite systems which are invariant under translations, it is natural to also impose transation-invariance on the MPS <a class="reference internal" href="#equation-inf-mps-formula">(9.1)</a>. This leads to a <em>uniform</em> MPS which has the same tensor <span class="math notranslate nohighlight">\(A[m] := A\)</span> at every site. In the diagramatic notation introduced in the <span class="xref myst">first section</span>, a uniform MPS can be represented as</p>
+<p>For infinite systems which are invariant under translations, it is natural to also impose transation-invariance on the MPS <a class="reference internal" href="#equation-inf-mps-formula">(9.1)</a>. This leads to a <em>uniform</em> MPS which has the same tensor <span class="math notranslate nohighlight">\(A[m] := A\)</span> at every site. In the diagramatic notation introduced in the <a class="reference internal" href="../1-Introduction/TensorNetworks.html#tensor-networks"><span class="std std-ref">first section</span></a>, a uniform MPS can be represented as</p>
 <img alt="../_images/umps.svg" class="align-center" id="mps-state" src="../_images/umps.svg" /><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In some cases, instead of assuming an MPS has the same tensor at each site it is more natural to use a state with a non-trivial repeating unit cell. A uniform MPS with a unit cell of size three would for example correspond to the state</p>
@@ -369,6 +369,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKit [bb1c41ca-d63c-52ed-829e-0820dda26502]
+</pre></div>
+</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>single site InfiniteMPS:
 │   ⋮
 │ CR[1]: TensorMap(ProductSpace(ℂ^5) ← ProductSpace(ℂ^5))
@@ -391,8 +394,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0000000000000002
-norm(mps.AC[1]) = 1.0000000000000002
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 0.9999999999999999
+norm(mps.AC[1]) = 0.9999999999999999
 norm(mps.CR[1]) = 1.0
 </pre></div>
 </div>
@@ -427,7 +430,7 @@ norm(mps.CR[1]) = 1.0
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- 1.040602264345501 - 0.05539387830614701im
+ 0.46569666022272255 + 0.01625475534710982im
 </pre></div>
 </div>
 </div>
@@ -440,7 +443,7 @@ norm(mps.CR[1]) = 1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5474270299924334
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5396280400637478
 </pre></div>
 </div>
 </div>
