@@ -10,14 +10,6 @@ kernelspec:
   name: julia-1.9
 ---
 
-<<<<<<< Updated upstream
-Discussion largely based on {cite}`vanderstraeten2019tangentspace`
-
-3. Infinite Matrix Product States
-	- gauging revisited
-	- expectation values
-	- structure factors
-=======
 # Infinite Matrix Product States
 
 This section discusses matrix product states (MPS) in the thermodynamic limit and their properties. Our discussion is mostly based on the excellent review {cite}`vanderstraeten2019tangentspace`, which provides a thorough technical overview of tangent-space methods for uniform MPS. The formal exposition is supplemented with some very basic code examples on working with infinite MPS using [MPSKit.jl](https://github.com/maartenvd/MPSKit.jl) at the end of this section. For more details on the numerical implementation of routines for uniform MPS we refer to the Julia version of the [tutorials on uniform MPS](https://github.com/leburgel/uniformMpsTutorial), which is again based on {cite}`vanderstraeten2019tangentspace`.
@@ -358,4 +350,3 @@ correlation_length(mps)
 ```
 
 MPSKit.jl exports a variety of infinite MPS algorithms, some of which will be discussed in the next section.
->>>>>>> Stashed changes
