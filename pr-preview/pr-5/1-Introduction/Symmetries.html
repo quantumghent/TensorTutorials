@@ -116,7 +116,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/Symmetries';</script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -461,7 +461,7 @@ As a simple exercise, let us construct a rank 3 <span class="math notranslate no
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(ProductSpace(Rep[SU₂](1=&gt;1)) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
 * Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
 [:, :, 1] =
- 6.91134514933087e-310
+ 7.0025861102e-313
 </pre></div>
 </div>
 </div>
@@ -478,7 +478,7 @@ The blocks can then be inspected by calling <code class="docutils literal notran
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1 =&gt; [6.91135e-310;;]
+  1 =&gt; [7.00259e-313;;]
 </pre></div>
 </div>
 </div>
@@ -507,7 +507,7 @@ The blocks can then be inspected by calling <code class="docutils literal notran
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [6.91134e-310 6.91135e-310; 6.91135e-310 6.91135e-310]
+  1/2 =&gt; [5.0e-324 NaN; 1.0e-323 NaN]
 </pre></div>
 </div>
 </div>
