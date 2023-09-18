@@ -26,6 +26,16 @@ computation complexity and their relevance to quantum many-body physics.
 
 This discussion is largely based on {cite}`bridgeman2017handwaving`.
 
+This lecture also serves as a brief introduction to
+[TensorOperations.jl](https://github.com/Jutho/TensorOperations.jl), and showcases some more
+features of [TensorKit.jl](https://github.com/Jutho/TensorKit.jl) as well. Note that
+TensorKit already re-exports the `@tensor` macro from TensorOperations, so it is not
+necessary to import it separately if TensorKit is already loaded.
+
+```{code-cell} julia
+using TensorKit
+```
+
 ### History
 
 The history of tensor networks is a fascinating journey through the evolution of profound
