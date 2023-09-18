@@ -1,0 +1,75 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jupyter_core/utils/__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+B = rand(2, 2, 2, 2)
+C = rand(2, 2, 2, 2, 2)
+D = rand(2, 2, 2)
+E = rand(2, 2)
+F = rand(2, 2)
+@tensor begin
+    A[-1, -2] := B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
+end
+------------------
+
+
+LoadError: ArgumentError: index 4 appears more than twice in tensor contraction: B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
+in expression starting at In[4]:6
+
+Stacktrace:
+  [1] getcontractionnetworks(ex::Any)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/contractiontrees.jl:143
+  [2] _processcontractions(ex::Any, treebuilder::Any, treesorter::Any, costcheck::Any)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/contractiontrees.jl:49
+  [3] processcontractions(ex::Any, treebuilder::Any, treesorter::Any, costcheck::Any)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/contractiontrees.jl:28
+  [4] (::TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing})(x::Any)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/contractiontrees.jl:19
+  [5] iterate
+    @ ./generator.jl:47 [inlined]
+  [6] collect_to!(dest::Vector{LineNumberNode}, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}}, offs::Int64, st::Int64)
+    @ Base ./array.jl:840
+  [7] collect_to_with_first!(dest::Vector{LineNumberNode}, v1::LineNumberNode, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}}, st::Int64)
+    @ Base ./array.jl:818
+  [8] _collect(c::Vector{Any}, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}}, #unused#::Base.EltypeUnknown, isz::Base.HasShape{1})
+    @ Base ./array.jl:812
+  [9] collect_similar(cont::Vector{Any}, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}})
+    @ Base ./array.jl:711
+ [10] map(f::Function, A::Vector{Any})
+    @ Base ./abstractarray.jl:3263
+ [11] processcontractions(ex::Any, treebuilder::Any, treesorter::Any, costcheck::Any)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/contractiontrees.jl:19
+ [12] (::TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing})(x::Any)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/contractiontrees.jl:19
+ [13] iterate
+    @ ./generator.jl:47 [inlined]
+ [14] collect_to!(dest::Vector{Expr}, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}}, offs::Int64, st::Int64)
+    @ Base ./array.jl:840
+ [15] collect_to_with_first!(dest::Vector{Expr}, v1::Expr, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}}, st::Int64)
+    @ Base ./array.jl:818
+ [16] _collect(c::Vector{Any}, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}}, #unused#::Base.EltypeUnknown, isz::Base.HasShape{1})
+    @ Base ./array.jl:812
+ [17] collect_similar(cont::Vector{Any}, itr::Base.Generator{Vector{Any}, TensorOperations.var"#41#42"{typeof(TensorOperations.defaulttreebuilder), typeof(TensorOperations.defaulttreesorter), Nothing}})
+    @ Base ./array.jl:711
+ [18] map(f::Function, A::Vector{Any})
+    @ Base ./abstractarray.jl:3263
+ [19] processcontractions(ex::Any, treebuilder::Any, treesorter::Any, costcheck::Any)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/contractiontrees.jl:19
+ [20] (::TensorOperations.TensorParser)(ex::Expr)
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/parser.jl:34
+ [21] var"@tensor"(__source__::LineNumberNode, __module__::Module, args::Vararg{Expr})
+    @ TensorOperations ~/.julia/packages/TensorOperations/igNgY/src/indexnotation/tensormacros.jl:42
+

@@ -282,18 +282,23 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/TensorNetworks.html">
-   2. Tensor Network Theory
+  <a class="reference internal" href="1-Introduction/Software.html">
+   2. Getting started with Julia
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/Julia.html">
-   3. Getting started with Julia
+  <a class="reference internal" href="1-Introduction/LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-Introduction/TensorNetworks.html">
+   4. Tensor Network Theory
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="1-Introduction/Symmetries.html">
-   4. Symmetries in quantum many-body physics
+   5. Symmetries in quantum many-body physics
   </a>
  </li>
 </ul>
@@ -305,12 +310,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="2-Tensors/TensorKit.html">
-   5. TensorKit.jl
+   6. TensorKit.jl
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="2-Tensors/TensorOperations.html">
-   6. TensorOperations.jl
+   7. TensorOperations.jl
   </a>
  </li>
 </ul>
@@ -322,27 +327,27 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="3-MatrixProductStates/MatrixProductStates.html">
-   7. Matrix Product States
+   8. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3-MatrixProductStates/MatrixProductOperators.html">
-   8. Matrix Product Operators
+   9. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3-MatrixProductStates/InfiniteMPS.html">
-   9. Infinite Matrix Product States
+   10. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3-MatrixProductStates/Algorithms.html">
-   10. Algorithms
+   11. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3-MatrixProductStates/Applications.html">
-   11. Applications
+   12. Applications
   </a>
  </li>
 </ul>
@@ -354,7 +359,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="4-Algorithms/FixedpointAlgorithms.html">
-   12. Fixed-Point algorithms
+   13. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -366,7 +371,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>
@@ -434,18 +439,18 @@ const thebe_selector_output = ".output, .cell_output"
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/search.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/search.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/search.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/search.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/search.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/search.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -476,8 +481,8 @@ const thebe_selector_output = ".output, .cell_output"
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
                 const pageName = "search";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/search.ipynb";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
+                const urlPath = "tree/TensorTutorials.notebooks/search.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 

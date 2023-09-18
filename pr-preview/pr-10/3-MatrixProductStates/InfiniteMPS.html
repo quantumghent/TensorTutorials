@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>9. Infinite Matrix Product States &#8212; TensorTutorials</title>
+    <title>10. Infinite Matrix Product States &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -116,13 +116,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3-MatrixProductStates/InfiniteMPS';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="10. Algorithms" href="Algorithms.html" />
-    <link rel="prev" title="8. Matrix Product Operators" href="MatrixProductOperators.html" />
+    <link rel="next" title="11. Algorithms" href="Algorithms.html" />
+    <link rel="prev" title="9. Matrix Product Operators" href="MatrixProductOperators.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="QuantumGhent" />
@@ -170,19 +170,19 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-product-states-in-the-thermodynamic-limit">9.1. Matrix product states in the thermodynamic limit</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation">9.1.1. Representation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">9.1.2. Normalization</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">9.1.3. Expectation values</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-functions">9.1.4. Correlation functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-product-states-in-the-thermodynamic-limit">10.1. Matrix product states in the thermodynamic limit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation">10.1.1. Representation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">10.1.2. Normalization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">10.1.3. Expectation values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-functions">10.1.4. Correlation functions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-revisited">9.2. Gauging revisited</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-in-the-thermodynamic-limit">9.2.1. Gauging in the thermodynamic limit</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values-revisited">9.2.2. Expectation values revisited</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#entanglement-entropy">9.2.3. Entanglement entropy</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truncation">9.2.4. Truncation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-mpskit-infinitemps">9.2.5. Code example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-revisited">10.2. Gauging revisited</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-in-the-thermodynamic-limit">10.2.1. Gauging in the thermodynamic limit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values-revisited">10.2.2. Expectation values revisited</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#entanglement-entropy">10.2.3. Entanglement entropy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truncation">10.2.4. Truncation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-mpskit-infinitemps">10.2.5. Code example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -230,8 +230,8 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="infinite-matrix-product-states">
-<h1><a class="toc-backref" href="#id4"><span class="section-number">9. </span>Infinite Matrix Product States</a><a class="headerlink" href="#infinite-matrix-product-states" title="Permalink to this heading">#</a></h1>
-<p>This section discusses matrix product states (MPS) in the thermodynamic limit and their properties. Our discussion is mostly based on the excellent review <span id="id1">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>, which provides a thorough technical overview of tangent-space methods for uniform MPS. The formal exposition is supplemented with some very basic code examples on working with infinite MPS using <a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a> at the end of this section. For more details on the numerical implementation of routines for uniform MPS we refer to the Julia version of the <a class="reference external" href="https://github.com/leburgel/uniformMpsTutorial">tutorials on uniform MPS</a>, which is again based on <span id="id2">[<a class="reference internal" href="../References.html#id3" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+<h1><a class="toc-backref" href="#id4"><span class="section-number">10. </span>Infinite Matrix Product States</a><a class="headerlink" href="#infinite-matrix-product-states" title="Permalink to this heading">#</a></h1>
+<p>This section discusses matrix product states (MPS) in the thermodynamic limit and their properties. Our discussion is mostly based on the excellent review <span id="id1">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>, which provides a thorough technical overview of tangent-space methods for uniform MPS. The formal exposition is supplemented with some very basic code examples on working with infinite MPS using <a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a> at the end of this section. For more details on the numerical implementation of routines for uniform MPS we refer to the Julia version of the <a class="reference external" href="https://github.com/leburgel/uniformMpsTutorial">tutorials on uniform MPS</a>, which is again based on <span id="id2">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -259,15 +259,15 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </div>
 <div class="section" id="matrix-product-states-in-the-thermodynamic-limit">
-<h2><a class="toc-backref" href="#id5"><span class="section-number">9.1. </span>Matrix product states in the thermodynamic limit</a><a class="headerlink" href="#matrix-product-states-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id5"><span class="section-number">10.1. </span>Matrix product states in the thermodynamic limit</a><a class="headerlink" href="#matrix-product-states-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h2>
 <div class="section" id="representation">
-<h3><a class="toc-backref" href="#id6"><span class="section-number">9.1.1. </span>Representation</a><a class="headerlink" href="#representation" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id6"><span class="section-number">10.1.1. </span>Representation</a><a class="headerlink" href="#representation" title="Permalink to this heading">#</a></h3>
 <p>The finite MPS representation introduced in the previous previous section can be readily extended to the thermodynamic limit. Consider an infinite one-dimensional chain with a local physical Hilbert space <span class="math notranslate nohighlight">\(\mathbb{C}^d\)</span> of dimension <span class="math notranslate nohighlight">\(d\)</span> at every site in the chain. An infinite matrix product state representing the quantum state of such a system has the form</p>
 <div class="math notranslate nohighlight" id="equation-inf-mps-formula">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-inf-mps-formula" title="Permalink to this equation">#</a></span>\[\left | \Psi({A}) \right \rangle = \sum_{\{s\}} \boldsymbol{v}_L^\dagger \left[ \prod_{m\in\mathbb{Z}} A[m]^{s_m} \right] \boldsymbol{v}_R \left | \{s\} \right \rangle.\]</div>
+<span class="eqno">(10.1)<a class="headerlink" href="#equation-inf-mps-formula" title="Permalink to this equation">#</a></span>\[\left | \Psi({A}) \right \rangle = \sum_{\{s\}} \boldsymbol{v}_L^\dagger \left[ \prod_{m\in\mathbb{Z}} A[m]^{s_m} \right] \boldsymbol{v}_R \left | \{s\} \right \rangle.\]</div>
 <!-- TODO: uniformize notation, conventions and discussion with finite MPS section -->
-<p>Here, each <span class="math notranslate nohighlight">\(A[m]^s\)</span> is a <span class="math notranslate nohighlight">\(D \times D\)</span> matrix for every value of the physical index <span class="math notranslate nohighlight">\(s\)</span>. As before, we can alternatively view <span class="math notranslate nohighlight">\(A[m]\)</span> as a tensor with three indices of dimensions <span class="math notranslate nohighlight">\(D \times d \times D\)</span>, where <span class="math notranslate nohighlight">\(D\)</span> is the the so-called <em>bond dimension</em>, which we assume to be same at every site. As in the case of finite systems, this bond dimension controls the entanglement of the corresponding state, where in the limit <span class="math notranslate nohighlight">\(D\to\infty\)</span> the MPS <a class="reference internal" href="#equation-inf-mps-formula">(9.1)</a> can represent any quantum state up to arbitrary accuracy. For certain classes of quantum states such low-energy states of gapped systems however we expect that we can accurately approximate these states using a much smaller bond dimension. Note that while in Eq. <a class="reference internal" href="#equation-inf-mps-formula">(9.1)</a> we have also introduced two boundary vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_L\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{v}_R\)</span>, but, as we work on an infinite system, the boundary conditions will never have any physical meaning. These can therefore safely be ignored in the following, and all bulk properties of the states are faithfully captured by the MPS tensors <span class="math notranslate nohighlight">\(A[m]\)</span>.</p>
-<p>For infinite systems which are invariant under translations, it is natural to also impose transation-invariance on the MPS <a class="reference internal" href="#equation-inf-mps-formula">(9.1)</a>. This leads to a <em>uniform</em> MPS which has the same tensor <span class="math notranslate nohighlight">\(A[m] := A\)</span> at every site. In the diagramatic notation introduced in the <span class="xref myst">first section</span>, a uniform MPS can be represented as</p>
+<p>Here, each <span class="math notranslate nohighlight">\(A[m]^s\)</span> is a <span class="math notranslate nohighlight">\(D \times D\)</span> matrix for every value of the physical index <span class="math notranslate nohighlight">\(s\)</span>. As before, we can alternatively view <span class="math notranslate nohighlight">\(A[m]\)</span> as a tensor with three indices of dimensions <span class="math notranslate nohighlight">\(D \times d \times D\)</span>, where <span class="math notranslate nohighlight">\(D\)</span> is the the so-called <em>bond dimension</em>, which we assume to be same at every site. As in the case of finite systems, this bond dimension controls the entanglement of the corresponding state, where in the limit <span class="math notranslate nohighlight">\(D\to\infty\)</span> the MPS <a class="reference internal" href="#equation-inf-mps-formula">(10.1)</a> can represent any quantum state up to arbitrary accuracy. For certain classes of quantum states such low-energy states of gapped systems however we expect that we can accurately approximate these states using a much smaller bond dimension. Note that while in Eq. <a class="reference internal" href="#equation-inf-mps-formula">(10.1)</a> we have also introduced two boundary vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_L\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{v}_R\)</span>, but, as we work on an infinite system, the boundary conditions will never have any physical meaning. These can therefore safely be ignored in the following, and all bulk properties of the states are faithfully captured by the MPS tensors <span class="math notranslate nohighlight">\(A[m]\)</span>.</p>
+<p>For infinite systems which are invariant under translations, it is natural to also impose transation-invariance on the MPS <a class="reference internal" href="#equation-inf-mps-formula">(10.1)</a>. This leads to a <em>uniform</em> MPS which has the same tensor <span class="math notranslate nohighlight">\(A[m] := A\)</span> at every site. In the diagramatic notation introduced in the <span class="xref myst">first section</span>, a uniform MPS can be represented as</p>
 <img alt="../_images/umps.svg" class="align-center" id="mps-state" src="../_images/umps.svg" /><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In some cases, instead of assuming an MPS has the same tensor at each site it is more natural to use a state with a non-trivial repeating unit cell. A uniform MPS with a unit cell of size three would for example correspond to the state</p>
@@ -277,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="../_images/tm.svg" class="align-center" id="transfer-matrix" src="../_images/tm.svg" /><p>The transfer matrix corresponds to an operator acting on the space of <span class="math notranslate nohighlight">\(D\times D\)</span> matrices, and can be interpreted as a 4-leg tensor <span class="math notranslate nohighlight">\(\mathbb C^D \otimes \mathbb C^D \leftarrow \mathbb C^D \otimes \mathbb C^D\)</span>. The transfer matrix can be shown to be a completely positive map, such that its leading eigenvalue is a positive number. The eigenvalues of the transfer matrix characterize the normalization and correlation length of a uniform MPS, while its eigenvectors can be used to evaluate expectation values of local observables.</p>
 </div>
 <div class="section" id="normalization">
-<h3><a class="toc-backref" href="#id7"><span class="section-number">9.1.2. </span>Normalization</a><a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id7"><span class="section-number">10.1.2. </span>Normalization</a><a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h3>
 <p>The norm of a uniform MPS corresponds to a contraction of the form</p>
 <img alt="../_images/mpsNorm.svg" class="align-center" id="mps-norm" src="../_images/mpsNorm.svg" /><p>Clearly, this norm is nothing more than an infinite product of MPS transfer matrices defined above. Consider the spectral decomposition of the <span class="math notranslate nohighlight">\(n\)</span>th power <span class="math notranslate nohighlight">\(\mathbb E^n\)</span>,</p>
 <img alt="../_images/tmDecomp.svg" class="align-center" id="tm-decomp" src="../_images/tmDecomp.svg" /><p>where <span class="math notranslate nohighlight">\(l\)</span> and <span class="math notranslate nohighlight">\(r\)</span> are the left and right fixed points which correspond to the largest magnitude eigenvalue <span class="math notranslate nohighlight">\(\lambda_0\)</span> of <span class="math notranslate nohighlight">\(\mathbb E\)</span>,</p>
@@ -286,7 +286,7 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="../_images/traceNorm.svg" class="align-center" id="trace-norm" src="../_images/traceNorm.svg" /><p>With these properties in place, the norm of an MPS reduces to the overlap between the boundary vectors and the fixed points. Since there is no effect of the boundary vectors on the bulk properties of the MPS, we can always choose these such that MPS is properly normalized as <span class="math notranslate nohighlight">\( \left \langle \Psi(\bar{A})\middle | \Psi(A) \right \rangle = 1\)</span>.</p>
 </div>
 <div class="section" id="expectation-values">
-<h3><a class="toc-backref" href="#id8"><span class="section-number">9.1.3. </span>Expectation values</a><a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id8"><span class="section-number">10.1.3. </span>Expectation values</a><a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
 <p>The fixed points of the transfer matrix can for example be to compute expectation values of operators. Suppose we wish to evaluate expectation values of an extensive operator,</p>
 <div class="math notranslate nohighlight">
 \[O = \frac{1}{\mathbb{Z}} \sum_{n \in \mathbb{Z}} O_n.\]</div>
@@ -294,7 +294,7 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="../_images/expVal.svg" class="align-center" id="exp-val" src="../_images/expVal.svg" /><p>In the uniform gauge, we can use the fixed points of the transfer matrix to contract everything to the left and to the right of the operator, such that we are left with the contraction</p>
 <img alt="../_images/expVal2.svg" class="align-center" id="exp-val2" src="../_images/expVal2.svg" /></div>
 <div class="section" id="correlation-functions">
-<h3><a class="toc-backref" href="#id9"><span class="section-number">9.1.4. </span>Correlation functions</a><a class="headerlink" href="#correlation-functions" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id9"><span class="section-number">10.1.4. </span>Correlation functions</a><a class="headerlink" href="#correlation-functions" title="Permalink to this heading">#</a></h3>
 <p>Correlation functions are computed similarly. Let us look at</p>
 <div class="math notranslate nohighlight">
 \[c^{\alpha\beta}(m,n) = \bra{\Psi(\bar A)} (O^\beta_m)^\dagger O^\alpha_n \ket{\Psi(A)},\]</div>
@@ -305,14 +305,14 @@ const thebe_selector_output = ".output, .cell_output"
 \[\xi = -\frac{1}{\log|\lambda_\mathrm{max}|}.\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of <em>finite entanglement scaling</em> for infinite MPS <span id="id3">[<a class="reference internal" href="../References.html#id7" title="Marek M. Rams, Piotr Czarnik, and Lukasz Cincio. Precise extrapolation of the correlation function asymptotics in uniform tensor network states with application to the Bose-Hubbard and XXZ models. Physical Review X, 8(4):041033, November 2018. URL: http://arxiv.org/abs/1801.08554, arXiv:1801.08554, doi:10.1103/PhysRevX.8.041033.">RCC18</a>]</span>. Using this framework we can accurately capture critical phenomena using MPS, despite the ansatz inherently having exponentially decaying correlations.</p>
+<p>The subleading eigenvalues of the transfer matrix typically also have a physical meaning, because they correspond to subleading correlations in the system. For example, by focussing on eigenvalues in a specific symmetry sector one can target the correlations associated to exitations corresponding to that particular symmetry. The subleading eigenvalues also play a crucial role in the powerful technique of <em>finite entanglement scaling</em> for infinite MPS <span id="id3">[<a class="reference internal" href="../References.html#id8" title="Marek M. Rams, Piotr Czarnik, and Lukasz Cincio. Precise extrapolation of the correlation function asymptotics in uniform tensor network states with application to the Bose-Hubbard and XXZ models. Physical Review X, 8(4):041033, November 2018. URL: http://arxiv.org/abs/1801.08554, arXiv:1801.08554, doi:10.1103/PhysRevX.8.041033.">RCC18</a>]</span>. Using this framework we can accurately capture critical phenomena using MPS, despite the ansatz inherently having exponentially decaying correlations.</p>
 </div>
 </div>
 </div>
 <div class="section" id="gauging-revisited">
-<h2><a class="toc-backref" href="#id10"><span class="section-number">9.2. </span>Gauging revisited</a><a class="headerlink" href="#gauging-revisited" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id10"><span class="section-number">10.2. </span>Gauging revisited</a><a class="headerlink" href="#gauging-revisited" title="Permalink to this heading">#</a></h2>
 <div class="section" id="gauging-in-the-thermodynamic-limit">
-<h3><a class="toc-backref" href="#id11"><span class="section-number">9.2.1. </span>Gauging in the thermodynamic limit</a><a class="headerlink" href="#gauging-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id11"><span class="section-number">10.2.1. </span>Gauging in the thermodynamic limit</a><a class="headerlink" href="#gauging-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
 <!-- TODO: uniformize with finite MPS section -->
 <p>While a given MPS tensor <span class="math notranslate nohighlight">\(A\)</span> corresponds to a unique state <span class="math notranslate nohighlight">\(\left | \Psi(A) \right \rangle\)</span>, the converse is not true, as different tensors may give rise to the same state. This is easily seen by noting that the gauge transform</p>
 <img alt="../_images/gaugeTransform.svg" class="align-center" id="gauge-transform" src="../_images/gaugeTransform.svg" /><p>leaves the physical state invariant. We may use this freedom in parametrization to impose canonical forms on the MPS tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
@@ -335,11 +335,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="section" id="expectation-values-revisited">
-<h3><a class="toc-backref" href="#id12"><span class="section-number">9.2.2. </span>Expectation values revisited</a><a class="headerlink" href="#expectation-values-revisited" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id12"><span class="section-number">10.2.2. </span>Expectation values revisited</a><a class="headerlink" href="#expectation-values-revisited" title="Permalink to this heading">#</a></h3>
 <p>In the mixed gauge, we can locate the center site where the operator is acting, and then contract everything to the left and right to the identity to arrive at the particularly simple expression for the expectation value</p>
 <img alt="../_images/expVal3.svg" class="align-center" id="exp-val3" src="../_images/expVal3.svg" /></div>
 <div class="section" id="entanglement-entropy">
-<h3><a class="toc-backref" href="#id13"><span class="section-number">9.2.3. </span>Entanglement entropy</a><a class="headerlink" href="#entanglement-entropy" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id13"><span class="section-number">10.2.3. </span>Entanglement entropy</a><a class="headerlink" href="#entanglement-entropy" title="Permalink to this heading">#</a></h3>
 <p>The mixed canonical form with a diagonal <span class="math notranslate nohighlight">\(C\)</span> now allows to straightforwardly write down a Schmidt decomposition of the state across an arbitrary bond in the chain</p>
 <div class="math notranslate nohighlight">
 \[\left | \Psi(A) \right \rangle = \sum_{i=1}^{D} C_i \left | \Psi^i_L(A_L) \right \rangle \otimes \left | \Psi^i_R(A_R) \right \rangle,\]</div>
@@ -348,14 +348,14 @@ const thebe_selector_output = ".output, .cell_output"
 \[S = -\sum_i C_i^2 \log(C_i^2) .\]</div>
 </div>
 <div class="section" id="truncation">
-<h3><a class="toc-backref" href="#id14"><span class="section-number">9.2.4. </span>Truncation</a><a class="headerlink" href="#truncation" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id14"><span class="section-number">10.2.4. </span>Truncation</a><a class="headerlink" href="#truncation" title="Permalink to this heading">#</a></h3>
 <p>The mixed canonical form also enables efficient truncatation of an MPS. The sum in the above Schmidt decomposition can be truncated, giving rise to a new MPS that has a reduced bond dimension for that bond. This truncation is optimal in the sense that the norm between the original and the truncated MPS is maximized. To arrive at a translation invariant truncated MPS, we can truncate the columns of the absorbed isometries <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V^\dagger\)</span> correspondingly, thereby transforming <em>every</em> tensor <span class="math notranslate nohighlight">\(A_L\)</span> or <span class="math notranslate nohighlight">\(A_R\)</span>. The truncated MPS in the mixed gauge is then given by</p>
 <img alt="../_images/truncMPS.svg" class="align-center" id="truncate-mps" src="../_images/truncMPS.svg" /><p>We note that the resulting state based on this local truncation is not guaranteed to correspond to the MPS with a lower bond dimension that is globally optimal. This would require a variational optimization of the cost function.</p>
 <div class="math notranslate nohighlight">
 \[\left | \left | ~\left | \Psi(A) \right \rangle - \left | \Psi(\tilde{A}) \right \rangle ~\right | \right |^2.\]</div>
 </div>
 <div class="section" id="code-example-mpskit-infinitemps">
-<h3><a class="toc-backref" href="#id15"><span class="section-number">9.2.5. </span>Code example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a><a class="headerlink" href="#code-example-mpskit-infinitemps" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id15"><span class="section-number">10.2.5. </span>Code example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a><a class="headerlink" href="#code-example-mpskit-infinitemps" title="Permalink to this heading">#</a></h3>
 <p>The Julia package <a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a> provides many tools for working with infinite MPS. Without going into much detail, we can already check some aspects of our discussion above with this numerical implementation.</p>
 <p>We can construct an <a class="reference external" href="https://maartenvd.github.io/MPSKit.jl/dev/lib/lib/#MPSKit.InfiniteMPS"><code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a> by specifying the physical and virtual vector spaces of the MPS. We will use standard complex vector spaces as specified by a <a class="reference external" href="https://jutho.github.io/TensorKit.jl/latest/lib/spaces/#TensorKit.ComplexSpace"><code class="docutils literal notranslate"><span class="pre">TensorKit.ComplexSpace</span></code></a>, and choose a physical dimension <span class="math notranslate nohighlight">\(d = 3\)</span> and bond dimension <span class="math notranslate nohighlight">\(D = 5\)</span>.</p>
 <div class="cell docutils container">
@@ -369,6 +369,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKit [bb1c41ca-d63c-52ed-829e-0820dda26502]
+</pre></div>
+</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>single site InfiniteMPS:
 │   ⋮
 │ CR[1]: TensorMap(ProductSpace(ℂ^5) ← ProductSpace(ℂ^5))
@@ -391,8 +394,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 0.9999999999999999
-norm(mps.AC[1]) = 0.9999999999999999
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0
+norm(mps.AC[1]) = 1.0
 norm(mps.CR[1]) = 1.0
 </pre></div>
 </div>
@@ -427,7 +430,7 @@ norm(mps.CR[1]) = 1.0
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- 0.39102534268424893 - 0.046034715511807996im
+ -2.425670175896739 + 0.10893204959262923im
 </pre></div>
 </div>
 </div>
@@ -440,7 +443,7 @@ norm(mps.CR[1]) = 1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5341157857928339
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6014808746786625
 </pre></div>
 </div>
 </div>
@@ -511,18 +514,23 @@ norm(mps.CR[1]) = 1.0
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../1-Introduction/TensorNetworks.html">
-   2. Tensor Network Theory
+  <a class="reference internal" href="../1-Introduction/Software.html">
+   2. Getting started with Julia
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../1-Introduction/Julia.html">
-   3. Getting started with Julia
+  <a class="reference internal" href="../1-Introduction/LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/TensorNetworks.html">
+   4. Tensor Network Theory
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../1-Introduction/Symmetries.html">
-   4. Symmetries in quantum many-body physics
+   5. Symmetries in quantum many-body physics
   </a>
  </li>
 </ul>
@@ -534,12 +542,12 @@ norm(mps.CR[1]) = 1.0
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   5. TensorKit.jl
+   6. TensorKit.jl
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   6. TensorOperations.jl
+   7. TensorOperations.jl
   </a>
  </li>
 </ul>
@@ -551,27 +559,27 @@ norm(mps.CR[1]) = 1.0
 <ul class="current nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductStates.html">
-   7. Matrix Product States
+   8. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductOperators.html">
-   8. Matrix Product Operators
+   9. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1 current active active">
   <a class="current reference internal" href="#">
-   9. Infinite Matrix Product States
+   10. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Algorithms.html">
-   10. Algorithms
+   11. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Applications.html">
-   11. Applications
+   12. Applications
   </a>
  </li>
 </ul>
@@ -583,7 +591,7 @@ norm(mps.CR[1]) = 1.0
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
-   12. Fixed-Point algorithms
+   13. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -595,7 +603,7 @@ norm(mps.CR[1]) = 1.0
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>
@@ -663,18 +671,18 @@ norm(mps.CR[1]) = 1.0
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/3-MatrixProductStates/InfiniteMPS.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/3-MatrixProductStates/InfiniteMPS.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -705,8 +713,8 @@ norm(mps.CR[1]) = 1.0
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
                 const pageName = "3-MatrixProductStates/InfiniteMPS";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/3-MatrixProductStates/InfiniteMPS.ipynb";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
+                const urlPath = "tree/TensorTutorials.notebooks/3-MatrixProductStates/InfiniteMPS.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 

@@ -202,7 +202,7 @@ known as the Schr\"{o}dinger equation, where $\hat{H}(t)$ is the Hamiltonian of 
 which may itself be time-dependent. In the case of a time-independent Hamiltonian, we can
 define the evolution operator
 
-$$ U(t, t') = \exp\left(-\mathrm{i}(t-t')\hat{H}) $$
+$$ U(t, t') = \exp\left(-\mathrm{i}(t-t')\hat{H}\right) $$
 
 which relates states at different times via $\ket{\psi(t)} = \hat{U}(t, t') \ket{\psi(t')}$
 and is clearly a unitary operator. Clearly, we need to know the Hamiltonian of a system in
@@ -298,13 +298,13 @@ However, in the context of spin coupling (see Section on Symmetries), one also u
 coupled basis
 
 ```{math}
-\ket{0,0} = \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} - \ket{\downarrow,\uparrow}\right)\\
-\ket{1,1} = \ket{\uparrow,\uparrow}\\
-\ket{1,0} = \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} + \ket{\downarrow,\uparrow}\right)\\
-\ket{1,-1} = \ket{\downarrow,\downarrow}
+\ket{0,0} &= \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} - \ket{\downarrow,\uparrow}\right)\\
+\ket{1,1} &= \ket{\uparrow,\uparrow}\\
+\ket{1,0} &= \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} + \ket{\downarrow,\uparrow}\right)\\
+\ket{1,-1} &= \ket{\downarrow,\downarrow}
 ```
 
-Note that we also use teh same tensor product notation as an operation to map operators from
+Note that we also use the same tensor product notation as an operation to map operators from
 the subsystems into operators acting on the full tensor product Hilbert space. In
 particular, the process of measuring operator $\hat{A}$ in subsystem $A$ and simultaneously
 operator $\hat{B}$ in subsystem $B$ is associated with an operator $\hat{A}\otimes \hat{B}$
@@ -322,12 +322,16 @@ anything on subsystem $B$, we should create the operator $\hat{O} \otimes \hat{1
 $\hat{1}_B$ the identity operator of the Hilbert space $\mathbb{H}^B$. Often, we will omit
 this explicit tensor product with the identity operator, and simply use some notation which
 indicates that an operator acts on a certain subsystem, such as
-$\hat{O}^{(A)} = \hat{O} \otimes \hat{1}_B$.
+$\hat{O}^{(A)} = \hat{O} \otimes \hat{1}_B$. This also makes it explicit that operators
+defined on different subsystems, when lifted to act on the full Hilbert space, commute, i.e.
 
-The tensor product construction extends to systems with multiple subsystems. Consider for
-example a system consisting of qubits, where every individual qubit has an associated
-Hilbert space $\mathbb{C}^2$ with basis denoted as $\{\ket{0},\ket{1}\}$. The Hilbert space
-$\mathbb{H}^N$ of $N$ qubits is then spanned by a computational basis which we can denote as
+$$ \left[\hat{O}_1^{(A)} , \hat{O}_2^{(B)}\right] = \left[ \hat{O}_1 \otimes \hat{1}_B, \hat{1}_A \otimes \hat{O}_2\right] = 0. $$
+
+The tensor product construction extends readily to systems with multiple subsystems.
+Consider for example a system consisting of qubits, where every individual qubit has an
+associated Hilbert space $\mathbb{C}^2$ with basis denoted as $\{\ket{0},\ket{1}\}$. The
+Hilbert space $\mathbb{H}^N$ of $N$ qubits is then spanned by a computational basis which we
+can denote as
 
 $$\{\ket{s_1, s_2, \ldots, s_N} = \ket{s_1} \otimes \ket{s_2} \otimes \cdots \otimes \ket{s_N}; s_1 =0,1; s_2 =0,1; \ldots; s_n =0,1\}.$$
 
@@ -535,7 +539,7 @@ $\ket{\varphi^{(M)}}$ and $N$-particle states $\ket{\psi^{(N)}}$ with $M \neq N$
 
 Given the above mode occupation numbers, we can now use the states
 
-$$\{\ket{n_1,n_2,\ldots,n_L}, n_j = 0,1\ \text{or}\ n_j = 0,1,2,\ldots\}
+$$\{\ket{n_1,n_2,\ldots,n_L}, n_j = 0,1\ \text{or}\ n_j = 0,1,2,\ldots\}$$
 
 as basis, where the global constraint can now be omitted. Aside from losing the global
 constraint, we have so far not yet gained anything and the different particle number sectors 
@@ -544,6 +548,341 @@ $\mathbb{H}$ which relate these different sectors by creating or annihilating a 
 
 TBC
 
+## Interesting states in quantum many-body physics
+
+Having introduced the Hilbert space and Hamiltonian of quantum many-body systems, we still
+need to define which states we are actually interested in. So far, we have only mentioned
+that isolated systems have a quantum state which corresponds to a vector (or rather a ray of
+vectors) in its Hilbert space $\mathbb{H}$.
+
+### Quantum states revisited
+
+More abstractly and generally, the quantum state of a system can be introduced as a map from 
+observables (operators) to numbers (expectation values). This is typically denoted as
+$\rho: \mathrm{End}(\mathbb{H}) \mapsto \mathbb{C}:\hat{A} \to \hat{A}$. Here, $\mathrm{End}(\mathbb{H})$
+is the set of linear operators (a.k.a endomorphisms) on $\mathbb{H}$. This set is itself a
+vector space, as we can consider linear combinations of linear operators. Furthermore, as we
+can compose linear operators, we have a multiplication, which makes $\mathrm{End}(\mathbb{H})$
+into an algebra. Finally, we have defined the concept of the adjoint of an operator, which in
+mathematics terminology gives $\mathrm{End}(\mathbb{H})$ the structure of a $C^\ast$-algebra.
+
+The map $\rho$ that represents a quantum state should have a number of properties, that generalise
+those of the case we have encountered so far, where 
+$\rho(\hat{A}) = \frac{\braket{\Psi\vert \hat{A} \vert \Psi}}{\braket{\Psi | \Psi}}$. In particular,
+this map is linear with respect to linear combinations of operators. This implies that it can
+be written as $\rho(\hat{A}) = \mathrm{Tr}\left[\hat{\rho}\hat{A}\right]$, where $\hat{\rho}$ is now
+itself an element of $ \mathrm{End}(\mathbb{H})$. Furthermore, we must have that our state
+gives rise to nonnegative and normalised probabilities, which implies that
+* $\rho(\hat{1}) = \mathrm{Tr}\left[\hat{\rho}\right] = 1$
+* $\rho(\hat{P}) \geq 0$ for any projector, and more generally, for any positive definite operator $\hat{P}$.
+This implies that the associated operator $\hat{\rho}$, known as the **density operator** or
+density matrix (when expressed with respect to a chosen basis), is itself a positive (and thus
+self-adjoint) operator, which is furthermore normalised to have trace one.
+
+The particular case where the state of the system was given by a vector $\ket{\Psi} \in \mathbb{H}$
+corresponds to $\hat{\rho} = \frac{\ket{\Psi}\bra{\Psi}}{\braket{\Psi\vert \Psi}}$ and thus
+satisfies $\hat{\rho}^2 = \hat{\rho}$, i.e. $\hat{\rho}$ is itself a projector. Such states are called
+*pure states*. All density operators which do not have this property are called *mixed states*.
+
+Being positive definite operators, any density operator admits a spectral decomposition of the
+form
+
+$$ \hat{\rho} = \sum_{n} p_n \ket{\Phi_n}\bra{\Phi_n} $$
+
+where the states $\{\ket{\Phi_n}\}$ form an orthonormal set and the eigenvalues $p_n$ satisfy
+$\sum_{n} p_n =1 $ and $p_n \geq 0$ (which together also yields $p_n < 1$).
+
+Mixed states arise in the quantum world in two scenarios:
+
+1.	Even for an isolated system, it can happen that the state is not exaclty known and one
+	must deal with classical uncertaintity and probability. Indeed, a mixed state can be
+	interpreted as a statistical ensemble. If the system can be prepared into different 
+	(not necessarily orthogonal) states $\{\ket{\Psi_1}, \ket{\Psi_2}, \ldots\}$ with probabilities 
+	$p_1, p_2, \ldots$ that sum up to one, then the state of the system is given by
+	
+	$$\hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} + \ldots $$
+
+	Note that this does not necessarily correspond to the spectral decomposition of
+	$\hat{\rho}$, as the states $\ket{\Psi_i}$ are not necessarily orthogonal. It is 
+	nonetheless a valid density operator. More generally, given two density operator
+	$\hat{\rho}_1$ and $\hat{\rho}_2$, aany convex combination 
+	$\hat{\rho} = p \hat{\rho}_1 + (1-p) \hat{\rho}_2$ with thus $0 \leq p \leq 1$ is a
+	valid density operator.
+
+2.	If the system is not isolated, but is rather a subsystem of a larger system and interacting with
+	its complement therein. This is discussed in the next section.
+
+To a mixed state, we can associate the Von Neumann entropy
+
+$$ S(\hat{\rho}) = - \mathrm{Tr}\left[\hat{\rho}\log \hat{\rho}\right] = - \sum_{n} p_n \log(p_n)$$
+
+with $p_n$ the eigenvalues of $\hat{\rho}$. For a pure state, the Von Neumann entropy
+evaluates to zero (using $\lim_{x\to 0} x \log x = 0$). Depending on the context, the
+interpretation and meaning of the Von Neumann entropy can differ, as we discuss below.
+
+### From tensor products to mixed states and entanglement
+
+Consider a bipartite system composed of two subsystems $A$ and $B$, with thus 
+$\mathbb{H} = \mathbb{H}^{(A)} \otimes \mathbb{H}^{(B)}$. Now suppose that we are only
+interested in measuring observables that act non-trivially on subsystem $A$. This might be
+the case if subsystem $A$ is the actual quantum system that we want to model, but it is not
+isolated and instead interacting with an environment, corresponding to subsystem $B$. With
+the axioms so far, we are forced to include the environment into our discussion. Only the
+combined system + environment can be assigned a pure state $\ket{\Psi}$. However, this seems
+complete overkill, as the environment might extend the whole universe and so it will be
+impossible to know the complete state $\ket{\Psi}$. Since we are only interested in
+observables that act nontrivially on the system $A$, i.e. all observables that we want to
+measure take the form $\hat{O}^A = \hat{O} \otimes \hat{1}_B$, and thus we expect that a
+reduced and simplified description must exist.
+
+Let us now assume that the Hilbert space of subsystem $A$ is spanned by a basis
+$\{\ket{\psi_k}, k=1,\dots, d^A\}$ and the Hilbert space of subsystem $B$ is spanned by a
+basis $\{\ket{\varphi_l}, l=1,\ldots, d^B\}$. A reduced description for the system $A$ can
+be obtained by observing that we can write
+
+```{math}
+\braket{\Psi \vert \hat{O}^A \vert \Psi} &= \mathrm{Tr}\left[\hat{O} \otimes \hat{1}_B \ket{\Psi} \bra{\Psi}\right]\\
+&= \sum_{k = 1}^{d^A}\sum_{l = 1}^{d^B} \left(\bra{\psi_k} \otimes \bra{\varphi_l}\right) \left(\hat{O} \otimes \hat{1}_B\right) \ket{\Psi}\bra{\Psi}\left(\ket{\psi_k} \otimes \ket{\varphi_l}\right)\\
+&= \sum_{k = 1}^{d^A}] \bra{\psi_k} \hat{O} \left[ \sum_{l=1}^{d_B} \bra{\varphi_l} \ket{\Psi} \bra{\Psi} \ket{\varphi_l}\right] \ket{\psi_k}\\
+&= \mathrm{Tr}_A \left[\hat{O} \mathrm{Tr}_B\left(\ket{\Psi}\bra{\Psi} \right)\right]\\
+&= \mathrm{Tr}\left[\hat{O} \hat{\rho}^{(A)}\right]
+```
+
+Hence, subsystem $A$ an be described in terms of a mixed state that is obtained as
+
+$$ \hat{\rho}^A = \mathrm{Tr}_B \ket{\Psi}\bra{\Psi} = \sum_{l=1}^{d_B} \bra{\varphi_l} \ket{\Psi} \bra{\Psi} \ket{\varphi_l} $$
+
+This construction is known as a *partial trace* and the resulting mixed state of subsystem
+$A$ as the *reduced density operator*. It is based on the fact that by using a tensor
+product basis for the joint Hilbert space $\mathbb{H} = \mathbb{H}^{(A)} \otimes
+\mathbb{H}^{(B)}$, a trace operation leads to a double sum, namely one over all basis
+vectors for $\mathbb{H}^A$ and one over all basis vectors for $\mathbb{H}^B$. Hence, the
+complete trace can be interpreted as the composition of two partial traces, one over
+subsystem $A$ and one over subsystem $B$. If all relevant operators act trivially on $B$,
+the partial trace over $B$ can be performed directly on the state
+$\hat{\rho}^{(AB)} = \ket{\Psi}\bra{\Psi}$ and gives rise to the reduced density matrix
+$\hat{\rho}^{(A)}$. Some notes are in order.
+* While we made reference to a specific tensor product basis to define this construction,
+  the concepts of reduced density operator and partial trace do not depend on the specific
+  choice of basis for $\mathbb{H}^{(A)}$ and $\mathbb{H}^{(B)}$. The construction only
+  requires a tensor product basis to expose the tensor product structure of $\mathbb{H}$.
+* While we have assumed that the total system is described by a pure state
+  $\hat{\rho}^{(AB)} = \ket{\Psi}\bra{\Psi}$. However, for the construction of the reduced
+  density opeator as $\hat{\rho}^{(A)} = \mathrm{Tr}_B \hat{\rho}^{(AB)}$ this is not
+  necessary.
+* With can expand the whole construction with respect to an explicitly chosen basis. If
+  $\ket{\Psi} = \sum_{k=1}^{d^A} \sum_{l=1}^{d^B} \Psi_{k,l} \ket{k}\otimes \ket{l}$, we
+  find
+  $$\hat{\rho}^{(AB)} = \sum_{k,k'=1}^{d^A} \sum_{l,l'=1}^{d^B} \Psi_{k,l} \Psi_{k',l'}^\ast \left(\ket{k}\otimes \ket{l}\right) \left(\bra{k'}\otimes \bra{l'}\right)$$  
+  and
+  $$\hat{\rho}^{(A)} = \sum_{k,k'=1}^{d^A} \sum_{l=1}^{d^B} \Psi_{k,l} \Psi_{k',l}^\ast \ket{k}\bra{k'}$$
+
+If the reduced density operator $\hat{\rho}^A$ is pure, this indicates that the state $\ket{\Psi}$
+was itself a tensor product. In all other cases, the subsystems $A$ and $B$ are said to be
+entangled. This entanglement can be quantified by computing the Von Neumann entropy $S(\hat{\rho}^A)$,
+which is then called the **entanglement entropy** of the combined system $A$ and $B$. Indeed,
+that this entropy is a property of how both subsystems are entangled follows from the fact that
+$S(\hat{\rho}^A) = S(\hat{\rho}^B)$, i.e.\ it doesn't matter whether the Von Neumann entropy
+of the reduced density operator of subsystem $A$ or of subsystem $B$ is computed. This is only
+true if the total system is in a pure state $\ket{\Psi}$. When also the total system is in a
+mixed state, because of classical randomness, then it is harder to differentiate between
+true quantum entanglement and classical probability.
+
+To conclude, we analyse the case where the combined system is in a pure state a bit more.
+If we again expand $\ket{\Psi}$ with respect to the tensor product basis as 
+
+$$\ket{\Psi} = \sum_{k=1}^{d^A} \sum_{l=1}^{d^B} \Psi_{k,l} \ket{k}\otimes \ket{l}$$
+
+and interpret its expansion coefficients $\Psi_{k,l}$ as the entries of a $d^A \times d^B$
+matrix $C$. The reduced density operators can now be written as
+
+$$\hat{\rho}^A = \sum_{k,k'=1}^{d^A} [C C^\dagger]_{k,k'} \ket{k}\bra{k'}\quad \text{and}\quad\hat{\rho}^A = \sum_{k,k'=1}^{d^A} [C^\dagger C]_{l,l'} \ket{l}\bra{l'}$$
+
+Hence, the reduced density matrices for subsystems $A$ and $B$ are related by the fact that
+they correspond to the two different ways in which we can multiply the matrix $C$ with its
+Hermitian conjugate $C^\dagger$. It is a well-known result from linear algebra that for two
+matrices $A \in \mathbb{C}^{d_1 \times d_2}$ and $B \in \mathbb{C}^{d_2 \times d_1}$, the
+square matrices $A B \in \mathbb{C}^{d_1 \times d_1}$ and $BA \in \mathbb{C}^{d_2 \times d_2}$
+have the same set of nonzero eigenvalues, counted with degeneracy. If $d_1 \neq d_2$, the 
+larger of the two matrices will have additional eigenvalues zero. This result already
+proofs the equality $S(\hat{\rho}^{(A)}) = S(\hat{\rho}^{(B)})$.
+
+However, we can even make this more explicit. We can decompose the matrix $C \in \mathbb{C}^{d^A \times d^B}$ as 
+$C = U S V^\dagger$ with $U$ and $V$ unitary matrices (of size $d^A \times d^A$ and
+$d^B \times d^B$ respectively), and $S$ a $d^A \times d^B$ matrix which only has nonzero entries
+on the diagonal. Furthermore, the nonzero entries of $S$ can be chosen positive in descending
+order. This decomposition is known as the **singular value decomposition**. For further reference,
+we denote the diagonal elements of $S$ as $s_i = S_{i,i}$ for $i=1,\ldots, \mathrm{min}(d^A,d^B)$.
+
+The unitary matrices $U$ and $V$ can be interpreted as basis transforms in the subsystems
+$A$ and $B$ respectively, i.e. they define a new basis (which is thus specific to the chosen
+state $\ket{\Psi}$), which we denote as $\{\ket{\psi^{(A)}_k}, k= 1,\ldots, d^A\}$ and 
+$\{\ket{\psi^{(B)}_l}, l= 1,\ldots, d^B\}$. We can then write
+
+$$ \ket{\Psi} &= \sum_{i=1}^{\min(d^A,d^B)} s_i \ket{\psi^A_i} \otimes \ket{\psi^B_i}\\
+\hat{\rho}^{(A)} &= \sum_{i=1}^{d^A} (s_i)^2 \ket{\psi^A_i} \bra{\psi^A_i}\\
+\hat{\rho}^{(B)} &= \sum_{i=1}^{d^b} (s_i)^2 \ket{\psi^B_i} \bra{\psi^B_i}$$
+
+Hence, the reduced matrices appear immietely in diagonalised form. The singular values $s_i$,
+or rather their squares $p_i = (s_i)^2 are referred to as the **entanglement spectrum**. The
+entanglement entropy is then given by
+
+$$ S = - \sum_{i} p_i \log(p_i)$$
+
+In all of this, it is clear that subsystems $A$ and $B$ were treated on equal footing, and it
+does in fact not matter which of the two is chosen to probe the entanglement structure of
+the state.
+
+### Quantum many-body physics at finite temperature
+
+When a system is in contact with a large environment that acts as a heat bath at temperature $T$,
+then it will equilibrate so that the state of the system at equilibrium is given by the
+so-called Gibbs state
+
+$$\hat{\rho} = \frac{\mathrm{e}^{-\beta \hat{H}}}{\mathrm{Tr}\left[\mathrm{e}^{-\beta \hat{H}}\right]}$$
+
+with $\beta = \frac{1}{k_B T}$, $T$ de temperature, and $k_B$ Boltzmann's constant. Henceforth,
+we simply refer to $\beta$ as *inverse temperature*.
+
+TBC
+
+### Quantum many-body physics at zero temperature
+
+TBC
+
 ## Quantum-to-classical mapping
 
+In this final section, we introduce a general technique that essentially enables us to map
+any quantum lattice system in $d$ dimensions to a classical partition function in $d+1$ dimensions, up to some caveats that we will return to at the end of this section.
 
+TBC
+
+<!-- 
+### Suzuki-Trotter decomposition
+So far, we have only discussed isolated quantum systems, the state of which corresponds to 
+a vector (or a ray of vectors) in the Hilbert space. When the system is not isolated, it will
+entangle with its environment. However, if we are not interested in any observables of the 
+environment, we can still restrict to a description that only involves the system itself, at
+the expense of modelling the state of the system as a mixed state or density matrix. 
+
+discusse
+Thermal expectation values are given by
+
+$$\braket{\operator{O}} = \tr\left[\operator{O} \ec^{-\beta \ham}\right]/Z(\beta)= \tr\left[\ec^{-\beta \ham/2} \operator{O} \ec^{-\beta \ham/2}\right]/Z(\beta)$$
+
+with the thermal partition function $Z(\beta)$ given by
+$$Z(\beta) = \tr \ec^{-\beta \ham} = \sum_{s= \pm 1} \braket{s|\ec^{-\beta \ham}|s}.$$
+
+The ground state physics is encoded in the limit $\beta \to \infty$. Note that, if the system has a unique ground state, we can obtain the ground state $\ket{\psi}$ of a quantum system by starting from essentially a random state $\ket{\phi}$ and evolving it in imaginary time $\tau = -\ic t$ for sufficiently long
+
+$$\ket{\psi_0} \sim \lim_{\tau \to \infty} \ec^{-\tau \ham} \ket{\phi}$$
+
+Expanding the initial state $\ket{\phi}$ in the energy eigenbasis of $\ham$, we see that the only condition is that it is not orthogonal to the ground state (subspace). In addition, the ground state will be well approximated if $\tau \Delta E \gg 1$, with $\Delta E=E_1 - E_0$ the energy gap.\footnote{This imaginary time evolution forms the basic ingredient of several numerical algorithms for approximating ground states of quantum many body systems, often in combination with the Suzuki-Trotter decomposition which is introduced below.} 
+ This approach yields the following expression for the ground state expectation value of on operator $\operator{O}$
+\begin{equation}
+\braket{\operator{O}} = \lim_{\tau\to\infty} \braket{\phi|\ec^{-\tau \ham} \operator{O} \ec^{-\tau \ham}|\phi}/\braket{\phi|\ec^{-2\tau \ham} |\phi}\label{eq:imaginartimeexpval}
+\end{equation}
+This expression can be compared with Eq.~\eqref{eq:thermalexpval} with $\beta = 2\tau$; the only difference is in the boundary conditions.
+
+For a quantum many body system, taking the exponential is as hard as determining the full diagonalisation of the hamiltonian, which is impossible due to the exponentially large Hilbert space. If the hamiltonian is a sum of local terms, each of these terms can be exponentiated easily, but for arbitrary $\tau$ there is no relation ship between $\exp(-\tau \sum_{i} \operator{h}_i)$ and the individual $\exp(-\tau \operator{h}_i)$, unless the different $\operator{h}_i$ commute. However, for an infinitesimal time step $\epsilon$, we can use to Baker-Campbell-Hausdorff formula (or better yet, the Zassenhaus formula) to obtain $\exp(-\epsilon \sum_{i} \operator{h}_i) = \prod_i \exp(-\epsilon \operator{h}_i) + \mathcal{O}(\epsilon^2)$. This then leads to the \emph{Suzuki-Trotter decomposition}
+\begin{equation}
+	\exp\left(-\tau \sum_{i} \operator{h}_i\right) = \lim_{M\to\infty} \left( \ec^{-\frac{\tau}{M} \sum_i \operator{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \ec^{-\frac{\tau}{M} \operator{h}_i} + \order(M^{-1})\right)^M 
+\end{equation}
+Note that splitting the time interval $[0,\tau]$ into small segments $\epsilon = \tau/M$ is also the starting point for deriving a path integral representation of the quantum partition function. The next step is to insert a resolution of the identity in between the $N$ different factors, where the labels of the basis will behave as classical degrees of freedom. For obtaining a path integral, the basis should be labeled by a number of continuous degrees of freedom, which can then become continuous functions of time in the limit $\epsilon\to 0$. Here, instead, we will keep $\epsilon$ small but finite, and use a discrete basis. 
+\subsection{From quantum to statistical mechanics}
+Let's start with a quantum system in $d=0$, i.e.\ a small number of spins, or in particular, a single spin, described by a hamiltonian
+\begin{equation}
+	\ham = - h_x \sigma^x - h_z \sigma^z
+\end{equation}
+While we could in principle exponentiate $\ham$ directly, we will treat it using the Suzuki-Trotter decomposition. Throughout the remainder of this section, we will use the $\sz$ basis, which we denote as $\ket{1} = \ket{\uparrow}$ and $\ket{-1} = \ket{\downarrow}$. Inserting resolutions of the identity, we write
+\begin{equation}
+	Z(\beta) = \tr \ec^{-\beta \ham} = \sum_{\{s_k\}=\pm 1} \braket{s_1|\ec^{-\epsilon \ham}|s_2}\cdots \braket{s_M-1| \ec^{-\epsilon \ham}|s_{M}} \cdots \braket{s_M| \ec^{-\epsilon \ham}|s_{M+1}}
+\end{equation}
+with $s_{M+1} = s_1$, $M\epsilon =\beta$, and where
+\begin{align*}
+	\braket{s_{i}|\ec^{-\epsilon H}|s_{i+1}} &= \braket{s_{i}|\ec^{-\epsilon H}|s_{i+1}} \approx  \braket{s_{i}|\ec^{\epsilon h_z \sz}\ec^{\epsilon h_x \sx}|s_{i+1}}\\
+	&=  \ec^{\epsilon h_z s_i} \braket{s_{i}|\cosh(\epsilon h_x) \one + \sinh(\epsilon h_x) \sx |s_{i+1}}\\
+	&= \ec^{K s_{i}s_{i+1} + h s_i + f_0}.
+\end{align*}
+\begin{exercise}
+Prove that the equality on the last line is obtained with , $K = -\frac{1}{2}\log \tanh(\epsilon h_x)$, $h = \epsilon h_z$ and $f_0 = \frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]$.
+\end{exercise}\\
+We thus obtain $Z(\beta) = \sum_{s_k} \ec^{\sum_{i=1}^{M}K s_i s_{i+1} + h s_i}$, the partition function of the one-dimensional classical Ising model with periodic boundary conditions. Indeed, $\braket{s_{i}|\ec^{-\epsilon H}|s_{i+1}}$ does exactly correspond to the transfer matrix, and diagonalising the transfer matrix is the most straightforward approach to solving the one-dimensional classical Ising model. 
+
+\subsection{Higher dimensional generalisation}
+
+We now apply the same approach to the transverse field Ising model in $d$ dimensions, on a hypercubic lattice. We separate the hamiltonian in two parts according to
+\begin{equation}
+	\ham_{\text{TFIM}} = \left(-J\sum_{\braket{i,j}} \sz_i \sz_j  - h_z \sum_{i} \sz_i\right) + \left(- h_x \sum_{i} \sx_i\right)= \operator{H}_1 + \operator{H}_2
+\end{equation}
+Note that $\operator{H}_1$ and $\operator{H}_2$ in itself contain commuting terms, but of course don't mutually commute. We follow the same strategy, and will in every (imaginary) time step introduce a resolution of the identity using the tensor product $\sz$ basis. We now denote the basis at time step $k$ as $\ket{\{s_{i,k}\}}$, where $i$ labels a site in the $d$ dimensional lattice hosting the quantum degrees of freedom, and $k$ labels points along the imaginary time axis, which emerges as a new dimension in the problem. We find
+\begin{align*}
+\exp(-\epsilon \operator{H}_1)\ket{\{s_{i,k}\}} = \exp(\epsilon J \sum_{\braket{i,j}} s_{i,k} s_{j,k}+\epsilon h \sum_i s_{i,k}) \ket{\{s_{i,k}\}}
+\end{align*}
+as $\operator{H}_1$ is diagonal in this basis, and 
+\begin{align*}
+\braket{\{s_{i,k}\}|\exp(-\epsilon \operator{H}_2)|\{s_{i,k+1}\}} = \prod_i \braket{s_{i,k}|\ec^{-\epsilon h_x \sx_i} | s_{i,k+1}}
+ \sim \exp(K_\perp\sum_{i} s_{i,k} s_{i,k+1})
+\end{align*}
+with $K_\perp = \log \tanh(\epsilon h_x)$ as before. Here, we have now ignored an overall proportionality factor, which is irrelevant when using the partition function to compute expectation values. With this, we find
+\begin{equation}
+	Z(\beta) = \sum_{\{s_i,k\}} \exp\left(\sum_{k=1}^{M}\sum_{i} K_\perp s_{i,k} s_{i,k+1}+\sum_{k=1}^M\sum_{\braket{i,j}} K_\parallel s_{i,k} s_{j,k} + \sum_{k=1}^{M}\sum_{i} h s_{i,k} \right)
+\end{equation}
+with $K_{\parallel} = \epsilon J$ and $h = \epsilon h_z$. We thus find the partition function of the classical Ising model in $d+1$ dimensions with anisotropic interaction strengths, periodic boundary condition in the imaginary time direction and a number of sites in the time direction given by $M = \beta/\epsilon$. Hence, the ground state regime $\beta\to \infty$ corresponds to the thermodynamic limit in this additional time direction of the corresponding classical system, and we will see that there are many similarities (or actually, equivalences) between between quantum phenomena in $d$ dimensions and classical phenomena in $D=d+1$ dimensions. On the other hand, when the quantum system is at finite temperature $\beta$, the additional dimension is finite and never in the thermodynamic limit. In that case, this extra dimension cannot cause new non-analyticities in the partition function and finite temperature quantum systems in $d$ dimensions are very similar to classical systems in $d$ dimensions.
+
+In particular, the ground state of the quantum Ising chain has an extended symmetry broken
+regime $g\in[0,1)$, matching the ferromagnetic phase at low temperatures in the
+two-dimensional classical Ising model. One can show that also the order parameter between
+the quantum chain and the classical model is equivalent. At finite temperature however, the
+quantum Ising chain does not exhibit symmetry breaking, exactly like the one-dimensional
+classical Ising model. It is not surprising that the $d=1$ quantum phase transition itself
+is also completely equivalent to the $D=2$ finite temperature phase transition, which also
+fits within the broader context of universality, which we briefly discuss in the next
+section. The duality mapping in the quantum Ising chain is furthermore equivalent to the
+well-known Kramers-Wannier duality in the classical Ising model.
+
+This quantum to classical mapping can also be inverted.\footnote{This does not imply that
+the mapping is unique. Choosing a different time step $\epsilon$ or a different basis, e.g.\
+the $\sx$ instead of $\sz$ basis will result in a different classical model.} Taking a
+codimension $1$ slice out of a $D$-dimensional classical partition function, one obtains a
+transfer matrix which can be interpreted as the exponential of a quantum hamiltonian acting
+on the Hilbert space of a $d=D-1$ dimensional quantum system. In fact, the modern
+perspective on the exact solution of the two-dimensional classical Ising model by Onsager is
+exactly by this transfer matrix approach, which is subsequently diagonalised using the
+Jordan Wigner and free fermion approach from Section~\ref{s:isingexact}.
+
+It is clear that the quantum to classical mapping is not specific to the quantum Ising model
+and can be applied to any hamiltonian. The path integral representation of the partition
+function fits within the same scheme, and only differs in the fact that the limit
+$\epsilon\to 0$ is taken such that the additional dimension becomes continuous. This is
+particularly natural if also the spatial dimensions of the quantum dimension are continuous,
+i.e.\ if we have a quantum field theory. In this case, a $D=d+1$ dimensional classical
+statistical field theory is obtained. For relativistic quantum field theories, where it is
+common practice to explicitly count the time dimension together with the space dimensions,
+imaginary time evolution leads to an action, which is equivalently a hamiltonian of a
+classical field theory in $D=d+1$ spatial dimensions, with full Euclidean invariance.
+
+One might thus wonder if there is anything new to be learned from studying quantum ground
+states. First of all, there is one important catch which we have overlooked so far. There is
+no guarantee that the above process yields a classical partition function with Boltzmann
+weights which are positive, or even real. While this may seem like a technical detail, it is
+of major importance. The quantum to classical mapping is the basis behind the Quantum Monte
+Carlo method, one the most successful numerical methods for studying quantum many body
+systems. One maps the quantum problem to a classical partition function and then uses one of
+the many flavours of Monte Carlo sampling. However, with non-positive Boltzmann weights, the
+interpretation of a probability distribution is lost and no efficient sampling procedure can
+be designed, as samples might annihilate each other. This is known as the \emph{sign}
+problem.
+
+Secondly, for many non-relativistic quantum systems, the anisotropy between the imaginary
+time direction and the spatial dimensions in the corresponding classical system cannot be
+ignored, even at the critical point. In those cases, critical correlations behave
+differently in the spatial and the time direction, which is characterised by a dynamical
+critical exponent $z$. The case $z=1$ corresponds to the case where the critical point has
+(emergent) rotation/Lorentz invariance between time and space.
+
+A final reason to study quantum systems directly is that certain concepts are more natural
+in that setting. In particular, the last 15 years, ideas from quantum information theory,
+and in particular the concept of entanglement, have made their way into the standard toolbox
+to study and characterize quantum many body systems.
+ -->
