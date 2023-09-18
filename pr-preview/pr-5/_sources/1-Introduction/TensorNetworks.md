@@ -20,10 +20,9 @@ kernelspec:
 
 In this lecture we will introduce the basic concepts of tensor network theory. We will start
 with a brief overview of the history of tensor networks and their relevance to modern
-physics. We will then introduce the basic mathematical concepts of tensor networks,
-including multi-linear algebra and graphical notation. Finally, we will discuss the
-computational complexity of tensor networks and their relevance to quantum many-body
-physics.
+physics. We will then introduce the graphical notation that is often used to simplify
+expressions, and discuss the relevant operations and decompositions along with their
+computation complexity and their relevance to quantum many-body physics.
 
 This discussion is largely based on {cite}`bridgeman2017handwaving`.
 
@@ -35,40 +34,30 @@ tools. These ideas have been developed in a variety of contexts, but have been e
 relevant to the study of quantum physics and machine learning.
 
 1. Early Foundations:
-
-* The roots of tensor networks can be traced back to the early development of linear algebra and matrix notation in the 19th century, pioneered by mathematicians like Arthur Cayley and James Sylvester.
-* The concept of tensors as multi-dimensional arrays of numbers began to emerge in the late 19th and early 20th centuries.
-
+  * The roots of tensor networks can be traced back to the early development of linear algebra and matrix notation in the 19th century, pioneered by mathematicians like Arthur Cayley and James Sylvester.
+  * The concept of tensors as multi-dimensional arrays of numbers began to emerge in the late 19th and early 20th centuries.
 2. Matrix Product States and DMRG:
-
-* The birth of modern tensor network theory can be attributed to the introduction of MPS in the 1960s (?).
-* One of the earliest, and still most widely used tensor network algorithm is DMRG. It was developed by Steven White in 1992, and provides one of the most efficient methods for simulating one-dimensional quantum many-body systems.
-
+  * The birth of modern tensor network theory can be attributed to the introduction of MPS in the 1960s (?).
+  * One of the earliest, and still most widely used tensor network algorithm is DMRG. It was developed by Steven White in 1992, and provides one of the most efficient methods for simulating one-dimensional quantum many-body systems.
 3. Quantum Information Theory:
-
-* In the 1980s and 1990s, the field of quantum information theory began to emerge, driven by (add names here)
-* Concepts such as quantum entanglement and quantum information became central to the study of quantum many-body systems.
-
+  * In the 1980s and 1990s, the field of quantum information theory began to emerge, driven by (add names here)
+  * Concepts such as quantum entanglement and quantum information became central to the study of quantum many-body systems.
 4. Higher-Dimensional Tensor Networks:
-
-* As the field progressed, tensor network methods were extended to higher-dimensional systems, leading to the emergence of more general tensor network states (TNS)..
-* Two-dimensional tensor networks such as Projected Entangled Pair States (PEPS) and Multi-scale Entanglement Renormalization Ansatz (MERA) were introduced in the early 2000s.
-
+  * As the field progressed, tensor network methods were extended to higher-dimensional systems, leading to the emergence of more general tensor network states (TNS)..
+  * Two-dimensional tensor networks such as Projected Entangled Pair States (PEPS) and Multi-scale Entanglement Renormalization Ansatz (MERA) were introduced in the early 2000s.
 5. Tensor Networks in other disciplines:
-
-* Many of the concepts and methods developed in the context of tensor networks have been applied to other disciplines, one of the most prominent being machine learning.
-* Unsuprisingly, they also play a central role in quantum computing, where tensor network algorithms provide a natural language to explore quantum circuit simulations.
-
+  * Many of the concepts and methods developed in the context of tensor networks have been applied to other disciplines, one of the most prominent being machine learning.
+  * Unsuprisingly, they also play a central role in quantum computing, where tensor network algorithms provide a natural language to explore quantum circuit simulations.
 6. Ongoing Research and Applications
-
-* Tensor network theory continues to be a vibrant and evolving field with ongoing research in various directions, such as the development of efficient tensor contraction algorithms, the application of tensor networks for understanding quantum phases of matter, the development of tensor network algorithms for quantum computing, and the application of tensor networks to machine learning.
+  * Tensor network theory continues to be a vibrant and evolving field with ongoing research in various directions, such as the development of efficient tensor contraction algorithms, the application of tensor networks for understanding quantum phases of matter, the development of tensor network algorithms for quantum computing, and the application of tensor networks to machine learning.
 
 ## Graphical Notation and Tensor Operations
 
 One of the main advantages of tensor networks is that they admit a very intuitive graphical
 notation, which greatly simplifies the expressions involving numerous indices. This notation
 is based on the idea of representing a single tensor as a node in a graph, where the indices
-of the tensor are depicted by legs sticking out of it, one for each vector space. As an example, a rank-four tensor $R$ can be represented as:
+of the tensor are depicted by legs sticking out of it, one for each vector space. As an
+example, a rank-four tensor $R$ can be represented as:
 
 ```{image} /_static/1-Introduction/R-tensor.svg
 :name: R-tensor
@@ -91,7 +80,9 @@ the node and the direction of the tensor can imply certain properties, such as m
 explicit distinction between the isomorphic representations, but in what follows we will not
 make this distinction.
 
-Furthermore, this naturally gives a notion of grouping and splitting of indices, which is just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and the inverse operation. For example, the following diagrams are equivalent:
+Furthermore, this naturally gives a notion of grouping and splitting of indices, which is
+just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and
+the inverse operation. For example, the following diagrams are equivalent:
 
 ```{image} /_static/1-Introduction/grouping.svg
 :name: grouping
@@ -106,7 +97,7 @@ column-major ordering is given explicitly by grouping indices as follows:
 
 ```{math}
 :label: eq:kronecker_product
-I \coloneq i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots
+I := i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots
 ```
 
 Here $d_i$ is the dimension of the corresponding vector space, and $I$ is the resulting
@@ -144,7 +135,7 @@ indices is given by:
 
 In this notation, the cyclic property of the trace follows trivially by sliding one of the
 matrices around the loop of the diagram. As this only changes the placement of the tensors
-in the network, and not the value, the graphic proof of $\tr (AB) = \tr (BA)$ is found.
+in the network, and not the value, the graphic proof of $\Tr{AB} = \Tr{BA}$ is found.
 
 ```{image} /_static/1-Introduction/trace-cyclic.svg
 :name: trace-cyclic

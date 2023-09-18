@@ -359,8 +359,8 @@ a vector in <span class="math notranslate nohighlight">\(V \otimes W\)</span> is
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×3 StridedViews.StridedView{Float64, 2, Matrix{Float64}, typeof(identity)}:
- 0.156141  0.650697  0.0569879
- 0.335061  0.543995  0.755302
+ 0.0872901  0.462704  0.355695
+ 0.418096   0.738796  0.152291
 </pre></div>
 </div>
 </div>
@@ -458,17 +458,17 @@ matrix strongly resembles the definition of a vector in a tensor product vector 
 is not a coincidence, and in fact the two can easily be identified by considering the
 following identification (isomorphism):</p>
 <div class="math notranslate nohighlight" id="equation-eq-tensor-isomorphism">
-<span class="eqno">(3.5)<a class="headerlink" href="#equation-eq-tensor-isomorphism" title="Permalink to this equation">#</a></span>\[W \leftarrow V \cong W \otimes V^* \]</div>
+<span class="eqno">(3.5)<a class="headerlink" href="#equation-eq-tensor-isomorphism" title="Permalink to this equation">#</a></span>\[(W \leftarrow V) \cong (W \otimes V^*) \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">V</span><span class="p">)</span>
 <span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Tensor</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">V</span><span class="o">&#39;</span><span class="p">)</span>
-<span class="n">space</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">space</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="n">space</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">space</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>false
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
 </pre></div>
 </div>
 </div>

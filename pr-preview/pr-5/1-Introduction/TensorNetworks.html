@@ -260,10 +260,9 @@ const thebe_selector_output = ".output, .cell_output"
 <h2><a class="toc-backref" href="#id5"><span class="section-number">4.1. </span>Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this lecture we will introduce the basic concepts of tensor network theory. We will start
 with a brief overview of the history of tensor networks and their relevance to modern
-physics. We will then introduce the basic mathematical concepts of tensor networks,
-including multi-linear algebra and graphical notation. Finally, we will discuss the
-computational complexity of tensor networks and their relevance to quantum many-body
-physics.</p>
+physics. We will then introduce the graphical notation that is often used to simplify
+expressions, and discuss the relevant operations and decompositions along with their
+computation complexity and their relevance to quantum many-body physics.</p>
 <p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id3" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, may 2017. URL: https://dx.doi.org/10.1088/1751-8121/aa6dc3, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
 <div class="section" id="history">
 <h3><span class="section-number">4.1.1. </span>History<a class="headerlink" href="#history" title="Permalink to this heading">#</a></h3>
@@ -319,7 +318,8 @@ relevant to the study of quantum physics and machine learning.</p>
 <p>One of the main advantages of tensor networks is that they admit a very intuitive graphical
 notation, which greatly simplifies the expressions involving numerous indices. This notation
 is based on the idea of representing a single tensor as a node in a graph, where the indices
-of the tensor are depicted by legs sticking out of it, one for each vector space. As an example, a rank-four tensor <span class="math notranslate nohighlight">\(R\)</span> can be represented as:</p>
+of the tensor are depicted by legs sticking out of it, one for each vector space. As an
+example, a rank-four tensor <span class="math notranslate nohighlight">\(R\)</span> can be represented as:</p>
 <img alt="../_images/R-tensor.svg" class="align-center" id="r-tensor" src="../_images/R-tensor.svg" /><div class="section" id="indexing">
 <h3><span class="section-number">4.2.1. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h3>
 <p>In this notation, the individual components of the tensor can be recoverd by fixing the open
@@ -334,14 +334,16 @@ moved around, as long as their order is preserved. In some contexts the shape of
 the node and the direction of the tensor can imply certain properties, such as making an
 explicit distinction between the isomorphic representations, but in what follows we will not
 make this distinction.</p>
-<p>Furthermore, this naturally gives a notion of grouping and splitting of indices, which is just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and the inverse operation. For example, the following diagrams are equivalent:</p>
+<p>Furthermore, this naturally gives a notion of grouping and splitting of indices, which is
+just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and
+the inverse operation. For example, the following diagrams are equivalent:</p>
 <img alt="../_images/grouping.svg" class="align-center" id="grouping" src="../_images/grouping.svg" /><p>Owing to the freedom in choice of basis, the precise details of grouping and splitting are
 not unique. One specific choice of convention is the tensor product basis, which is
 precisely the one we have used in the discussion of multi-linear algebra. More concretely,
 one choice that is often used is the <em>Kronecker product</em>, which in the setting of
 column-major ordering is given explicitly by grouping indices as follows:</p>
 <div class="math notranslate nohighlight" id="equation-eq-kronecker-product">
-<span class="eqno">(4.1)<a class="headerlink" href="#equation-eq-kronecker-product" title="Permalink to this equation">#</a></span>\[I \coloneq i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots\]</div>
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-eq-kronecker-product" title="Permalink to this equation">#</a></span>\[I := i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots\]</div>
 <p>Here <span class="math notranslate nohighlight">\(d_i\)</span> is the dimension of the corresponding vector space, and <span class="math notranslate nohighlight">\(I\)</span> is the resulting
 linear index. Note again that so long as the chosen convention is consistent, the precise
 method of grouping and splitting is immaterial.</p>
@@ -365,7 +367,7 @@ over these indices. For example, the trace of a rank three tensor <span class="m
 indices is given by:</p>
 <img alt="../_images/trace.svg" class="align-center" id="trace" src="../_images/trace.svg" /><p>In this notation, the cyclic property of the trace follows trivially by sliding one of the
 matrices around the loop of the diagram. As this only changes the placement of the tensors
-in the network, and not the value, the graphic proof of <span class="math notranslate nohighlight">\(\tr (AB) = \tr (BA)\)</span> is found.</p>
+in the network, and not the value, the graphic proof of <span class="math notranslate nohighlight">\(\Tr{AB} = \Tr{BA}\)</span> is found.</p>
 <img alt="../_images/trace-cyclic.svg" class="align-center" id="trace-cyclic" src="../_images/trace-cyclic.svg" /></div>
 <div class="section" id="contractions">
 <h3><span class="section-number">4.2.5. </span>Contractions<a class="headerlink" href="#contractions" title="Permalink to this heading">#</a></h3>
