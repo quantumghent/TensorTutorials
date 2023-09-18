@@ -20,9 +20,9 @@ parts:
   numbered: true
   chapters:
   - file: 3-MatrixProductStates/MatrixProductStates
-  - file: 3-MatrixProductStates/MatrixProductOperators
   - file: 3-MatrixProductStates/InfiniteMPS
   - file: 3-MatrixProductStates/Algorithms
+  - file: 3-MatrixProductStates/MatrixProductOperators
   - file: 3-MatrixProductStates/Applications
 - caption: Tensor Network Algorithms
   numbered: true
