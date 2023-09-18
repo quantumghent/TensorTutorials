@@ -391,9 +391,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 0.9999999999999998
-norm(mps.AC[1]) = 0.9999999999999998
-norm(mps.CR[1]) = 0.9999999999999999
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0
+norm(mps.AC[1]) = 1.0
+norm(mps.CR[1]) = 1.0
 </pre></div>
 </div>
 </div>
@@ -427,7 +427,7 @@ norm(mps.CR[1]) = 0.9999999999999999
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- 0.5107437266414966 + 0.039010936152036615im
+ 1.4993930744199726 + 0.046212908751242385im
 </pre></div>
 </div>
 </div>
@@ -440,7 +440,7 @@ norm(mps.CR[1]) = 0.9999999999999999
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5463080699606351
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5746434711460918
 </pre></div>
 </div>
 </div>
@@ -586,6 +586,11 @@ norm(mps.CR[1]) = 0.9999999999999999
    12. Fixed-Point algorithms
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/TimeEvolutionAlgorithms.html">
+   13. Time Evolution
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -595,7 +600,7 @@ norm(mps.CR[1]) = 0.9999999999999999
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>
@@ -663,18 +668,18 @@ norm(mps.CR[1]) = 0.9999999999999999
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/3-MatrixProductStates/InfiniteMPS.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/3-MatrixProductStates/InfiniteMPS.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/InfiniteMPS.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -705,8 +710,8 @@ norm(mps.CR[1]) = 0.9999999999999999
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
                 const pageName = "3-MatrixProductStates/InfiniteMPS";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/3-MatrixProductStates/InfiniteMPS.ipynb";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
+                const urlPath = "tree/TensorTutorials.notebooks/3-MatrixProductStates/InfiniteMPS.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 

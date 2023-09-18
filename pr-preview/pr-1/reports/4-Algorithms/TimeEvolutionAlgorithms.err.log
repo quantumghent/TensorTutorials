@@ -1,0 +1,88 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+using TensorKit,MPSKit,MPSKitModels
+using Plots
+
+H₀ = transverse_field_ising(;J=1.0,g=0.0);
+
+#Create a MPS with physical bond dimension d=2 and virtual D=50 and optimize it
+Ψ = InfiniteMPS([2],[50]);
+(gs,envs,_) = find_groundstate(Ψ,H₀,VUMPS(;verbose=false));
+
+#Let's check some expectation values
+sz_gs = expectation_value(gs,σᶻ()) # we have found the |↑↑...↑> or |↓↓...↓> state
+E_gs  = expectation_value(gs,H₀,envs)
+
+# time evolution Hamiltonian
+Ht  = transverse_field_ising(;J=1.0,g=0.25);
+alg = TDVP();
+
+dt = 0.1
+Nsteps = 20
+ts = dt .* 1:Nsteps
+
+#Do the time evolution with tdvp
+sz_tdvp = zeros(Nsteps);
+(Ψt,envs) = timestep(gs,Ht,dt,alg);
+sz_tdvp[1] = real(expectation_value(Ψt,σᶻ())[1]);
+for n in 2:Nsteps
+  (Ψt,envs) = timestep(Ψt,Ht,dt,alg,envs);
+  sz_tdvp[n] = real(expectation_value(Ψt,σᶻ())[1])
+end
+
+# let's make a first order time evolution mpo out of Ht
+Ht_mpo = make_time_mpo(Ht, dt, TaylorCluster{1}());
+
+sz_tmpo = zeros(Nsteps);
+Ψt,_ = approximate(gs, (Ht_mpo, gs), VUMPS(; verbose=false));
+sz_tmpo[1] = real(expectation_value(Ψt,σᶻ())[1]);
+for n in 2:Nsteps
+  Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
+  sz_tmpo[n] = real(expectation_value(Ψt,σᶻ())[1])
+end
+
+# let's make a 2nd order time evolution mpo out of Ht
+Ht_mpo = make_time_mpo(Ht, dt, TaylorCluster{2}());
+
+sz_tmpo2 = zeros(Nsteps);
+Ψt,_ = approximate(gs, (Ht_mpo, gs), VUMPS(; verbose=false));
+sz_tmpo2[1] = real(expectation_value(Ψt,σᶻ())[1]);
+for n in 2:Nsteps
+  Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
+  sz_tmpo2[n] = real(expectation_value(Ψt,σᶻ())[1])
+end
+
+# Compare the different methods
+a = plot(xlabel="t",ylabel="<σᶻ(t)>");
+plot!(a,ts,sz_tdvp,label="TDVP",c=:black);
+scatter!(a,ts,sz_tmpo,label="tmpo 1st");
+scatter!(a,ts,sz_tmpo2,label="tmpo 2nd")
+------------------
+
+
+ArgumentError: Package Plots not found in current path.
+- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
+
+Stacktrace:
+ [1] macro expansion
+   @ ./loading.jl:1630 [inlined]
+ [2] macro expansion
+   @ ./lock.jl:267 [inlined]
+ [3] require(into::Module, mod::Symbol)
+   @ Base ./loading.jl:1611
+
