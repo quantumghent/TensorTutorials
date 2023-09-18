@@ -12,10 +12,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
-      - name: Install Python Dependencies
-        run: |
-          pip install -r lectures/requirements.txt
+          python-version: '3.9'
+          cache: 'pip'
+      - run: pip install -r lectures/requirements.txt
       - name: Install LaTeX dependencies
         run: |
           sudo apt-get -qq update
@@ -40,6 +39,7 @@ jobs:
         run: |
           julia -e 'using Pkg; Pkg.add("IJulia");'
           julia --project=lectures --threads auto -e 'using Pkg; Pkg.instantiate();'
+      - uses: julia-actions/cache@v1
       - name: Build HTML
         shell: bash -l {0}
         run: |

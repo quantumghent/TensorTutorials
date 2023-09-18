@@ -16,12 +16,11 @@ jobs:
 
     # Install dependencies
     - name: Set up Python 3.9
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
-        python-version: 3.9
-    - name: Install Python dependencies
-      run: |
-        pip install -r lectures/requirements.txt
+        python-version: '3.9'
+        cache: 'pip'
+    - run: pip install -r lectures/requirements.txt
     - name: Install LaTeX dependencies
       run: |
         sudo apt-get -qq update
@@ -46,6 +45,7 @@ jobs:
       run: |
         julia -e 'using Pkg; Pkg.add("IJulia");'
         julia --project=lectures --threads auto -e 'using Pkg; Pkg.instantiate();'
+    - uses: julia-actions/cache@v1
     - name: Download "build" folder (cache)
       uses: dawidd6/action-download-artifact@v2
       with:
@@ -94,7 +94,7 @@ jobs:
     - name: Commit notebooks to lecture-julia.notebooks
       uses: cpina/github-action-push-to-another-repository@v1.7.2
       env:
-        GITHUB_TOKEN: ${{ secrets.SOURCE_PAT }}
+        API_TOKEN_GITHUB: ${{ secrets.SOURCE_PAT }}
       with:
         source-directory: _build/lecture-julia.notebooks
         destination-github-username: quantumghent
