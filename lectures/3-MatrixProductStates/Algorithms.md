@@ -126,7 +126,7 @@ by means of the Corner Transfer Matrix Renormalization Group (CTMRG) technique {
 Anything more to say on this? Does it even make sense to discuss this here in the first place?
 ```
 
-
+(tebd) =
 ## Case study: TEBD
 
 As a basic illustrative example of a tensor network application we will discuss the Time Evolving Block Decimation (TEBD) algorithm for simulating time evolution of one-dimensional quantum systems {cite}`vidal2003efficient`. To this end we first discuss a well known method for approximating the time evolution operator based on the Suzuki-Trotter decomposition. 
