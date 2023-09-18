@@ -6,7 +6,7 @@ https://quantumghent.github.io/TensorTutorials/
 	- who is who?
 	- practicalities during the year
 	- Julia
-	- ...
+	- Git(Hub)
 2. Introduction to Quantum Many-Body theory
 	- context, history, purpose, relevance
 	- second quantization
@@ -54,15 +54,25 @@ https://quantumghent.github.io/TensorTutorials/
 	- TDVP
 	- MPO Compression
 	- *Finite Temperature*
-3. Dynamic Bonddimensions
-	- Multi-Site Algorithms
-	- MPS Truncation
-	- MPO-MPS approximation
-4. *Excitations*
+3. *Excitations*
 	- Finite Excitations
 	- Quasiparticle ansatz
-5. *Gradient Methods*
+4. *Gradient Methods*
 	- Quasi-Newton methods
 	- Grassmann optimization
 	- AD
-6. *PEPS*
+5. *PEPS*
+6. Dynamic Bonddimensions
+	- Multi-Site Algorithms
+	- MPS Truncation
+	- MPO-MPS approximation
+
+---
+
+# Local development:
+
+Run the `build.sh` script to build the pages locally. Optionally, you can pass the `-d` flag to update the dependencies.
+
+```bash
+./build.sh [-d]
+```
