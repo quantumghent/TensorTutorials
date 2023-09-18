@@ -434,18 +434,18 @@ const thebe_selector_output = ".output, .cell_output"
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/search.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/search.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/search.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/search.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/search.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/search.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -476,8 +476,8 @@ const thebe_selector_output = ".output, .cell_output"
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
                 const pageName = "search";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/search.ipynb";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
+                const urlPath = "tree/TensorTutorials.notebooks/search.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
