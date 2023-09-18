@@ -208,13 +208,13 @@ following identification (isomorphism):
 
 ```{math}
 :label: eq:tensor_isomorphism
-W \leftarrow V \cong W \otimes V^* 
+(W \leftarrow V) \cong (W \otimes V^*) 
 ```
 
 ```{code-cell} julia
 A = TensorMap(rand, Float64, W ← V)
 B = Tensor(rand, Float64, W ⊗ V')
-space(A) == space(B)
+space(A, 2) == space(B, 2)
 ```
 
 ```{note}
