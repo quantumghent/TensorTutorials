@@ -183,6 +183,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fock-space-and-second-quantisation">1.3. Fock space and second quantisation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-to-classical-mapping">1.4. Quantum-to-classical mapping</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -233,13 +234,15 @@ const thebe_selector_output = ".output, .cell_output"
 <h2><span class="section-number">1.1. </span>Quantum mechanics and its postulates<a class="headerlink" href="#quantum-mechanics-and-its-postulates" title="Permalink to this heading">#</a></h2>
 <p>While the energy levels of the hydrogen atom played an important role in the historical
 development of quantum mechanics, it became almost immediately clear that the true challenge
-is in applying the laws of quantum mechanics to systems with many interacting particles
-or fields. Note that the formalism of quantum mechanics, and in particular its postulates,
-are generically valid and not restricted to the description of a single particle. These
-postulates characterise the mathematical model by which quantum mechanics describes physical
-systems, and more specifically how it represents states, observables, measurements and
-dynamics. We briefly reiterate this postulates and base our discussion on the wonderfull
-lecture notes ``Quantum Information and Computation’’ by John Preskill.</p>
+is in applying the laws of quantum mechanics to systems with many interacting particles or
+fields. Note that the formalism of quantum mechanics, and in particular its postulates, are
+generically valid and not restricted to the description of a single particle. Quantum field
+theory also follows these postulates and is thus not a generalisation of quantum mechanics,
+but rather a specific case of it. These postulates characterise the mathematical model by
+which quantum mechanics describes physical systems, and more specifically how it represents
+states, observables, measurements and dynamics. We briefly reiterate this postulates and
+base our discussion on the wonderfull lecture notes “Quantum Information and Computation” by
+John Preskill.</p>
 <div class="section" id="postulate-1-states">
 <h3><span class="section-number">1.1.1. </span><strong>Postulate 1: States</strong><a class="headerlink" href="#postulate-1-states" title="Permalink to this heading">#</a></h3>
 <p>The state of an isolated quantum system is associated to a ray of vectors in a complex
@@ -263,13 +266,13 @@ with the properties that</p>
 </ul>
 <p>This last property enables us to define a norm <span class="math notranslate nohighlight">\(\lVert \psi \rVert = \lVert \ket{\psi} \rVert = \sqrt{\braket{\psi|\psi}}\)</span>,
 which satisfies known properties such as <span class="math notranslate nohighlight">\(\lVert \psi \rVert = 0 \Leftrightarrow \ket{\psi} = 0\)</span>
-<span class="math notranslate nohighlight">\(\lVert a \ket{\psi} \rVert = a \lVert \psi \rVert\)</span> and the triangle inequality
+<span class="math notranslate nohighlight">\(\lVert a \ket{\psi} \rVert = \vert a\vert  \lVert \psi \rVert\)</span> and the triangle inequality
 <span class="math notranslate nohighlight">\(\lVert \ket{\varphi} + \ket{\psi} \rVert \leq \lVert \varphi \rVert + \lVert \psi \rVert\)</span>.</p>
 </li>
 <li><p>The final property of metric completeness is a technical requirement that is only relevant
 in infinite-dimensional Hilbert spaces. Firstly, a metric is a notation of distance between
 the elements in <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>, which is provided by the norm of the difference, i.e.
-$d(\varphi, \psi) = \lVert \varphi - \psi \rVert.</p>
+<span class="math notranslate nohighlight">\(d(\varphi, \psi) = \lVert \varphi - \psi \rVert\)</span>.</p>
 <p>Completeness of the metric is a specific property that guarantees that certain sequences
 of vectors are guaranteed to have a limit value that also exists in <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>. This is
 necessary to make sense of e.g. Fourier series.</p>
@@ -340,24 +343,71 @@ linear operators <span class="math notranslate nohighlight">\(\hat{A}_1 \hat{A}_
 \[ \left[ \hat{A}_1 , \hat{A}_2 \right] = \hat{A}_1 \hat{A}_2 - \hat{A}_2 \hat{A}_1 = 0, \]</div>
 <p>i.e. if the operators also commute. Self-adjoint operators have real eigenvalues, and eigenvectors
 associated to distinct  eigenvalues are orthogonal. In a finite-dimensional Hilbert space,
-all self-adjoint operators are represented as Hermitian matrices and admit a spectral decomposition</p>
+self-adjoint operators admit a spectral decomposition</p>
 <div class="math notranslate nohighlight">
 \[\hat{A} = \sum_{n} \lambda_n \hat{P}_n\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{P}_n\)</span> is the spectral projector onto the eigenspace associated with <span class="math notranslate nohighlight">\(\lambda_n\)</span>.
-The spectral projectors satisfy <span class="math notranslate nohighlight">\(\hat{P}_n \hat{P}_m = \delta_{n,m}\)</span>, <span class="math notranslate nohighlight">\(\hat{P}_n^\dagger = \hat{P}_n\)</span>
+The spectral projectors satisfy <span class="math notranslate nohighlight">\(\hat{P}_n \hat{P}_m = \delta_{n,m} \hat{P}_n\)</span>, <span class="math notranslate nohighlight">\(\hat{P}_n^\dagger = \hat{P}_n\)</span>
 and <span class="math notranslate nohighlight">\(\sum_{n} \hat{P}_n = \mathbb{1}\)</span>, the identity operator. If <span class="math notranslate nohighlight">\(\lambda_n\)</span> has one-dimensional
 eigenspace spanned by the eigenvector <span class="math notranslate nohighlight">\(\vert\phi_n\rangle\)</span>, then</p>
 <div class="math notranslate nohighlight">
 \[\hat{P}_n = \frac{\vert \phi_n \rangle \langle \phi_n \vert}{\langle \phi_n \vert \phi_n \rangle}\]</div>
 <p>where the denominator can be omitted if the eigenvector is normalised.</p>
+<p>In the language of matrices, these properties can be rephrased as follows: With respect to an
+orthonormal basis choice, self-adjoint operators are represented as hermitian matrices. Such
+matrices can be diagonalised by a unitary transformation, or thus, we can construct a complete
+basis consisting of eigenvectors. With respect to this basis, the self-adjoint operator is
+represented by a diagonal matrix with real values on the diagonal.</p>
 </div>
 <div class="section" id="postulate-3-measurements-expectation-values-and-collapse">
 <h3><span class="section-number">1.1.3. </span><strong>Postulate 3: Measurements, expectation values and collapse</strong><a class="headerlink" href="#postulate-3-measurements-expectation-values-and-collapse" title="Permalink to this heading">#</a></h3>
-<p>TBC</p>
+<p>Given an observable to which we associate the operator <span class="math notranslate nohighlight">\(\hat{A}\)</span>, we now need to prescribe
+the result of measuring this observable with respect to a system that is in a state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>.
+The most compact way of describing the result is by stating that, the expectation value <span class="math notranslate nohighlight">\(\braket{\hat{A}}\)</span>
+(= the  mean value of the measurement when averaging over an ensemble of identical copies of the system)
+is given by</p>
+<div class="math notranslate nohighlight">
+\[ \braket{\hat{A}} = \frac{\braket{\psi \vert \hat{A} \vert \psi}}{\braket{\psi \vert \psi}} \]</div>
+<p>By exploiting the fact that this also prescribes the expectation value of all higher moments
+<span class="math notranslate nohighlight">\(\braket{\hat{A}^k}\)</span>, this determines the full probability distribution of the measurement
+outcome, and yields the more familiar result: The only possible measurement outcomes are
+given by the eigenvalues <span class="math notranslate nohighlight">\(\lambda_n\)</span> of <span class="math notranslate nohighlight">\(\hat{A}\)</span>, and for a system in state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>
+(now assumed normalized), the probability of obtaining <span class="math notranslate nohighlight">\(\lambda_n\)</span> is given by
+<span class="math notranslate nohighlight">\(p_n = \braket{\psi \vert \hat{P}_n \vert \psi}\)</span> with <span class="math notranslate nohighlight">\(\hat{P}_n\)</span> the spectral projector from
+above. In the case that <span class="math notranslate nohighlight">\(\lambda_n\)</span> has a single (linearly independent) eigenvector
+<span class="math notranslate nohighlight">\(\ket{\phi_n}\)</span> (also assumed normalised), this amounts to <span class="math notranslate nohighlight">\(p_n = \vert \braket{\phi_n|\psi}\vert^2\)</span>.</p>
+<p>There is a second part to the measurement postulate, which states that, if the measurement
+is immediately repeated (without intermediate dynamcis, as described by the next postulate),
+then the same measurement outcome is obtained. Because the measurement outcome with respect
+to the initial state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> is probabilistic and can yield different results, this
+requires that after the first measurement, the state changes is changed. This is the
+well-known <strong>collapse</strong> of the wave function. More specifically, if a measurement of
+observable <span class="math notranslate nohighlight">\(\hat{A}\)</span> is performed in a system with state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> and the measurement
+value <span class="math notranslate nohighlight">\(\lambda_n\)</span> is obtained, then the state of the system changes to</p>
+<div class="math notranslate nohighlight">
+\[ \ket{\psi} \longrightarrow \frac{\hat{P}_n \ket{\psi}}{\lVert \hat{P}_n \ket{\psi}\rVert}. \]</div>
+<p>Note that the denominator cannot vanish, as otherwise the probability of having obtained
+measurement outcome <span class="math notranslate nohighlight">\(\lambda_n\)</span> would have been zero in the first place.</p>
 </div>
 <div class="section" id="postulate-4-dynamics">
 <h3><span class="section-number">1.1.4. </span><strong>Postulate 4: Dynamics</strong><a class="headerlink" href="#postulate-4-dynamics" title="Permalink to this heading">#</a></h3>
-<p>TBC</p>
+<p>During time intervals without measurements, the state of an isolated quantum system evolves
+unitarily according to the (first order linear) differential equation</p>
+<div class="math notranslate nohighlight">
+\[\frac{\mathrm{d}\ }{\mathrm{d} t} \ket{\psi(t)} = - \mathrm{i} \hat{H}(t) \ket{\psi(t)}\]</div>
+<p>known as the Schr”{o}dinger equation, where <span class="math notranslate nohighlight">\(\hat{H}(t)\)</span> is the Hamiltonian of the system,
+which may itself be time-dependent. In the case of a time-independent Hamiltonian, we can
+define the evolution operator</p>
+<div class="math notranslate nohighlight">
+\[ U(t, t') = \exp\left(-\mathrm{i}(t-t')\hat{H}) \]</div>
+<p>which relates states at different times via <span class="math notranslate nohighlight">\(\ket{\psi(t)} = \hat{U}(t, t') \ket{\psi(t')}\)</span>
+and is clearly a unitary operator. Clearly, we need to know the Hamiltonian of a system in
+order to even start thinking about modelling its quantum properties. We will always assume
+that the Hamiltonian is given. In practice, however, the situation can be much more
+complicated. Typically, we want to build only an effective quantum description of the system
+(e.g. only the electrons, only certain electrons, <span class="math notranslate nohighlight">\(\ldots\)</span>) and not start all the way down
+at the level of fundamental particles and the standard model (which is also only an
+effective model valid up to some energy scale).</p>
 </div>
 </div>
 <div class="section" id="the-hilbert-space-of-many-body-physics">
@@ -417,36 +467,76 @@ and <span class="math notranslate nohighlight">\(\{\ket{k}, k=1,\dots, d_B\}\)</
 of all products</p>
 <div class="math notranslate nohighlight">
 \[\{ \ket{j,k} = \ket{j} \otimes \ket{k}, j=1,\dots, d_A, k=1,\dots, d_B\}\]</div>
-<p>and thus has dimension <span class="math notranslate nohighlight">\(d_A \dot d_B\)</span>. A general state <span class="math notranslate nohighlight">\(\ket{\Psi} \in \mathbb{H}^{A}\otimes \mathbb{H}^B\)</span>
+<p>and thus has dimension <span class="math notranslate nohighlight">\(d_A \cdot d_B\)</span>. A general state <span class="math notranslate nohighlight">\(\ket{\Psi} \in \mathbb{H}^{A}\otimes \mathbb{H}^B\)</span>
 can then be expanded as</p>
 <div class="math notranslate nohighlight">
 \[ \ket{\Psi} = \sum_{j=1}^{d_A }\sum_{k=1}^{d_B} \Psi_{jk} \ket{j,k} \]</div>
-<p>The expansion coefficients <span class="math notranslate nohighlight">\(\Psi_{jk}\)</span> thus have two indices, and it is often useful to think
-of them as a matrix. Note that we will almost always use this product basis, also sometimes
-referred to as the computational basis, for working with tensor product spaces. However, one
-can certainly also use more complicated basis choices, where the basis vectors are not simple
-product states. One well known choice that you might remember from your quantum mechanics course
-is in the case of two spin-1/2 systems. If we denote the basis for a single spin-1/2 system as
-<span class="math notranslate nohighlight">\(\{\ket{\uparrow},\ket{\downarrow}\}\)</span>, then the product basis for a system consisting of two
-spin-1/2 systems is given by <span class="math notranslate nohighlight">\(\{\ket{\uparrow,\uparrow}, \ket{\downarrow,\uparrow}, \ket{\uparrow,\downarrow}, \ket{\downarrow,\downarrow}, \}\)</span>.
-However, in the context of spin coupling (see Section on Symmetries), one also uses the coupled
-basis</p>
+<p>The expansion coefficients <span class="math notranslate nohighlight">\(\Psi_{jk}\)</span> thus have two indices, and it is often useful to
+think of them as a matrix. Note that we will almost always use this product basis, also
+sometimes referred to as the computational basis, for working with tensor product spaces.
+However, one can certainly also use more complicated basis choices, where the basis vectors
+are not simple product states. One well known choice that you might remember from your
+quantum mechanics course is in the case of two spin-1/2 systems. If we denote the basis for
+a single spin-1/2 system as <span class="math notranslate nohighlight">\(\{\ket{\uparrow},\ket{\downarrow}\}\)</span>, then the product basis
+for a system consisting of two spin-1/2 systems is given by
+<span class="math notranslate nohighlight">\(\{\ket{\uparrow,\uparrow}, \ket{\downarrow,\uparrow}, \ket{\uparrow,\downarrow}, \ket{\downarrow,\downarrow}, \}\)</span>.
+However, in the context of spin coupling (see Section on Symmetries), one also uses the
+coupled basis</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\ket{0,0} = \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} - \ket{\downarrow,\uparrow}\right)\\
 \ket{1,1} = \ket{\uparrow,\uparrow}\\
 \ket{1,0} = \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} + \ket{\downarrow,\uparrow}\right)\\
 \ket{1,-1} = \ket{\downarrow,\downarrow}\end{split}\]</div>
-<p>The tensor product construction extends to systems with multiple subsystems. Consider for example
-a system consisting of qubits, where every individual qubit has an associated Hilbert
-space <span class="math notranslate nohighlight">\(\mathbb{C}^2\)</span> with basis denoted as <span class="math notranslate nohighlight">\(\{\ket{0},\ket{1}\}\)</span>. The Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^N\)</span> of <span class="math notranslate nohighlight">\(N\)</span>
-qubits is then spanned by a computational basis which we can denote as</p>
+<p>Note that we also use teh same tensor product notation as an operation to map operators from
+the subsystems into operators acting on the full tensor product Hilbert space. In
+particular, the process of measuring operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> in subsystem <span class="math notranslate nohighlight">\(A\)</span> and simultaneously
+operator <span class="math notranslate nohighlight">\(\hat{B}\)</span> in subsystem <span class="math notranslate nohighlight">\(B\)</span> is associated with an operator <span class="math notranslate nohighlight">\(\hat{A}\otimes \hat{B}\)</span>
+acting on <span class="math notranslate nohighlight">\(\mathbb{H}^A \otimes \mathbb{H}^B\)</span>, the action of which is first defined on the
+product states as</p>
+<div class="math notranslate nohighlight">
+\[\left(\hat{A} \otimes \hat{B}\right) \left(\ket{\psi^A}\otimes \ket{\varphi^B}\right) = \left(\hat{A}\ket{\psi^A}\right) \otimes \left(\hat{B}\ket{\varphi^B}\right) \]</div>
+<p>and then extended by linearity. With respect to a product basis, the matrix representation
+of <span class="math notranslate nohighlight">\(\left(\hat{A} \otimes \hat{B}\right)\)</span> is given by the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Kronecker_product">Kronecker product</a>.</p>
+<p>When we are only interested in an operator <span class="math notranslate nohighlight">\(\hat{O}\)</span> acting on subsystem <span class="math notranslate nohighlight">\(A\)</span> without doing
+anything on subsystem <span class="math notranslate nohighlight">\(B\)</span>, we should create the operator <span class="math notranslate nohighlight">\(\hat{O} \otimes \hat{1}_B\)</span>, with
+<span class="math notranslate nohighlight">\(\hat{1}_B\)</span> the identity operator of the Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^B\)</span>. Often, we will omit
+this explicit tensor product with the identity operator, and simply use some notation which
+indicates that an operator acts on a certain subsystem, such as
+<span class="math notranslate nohighlight">\(\hat{O}^{(A)} = \hat{O} \otimes \hat{1}_B\)</span>.</p>
+<p>The tensor product construction extends to systems with multiple subsystems. Consider for
+example a system consisting of qubits, where every individual qubit has an associated
+Hilbert space <span class="math notranslate nohighlight">\(\mathbb{C}^2\)</span> with basis denoted as <span class="math notranslate nohighlight">\(\{\ket{0},\ket{1}\}\)</span>. The Hilbert space
+<span class="math notranslate nohighlight">\(\mathbb{H}^N\)</span> of <span class="math notranslate nohighlight">\(N\)</span> qubits is then spanned by a computational basis which we can denote as</p>
 <div class="math notranslate nohighlight">
 \[\{\ket{s_1, s_2, \ldots, s_N} = \ket{s_1} \otimes \ket{s_2} \otimes \cdots \otimes \ket{s_N}; s_1 =0,1; s_2 =0,1; \ldots; s_n =0,1\}.\]</div>
-<p>Hence, the Hilbert space thus has dimension <span class="math notranslate nohighlight">\(2^N\)</span>, and a general state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> has expansion coefficients</p>
+<p>Hence, the Hilbert space thus has dimension <span class="math notranslate nohighlight">\(2^N\)</span>, and a general state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> has
+expansion coefficients</p>
 <div class="math notranslate nohighlight">
 \[\Psi_{s_1,s_2, \ldots, s_N}\]</div>
-<p>which can be interpreted as a single vector of length <span class="math notranslate nohighlight">\(2^n\)</span>, or as a <span class="math notranslate nohighlight">\(n\)</span>-dimensional tensor,
-where every tensor index ranges over the two values 0 and 1.</p>
+<p>which can be interpreted as a single vector of length <span class="math notranslate nohighlight">\(2^N\)</span>, or as a <span class="math notranslate nohighlight">\(N\)</span>-dimensional tensor,
+where every tensor index ranges over the two values 0 and 1. This exponential increase of
+the Hilbert space dimension with the number of particles is exactly why the quantum
+many-body problem is so difficult, but also essential for providing a quantum computer with
+its speed-up.</p>
+<p>The Hamiltonian of a many-body system typically takes the form of a sum of terms, where
+every individual term acts nontrivially on only a few subsystems. One important example that
+will reappear throughout these tutorials is the “Quantum Ising Model with transverse
+magnetic field”, which acts on a system composed of qubits or spin-1/2 particles, and is
+defined as</p>
+<div class="math notranslate nohighlight">
+\[ \hat{H} = - J \sum_{\langle i, j \rangle} \sigma^z_i \otimes \sigma^z_j - h \sum_i \sigma^x_i \]</div>
+<p>Here, the summation variables <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> correspond to the sites of a lattice. The notation
+<span class="math notranslate nohighlight">\(\sum_{\langle i,j \rangle}\)</span> denotes a sum over pairs of neighbouring lattice sites <span class="math notranslate nohighlight">\(i\)</span> and
+<span class="math notranslate nohighlight">\(j\)</span>. The second sum contains terms <span class="math notranslate nohighlight">\(\sigma^x_i\)</span> which act nontrivially only on the site <span class="math notranslate nohighlight">\(i\)</span>,
+and as the identity operator elsewhere. If, for example, we enumerate the sites from <span class="math notranslate nohighlight">\(1\)</span> to
+<span class="math notranslate nohighlight">\(N\)</span>, it would act as</p>
+<div class="math notranslate nohighlight">
+\[ \sigma^x_i = \underbrace{1 \otimes 1 \otimes \ldots \otimes 1}_{\text{$i-1$ factors}} \otimes \sigma^x \otimes \underbrace{1 \otimes \ldots \otimes 1}_{\text{$N-i-1$ factors}}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\sigma^x = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}\)</span> the Pauli x matrix, and <span class="math notranslate nohighlight">\(1\)</span>
+the <span class="math notranslate nohighlight">\(2 x 2\)</span> unit matrix. The first set of terms in <span class="math notranslate nohighlight">\(\hat{H}\)</span> acts nontrivially on two sites,
+and is defined analoguously, using the Pauli z matrices
+<span class="math notranslate nohighlight">\(\sigma^z = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{bmatrix}\)</span>.</p>
 </div>
 <div class="section" id="identical-particles-and-pauli-s-exclusion-principle">
 <h3><span class="section-number">1.2.2. </span>Identical particles and Pauli’s exclusion principle<a class="headerlink" href="#identical-particles-and-pauli-s-exclusion-principle" title="Permalink to this heading">#</a></h3>
@@ -458,7 +548,7 @@ for a particle moving on the real line, or <span class="math notranslate nohighl
 on the sites of a chain of length <span class="math notranslate nohighlight">\(L\)</span>.</p>
 <p>If we temporarily assign each of the <span class="math notranslate nohighlight">\(N\)</span> particles a label <span class="math notranslate nohighlight">\(n=1,\dots, N\)</span>, then the Hilbert
 space of the composite system would be given by the <span class="math notranslate nohighlight">\(N\)</span>-fold tensor product
-<span class="math notranslate nohighlight">\(\tilde{\mathbb{H}}^{(N)} = \left(\mathbb{H}^{(1)}\right)^{\otimes N}\)</span>. However, for identical particles,
+<span class="math notranslate nohighlight">\(\widetilde{\mathbb{H}}^{(N)} = \left(\mathbb{H}^{(1)}\right)^{\otimes N}\)</span>. However, for identical particles,
 our labeling is completely arbitrary. For the case of <span class="math notranslate nohighlight">\(N=2\)</span> particles on a chain of <span class="math notranslate nohighlight">\(L\)</span> sites,
 we cannot distinguish between the state <span class="math notranslate nohighlight">\(\ket{j_1, j_2}\)</span> where particle <span class="math notranslate nohighlight">\(1\)</span> is on site <span class="math notranslate nohighlight">\(j_1\)</span>
 and particle <span class="math notranslate nohighlight">\(2\)</span> is on site <span class="math notranslate nohighlight">\(j_2\)</span> versus the state <span class="math notranslate nohighlight">\(\ket{j_2, j_1}\)</span> where site <span class="math notranslate nohighlight">\(j_1\)</span> is occupied
@@ -477,15 +567,139 @@ absent (or thus 1), or the phase factor is (-1) for odd permutations and (+1) fo
 permutations, i.e. the phase factor equals the sign(ature) of the permutation. Identical particles
 for which the phase factor is always one are known as <em>bosons</em>, whereas those with the nontrival
 phase factor choice correspond to <em>fermions</em>. Indeed, the nontrivial phase factor automatically
-gives rise to Pauli’s exclusion principle: two fermions cannot be in the same quantum state,
+gives rise to <em>Pauli’s exclusion principle</em>: two fermions cannot be in the same quantum state,
 since <span class="math notranslate nohighlight">\(P_{12} \ket{j_1,j_2} = \ket{j_2,j_1} = -\ket{j_1,j_2}\)</span> and for <span class="math notranslate nohighlight">\(j_1=j_2\)</span> we would thus
 find <span class="math notranslate nohighlight">\(\ket{j,j} = -\ket{j,j}\)</span>.</p>
-<p>TBC</p>
+<p>Bosons are thus described by states which are symmetric under permutations, whereas fermions
+are described by states which are called antisymmetric. We can define an operator on
+<span class="math notranslate nohighlight">\(\tilde{\mathbb{H}}^{(N)} = \)</span>\left(\mathbb{H}^{(1)}\right)^{\otimes N}$ that maps any given
+state onto such a (anti)symmeric state, namely by first defining its action on product states
+as</p>
+<div class="math notranslate nohighlight">
+\[ \hat{S}^{\pm} \ket{\psi_1} \otimes \ket{\psi_2} \otimes \cdots \otimes \ket{\psi_N} = \frac{1}{\sqrt{N!}} \sum_{\sigma \in S_N} \epsilon_\sigma \ket{\psi_{\sigma(1)}} \otimes \ket{\psi_{\sigma(2)}} \otimes \cdots \otimes \ket{\psi_{\sigma(N)}} \]</div>
+<p>and then extending it by linearity. Here, <span class="math notranslate nohighlight">\(S_N\)</span> is the symmetric group containing all permutations
+<span class="math notranslate nohighlight">\(\sigma\)</span> of <span class="math notranslate nohighlight">\(N\)</span> elements, where the permutation <span class="math notranslate nohighlight">\(\sigma\)</span> is a bijective map from integers <span class="math notranslate nohighlight">\(j \in \{1,\dots,N\}\)</span>
+to a new number <span class="math notranslate nohighlight">\(\sigma(j) \in \{1,\dots,N\}\)</span>. The sign(ature) <span class="math notranslate nohighlight">\(\epsilon_\sigma\)</span> of the permutation
+takes the value <span class="math notranslate nohighlight">\(+1\)</span> or <span class="math notranslate nohighlight">\(-1\)</span>, depending on whether the permutation <span class="math notranslate nohighlight">\(\sigma\)</span> can be obtained
+by composing an even or odd number of elementary transpositions. An elementary transposition
+<span class="math notranslate nohighlight">\(\tau_{i,j}\)</span> is a permutation which only interchanges the two numbers <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j \neq i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\tau_{i,j}(i) =j, \tau_{i,j}(j) = i, \tau_{i,j}(k) =k, \forall k\neq i \land k \neq j \]</div>
+<p>Note that <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> does not necessarily yield a normalised state, and can indeed even
+map a state to zero, in order to give rise to Pauli’s exclusion principle: <span class="math notranslate nohighlight">\(\hat{S}^- \ket{j,j} = 0\)</span>.
+The image of <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> contains all states with the proper behaviour under relabeling
+permutations, and thus correspond to the physical Hilbert space for bosons or fermions:</p>
+<div class="math notranslate nohighlight">
+\[ \mathbb{H}^{(N)} = \hat{S}^{\pm} \widetilde{\mathbb{H}}^{(N)} = \hat{S}^{\pm} \left(\mathbb{H}^{(1)}\right)^{\otimes N} \]</div>
+<p>Note that in this case, the physical Hilbert space is not a tensor product. We had to define
+a larger auxiliary Hilbert space, <span class="math notranslate nohighlight">\( \widetilde{\mathbb{H}}^{(N)}\)</span>, which is a tensor product.
+The physical Hilbert space can then be thought of as a subspace thereof. This situation also
+occurs in other places, most notably, in the case of gauge theories.</p>
+<p>Now consider a single particle Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)}\)</span> with an orthonormal basis
+<span class="math notranslate nohighlight">\(\{\ket{j}, j=1,\ldots,L\}\)</span>, for example where <span class="math notranslate nohighlight">\(\ket{j}\)</span> corresponds to the particle being
+positioned on site <span class="math notranslate nohighlight">\(j\)</span> of a lattice with <span class="math notranslate nohighlight">\(L\)</span> sites. We also refer to these single particle
+states as modes. To construct a basis for <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span>, we can start from the tensor
+product basis of <span class="math notranslate nohighlight">\(\widetilde{\mathbb{H}}^{(N)}\)</span> and apply <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> to each of its
+<span class="math notranslate nohighlight">\(L^N\)</span> elements. Let us henceforth denote these states as</p>
+<div class="math notranslate nohighlight">
+\[ \ket{j_1,j_2,\ldots ,j_N} = \hat{S}^{\pm} \left(\ket{j_1} \otimes \ket{j_2} \otimes \cdots \otimes \ket{j_N}\right)\]</div>
+<p>The application of <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> will create certain linear dependences. In particular, states
+<span class="math notranslate nohighlight">\( \ket{j_1,j_2, \ldots, j_N}\)</span> that contain the same set of modes <span class="math notranslate nohighlight">\(j_k\)</span>, i.e. for which the <span class="math notranslate nohighlight">\(j_k\)</span>’s
+are related by a permutation, are equal (up to a sign in the case of <span class="math notranslate nohighlight">\(\hat{S}^-\)</span>). We can thus select
+a single state by ordering the <span class="math notranslate nohighlight">\(j_k\)</span> arguments. Furthermore, in the case of <span class="math notranslate nohighlight">\(\hat{S}^{-}\)</span>, the
+state is mapped to zero as soon as two <span class="math notranslate nohighlight">\(j_k\)</span> values coincide, so we can eliminate such states. If we
+thus restrict the set to states <span class="math notranslate nohighlight">\(\ket{j_1,j_2,\ldots ,j_N}\)</span> which are such that the modes are
+ordered as <span class="math notranslate nohighlight">\(j_1 &lt; j_2 &lt; \ldots &lt; j_N\)</span> (for fermions) or <span class="math notranslate nohighlight">\(j_1 \leq j_2 \leq \ldots \leq j_N\)</span> (for bosons),
+then we have a linearly indepenent set of states. For fermions, this implies in particular that
+we need to have <span class="math notranslate nohighlight">\(N \leq L\)</span>, there cannot be more fermions in the system then there are linearly
+independent modes (single particle states).</p>
+<p>Finally, one can wonder about the normalisation of these states. For fermions, the superposition
+created by <span class="math notranslate nohighlight">\(\hat{S}^-\)</span> contains <span class="math notranslate nohighlight">\(N!\)</span> terms, which are mutually orthogonal, so that the
+resulting state is normalised (because of the <span class="math notranslate nohighlight">\(1/\sqrt{N!}\)</span> prefactor in the definition of
+<span class="math notranslate nohighlight">\(\hat{S}^{-}\)</span>. More generally, one then finds</p>
+<div class="math notranslate nohighlight">
+\[\braket{i_1 &lt; i_2 &lt; \ldots &lt; i_N | j_1 &lt; j_2 &lt; \ldots &lt; j_N} = \delta_{i_1,j_1} \delta_{i_2,j_2} \cdots \delta_{i_N,j_N}\]</div>
+<p>For bosons, the situation is more complicated in the case that some <span class="math notranslate nohighlight">\(j_k\)</span> values coincide.
+Some of the <span class="math notranslate nohighlight">\(N!\)</span> terms created by <span class="math notranslate nohighlight">\(\hat{S}^+\)</span> are then equal and contribute differently to
+the norm. If we denote with <span class="math notranslate nohighlight">\(n_1, n_2, \ldots, n_L\)</span> the number of <span class="math notranslate nohighlight">\(j\)</span> values that equal
+the value <span class="math notranslate nohighlight">\(1, 2, \ldots, L\)</span>, i.e. the number of particles in mode <span class="math notranslate nohighlight">\(1, 2, \ldots, L\)</span>,
+then we find</p>
+<div class="math notranslate nohighlight">
+\[\braket{i_1 \leq i_2 \leq \ldots \leq i_N | j_1 \leq j_2 \leq \ldots \leq j_N} = (n_1! n_2! \cdots n_L!) \delta_{i_1,j_1} \delta_{i_2,j_2} \cdots \delta_{i_N,j_N}\]</div>
+<p>This more general exprression is also valid for fermions, where every <span class="math notranslate nohighlight">\(n_j\)</span> is restricted to be
+zero or one. In fact, the values <span class="math notranslate nohighlight">\(n_j\)</span> for <span class="math notranslate nohighlight">\(j=1,\ldots,L\)</span> completely characterise the state, and
+can thus be used to relabel the basis. Instead of specifying the mode <span class="math notranslate nohighlight">\(j_k\)</span>
+that each particle <span class="math notranslate nohighlight">\(k=1,\ldots,N\)</span> occuppies (where the labeling of the particles is arbitrary
+because they are identical), we can move to a mode-based description and thus specify the
+number of particles in each mode, also known as the mode occupation number. We can then
+refer to the basis vectors as</p>
+<div class="math notranslate nohighlight">
+\[\ket{n_1, n_2, \ldots, n_L}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_j = 0, 1\)</span> (fermions) or <span class="math notranslate nohighlight">\(n_j = 0,1,2, \ldots \)</span> (bosons) and furthermore
+<span class="math notranslate nohighlight">\(\sum_{j=1}^{L} n_j = N\)</span>. Furthermore, we define these states to be normalised to 1, i.e. we
+absorb a suitable normalisation factor when defining <span class="math notranslate nohighlight">\(\ket{n_1, n_2, \ldots, n_L}\)</span> in terms
+of the construction above.</p>
+<p>This way of labelling the basis states now is again reminiscent of a tensor product structure,
+i.e.\ we could think of <span class="math notranslate nohighlight">\(\ket{n_1, n_2, \ldots, n_L}\)</span> as the tensor product of states <span class="math notranslate nohighlight">\(\ket{n_j}\)</span>
+associated to every mode, and where the Hilbert space associated with such a mode is two-dimensional
+in the case of fermions, or infinite-dimensional in the case of bosons.  However, there is still
+a global constraint <span class="math notranslate nohighlight">\(\sum_{j=1}^{L} n_j = N\)</span> so that we cannot let the different <span class="math notranslate nohighlight">\(n_j\)</span> values
+vary completely independently from each other. Furthermore, some caution is now needed as to
+what it means to have operators acting on these different “mode Hilbert spaces”. The correct
+formalism is that of second quantisation, which we introduce next.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In many applications, people do still work with the framework of first quantisation, and consider
+<span class="math notranslate nohighlight">\(N\)</span>-particle states constructed by symmetrising or antisymmetrising the tensor product of
+<span class="math notranslate nohighlight">\(N\)</span> single-particle states, in a so-called independent particle model or approximation.
+Such states are quite cumbersome to work with. As can already be seen,
+the antisymmetric case is slightly easier and is known as a Slater determinant. Indeed, the
+antisymmetrisation formula is reminiscent of the Leibniz formula of a determinant, and for
+example the inner product between two Slater determinants constructed from <span class="math notranslate nohighlight">\(\{\ket{\psi_n},n=1,\ldots,N\}\)</span> and
+<span class="math notranslate nohighlight">\(\{\ket{\varphi_n},n=1,\ldots,N\}\)</span> is given by the determinant of the matrix containing all
+overlaps <span class="math notranslate nohighlight">\(\braket{\varphi_m \vert \psi_n}\)</span>. Slater determinants form the basis of Hartree-Fock
+theory for approximating the state of electrons in an atom or molecule.</p>
+<p>The bosonic version occurs in the context of Bose-Einstein condensation and cold atom systems
+more generally. In that case, the inner product between two such states gives rise to a
+determinant-like formula, but without the minus signs. This construction is known as the
+permenant, but unlike the determinant it is very hard to compute in general and really requires
+to explicitly sum up all <span class="math notranslate nohighlight">\(N!\)</span> terms.</p>
+</div>
 </div>
 </div>
 <div class="section" id="fock-space-and-second-quantisation">
 <h2><span class="section-number">1.3. </span>Fock space and second quantisation<a class="headerlink" href="#fock-space-and-second-quantisation" title="Permalink to this heading">#</a></h2>
+<p>However, there is an easier formalism that is furthermore required when dealing with systems
+in which the precise number of particles <span class="math notranslate nohighlight">\(N\)</span> might fluctuate. While non-relativistic processes
+do typically not create new particles, this can still be useful for providing an effective
+or approximate description. For example, the BCS theory of superconductivity is constructed
+by transforming into a description where the number of Cooper pairs can fluctuate.</p>
+<p>We start by defining the Fock space, which is the direct sum of all physical (symmetrised or
+antisymmetrised) Hilbert spaces <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span> for different particle numbers <span class="math notranslate nohighlight">\(N\)</span>, going
+all the way from <span class="math notranslate nohighlight">\(N=0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{H} = \bigoplus_{N=0}^{+\infty} \mathbb{H}^{(N)}\]</div>
+<p>Note that we have not discussed the case <span class="math notranslate nohighlight">\(N=0\)</span> before, as in the previou subsection we started
+the construction of <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span> from a given single particle Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)}\)</span>.
+When there are no particles in the system, there is only a single state in which it can be.
+Hence, for <span class="math notranslate nohighlight">\(N=0\)</span> particles, the Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{(0)}\)</span> is spanned by a single state,
+which we typically denote as <span class="math notranslate nohighlight">\(\ket{0}\)</span> or <span class="math notranslate nohighlight">\(\ket{\Omega}\)</span> and refer to as the <em>vacuum state</em>.
+We choose this state to be normalised, and thus note that <span class="math notranslate nohighlight">\(\ket{0}\)</span> is very different from
+a the zero vector of the vector space, which has norm zero.</p>
+<p>The Fock space becomes a Hilbert space simply by incorporating the inner product from each
+of its summands. States within the different summands of this direct sum are defined
+to be orthogonal, i.e. <span class="math notranslate nohighlight">\(\braket{\varphi^{(M)} \vert \psi^{(N)}}=0\)</span> for all <span class="math notranslate nohighlight">\(M\)</span>-particle states
+<span class="math notranslate nohighlight">\(\ket{\varphi^{(M)}}\)</span> and <span class="math notranslate nohighlight">\(N\)</span>-particle states <span class="math notranslate nohighlight">\(\ket{\psi^{(N)}}\)</span> with <span class="math notranslate nohighlight">\(M \neq N\)</span>.</p>
+<p>Given the above mode occupation numbers, we can now use the states</p>
+<p>$${\ket{n_1,n_2,\ldots,n_L}, n_j = 0,1\ \text{or}\ n_j = 0,1,2,\ldots}</p>
+<p>as basis, where the global constraint can now be omitted. Aside from losing the global
+constraint, we have so far not yet gained anything and the different particle number sectors
+cannot yet easily be related to each other. Hereto, we now introduce a set of operators on
+<span class="math notranslate nohighlight">\(\mathbb{H}\)</span> which relate these different sectors by creating or annihilating a particle.</p>
 <p>TBC</p>
+</div>
+<div class="section" id="quantum-to-classical-mapping">
+<h2><span class="section-number">1.4. </span>Quantum-to-classical mapping<a class="headerlink" href="#quantum-to-classical-mapping" title="Permalink to this heading">#</a></h2>
 </div>
 </div>
 
@@ -559,6 +773,11 @@ find <span class="math notranslate nohighlight">\(\ket{j,j} = -\ket{j,j}\)</span
    3. Getting started with Julia
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Symmetries.html">
+   4. Symmetries in quantum many-body physics
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -568,12 +787,12 @@ find <span class="math notranslate nohighlight">\(\ket{j,j} = -\ket{j,j}\)</span
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   4. TensorKit.jl
+   5. TensorKit.jl
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   5. TensorOperations.jl
+   6. TensorOperations.jl
   </a>
  </li>
 </ul>
@@ -585,27 +804,39 @@ find <span class="math notranslate nohighlight">\(\ket{j,j} = -\ket{j,j}\)</span
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
-   7. Matrix Product Operators
+   8. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
-   8. Infinite Matrix Product States
+   9. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
-   9. Algorithms
+   10. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-MatrixProductStates/Applications.html">
-   10. Applications
+   11. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
+   12. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -617,7 +848,7 @@ find <span class="math notranslate nohighlight">\(\ket{j,j} = -\ket{j,j}\)</span
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   11. References
+   13. References
   </a>
  </li>
 </ul>
