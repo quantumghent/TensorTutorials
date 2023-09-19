@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>11. Algorithms &#8212; TensorTutorials</title>
+    <title>6. Matrix Product States &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -116,11 +116,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '3-MatrixProductStates/Algorithms';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/MatrixProductStates';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="12. Applications" href="Applications.html" />
-    <link rel="prev" title="10. Infinite Matrix Product States" href="InfiniteMPS.html" />
+    <link rel="next" title="7. Matrix Product Operators" href="MatrixProductOperators.html" />
+    <link rel="prev" title="5. Symmetries in Quantum Many-Body Physics" href="../1-Introduction/Symmetries.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="QuantumGhent" />
@@ -130,13 +130,13 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@" />
-<meta name="twitter:title" content="Algorithms"/>
+<meta name="twitter:title" content="Matrix Product States"/>
 <meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
 <meta name="twitter:creator" content="@">
 <meta name="twitter:image" content="">
 
 <!-- Opengraph tags -->
-<meta property="og:title" content="Algorithms" />
+<meta property="og:title" content="Matrix Product States" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="None" />
 <meta property="og:image" content="" />
@@ -154,7 +154,7 @@ const thebe_selector_output = ".output, .cell_output"
 
         <div class="qe-main">
 
-            <div class="qe-page" id=3-MatrixProductStates/Algorithms>
+            <div class="qe-page" id=2-MatrixProductStates/MatrixProductStates>
 
                 <div class="qe-page__toc">
 
@@ -193,7 +193,7 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
 
-                        <p class="qe-page__header-subheading">Algorithms</p>
+                        <p class="qe-page__header-subheading">Matrix Product States</p>
 
                     </div>
 
@@ -208,14 +208,16 @@ const thebe_selector_output = ".output, .cell_output"
                     
                     <div>
                         
-  <div class="tex2jax_ignore mathjax_ignore section" id="algorithms">
-<h1><span class="section-number">11. </span>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this heading">#</a></h1>
-<ol class="arabic simple" start="4">
-<li><p>Basic Algorithms</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="matrix-product-states">
+<h1><span class="section-number">6. </span>Matrix Product States<a class="headerlink" href="#matrix-product-states" title="Permalink to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Matrix Product States</p>
 <ul class="simple">
-<li><p><em>Simple Update</em></p></li>
-<li><p>Trotterization</p></li>
-<li><p>TEBD</p></li>
+<li><p>MPS as a polynomial Ansatz</p></li>
+<li><p>entanglement and area laws</p></li>
+<li><p>gauge freedom</p></li>
+<li><p>expectation values</p></li>
+<li><p>correlators</p></li>
 </ul>
 </li>
 </ol>
@@ -234,7 +236,7 @@ const thebe_selector_output = ".output, .cell_output"
         },
         kernelOptions: {
             name: "python3",
-            path: "./3-MatrixProductStates"
+            path: "./2-MatrixProductStates"
         },
         predefinedOutput: true
     }
@@ -298,24 +300,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../1-Introduction/Symmetries.html">
-   5. Symmetries in quantum many-body physics
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Tensors
- </span>
-</p>
-<ul class="nav bd-sidenav nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   6. TensorKit.jl
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   7. TensorOperations.jl
+   5. Symmetries in Quantum Many-Body Physics
   </a>
  </li>
 </ul>
@@ -325,29 +310,29 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="current nav bd-sidenav nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="MatrixProductStates.html">
-   8. Matrix Product States
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   6. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductOperators.html">
-   9. Matrix Product Operators
+   7. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="InfiniteMPS.html">
-   10. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
- <li class="toctree-l1 current active active">
-  <a class="current reference internal" href="#">
-   11. Algorithms
+ <li class="toctree-l1">
+  <a class="reference internal" href="Algorithms.html">
+   9. Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Applications.html">
-   12. Applications
+   10. Applications
   </a>
  </li>
 </ul>
@@ -358,8 +343,8 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
-   13. Fixed-Point algorithms
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   11. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -371,7 +356,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   14. References
+   12. References
   </a>
  </li>
 </ul>
@@ -410,7 +395,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/3-MatrixProductStates/Algorithms.md" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/2-MatrixProductStates/MatrixProductStates.md" download><i data-feather="github"></i></a></li>
                 </ul>
 
             </div>
@@ -439,18 +424,18 @@ const thebe_selector_output = ".output, .cell_output"
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/Algorithms.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/MatrixProductStates.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/3-MatrixProductStates/Algorithms.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/2-MatrixProductStates/MatrixProductStates.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/Algorithms.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/MatrixProductStates.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -480,9 +465,9 @@ const thebe_selector_output = ".output, .cell_output"
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "3-MatrixProductStates/Algorithms";
+                const pageName = "2-MatrixProductStates/MatrixProductStates";
                 const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
-                const urlPath = "tree/TensorTutorials.notebooks/3-MatrixProductStates/Algorithms.ipynb";
+                const urlPath = "tree/TensorTutorials.notebooks/2-MatrixProductStates/MatrixProductStates.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
