@@ -20,6 +20,7 @@ latex:
 bibtex_bibfiles:
   - assets/references.bib
 
+
 # Information about where the book exists on the web
 repository:
   url: https://github.com/quantumghent/TensorTutorials  # Online location of your book
@@ -29,6 +30,8 @@ repository:
 sphinx:
   extra_extensions: [sphinx_multitoc_numbering, sphinxext.rediraffe, sphinx_tojupyter]
   config:
+    bibtex_reference_style: label
+    bibtex_default_style: alpha
     nb_mime_priority_overrides: [
        # HTML
        ['html', 'application/vnd.jupyter.widget-view+json', 10],
