@@ -128,7 +128,7 @@ alleviating the need to consider finite-size effects and extrapolation technique
 insight that allows for this is that the partition function may be written as
 
 ```{math}
-Z = \lim_{N \to \infty} \mathrm{Tr} \left( T^N \right)
+\mathcal Z = \lim_{N \to \infty} \mathrm{Tr} \left( T^N \right)
 ```
 
 where $T$ is the row-to-row transfer matrix, and $N$ is the number of rows (or columns) in
@@ -137,7 +137,7 @@ easily show that as the number of rows goes to infinity, the largest eigenvalue 
 transfer matrix dominates, and the partition function is given by
 
 ```{math}
-Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N
+\mathcal Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N
 ```
 
 where $\lambda_{\mathrm{max}}$ is the largest eigenvalue of the transfer matrix. In other
@@ -151,11 +151,13 @@ value of an operator $O$ is given by the weighing the value of that operator for
 microstate, with the probability of that microstate:
 
 ```{math}
-\langle O \rangle = \frac{1}{Z} \sum_\sigma O(\sigma) e^{-\beta H(\sigma)}
+\langle O \rangle = \frac{1}{\mathcal Z} \sum_{\{s_i\}} O(\{s_i\})\text{e}^{-\beta
+H(\{s_i\})}
 ```
 
-Again, this can be written as a tensor network, where the network is the same as before, but
-with a single vertex tensor exchanged for one that represents the operator $O$:
+For a local operator $O_i$, this can again be written as a tensor network, where a single
+vertex tensor is exchanged for $M\prime_{ijkl} = O_i \delta_{ijkl}$, and then absorbing the
+remaining edge tensors:
 
 <!-- Insert image of expectation value -->
 
@@ -193,7 +195,7 @@ H = -J \sum X_j X_{j+1} - h \sum Z_j
 it can be represented as an MPO through the (operator-valued) matrix, 
 
 ```{math}
-M = \begin{pmatrix}
+W = \begin{pmatrix}
 1 & X & -hZ \\ 
 0 & 0 & -JX \\
 0 & 0 & 1
@@ -215,13 +217,13 @@ v_R = \begin{pmatrix}
 The Hamiltonian on $N$ sites is then given by the contraction
 
 ```{math}
-H = V_L M^{\otimes N} V_R
+H = V_L W^{\otimes N} V_R
 ```
 
 ```{note}
 While the above example can be constructed from building blocks that are strictly local
 operators, this is not always the case, especially when symmetries are involved. In those
-cases, the elements of the matrix $M$ have additional virtual legs that are contracted
+cases, the elements of the matrix $W$ have additional virtual legs that are contracted
 between different sites.
 ```
 
@@ -234,9 +236,9 @@ mathematical model of computation that consists of a finite set of states, and a
 transitions between those states. In the context of MPOs, this is realised by associating
 each _virtual level_ with a state, and each transition then corresponds to applying a local
 operator. In that regard, the MPO is then a representation of the state of the finite-state
-machine, and the matrix $M$ is the transition matrix of the machine.
+machine, and the matrix $W$ is the transition matrix of the machine.
 
-In general, the matrix $M$ can then be thought of as a block matrix with entries
+In general, the matrix $W$ can then be thought of as a block matrix with entries
 
 ```{math}
 \begin{pmatrix}
