@@ -119,6 +119,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/Symmetries';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/1-Introduction/Symmetries.html" />
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -141,7 +142,7 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Opengraph tags -->
 <meta property="og:title" content="Symmetries in Quantum Many-Body Physics" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="None" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/1-Introduction/Symmetries.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
 <meta property="og:site_name" content="TensorTutorials" />
@@ -661,7 +662,7 @@ we would write</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(ProductSpace(Rep[SU₂](1=&gt;1)) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
 * Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
 [:, :, 1] =
- 2.1219957915e-314
+ 0.0
 </pre></div>
 </div>
 </div>
@@ -680,7 +681,7 @@ and codomain are as expected:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1 =&gt; [2.122e-314;;]
+  1 =&gt; [0.0;;]
 </pre></div>
 </div>
 </div>
@@ -711,7 +712,7 @@ cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [5.0e-324 1.5e-323; 1.0e-323 2.0e-323]
+  1/2 =&gt; [5.0e-324 6.9446e-310; 5.0e-324 6.9446e-310]
 </pre></div>
 </div>
 </div>
@@ -907,7 +908,7 @@ respect to these more general kind of symmetries.</p></li>
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
                     <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
                     <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
-                    <li><a href="https://github.com/quantumghent" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
                 </ul>
 
                 <ul class="qe-toolbar__links">
@@ -921,7 +922,7 @@ respect to these more general kind of symmetries.</p></li>
                     <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
                     <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
-                    <li data-tippy-content="Download Notebook"><a href="/TensorTutorials/_notebooks/1-Introduction/Symmetries.ipynb" download><i data-feather="download-cloud"></i></a></li>
+                    <li data-tippy-content="Download Notebook"><a href="https://quantumghent.github.io/TensorTutorials//_notebooks/1-Introduction/Symmetries.ipynb" download><i data-feather="download-cloud"></i></a></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
                     <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/1-Introduction/Symmetries.md" download><i data-feather="github"></i></a></li>
