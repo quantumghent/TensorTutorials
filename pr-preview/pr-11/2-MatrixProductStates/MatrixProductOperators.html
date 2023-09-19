@@ -295,7 +295,7 @@ cases, as efficient algorithms exist to determine the product of an MPO with an 
 approximate manner. This allows us to efficiently split the computation of the partition
 function in a sequence of one-dimensional contractions, thus reducing the complexity of the
 problem by solving it layer by layer. For example, one can resort to <em>boundary MPS
-techniques</em> <span id="id3">[<a class="reference internal" href="../References.html#id9" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, January 2018. URL: http://arxiv.org/abs/1701.07035, arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>.</p>
+techniques</em> <span id="id3">[<a class="reference internal" href="../References.html#id9" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>.</p>
 <a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
 </div>
 <div class="section" id="thermodynamic-limit">
@@ -305,13 +305,13 @@ computation of the partition function of systems directly in the thermodynamic l
 alleviating the need to consider finite-size effects and extrapolation techniques. The key
 insight that allows for this is that the partition function may be written as</p>
 <div class="math notranslate nohighlight">
-\[Z = \lim_{N \to \infty} \mathrm{Tr} \left( T^N \right)\]</div>
+\[\mathcal Z = \lim_{N \to \infty} \mathrm{Tr} \left( T^N \right)\]</div>
 <p>where <span class="math notranslate nohighlight">\(T\)</span> is the row-to-row transfer matrix, and <span class="math notranslate nohighlight">\(N\)</span> is the number of rows (or columns) in
 the network. If we then consider the spectral decomposition of the transfer matrix, we can
 easily show that as the number of rows goes to infinity, the largest eigenvalue of the
 transfer matrix dominates, and the partition function is given by</p>
 <div class="math notranslate nohighlight">
-\[Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N\]</div>
+\[\mathcal Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda_{\mathrm{max}}\)</span> is the largest eigenvalue of the transfer matrix. In other
 words, the partition function can be computed if it is possible to find the largest
 eigenvalue of the transfer matrix, for which efficient algorithms exist.</p>
@@ -322,9 +322,11 @@ eigenvalue of the transfer matrix, for which efficient algorithms exist.</p>
 value of an operator <span class="math notranslate nohighlight">\(O\)</span> is given by the weighing the value of that operator for a given
 microstate, with the probability of that microstate:</p>
 <div class="math notranslate nohighlight">
-\[\langle O \rangle = \frac{1}{Z} \sum_\sigma O(\sigma) e^{-\beta H(\sigma)}\]</div>
-<p>Again, this can be written as a tensor network, where the network is the same as before, but
-with a single vertex tensor exchanged for one that represents the operator <span class="math notranslate nohighlight">\(O\)</span>:</p>
+\[\langle O \rangle = \frac{1}{\mathcal Z} \sum_{\{s_i\}} O(\{s_i\})\text{e}^{-\beta
+H(\{s_i\})}\]</div>
+<p>For a local operator <span class="math notranslate nohighlight">\(O_i\)</span>, this can again be written as a tensor network, where a single
+vertex tensor is exchanged for <span class="math notranslate nohighlight">\(M\prime_{ijkl} = O_i \delta_{ijkl}\)</span>, and then absorbing the
+remaining edge tensors:</p>
 <!-- Insert image of expectation value -->
 <p>Using this network, the expectation value can be computed by first contracting the top and
 bottom part, replacing them by their fixed-point MPS representations, and then contracting
@@ -355,7 +357,7 @@ specific structure, and is often referred to as a <em>Jordan block MPO</em>.</p>
 \[H = -J \sum X_j X_{j+1} - h \sum Z_j\]</div>
 <p>it can be represented as an MPO through the (operator-valued) matrix,</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}M = \begin{pmatrix}
+\[\begin{split}W = \begin{pmatrix}
 1 &amp; X &amp; -hZ \\ 
 0 &amp; 0 &amp; -JX \\
 0 &amp; 0 &amp; 1
@@ -371,12 +373,12 @@ v_R = \begin{pmatrix}
 \end{pmatrix}\end{split}\]</div>
 <p>The Hamiltonian on <span class="math notranslate nohighlight">\(N\)</span> sites is then given by the contraction</p>
 <div class="math notranslate nohighlight">
-\[H = V_L M^{\otimes N} V_R\]</div>
+\[H = V_L W^{\otimes N} V_R\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>While the above example can be constructed from building blocks that are strictly local
 operators, this is not always the case, especially when symmetries are involved. In those
-cases, the elements of the matrix <span class="math notranslate nohighlight">\(M\)</span> have additional virtual legs that are contracted
+cases, the elements of the matrix <span class="math notranslate nohighlight">\(W\)</span> have additional virtual legs that are contracted
 between different sites.</p>
 </div>
 </div>
@@ -389,8 +391,8 @@ mathematical model of computation that consists of a finite set of states, and a
 transitions between those states. In the context of MPOs, this is realised by associating
 each <em>virtual level</em> with a state, and each transition then corresponds to applying a local
 operator. In that regard, the MPO is then a representation of the state of the finite-state
-machine, and the matrix <span class="math notranslate nohighlight">\(M\)</span> is the transition matrix of the machine.</p>
-<p>In general, the matrix <span class="math notranslate nohighlight">\(M\)</span> can then be thought of as a block matrix with entries</p>
+machine, and the matrix <span class="math notranslate nohighlight">\(W\)</span> is the transition matrix of the machine.</p>
+<p>In general, the matrix <span class="math notranslate nohighlight">\(W\)</span> can then be thought of as a block matrix with entries</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{pmatrix}
 1 &amp; C &amp; D \\

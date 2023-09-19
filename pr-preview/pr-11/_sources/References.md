@@ -12,5 +12,6 @@ kernelspec:
 (references)=
 # References
 
-```{bibliography} assets/references.bib
+```{bibliography}
+:style: alpha
 ```

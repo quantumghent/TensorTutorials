@@ -234,7 +234,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>over a restricted class of states <span class="math notranslate nohighlight">\(D\)</span>. For simplicity, we will assume the Hamiltonian under consideration has an MPO representation of the form</p>
 <img alt="../_images/mpoHam.svg" class="align-center" id="mpoham" src="../_images/mpoHam.svg" /><p>which can encode interactions of arbitrary range as discussed in the previous section.</p>
 <p>In the algorithms discussed below we optimize over matrix product states of a fixed finite bond dimension. In the first algorithm known as DMRG (density matrix renormalization group) the states we consider are finite MPS, whereas the second algorithm VUMPS (variational uniform matrix product state algorithm), as the name suggests, optimizes over uniform MPS. Hence, VUMPS enables direct optimization in the thermodynamic limit, without breaking translation invariance.</p>
-<p>Our exposition of DMRG closes follows the one in <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, may 2017. URL: https://dx.doi.org/10.1088/1751-8121/aa6dc3, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>, and that of VUMPS closely follows the excellent set of lecture notes <span id="id2">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+<p>Our exposition of DMRG closes follows the one in <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>, and that of VUMPS closely follows the excellent set of lecture notes <span id="id2">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
 <div class="section" id="dmrg">
 <h2><span class="section-number">11.1. </span>DMRG<a class="headerlink" href="#dmrg" title="Permalink to this heading">#</a></h2>
 <p>Starting from a random MPS ansatz, DMRG tries to approximate the ground state by sequentially optimizing over all the MPS tensors one by one and sweeping through the chain, until convergence is reached. Let us discuss this algorithm in a bit more detail step by step.</p>
@@ -273,41 +273,43 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKitModels [ca635005-6f8c-4cd1-b51d-8491250ef2ab]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 0 error 0.01230005476158562
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 0 error 0.00907973061736265
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 1 error 3.4012732682744285e-6
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 1 error 4.250756565960239e-6
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 2 error 2.153819691243991e-6
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 2 error 5.882604535975857e-7
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 3 error 9.271415998382257e-7
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 3 error 2.1529494987160333e-7
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 4 error 3.7223331558664004e-7
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 5 error 1.4780164222719185e-7
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 4 error 8.019148692473175e-8
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 5 error 2.9894365548609836e-8
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 6 error 5.8621532278937985e-8
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 6 error 1.1159225127904614e-8
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 7 error 4.171680040850884e-9
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 7 error 2.3262320997339413e-8
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 8 error 9.237924861019261e-9
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 8 error 1.5618921906610032e-9
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 9 error 3.671341626928614e-9
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 10 error 1.4601179709614361e-9
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 9 error 5.857131513251018e-10
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 10 error 2.205091328750191e-10
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 11 error 5.810905892492245e-10
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 12 error 2.3140448605803284e-10
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 11 error 8.858707547688096e-11
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 12 error 3.5608050706116906e-11
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 13 error 1.4317841286018544e-11
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 13 error 9.22042259026913e-11
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 14 error 3.675775343781126e-11
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 15 error 1.466092939272126e-11
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 14 error 5.757984248424306e-12
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 15 error 2.3153684232334253e-12
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 16 error 9.20086879551695e-13
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 16 error 5.850739071146437e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 17 error 2.413502985510087e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Iteraton 18 error 9.407930557345318e-13
 </pre></div>
 </div>
 </div>
@@ -325,7 +327,7 @@ const thebe_selector_output = ".output, .cell_output"
 \[\begin{split}    A_C' = H_{A_C}(A_C), \\
     C' = H_C(C), \\
     A_C = A_LC = CA_R.\end{split}\]</div>
-<p>A detailed derivation that these equations characterize the variational minimum in the manifold of uniform MPS is beyond the scope of these notes, but see <span id="id4">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+<p>A detailed derivation that these equations characterize the variational minimum in the manifold of uniform MPS is beyond the scope of these notes, but see <span id="id4">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
 <p>In these equations the effective Hamiltonians <span class="math notranslate nohighlight">\(H_{A_C}\)</span> and <span class="math notranslate nohighlight">\(H_{C}\)</span> acting on <span class="math notranslate nohighlight">\(A_C\)</span> and <span class="math notranslate nohighlight">\(C\)</span> respectively are given by is given by</p>
 <img alt="../_images/H_AC.svg" class="align-center" id="h-ac" src="../_images/H_AC.svg" /><img alt="../_images/H_C.svg" class="align-center" id="h-c" src="../_images/H_C.svg" /><p>The last equation then simply states that <span class="math notranslate nohighlight">\(C\)</span> intertwines the left - and right-orthonormal form of the tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <div class="section" id="id5">
@@ -371,44 +373,44 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 1 galerkin = 1.066960125053435
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 2 galerkin = 0.3991112884877352
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 3 galerkin = 0.04634540082031235
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 4 galerkin = 0.03312453989444381
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 1 galerkin = 1.3659662463856561
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 2 galerkin = 1.1723231976160782
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 3 galerkin = 0.7935763387518421
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 4 galerkin = 0.0960858226814068
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 5 galerkin = 0.02725435670033508
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 5 galerkin = 0.03135102269774109
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 6 galerkin = 0.019569430576523158
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 7 galerkin = 0.012527022436939336
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 8 galerkin = 0.0031541300804923495
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 9 galerkin = 0.0011014515984163137
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 10 galerkin = 0.0003531011576464239
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 6 galerkin = 0.013177147060063545
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 7 galerkin = 0.005814843620056338
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 8 galerkin = 0.001860472951187659
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 9 galerkin = 0.0006613552067970662
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 10 galerkin = 0.00023075129527885485
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 11 galerkin = 8.330353525708808e-5
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 11 galerkin = 0.00012340622467967794
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 12 galerkin = 4.326618831680643e-5
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 13 galerkin = 1.576603096765353e-5
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 14 galerkin = 5.7033894195826606e-6
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 15 galerkin = 2.1255652122166478e-6
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 16 galerkin = 7.804372495241403e-7
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 17 galerkin = 2.9434856523967773e-7
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 18 galerkin = 1.0894114528604224e-7
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 12 galerkin = 2.9827161231879082e-5
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 13 galerkin = 1.093449988229611e-5
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 14 galerkin = 3.972600586573001e-6
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 15 galerkin = 1.4724607882859604e-6
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 16 galerkin = 5.40620752206743e-7
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 17 galerkin = 2.0207359235637187e-7
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 18 galerkin = 7.48105375751277e-8
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 19 galerkin = 4.137362244281207e-8
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 20 galerkin = 1.538808685044548e-8
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 21 galerkin = 5.870194799165131e-9
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 22 galerkin = 2.1909702894336544e-9
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 23 galerkin = 8.384155365886938e-10
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 24 galerkin = 3.138179665939638e-10
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 25 galerkin = 1.203696221486903e-10
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 26 galerkin = 4.517141491811841e-11
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 19 galerkin = 2.8149522213085796e-8
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 20 galerkin = 1.0493023250708922e-8
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 21 galerkin = 3.969618077348672e-9
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 22 galerkin = 1.4883615299258096e-9
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 23 galerkin = 5.655531667624277e-10
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 24 galerkin = 2.131220746842582e-10
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 25 galerkin = 8.12794013141652e-11
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 27 galerkin = 1.7358843397520016e-11
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 28 galerkin = 6.537822554939014e-12
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 29 galerkin = 2.5112348009497588e-12
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 30 galerkin = 9.591758507414685e-13
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 26 galerkin = 3.0767910860997756e-11
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 27 galerkin = 1.1769898740034167e-11
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 28 galerkin = 4.479740958665801e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 29 galerkin = 1.719539184934784e-12
+<span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>vumps @iteration 30 galerkin = 6.711351405717097e-13
 </pre></div>
 </div>
 </div>
@@ -422,12 +424,12 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element PeriodicArray{ComplexF64, 1}:
- -1.401380643518249 - 6.938893903907228e-17im
+ -1.4013806435182483 - 2.2551405187698492e-17im
 </pre></div>
 </div>
 </div>
 </div>
-<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in <span id="id7">[<a class="reference internal" href="../References.html#id5" title="Jutho Haegeman, J Ignacio Cirac, Tobias J Osborne, Iztok Pižorn, Henri Verschelde, and Frank Verstraete. Time-dependent variational principle for quantum lattices. Physical review letters, 107(7):070601, 2011.">HCO+11</a>]</span>. As you can see, even with such a small bond dimension we can easily approximate the ground state energy up to 3 decimals.</p>
+<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in <span id="id7">[<a class="reference internal" href="../References.html#id5" title="Jutho Haegeman, J Ignacio Cirac, Tobias J Osborne, Iztok Pižorn, Henri Verschelde, and Frank Verstraete. Time-dependent variational principle for quantum lattices. Physical Review Letters, 107(7):070601, 2011. arXiv:1103.0936, doi:10.1103/PhysRevLett.107.070601.">HCO+11</a>]</span>. As you can see, even with such a small bond dimension we can easily approximate the ground state energy up to 3 decimals.</p>
 </div>
 </div>
 </div>
