@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>11. Tensor Network Algorithms &#8212; TensorTutorials</title>
+    <title>Tensor Network Algorithms &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -118,14 +118,12 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '3-MatrixProductStates/Algorithms';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/Algorithms-backup';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="12. Applications" href="Applications.html" />
-    <link rel="prev" title="10. Infinite Matrix Product States" href="InfiniteMPS.html" />
 
 <!-- Normal Meta Tags -->
-<meta name="author" context="QuantumGhent" />
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
 <meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
 <meta name="description" content=This website presents a set of lectures on Tensor Network methods />
 
@@ -156,7 +154,7 @@ const thebe_selector_output = ".output, .cell_output"
 
         <div class="qe-main">
 
-            <div class="qe-page" id=3-MatrixProductStates/Algorithms>
+            <div class="qe-page" id=2-MatrixProductStates/Algorithms-backup>
 
                 <div class="qe-page__toc">
 
@@ -170,11 +168,11 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-quantum-systems">11.1. Simulating Quantum Systems</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-statistical-mechanics">11.2. Classical Statistical Mechanics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-tebd">11.3. Case Study: TEBD</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approximating-the-time-evolution-operator">11.3.1. Approximating The Time Evolution Operator</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-a-one-dimensional-system">11.3.2. Simulating a One-Dimensional System</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-quantum-systems">Simulating Quantum Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-statistical-mechanics">Classical Statistical Mechanics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-tebd">Case Study: TEBD</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approximating-the-time-evolution-operator">Approximating The Time Evolution Operator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-a-one-dimensional-system">Simulating a One-Dimensional System</a></li>
 </ul>
 </li>
 </ul>
@@ -210,7 +208,7 @@ const thebe_selector_output = ".output, .cell_output"
 
                     </div>
 
-                    <p class="qe-page__header-authors">QuantumGhent</p>
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
 
                 </div> <!-- .page__header -->
 
@@ -222,7 +220,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-algorithms">
-<h1><span class="section-number">11. </span>Tensor Network Algorithms<a class="headerlink" href="#tensor-network-algorithms" title="Permalink to this heading">#</a></h1>
+<h1>Tensor Network Algorithms<a class="headerlink" href="#tensor-network-algorithms" title="Permalink to this heading">#</a></h1>
 <p>Now that we have introduced tensor networks in general and have spent some time on the
 particular case of MPS in one spatial dimension, it is worth to consider some possible
 applications of this tensor-network framework. While there are a large number of theoretical
@@ -233,7 +231,7 @@ section we will give a general introduction to the kind of problems that can be 
 using tensor-network simulations and discuss an approach to simulating dynamics in a
 one-dimensional quantum system as an illustrative example.</p>
 <div class="section" id="simulating-quantum-systems">
-<h2><span class="section-number">11.1. </span>Simulating Quantum Systems<a class="headerlink" href="#simulating-quantum-systems" title="Permalink to this heading">#</a></h2>
+<h2>Simulating Quantum Systems<a class="headerlink" href="#simulating-quantum-systems" title="Permalink to this heading">#</a></h2>
 <!-- TODO: decide how much of the general introduction we want to keep; maybe even move some things up since we've already mentioned for example expectation values, so it's a bit silly to introduce these here again... -->
 <p>A first setting where tensor network methods have been intensively applied is that of
 simulating quantum systems. . We will introduce these algorithms in the setting of discrete
@@ -270,7 +268,7 @@ other hand it governs the thermal equilibrium of the system if the system is cou
 external environment. For our discussion here we will consider <em>local Hamiltonians</em> of the
 form</p>
 <div class="math notranslate nohighlight" id="equation-localham">
-<span class="eqno">(11.1)<a class="headerlink" href="#equation-localham" title="Permalink to this equation">#</a></span>\[H = \sum_{s \in \Lambda} h_s\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-localham" title="Permalink to this equation">#</a></span>\[H = \sum_{s \in \Lambda} h_s\]</div>
 <p>where each <span class="math notranslate nohighlight">\( h_s \)</span> is <em>geometrically local</em>, meaning that it acts on a connected subregion <span class="math notranslate nohighlight">\(
 s \)</span> of the lattice <span class="math notranslate nohighlight">\( \Lambda \)</span> whose size <span class="math notranslate nohighlight">\( |s| \leq k \)</span> is bounded by some constant <span class="math notranslate nohighlight">\( k \)</span>
 and does not scale with the system size. For example, terms with <span class="math notranslate nohighlight">\( |s| = 1 \)</span> act on a single
@@ -340,7 +338,7 @@ this be done relatively succunctly? E.g. DMRG, TEBD, VUMPS, gradient methods, �
 </div>
 </div>
 <div class="section" id="classical-statistical-mechanics">
-<h2><span class="section-number">11.2. </span>Classical Statistical Mechanics<a class="headerlink" href="#classical-statistical-mechanics" title="Permalink to this heading">#</a></h2>
+<h2>Classical Statistical Mechanics<a class="headerlink" href="#classical-statistical-mechanics" title="Permalink to this heading">#</a></h2>
 <p>A second area where tensor networks have proven very effective in that of classical
 statistical mechanics. The central object in this setting is the <em>partition</em> function,
 <span class="math notranslate nohighlight">\(\mathcal Z\)</span>, which encodes the properties of some statistical ensemble that we wich to
@@ -382,13 +380,13 @@ place?</p>
 <p>(tebd) =</p>
 </div>
 <div class="section" id="case-study-tebd">
-<h2><span class="section-number">11.3. </span>Case Study: TEBD<a class="headerlink" href="#case-study-tebd" title="Permalink to this heading">#</a></h2>
+<h2>Case Study: TEBD<a class="headerlink" href="#case-study-tebd" title="Permalink to this heading">#</a></h2>
 <p>As a basic illustrative example of a tensor network application we will discuss the Time
 Evolving Block Decimation (TEBD) algorithm for simulating time evolution of one-dimensional
 quantum systems <span id="id3">[<a class="reference internal" href="../References.html#id12" title="Guifre Vidal. Efficient classical simulation of slightly entangled quantum computations. Physical Review Letters, 91(14):147902, October 2003. URL: http://arxiv.org/abs/quant-ph/0301063, arXiv:quant-ph/0301063, doi:10.1103/PhysRevLett.91.147902.">Vid03</a>]</span>. To this end we first discuss a well known method
 for approximating the time evolution operator based on the Suzuki-Trotter decomposition.</p>
 <div class="section" id="approximating-the-time-evolution-operator">
-<h3><span class="section-number">11.3.1. </span>Approximating The Time Evolution Operator<a class="headerlink" href="#approximating-the-time-evolution-operator" title="Permalink to this heading">#</a></h3>
+<h3>Approximating The Time Evolution Operator<a class="headerlink" href="#approximating-the-time-evolution-operator" title="Permalink to this heading">#</a></h3>
 <p>In order to simulate quantum dynamics, we want to design a protocol for reliably estimating
 any expectation value <span class="math notranslate nohighlight">\( O_{\text{out}} \)</span> for a time-evolved state starting from an initial
 state <span class="math notranslate nohighlight">\( \ket{\psi(0)} = \ket{\psi_0} \)</span>,</p>
@@ -397,7 +395,7 @@ state <span class="math notranslate nohighlight">\( \ket{\psi(0)} = \ket{\psi_0}
 <p>We can achieve this by directly preparing the time-evolved state which approximates a
 solution of Schrödinger’s equation,</p>
 <div class="math notranslate nohighlight" id="equation-time-evo">
-<span class="eqno">(11.2)<a class="headerlink" href="#equation-time-evo" title="Permalink to this equation">#</a></span>\[	\ket{\psi(t)} = e^{-i H t} \ket{\psi(0)}.\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-time-evo" title="Permalink to this equation">#</a></span>\[	\ket{\psi(t)} = e^{-i H t} \ket{\psi(0)}.\]</div>
 <p>after which we can simply measure <span class="math notranslate nohighlight">\( O \)</span> in resulting state. Directly exponentiating the full
 Hamiltonian is of course entirely intractable for larger system sizes, but we can exploit
 the structure of the system to find a suitable approximation up to a given order. The
@@ -411,7 +409,7 @@ h_s t} \)</span>.</p>
 <p>One way to do this is by relying on the <em>first order Suzuki-Trotter decomposition</em>, which
 states that for any two Hermitian operators <span class="math notranslate nohighlight">\( A \)</span> and <span class="math notranslate nohighlight">\( B \)</span>, and any real <span class="math notranslate nohighlight">\(\Delta t\)</span>,</p>
 <div class="math notranslate nohighlight" id="equation-trotter-first">
-<span class="eqno">(11.3)<a class="headerlink" href="#equation-trotter-first" title="Permalink to this equation">#</a></span>\[e^{(A + B) \Delta t} = e^{A \Delta t} e^{B \Delta t} + \mathcal O(\Delta t^2).\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-trotter-first" title="Permalink to this equation">#</a></span>\[e^{(A + B) \Delta t} = e^{A \Delta t} e^{B \Delta t} + \mathcal O(\Delta t^2).\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There actually exis tentire families of such exponential product approximations up to a
@@ -420,14 +418,14 @@ illustrate a simulation procedure using this first-order approximation.</p>
 </div>
 </div>
 <div class="section" id="simulating-a-one-dimensional-system">
-<h3><span class="section-number">11.3.2. </span>Simulating a One-Dimensional System<a class="headerlink" href="#simulating-a-one-dimensional-system" title="Permalink to this heading">#</a></h3>
+<h3>Simulating a One-Dimensional System<a class="headerlink" href="#simulating-a-one-dimensional-system" title="Permalink to this heading">#</a></h3>
 <p>We can put the discussion above into practice by applying it to the example of a
 nearest-neighbor Hamiltonian in one dimension,</p>
 <div class="math notranslate nohighlight" id="equation-1dham">
-<span class="eqno">(11.4)<a class="headerlink" href="#equation-1dham" title="Permalink to this equation">#</a></span>\[	H = \sum_{n = 1}^{N} h_{(n, n+1)},\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-1dham" title="Permalink to this equation">#</a></span>\[	H = \sum_{n = 1}^{N} h_{(n, n+1)},\]</div>
 <p>where we assume periodic boundary conditions <span class="math notranslate nohighlight">\( N + 1 \to 1 \)</span>. We now want to simulate the
 dynamics of this Hamiltonian in an efficient way using a first order approximation of the
-form Eq. <a class="reference internal" href="#equation-trotter-first">(11.3)</a>. The simplest way to do this is to split the Hamiltonian into
+form Eq. <a class="reference internal" href="#equation-trotter-first">()</a>. The simplest way to do this is to split the Hamiltonian into
 two parts which do not necessarily commute, but for which all the terms within each part do
 commute. Since we are dealing with interactions <span class="math notranslate nohighlight">\( h_{(n, n+1)} \)</span> which act on two
 neighboring sites, we have <span class="math notranslate nohighlight">\( \left[ h_{(n, n+1)}, h_{(m, m+1)} \right] \propto
@@ -435,7 +433,7 @@ neighboring sites, we have <span class="math notranslate nohighlight">\( \left[ 
 common. Given this observation, it is natural to split the Hamiltonian into an ‘even’ and an
 ‘odd’ part,</p>
 <div class="math notranslate nohighlight" id="equation-hamsplit">
-<span class="eqno">(11.5)<a class="headerlink" href="#equation-hamsplit" title="Permalink to this equation">#</a></span>\[H_e = \sum_n h_{(2n, 2n+1)}, \qquad H_o = \sum_n h_{(2n+1, 2n+2)}.\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-hamsplit" title="Permalink to this equation">#</a></span>\[H_e = \sum_n h_{(2n, 2n+1)}, \qquad H_o = \sum_n h_{(2n+1, 2n+2)}.\]</div>
 <p>It is clear that all local terms within <span class="math notranslate nohighlight">\( H_e \)</span> and <span class="math notranslate nohighlight">\( H_o \)</span> commute, while <span class="math notranslate nohighlight">\(
 \left[ H_e, H_o \right] \ne 0 \)</span> since they contain overlapping terms. In particular, this
 means that for a given time step <span class="math notranslate nohighlight">\(\Delta t\)</span> the operators <span class="math notranslate nohighlight">\(e^{-i H_e \Delta t}\)</span> and <span class="math notranslate nohighlight">\(e^{-i
@@ -511,7 +509,7 @@ increase in computational cost due to the full environment approximation at each
         },
         kernelOptions: {
             name: "julia-1.9",
-            path: "./3-MatrixProductStates"
+            path: "./2-MatrixProductStates"
         },
         predefinedOutput: true
     }
@@ -560,7 +558,7 @@ increase in computational cost due to the full environment approximation at each
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../1-Introduction/Software.html">
-   2. Getting started with Julia
+   2. Getting Started with Numerics
   </a>
  </li>
  <li class="toctree-l1">
@@ -575,24 +573,7 @@ increase in computational cost due to the full environment approximation at each
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../1-Introduction/Symmetries.html">
-   5. Symmetries in quantum many-body physics
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Tensors
- </span>
-</p>
-<ul class="nav bd-sidenav nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   6. TensorKit.jl
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   7. TensorOperations.jl
+   5. Symmetries in Quantum Many-Body Physics
   </a>
  </li>
 </ul>
@@ -601,30 +582,30 @@ increase in computational cost due to the full environment approximation at each
   Matrix Product States
  </span>
 </p>
-<ul class="current nav bd-sidenav nav sidenav_l1">
+<ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductStates.html">
-   8. Matrix Product States
+   6. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductOperators.html">
-   9. Matrix Product Operators
+   7. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="InfiniteMPS.html">
-   10. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
- <li class="toctree-l1 current active active">
-  <a class="current reference internal" href="#">
-   11. Tensor Network Algorithms
+ <li class="toctree-l1">
+  <a class="reference internal" href="Algorithms.html">
+   9. Tensor Network Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Applications.html">
-   12. Applications
+   10. Applications
   </a>
  </li>
 </ul>
@@ -635,8 +616,8 @@ increase in computational cost due to the full environment approximation at each
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
-   13. Fixed-Point algorithms
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   11. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -648,7 +629,7 @@ increase in computational cost due to the full environment approximation at each
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   14. References
+   12. References
   </a>
  </li>
 </ul>
@@ -687,7 +668,7 @@ increase in computational cost due to the full environment approximation at each
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/3-MatrixProductStates/Algorithms.md" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-MatrixProductStates/Algorithms-backup.md" download><i data-feather="github"></i></a></li>
                 </ul>
 
             </div>
@@ -716,18 +697,18 @@ increase in computational cost due to the full environment approximation at each
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/Algorithms.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/Algorithms-backup.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/3-MatrixProductStates/Algorithms.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/2-MatrixProductStates/Algorithms-backup.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/3-MatrixProductStates/Algorithms.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/Algorithms-backup.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -757,9 +738,9 @@ increase in computational cost due to the full environment approximation at each
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "3-MatrixProductStates/Algorithms";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
-                const urlPath = "tree/TensorTutorials.notebooks/3-MatrixProductStates/Algorithms.ipynb";
+                const pageName = "2-MatrixProductStates/Algorithms-backup";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/2-MatrixProductStates/Algorithms-backup.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
