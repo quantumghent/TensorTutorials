@@ -235,13 +235,13 @@ const thebe_selector_output = ".output, .cell_output"
 <h1><a class="toc-backref" href="#id4"><span class="section-number">8. </span>Infinite Matrix Product States</a><a class="headerlink" href="#infinite-matrix-product-states" title="Permalink to this heading">#</a></h1>
 <p>This section discusses matrix product states (MPS) in the thermodynamic limit and their
 properties. Our discussion is mostly based on the excellent review
-<span id="id1">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>, which provides a thorough technical overview of
+<span id="id1">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>, which provides a thorough technical overview of
 tangent-space methods for uniform MPS. The formal exposition is supplemented with some very
 basic code examples on working with infinite MPS using
 <a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a> at the end of this section. For more
 details on the numerical implementation of routines for uniform MPS we refer to the Julia
 version of the <a class="reference external" href="https://github.com/leburgel/uniformMpsTutorial">tutorials on uniform MPS</a>,
-which is again based on <span id="id2">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, January 2019. URL: https://scipost.org/SciPostPhysLectNotes.7, arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+which is again based on <span id="id2">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -371,7 +371,7 @@ because they correspond to subleading correlations in the system. For example, b
 on eigenvalues in a specific symmetry sector one can target the correlations associated to
 exitations corresponding to that particular symmetry. The subleading eigenvalues also play a
 crucial role in the powerful technique of <em>finite entanglement scaling</em> for infinite MPS
-<span id="id3">[<a class="reference internal" href="../References.html#id8" title="Marek M. Rams, Piotr Czarnik, and Lukasz Cincio. Precise extrapolation of the correlation function asymptotics in uniform tensor network states with application to the Bose-Hubbard and XXZ models. Physical Review X, 8(4):041033, November 2018. URL: http://arxiv.org/abs/1801.08554, arXiv:1801.08554, doi:10.1103/PhysRevX.8.041033.">RCC18</a>]</span>. Using this framework we can accurately capture critical phenomena
+<span id="id3">[<a class="reference internal" href="../References.html#id8" title="Marek M. Rams, Piotr Czarnik, and Lukasz Cincio. Precise extrapolation of the correlation function asymptotics in uniform tensor network states with application to the Bose-Hubbard and XXZ models. Physical Review X, 8(4):041033, 2018. arXiv:1801.08554, doi:10.1103/PhysRevX.8.041033.">RCC18</a>]</span>. Using this framework we can accurately capture critical phenomena
 using MPS, despite the ansatz inherently having exponentially decaying correlations.</p>
 </div>
 </div>
@@ -388,7 +388,7 @@ easily seen by noting that the gauge transform</p>
 canonical forms on the MPS tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>We start by considering the <em>left-orthonormal form</em> of an MPS, which is defined in terms of
 a tensor <span class="math notranslate nohighlight">\(A_L\)</span> that satisfies the condition</p>
-<img alt="../_images/leftOrth.svg" class="align-center" id="left-orthonormal" src="../_images/leftOrth.svg" /><p>We can find the gauge transform <span class="math notranslate nohighlight">\(L\)</span> that brings <span class="math notranslate nohighlight">\(A\)</span> into this form</p>
+<img alt="../_images/leftOrth1.svg" class="align-center" id="left-orthonormal" src="../_images/leftOrth1.svg" /><p>We can find the gauge transform <span class="math notranslate nohighlight">\(L\)</span> that brings <span class="math notranslate nohighlight">\(A\)</span> into this form</p>
 <img alt="../_images/leftGauge.svg" class="align-center" id="left-gauge" src="../_images/leftGauge.svg" /><p>using an iterative procedure based on the QR docomposition, where starting from some initial
 guess <span class="math notranslate nohighlight">\(L^0\)</span> we repeatedly perform the QR-based update</p>
 <img alt="../_images/qrStep.svg" class="align-center" id="qr-step" src="../_images/qrStep.svg" /><p>This iterative procedure is bound to converge to a fixed point for which
@@ -503,8 +503,8 @@ tensors <span class="math notranslate nohighlight">\(A_C\)</span> and <span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0000000000000002
-norm(mps.AC[1]) = 1.0000000000000002
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 0.9999999999999999
+norm(mps.AC[1]) = 0.9999999999999999
 norm(mps.CR[1]) = 1.0
 </pre></div>
 </div>
@@ -541,7 +541,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- -0.2965360780687573 + 0.024684087674045976im
+ 0.821992711120626 - 0.010422003264619086im
 </pre></div>
 </div>
 </div>
@@ -554,7 +554,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5210339009216689
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4682543695237864
 </pre></div>
 </div>
 </div>
@@ -735,6 +735,7 @@ the next section.</p>
                     <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
                     <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li data-tippy-content="Download Notebook"><a href="https://quantumghent.github.io/TensorTutorials//_notebooks/2-MatrixProductStates/InfiniteMPS.ipynb" download><i data-feather="download-cloud"></i></a></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
                     <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-MatrixProductStates/InfiniteMPS.md" download><i data-feather="github"></i></a></li>

@@ -662,7 +662,7 @@ we would write</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(ProductSpace(Rep[SU₂](1=&gt;1)) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
 * Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
 [:, :, 1] =
- 1.5e-323
+ 7.0025861102e-313
 </pre></div>
 </div>
 </div>
@@ -681,7 +681,7 @@ and codomain are as expected:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1 =&gt; [1.5e-323;;]
+  1 =&gt; [7.00259e-313;;]
 </pre></div>
 </div>
 </div>
@@ -712,7 +712,7 @@ cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [5.0e-324 5.0e-324; 5.0e-324 5.0e-324]
+  1/2 =&gt; [0.0 0.0; 0.0 0.0]
 </pre></div>
 </div>
 </div>
@@ -745,7 +745,7 @@ categorical symmetries. These symmetries are beyond the scope of these notes. Th
 categorical symmetries are not described by groups but by more general and intricate
 algebraic structures called fusion categories, of which (finite) groups and their
 representations are specific examples. For an example of how spin chains with categorical
-symmetries can be constructed, see for example <span id="id2">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical review letters, 98(16):160409, 2007.">FTL+07</a>]</span>. TensorKit
+symmetries can be constructed, see for example <span id="id2">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">FTL+07</a>]</span>. TensorKit
 allows for an efficient construction and storage of tensors which are symmetric with
 respect to these more general kind of symmetries.</p></li>
 </ul>
@@ -922,6 +922,7 @@ respect to these more general kind of symmetries.</p></li>
                     <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
                     <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li data-tippy-content="Download Notebook"><a href="https://quantumghent.github.io/TensorTutorials//_notebooks/1-Introduction/Symmetries.ipynb" download><i data-feather="download-cloud"></i></a></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
                     <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/1-Introduction/Symmetries.md" download><i data-feather="github"></i></a></li>
