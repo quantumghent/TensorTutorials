@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jupyter_core/utils/__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+A = TensorMap(randn, ComplexF64, S1, S1) # codomain and domain equal for eigendecomposition
+partition = ((1, 5, 3), (4, 2, 6))
+D, V = eig(A, partition)
+@test permute(A, partition) * V ≈ V * D
+------------------
+
+
+MethodError: no method matching eig(::TensorMap{ComplexSpace, 3, 3, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ::Tuple{Tuple{Int64, Int64, Int64}, Tuple{Int64, Int64, Int64}})
+
+[0mClosest candidates are:
+[0m  eig(::AbstractTensorMap; kwargs...)
+[0m[90m   @[39m [35mTensorKit[39m [90m~/.julia/packages/TensorKit/MikvC/src/tensors/[39m[90m[4mfactorizations.jl:270[24m[39m
+[0m  eig(::AbstractTensorMap, [91m::Tuple{Vararg{Int64, N}} where N[39m, [91m::Tuple{Vararg{Int64, N}} where N[39m; kwargs...)
+[0m[90m   @[39m [35mTensorKit[39m [90m~/.julia/packages/TensorKit/MikvC/src/tensors/[39m[90m[4mfactorizations.jl:207[24m[39m
+
+
+Stacktrace:
+ [1] top-level scope
+   @ In[7]:3
+
