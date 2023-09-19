@@ -662,7 +662,7 @@ we would write</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(ProductSpace(Rep[SU₂](1=&gt;1)) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
 * Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
 [:, :, 1] =
- 0.0
+ 3.0e-323
 </pre></div>
 </div>
 </div>
@@ -681,7 +681,7 @@ and codomain are as expected:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1 =&gt; [0.0;;]
+  1 =&gt; [3.0e-323;;]
 </pre></div>
 </div>
 </div>
@@ -712,7 +712,7 @@ cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [0.0 6.94704e-310; 6.94704e-310 0.0]
+  1/2 =&gt; [0.0 6.90299e-310; 6.903e-310 0.0]
 </pre></div>
 </div>
 </div>
@@ -876,6 +876,11 @@ respect to these more general kind of symmetries.</p></li>
    11. Fixed-Point algorithms
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
+   12. Time Evolution
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -885,7 +890,7 @@ respect to these more general kind of symmetries.</p></li>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   12. References
+   13. References
   </a>
  </li>
 </ul>
