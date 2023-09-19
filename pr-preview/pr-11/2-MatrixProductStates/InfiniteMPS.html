@@ -119,6 +119,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/InfiniteMPS';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/InfiniteMPS.html" />
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -141,7 +142,7 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Opengraph tags -->
 <meta property="og:title" content="Infinite Matrix Product States" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="None" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/InfiniteMPS.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
 <meta property="og:site_name" content="TensorTutorials" />
@@ -387,7 +388,7 @@ easily seen by noting that the gauge transform</p>
 canonical forms on the MPS tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>We start by considering the <em>left-orthonormal form</em> of an MPS, which is defined in terms of
 a tensor <span class="math notranslate nohighlight">\(A_L\)</span> that satisfies the condition</p>
-<img alt="../_images/leftOrth.svg" class="align-center" id="left-orthonormal" src="../_images/leftOrth.svg" /><p>We can find the gauge transform <span class="math notranslate nohighlight">\(L\)</span> that brings <span class="math notranslate nohighlight">\(A\)</span> into this form</p>
+<img alt="../_images/leftOrth1.svg" class="align-center" id="left-orthonormal" src="../_images/leftOrth1.svg" /><p>We can find the gauge transform <span class="math notranslate nohighlight">\(L\)</span> that brings <span class="math notranslate nohighlight">\(A\)</span> into this form</p>
 <img alt="../_images/leftGauge.svg" class="align-center" id="left-gauge" src="../_images/leftGauge.svg" /><p>using an iterative procedure based on the QR docomposition, where starting from some initial
 guess <span class="math notranslate nohighlight">\(L^0\)</span> we repeatedly perform the QR-based update</p>
 <img alt="../_images/qrStep.svg" class="align-center" id="qr-step" src="../_images/qrStep.svg" /><p>This iterative procedure is bound to converge to a fixed point for which
@@ -502,9 +503,9 @@ tensors <span class="math notranslate nohighlight">\(A_C\)</span> and <span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 0.9999999999999999
-norm(mps.AC[1]) = 0.9999999999999999
-norm(mps.CR[1]) = 1.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 0.9999999999999998
+norm(mps.AC[1]) = 0.9999999999999998
+norm(mps.CR[1]) = 0.9999999999999999
 </pre></div>
 </div>
 </div>
@@ -540,7 +541,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- 0.383772241019342 + 0.056055451553262664im
+ 0.49557302454548496 - 0.03868160180628546im
 </pre></div>
 </div>
 </div>
@@ -553,7 +554,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.48038672141868327
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5000774996643486
 </pre></div>
 </div>
 </div>
@@ -720,7 +721,7 @@ the next section.</p>
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
                     <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
                     <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
-                    <li><a href="https://github.com/quantumghent" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
                 </ul>
 
                 <ul class="qe-toolbar__links">

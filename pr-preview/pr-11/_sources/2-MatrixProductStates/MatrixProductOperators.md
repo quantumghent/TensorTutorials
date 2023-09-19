@@ -40,40 +40,63 @@ where $s_i$ denotes a configuration of spins, and $H(\{s_i\})$ is the correspond
 energy, as determined by the Hamiltonian:
 
 ```{math}
-H(\{s_i\}) = -J \sum_{\langle i,j \rangle} s_i s_j - h \sum_i s_i
+H(\{s_i\}) = -J \sum_{\langle i,j \rangle} s_i s_j
 ```
 
-where the first sum is over nearest neighbors, and the second sum is over all sites. 
+where the first sum is over nearest neighbors. 
 
 ### Partition Functions as Tensor Networks
 
 As the expression for the partition function is an exponential of a sum, we can also write
-it as a product of exponentials, and it is left as an exercise to show that this is
-equivalent to contracting the following network, where the tensors at the vertices are
-Kronecker deltas, which denote the spins at each site, and the tensors on the edges are
-exponentials of the local Hamiltonian that represent the interactions between spins:
+it as a product of exponentials, which can be reduced to the following network:
 
-<!-- Insert image of tensor network -->
-
-It is then easy to check that contracting this network gives rise to the partition function,
-where the sum over all configurations is converted into the summations in the contractions
-of the network. Finally, it is more common to absorb the edge tensors into the vertex
-tensors by explicitly contracting them, such that the remaining network consists of tensors
-at the vertices only:
-
-```{image} /_static/figures/alg/partition_function.svg
+```{image} /_static/figures/mpo/partition_function_1.svg
 :scale: 12%
 :name: partfunc
 :align: center
 ```
 
-```{note}
+Here, the black dots at the vertices represent Kronecker $\delta$-tensors,
+
+```{image} /_static/figures/mpo/kronecker.svg
+:scale: 12%
+:name: kronecker
+:align: center
+```
+
+and the matrices $t$ encode the Boltzmann weights associated to each nearest-neighbor interaction,
+
+```{image} /_static/figures/mpo/boltzmann.svg
+:scale: 12%
+:name: boltzmann
+:align: center
+```
+
+It is then simple, albeit somewhat involved to check that contracting this network gives
+rise to the partition function, where the sum over all configurations is converted into the
+summations in the contractions of the network. Finally, it is more common to absorb the edge
+tensors into the vertex tensors by explicitly contracting them, such that the remaining
+network consists of tensors at the vertices only:
+
+```{image} /_static/figures/mpo/partition_function.svg
+:scale: 12%
+:name: partfunc
+:align: center
+```
+
+````{note}
 Because there are two edges per vertex, an intuitive way of absorbing the edge tensors is to
 absorb for example the left and bottom edge tensors into the vertex tensor. However, this
-leads to a slightly asymmetric form, and more commonly the square root of the edge tensors
-is taken, such that each vertex tensor absorbs such a factor from each of the edges,
-resulting in a rotation-symmetric form.
+leads to a slightly asymmetric form, and more commonly the square root $q$ of the Boltzmann
+matrices is taken, such that each vertex tensor absorbs such a factor from each of the
+edges, resulting in a rotation-invariant form.
+
+```{image} /_static/figures/mpo/boltzmann_mpo.svg
+:scale: 12%
+:name: boltzmann_mpo
+:align: center
 ```
+````
 
 ### Transfer Matrices
 

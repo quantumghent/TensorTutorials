@@ -70,7 +70,8 @@ is based on the idea of representing a single tensor as a node in a graph, where
 of the tensor are depicted by legs sticking out of it, one for each vector space. As an
 example, a rank-four tensor $R$ can be represented as:
 
-```{image} /_static/1-Introduction/R-tensor.svg
+```{image} /_static/TensorNetworks/R-tensor.svg
+:scale: 12%
 :name: R-tensor
 :align: center
 ```
@@ -81,7 +82,11 @@ In this notation, the individual components of the tensor can be recoverd by fix
 legs of a diagram to some value, and the resulting diagram is then a scalar. For example,
 the component $R_{i_1,i_2,i_3,i_4}$ is given by:
 
-<!-- TODO: insert figure -->
+```{image} /_static/TensorNetworks/indexing.svg
+:scale: 12%
+:name: indexing
+:align: center
+```
 
 ### Grouping and Splitting of Indices
 
@@ -95,7 +100,8 @@ Furthermore, this naturally gives a notion of grouping and splitting of indices,
 just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and
 the inverse operation. For example, the following diagrams are equivalent:
 
-```{image} /_static/1-Introduction/grouping.svg
+```{image} /_static/TensorNetworks/grouping.svg
+:scale: 12%
 :name: grouping
 :align: center
 ```
@@ -137,7 +143,8 @@ tensors being placed next to each other. The value of the resulting network is s
 product of the constituents. For example, the outer product of a rank three tensor $A$ and a
 rank two tensor $B$ is given by:
 
-```{image} /_static/1-Introduction/outer-product.svg
+```{image} /_static/TensorNetworks/outer-product.svg
+:scale: 12%
 :name: outer-product
 :align: center
 ```
@@ -152,7 +159,8 @@ If two legs from a single tensor are joined, this signifies a (partial) _trace_ 
 over these indices. For example, the trace of a rank three tensor $A$ over two of its
 indices is given by:
 
-```{image} /_static/1-Introduction/trace.svg
+```{image} /_static/TensorNetworks/trace.svg
+:scale: 12%
 :name: trace
 :align: center
 ```
@@ -161,7 +169,8 @@ In this notation, the cyclic property of the trace follows by sliding one of the
 around the loop of the diagram. As this only changes the placement of the tensors in the
 network, and not the value, the graphic proof of $\text{Tr}(AB) = \text{Tr}(BA)$ is found.
 
-```{image} /_static/1-Introduction/trace-cyclic.svg
+```{image} /_static/TensorNetworks/trace-cyclic.svg
+:scale: 12%
 :name: trace-cyclic
 :align: center
 ```
@@ -173,7 +182,8 @@ different tensors. This can equivalently be thought of as a tensor product follo
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
 is drawn as:
 
-```{image} /_static/1-Introduction/contraction.svg
+```{image} /_static/TensorNetworks/contraction.svg
+:scale: 12%
 :name: contraction
 :align: center
 ```
@@ -181,7 +191,30 @@ is drawn as:
 Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.
 
-<!-- TODO: insert figure -->
+```{image} /_static/TensorNetworks/vecvec.svg
+:scale: 12%
+:name: vecvec
+:align: center
+```
+
+```{image} /_static/TensorNetworks/matvec.svg
+:scale: 12%
+:name: matvec
+:align: center
+```
+
+```{image} /_static/TensorNetworks/matmat.svg
+:scale: 12%
+:name: matmat
+:align: center
+```
+
+```{image} /_static/TensorNetworks/tr.svg
+:scale: 12%
+:name: tr
+:align: center
+```
+
 
 ## Network Contractions
 
@@ -190,7 +223,8 @@ _tensor networks_, which can then be evaluated by a sequence of pair-wise operat
 result then reduces to a tensor which has a rank equal to the number of open legs in the
 network. For example, the following diagram represents a generic tensor network:
 
-```{image} /_static/1-Introduction/network.svg
+```{image} /_static/TensorNetworks/network.svg
+:scale: 12%
 :name: network
 :align: center
 ```
@@ -266,8 +300,17 @@ of particular relevance in the context of Matrix Product States, we can highligh
 possible contraction orders, for which we leave it as an exercise to determine the
 computational complexity:
 
-<!-- ladder1 -->
-<!-- ladder2 -->
+```{image} /_static/TensorNetworks/ladder1.svg
+:scale: 12%
+:name: ladder1
+:align: center
+```
+
+```{image} /_static/TensorNetworks/ladder2.svg
+:scale: 12%
+:name: ladder2
+:align: center
+```
 
 Determining the optimal order however is a problem that is known to be NP-hard, and thus no
 algorithm exists that can efficiently compute optimal orders for larger networks.
@@ -330,7 +373,11 @@ where $v$ is an eigenvector of $A$ with eigenvalue $\lambda$.
 For tensors, the eigenvalue decomposition is defined similarly, and the equivalent equation
 is diagrammatically represented as:
 
-<!-- TODO: insert image -->
+```{image} /_static/TensorNetworks/eig.svg
+:scale: 12%
+:name: eig
+:align: center
+```
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S1) # codomain and domain equal for eigendecomposition
@@ -353,8 +400,15 @@ SVD, where $\Sigma$ is truncated to the first (largest) $k$ singular values.
 Again, a tensorial version is defined by first grouping indices to form a matrix, and then
 applying the SVD to that matrix.
 
-```{image} /_static/1-Introduction/svd.svg
+```{image} /_static/TensorNetworks/svd.svg
+:scale: 12%
 :name: svd
+:align: center
+```
+
+```{image} /_static/TensorNetworks/unitary.svg
+:scale: 12%
+:name: unitary
 :align: center
 ```
 
@@ -375,7 +429,11 @@ a positive semi-definite Hermitian matrix. It can be interpreted as decomposing 
 transformation into a rotation/reflection $U$, combined with a scaling $P$. The polar
 decomposition is unique for all matrices that are full rank.
 
-<!-- TODO: insert image polar -->
+```{image} /_static/TensorNetworks/polar.svg
+:scale: 12%
+:name: svd
+:align: center
+```
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
@@ -395,7 +453,17 @@ of the triangular structure (for example by Gaussian elimination). Additionally,
 overdetermined linear systems, the QR decomposition can be used to find the least-squares
 solution.
 
-<!-- TODO: insert image QR -->
+```{image} /_static/TensorNetworks/qr.svg
+:scale: 12%
+:name: qr
+:align: center
+```
+
+```{image} /_static/TensorNetworks/leftOrth.svg
+:scale: 12%
+:name: leftOrth
+:align: center
+```
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)

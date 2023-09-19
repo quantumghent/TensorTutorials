@@ -119,6 +119,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/MatrixProductOperators';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/MatrixProductOperators.html" />
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -141,7 +142,7 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Opengraph tags -->
 <meta property="og:title" content="Matrix Product Operators" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="None" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/MatrixProductOperators.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
 <meta property="og:site_name" content="TensorTutorials" />
@@ -181,7 +182,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics-in-1-1d">9.2. Quantum Mechanics in 1+1D</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-block-mpos">9.2.1. Jordan Block MPOs</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-state-machines">9.2.2. Finite-State Machines</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.2.3. Expectation Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.3. Expectation Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-mpos-in-the-thermodynamic-limit">9.2.4. Jordan MPOs in the Thermodynamic Limit</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-1d-systems">9.2.5. Quasi-1D Systems</a></li>
 </ul>
@@ -254,29 +255,31 @@ tensor network. To this end, consider the partition function of the
 <p>where <span class="math notranslate nohighlight">\(s_i\)</span> denotes a configuration of spins, and <span class="math notranslate nohighlight">\(H(\{s_i\})\)</span> is the corresponding
 energy, as determined by the Hamiltonian:</p>
 <div class="math notranslate nohighlight">
-\[H(\{s_i\}) = -J \sum_{\langle i,j \rangle} s_i s_j - h \sum_i s_i\]</div>
-<p>where the first sum is over nearest neighbors, and the second sum is over all sites.</p>
+\[H(\{s_i\}) = -J \sum_{\langle i,j \rangle} s_i s_j\]</div>
+<p>where the first sum is over nearest neighbors.</p>
 <div class="section" id="partition-functions-as-tensor-networks">
 <h3><span class="section-number">9.1.1. </span>Partition Functions as Tensor Networks<a class="headerlink" href="#partition-functions-as-tensor-networks" title="Permalink to this heading">#</a></h3>
 <p>As the expression for the partition function is an exponential of a sum, we can also write
-it as a product of exponentials, and it is left as an exercise to show that this is
-equivalent to contracting the following network, where the tensors at the vertices are
-Kronecker deltas, which denote the spins at each site, and the tensors on the edges are
-exponentials of the local Hamiltonian that represent the interactions between spins:</p>
-<!-- Insert image of tensor network -->
-<p>It is then easy to check that contracting this network gives rise to the partition function,
-where the sum over all configurations is converted into the summations in the contractions
-of the network. Finally, it is more common to absorb the edge tensors into the vertex
-tensors by explicitly contracting them, such that the remaining network consists of tensors
-at the vertices only:</p>
-<a class="reference internal image-reference" href="../_images/partition_function.svg" id="partfunc"><img alt="../_images/partition_function.svg" class="align-center" height="241" id="partfunc" src="../_images/partition_function.svg" width="297" /></a>
+it as a product of exponentials, which can be reduced to the following network:</p>
+<a class="reference internal image-reference" href="_static/figures/mpo/partition_function_1.svg" id="partfunc"><img alt="_static/figures/mpo/partition_function_1.svg" class="align-center" id="partfunc" src="_static/figures/mpo/partition_function_1.svg" /></a>
+<p>Here, the black dots at the vertices represent Kronecker <span class="math notranslate nohighlight">\(\delta\)</span>-tensors,</p>
+<a class="reference internal image-reference" href="../_images/kronecker.svg" id="kronecker"><img alt="../_images/kronecker.svg" class="align-center" height="97" id="kronecker" src="../_images/kronecker.svg" width="316" /></a>
+<p>and the matrices <span class="math notranslate nohighlight">\(t\)</span> encode the Boltzmann weights associated to each nearest-neighbor interaction,</p>
+<a class="reference internal image-reference" href="../_images/boltzmann.svg" id="boltzmann"><img alt="../_images/boltzmann.svg" class="align-center" height="65" id="boltzmann" src="../_images/boltzmann.svg" width="253" /></a>
+<p>It is then simple, albeit somewhat involved to check that contracting this network gives
+rise to the partition function, where the sum over all configurations is converted into the
+summations in the contractions of the network. Finally, it is more common to absorb the edge
+tensors into the vertex tensors by explicitly contracting them, such that the remaining
+network consists of tensors at the vertices only:</p>
+<a class="reference internal image-reference" href="../_images/partition_function.svg" id="id1"><img alt="../_images/partition_function.svg" class="align-center" height="241" id="id1" src="../_images/partition_function.svg" width="297" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Because there are two edges per vertex, an intuitive way of absorbing the edge tensors is to
 absorb for example the left and bottom edge tensors into the vertex tensor. However, this
-leads to a slightly asymmetric form, and more commonly the square root of the edge tensors
-is taken, such that each vertex tensor absorbs such a factor from each of the edges,
-resulting in a rotation-symmetric form.</p>
+leads to a slightly asymmetric form, and more commonly the square root <span class="math notranslate nohighlight">\(q\)</span> of the Boltzmann
+matrices is taken, such that each vertex tensor absorbs such a factor from each of the
+edges, resulting in a rotation-invariant form.</p>
+<a class="reference internal image-reference" href="../_images/boltzmann_mpo.svg" id="boltzmann-mpo"><img alt="../_images/boltzmann_mpo.svg" class="align-center" height="109" id="boltzmann-mpo" src="../_images/boltzmann_mpo.svg" width="220" /></a>
 </div>
 </div>
 <div class="section" id="transfer-matrices">
@@ -286,13 +289,13 @@ resulting in a rotation-symmetric form.</p>
 technique that splits the two-dimensional network into rows (or columns) of so-called
 transfer matrices, which are already represented as MPOs. In fact, this method has even led
 to the famous exact solution of the two-dimensional Ising model by Onsager.
-<span id="id1">[<a class="reference internal" href="../References.html#id15" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Phys. Rev., 65:117–149, Feb 1944. URL: https://link.aps.org/doi/10.1103/PhysRev.65.117, doi:10.1103/PhysRev.65.117.">Ons44</a>]</span>.</p>
+<span id="id2">[<a class="reference internal" href="../References.html#id15" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Phys. Rev., 65:117–149, Feb 1944. URL: https://link.aps.org/doi/10.1103/PhysRev.65.117, doi:10.1103/PhysRev.65.117.">Ons44</a>]</span>.</p>
 <p>In the context of tensor networks, this technique is even useful beyond exactly solvable
 cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
 approximate manner. This allows us to efficiently split the computation of the partition
 function in a sequence of one-dimensional contractions, thus reducing the complexity of the
 problem by solving it layer by layer. For example, one can resort to <em>boundary MPS
-techniques</em> <span id="id2">[<a class="reference internal" href="../References.html#id9" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, January 2018. URL: http://arxiv.org/abs/1701.07035, arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>.</p>
+techniques</em> <span id="id3">[<a class="reference internal" href="../References.html#id9" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, January 2018. URL: http://arxiv.org/abs/1701.07035, arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>.</p>
 <a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
 </div>
 <div class="section" id="thermodynamic-limit">
@@ -403,8 +406,8 @@ of the blocks <span class="math notranslate nohighlight">\(A\)</span>, <span cla
 of generic local terms, and even approximate long-range interactions by a sum of
 exponentials.</p>
 </div>
-<div class="section" id="id3">
-<h3><span class="section-number">9.2.3. </span>Expectation Values<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<div class="section" id="id4">
+<h3><span class="section-number">9.2.3. </span>Expectation Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>In order to compute expectation values of such MPOs, we can use the same technique as
 before, and sandwich the MPO between two MPSs.</p>
 <!-- Insert image of expectation value -->
@@ -437,7 +440,7 @@ as now only local expectation values are well-defined, and the total energy dive
 the system size.</p>
 <p>This is achieved by considering a regularization of the environment tensors, such that the
 divergent parts are already removed. This construction can be found in more detail in
-<span id="id4">[]</span>.</p>
+<span id="id5">[]</span>.</p>
 </div>
 <div class="section" id="quasi-1d-systems">
 <h3><span class="section-number">9.2.5. </span>Quasi-1D Systems<a class="headerlink" href="#quasi-1d-systems" title="Permalink to this heading">#</a></h3>
@@ -618,7 +621,7 @@ expectation values, and form the building block for many tensor network algorith
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
                     <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
                     <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
-                    <li><a href="https://github.com/quantumghent" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
                 </ul>
 
                 <ul class="qe-toolbar__links">
