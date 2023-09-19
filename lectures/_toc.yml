@@ -8,8 +8,9 @@ parts:
   numbered: true
   chapters:
   - file: 1-Introduction/QuantumManyBody
+  - file: 1-Introduction/Software
+  - file: 1-Introduction/LinearAlgebra
   - file: 1-Introduction/TensorNetworks
-  - file: 1-Introduction/Julia
   - file: 1-Introduction/Symmetries
 - caption: Tensors
   numbered: true
