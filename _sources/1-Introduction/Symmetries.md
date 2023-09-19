@@ -52,7 +52,7 @@ symmetry (of every model) and thus the set $\{1,P\}$ is closed under taking the 
 
 Even though the Hamiltonian has the symmetry regardless of the value of the parameter $h_x$,
 you might know from a previous course that the ground state or ground state subspace are not
-necessarily invariant under the symmetry, a phenomenon known as spontanuous symmetry
+necessarily invariant under the symmetry, a phenomenon known as spontaneous symmetry
 breaking (SSB) or symmetry breaking for short. Let us investigate the ground state subspace
 of the transverse field Ising model in the extremal case of vanishing and infinite magnetic
 field.
@@ -73,17 +73,17 @@ field.
   is thus symmetry broken, or ordered.
 
 Since the ground state degeneracy is necessarily an integer, it is clear that it can not
-change smoothly from 2 to 1 when the magnetic field is slowly turned on from
-$h_x=0\rightarrow \infty$. Therefore the Ising model for small $h_x$ and large $h_x$ are
+change smoothly from two to one when the magnetic field is slowly turned on from
+$h_x = 0 \rightarrow \infty$. Therefore the Ising model for small $h_x$ and large $h_x$ are
 said to belong to different phases, and for some finite value of $h_x$ a phase transition
 where the ground state degeneracy changes abruptly is expected to take place. As it turns
-out, this change happens for $h_x=1$, at which the Ising model becomes critical.
+out, this change happens for $h_x = 1$, at which point the Ising model becomes critical.
 
 Inspired by the credo of symmetry we can introduce a local operator which probes the phase
 and can witness the phase transition. In the case of the Ising model this order parameter is
 the local magnetisation on every site: $O=\sum_i\sigma^z_i$. It is clear that this order
 parameter anticommutes with the symmetry, $P^\dagger OP=-O$, from which it follows that in
-the symmetric phase the expectiation value of the order parameter vanishes,
+the symmetric phase the expectation value of the order parameter vanishes,
 $\braket{\Psi_+|O|\Psi_+}=0$, while in the ferromagnetic phase
 $\braket{\Psi_\uparrow|O|\Psi_\uparrow}>0$ and
 $\braket{\Psi_\downarrow|O|\Psi_\downarrow}<0$. Notice however that for the latter we could
@@ -91,7 +91,7 @@ also have chosen the ground state $\ket{\Psi_\uparrow}+\ket{\Psi_\downarrow}$ in
 the expectation value of $O$ becomes 0. So it seems that the expectation value of the order
 parameter is ill-defined is this phase. This can be remedied by first adding a small
 symmetry breaking term $\lambda\sum_i\sigma^z_i$ to the Hamiltonian which, depending on the
-sign of $\lambda$ ,selects one of the ground states $\ket{\Psi_{\uparrow/\downarrow}}$ after
+sign of $\lambda$, selects one of the ground states $\ket{\Psi_{\uparrow/\downarrow}}$ after
 which the limit $\lambda\rightarrow 0$ is taken.
 
 The synopsis of this example is thus the following. Symmetries in quantum many-body physics
@@ -100,8 +100,8 @@ are closed under multiplication. Depending on the parameters in the Hamiltonian,
 these symmetries can be broken by the ground state subspace, and this pattern of symmetry
 breaking is a hallmark feature of different phases of the model. Different phases can be
 probed by a local order parameter which does not commute with the symmetries. This paradigm
-of classifying phases based on symmetry principles was first put forward by Landau, and
-since then bears his name.
+of classifying phases based on symmetry principles was first put forward by Landau
+{cite}`Landau:1937obd`, and since then bears his name.
 
 ### Noether and Conserved Quantitites
 
@@ -150,8 +150,8 @@ S^a = \sum_i S^a_i.
 ```
 
 From a direct computation it follows that in the case where $\Delta=1$, and the model thus
-reduces to the Heisenberg XXX model, H commutes with all $S^a$, $[H,S^a]=0$, $a=x,y,z$.
-However, when $\Delta\neq 1$ only the Z component $S^z$ commutes with H, $[H, S^z]=0$.
+reduces to the Heisenberg XXX model, $H$ commutes with all $S^a$, $[H,S^a]=0$, $a=x,y,z$.
+However, when $\Delta\neq 1$ only the Z component $S^z$ commutes with $H$, $[H, S^z]=0$.
 Notice the difference with the Ising model where the same symmetry was present for all
 values of $h_x$.
 
@@ -181,8 +181,8 @@ to compose them. Let us motivate the definition one step a time.
 First of all notice that a model can have a finite or infinite (discrete or continuous)
 number of symmetries. Clearly, the spin flip symmetry of the Ising model consists of only
 one non-trivial symmetry operation, namely flipping all spins. The operator carrying out
-this transformation is $P=\bigotimes_i\sigma^x_i$ The XXZ model however has a continuous
-symmetry, namely rotations around the Z axis, that is implemented via $\exp(i\theta S^z)$,
+this transformation is $P=\bigotimes_i\sigma^x_i$. The XXZ model however has a continuous
+symmetry, namely rotations around the Z-axis, that is implemented via $\exp(i\theta S^z)$,
 $\theta\in[0,2\pi)$, where we should really think about every value of $\theta$ as labeling
 a different symmetry operation.
 
@@ -223,7 +223,9 @@ an explanation of the notation). In other words, the full symmetry group ($\math
 broken in the ferromagnetic phase to a subgroup (the trivial group). More generally, a
 theory with a $G$ symmetry can undergo a pattern of symmetry breaking $G\rightarrow H$ where
 $H$ is a subgroup of $G$. The meaning of this symbolic expression is that the ground states
-keep an H symmetry, and the ground state degeneracy is $|G|/|H|$. #### Examples
+keep an H symmetry, and the ground state degeneracy is $|G|/|H|$. 
+
+#### Examples
 
 - The trivial group is a group with only one element that is than automatically also the
   identity, and a trivial multiplication law. Above, it was denoted by $\{1\}$.
