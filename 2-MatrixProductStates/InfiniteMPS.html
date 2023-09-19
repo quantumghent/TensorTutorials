@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>8. Infinite Matrix Product States &#8212; TensorTutorials</title>
+    <title>7. Infinite Matrix Product States &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -123,8 +123,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="9. Tensor Network Algorithms" href="Algorithms.html" />
-    <link rel="prev" title="7. Matrix Product Operators" href="MatrixProductOperators.html" />
+    <link rel="next" title="8. Tensor Network Algorithms" href="Algorithms.html" />
+    <link rel="prev" title="6. Matrix Product States" href="MatrixProductStates.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
@@ -172,19 +172,19 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-product-states-in-the-thermodynamic-limit">8.1. Matrix Product States in the Thermodynamic Limit</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation">8.1.1. Representation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">8.1.2. Normalization</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">8.1.3. Expectation Values</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-functions">8.1.4. Correlation Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-product-states-in-the-thermodynamic-limit">7.1. Matrix Product States in the Thermodynamic Limit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation">7.1.1. Representation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">7.1.2. Normalization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">7.1.3. Expectation Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-functions">7.1.4. Correlation Functions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-revisited">8.2. Gauging Revisited</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-in-the-thermodynamic-limit">8.2.1. Gauging in the Thermodynamic Limit</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values-revisited">8.2.2. Expectation Values Revisited</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#entanglement-entropy">8.2.3. Entanglement Entropy</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truncation">8.2.4. Truncation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-mpskit-infinitemps">8.2.5. Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-revisited">7.2. Gauging Revisited</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gauging-in-the-thermodynamic-limit">7.2.1. Gauging in the Thermodynamic Limit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values-revisited">7.2.2. Expectation Values Revisited</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#entanglement-entropy">7.2.3. Entanglement Entropy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truncation">7.2.4. Truncation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-mpskit-infinitemps">7.2.5. Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -232,7 +232,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="infinite-matrix-product-states">
-<h1><a class="toc-backref" href="#id4"><span class="section-number">8. </span>Infinite Matrix Product States</a><a class="headerlink" href="#infinite-matrix-product-states" title="Permalink to this heading">#</a></h1>
+<h1><a class="toc-backref" href="#id4"><span class="section-number">7. </span>Infinite Matrix Product States</a><a class="headerlink" href="#infinite-matrix-product-states" title="Permalink to this heading">#</a></h1>
 <p>This section discusses matrix product states (MPS) in the thermodynamic limit and their
 properties. Our discussion is mostly based on the excellent review
 <span id="id1">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>, which provides a thorough technical overview of
@@ -269,30 +269,30 @@ which is again based on <span id="id2">[<a class="reference internal" href="../R
 </ul>
 </div>
 <div class="section" id="matrix-product-states-in-the-thermodynamic-limit">
-<h2><a class="toc-backref" href="#id5"><span class="section-number">8.1. </span>Matrix Product States in the Thermodynamic Limit</a><a class="headerlink" href="#matrix-product-states-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id5"><span class="section-number">7.1. </span>Matrix Product States in the Thermodynamic Limit</a><a class="headerlink" href="#matrix-product-states-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h2>
 <div class="section" id="representation">
-<h3><a class="toc-backref" href="#id6"><span class="section-number">8.1.1. </span>Representation</a><a class="headerlink" href="#representation" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id6"><span class="section-number">7.1.1. </span>Representation</a><a class="headerlink" href="#representation" title="Permalink to this heading">#</a></h3>
 <p>The finite MPS representation introduced in the previous previous section can be readily
 extended to the thermodynamic limit. Consider an infinite one-dimensional chain with a local
 physical Hilbert space <span class="math notranslate nohighlight">\(\mathbb{C}^d\)</span> of dimension <span class="math notranslate nohighlight">\(d\)</span> at every site in the chain. An
 infinite matrix product state representing the quantum state of such a system has the form</p>
 <div class="math notranslate nohighlight" id="equation-inf-mps-formula">
-<span class="eqno">(8.1)<a class="headerlink" href="#equation-inf-mps-formula" title="Permalink to this equation">#</a></span>\[\left | \Psi({A}) \right \rangle = \sum_{\{s\}} \boldsymbol{v}_L^\dagger \left[ \prod_{m\in\mathbb{Z}} A[m]^{s_m} \right] \boldsymbol{v}_R \left | \{s\} \right \rangle.\]</div>
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-inf-mps-formula" title="Permalink to this equation">#</a></span>\[\left | \Psi({A}) \right \rangle = \sum_{\{s\}} \boldsymbol{v}_L^\dagger \left[ \prod_{m\in\mathbb{Z}} A[m]^{s_m} \right] \boldsymbol{v}_R \left | \{s\} \right \rangle.\]</div>
 <!-- TODO: uniformize notation, conventions and discussion with finite MPS section -->
 <p>Here, each <span class="math notranslate nohighlight">\(A[m]^s\)</span> is a <span class="math notranslate nohighlight">\(D \times D\)</span> matrix for every value of the physical index <span class="math notranslate nohighlight">\(s\)</span>. As
 before, we can alternatively view <span class="math notranslate nohighlight">\(A[m]\)</span> as a tensor with three indices of dimensions <span class="math notranslate nohighlight">\(D
 \times d \times D\)</span>, where <span class="math notranslate nohighlight">\(D\)</span> is the the so-called <em>bond dimension</em>, which we assume to be
 same at every site. As in the case of finite systems, this bond dimension controls the
 entanglement of the corresponding state, where in the limit <span class="math notranslate nohighlight">\(D\to\infty\)</span> the MPS
-<a class="reference internal" href="#equation-inf-mps-formula">(8.1)</a> can represent any quantum state up to arbitrary accuracy. For certain
+<a class="reference internal" href="#equation-inf-mps-formula">(7.1)</a> can represent any quantum state up to arbitrary accuracy. For certain
 classes of quantum states such low-energy states of gapped systems however we expect that we
 can accurately approximate these states using a much smaller bond dimension. Note that while
-in Eq. <a class="reference internal" href="#equation-inf-mps-formula">(8.1)</a> we have also introduced two boundary vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_L\)</span>
+in Eq. <a class="reference internal" href="#equation-inf-mps-formula">(7.1)</a> we have also introduced two boundary vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_L\)</span>
 and <span class="math notranslate nohighlight">\(\boldsymbol{v}_R\)</span>, but, as we work on an infinite system, the boundary conditions will
 never have any physical meaning. These can therefore safely be ignored in the following, and
 all bulk properties of the states are faithfully captured by the MPS tensors <span class="math notranslate nohighlight">\(A[m]\)</span>.</p>
 <p>For infinite systems which are invariant under translations, it is natural to also impose
-transation-invariance on the MPS <a class="reference internal" href="#equation-inf-mps-formula">(8.1)</a>. This leads to a <em>uniform</em> MPS which
+transation-invariance on the MPS <a class="reference internal" href="#equation-inf-mps-formula">(7.1)</a>. This leads to a <em>uniform</em> MPS which
 has the same tensor <span class="math notranslate nohighlight">\(A[m] := A\)</span> at every site. In the diagramatic notation introduced in the
 <span class="xref myst">first section</span>, a uniform MPS can be represented as</p>
 <img alt="../_images/umps.svg" class="align-center" id="mps-state" src="../_images/umps.svg" /><div class="admonition note">
@@ -313,7 +313,7 @@ matrix characterize the normalization and correlation length of a uniform MPS, w
 eigenvectors can be used to evaluate expectation values of local observables.</p>
 </div>
 <div class="section" id="normalization">
-<h3><a class="toc-backref" href="#id7"><span class="section-number">8.1.2. </span>Normalization</a><a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id7"><span class="section-number">7.1.2. </span>Normalization</a><a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h3>
 <p>The norm of a uniform MPS corresponds to a contraction of the form</p>
 <img alt="../_images/mpsNorm.svg" class="align-center" id="mps-norm" src="../_images/mpsNorm.svg" /><p>Clearly, this norm is nothing more than an infinite product of MPS transfer matrices defined
 above. Consider the spectral decomposition of the <span class="math notranslate nohighlight">\(n\)</span>th power <span class="math notranslate nohighlight">\(\mathbb E^n\)</span>,</p>
@@ -331,7 +331,7 @@ the bulk properties of the MPS, we can always choose these such that MPS is prop
 normalized as <span class="math notranslate nohighlight">\( \left \langle \Psi(\bar{A})\middle | \Psi(A) \right \rangle = 1\)</span>.</p>
 </div>
 <div class="section" id="expectation-values">
-<h3><a class="toc-backref" href="#id8"><span class="section-number">8.1.3. </span>Expectation Values</a><a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id8"><span class="section-number">7.1.3. </span>Expectation Values</a><a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
 <p>The fixed points of the transfer matrix can for example be to compute expectation values of
 operators. Suppose we wish to evaluate expectation values of an extensive operator,</p>
 <div class="math notranslate nohighlight">
@@ -344,7 +344,7 @@ everything to the left and to the right of the operator, such that we are left w
 contraction</p>
 <img alt="../_images/expVal2.svg" class="align-center" id="exp-val2" src="../_images/expVal2.svg" /></div>
 <div class="section" id="correlation-functions">
-<h3><a class="toc-backref" href="#id9"><span class="section-number">8.1.4. </span>Correlation Functions</a><a class="headerlink" href="#correlation-functions" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id9"><span class="section-number">7.1.4. </span>Correlation Functions</a><a class="headerlink" href="#correlation-functions" title="Permalink to this heading">#</a></h3>
 <p>Correlation functions are computed similarly. Let us look at</p>
 <div class="math notranslate nohighlight">
 \[c^{\alpha\beta}(m,n) = \bra{\Psi(\bar A)} (O^\beta_m)^\dagger O^\alpha_n \ket{\Psi(A)},\]</div>
@@ -377,9 +377,9 @@ using MPS, despite the ansatz inherently having exponentially decaying correlati
 </div>
 </div>
 <div class="section" id="gauging-revisited">
-<h2><a class="toc-backref" href="#id10"><span class="section-number">8.2. </span>Gauging Revisited</a><a class="headerlink" href="#gauging-revisited" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id10"><span class="section-number">7.2. </span>Gauging Revisited</a><a class="headerlink" href="#gauging-revisited" title="Permalink to this heading">#</a></h2>
 <div class="section" id="gauging-in-the-thermodynamic-limit">
-<h3><a class="toc-backref" href="#id11"><span class="section-number">8.2.1. </span>Gauging in the Thermodynamic Limit</a><a class="headerlink" href="#gauging-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id11"><span class="section-number">7.2.1. </span>Gauging in the Thermodynamic Limit</a><a class="headerlink" href="#gauging-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
 <!-- TODO: uniformize with finite MPS section -->
 <p>While a given MPS tensor <span class="math notranslate nohighlight">\(A\)</span> corresponds to a unique state <span class="math notranslate nohighlight">\(\left | \Psi(A) \right \rangle\)</span>,
 the converse is not true, as different tensors may give rise to the same state. This is
@@ -422,13 +422,13 @@ normalized now reduces to</p>
 </div>
 </div>
 <div class="section" id="expectation-values-revisited">
-<h3><a class="toc-backref" href="#id12"><span class="section-number">8.2.2. </span>Expectation Values Revisited</a><a class="headerlink" href="#expectation-values-revisited" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id12"><span class="section-number">7.2.2. </span>Expectation Values Revisited</a><a class="headerlink" href="#expectation-values-revisited" title="Permalink to this heading">#</a></h3>
 <p>In the mixed gauge, we can locate the center site where the operator is acting, and then
 contract everything to the left and right to the identity to arrive at the particularly
 simple expression for the expectation value</p>
 <img alt="../_images/expVal3.svg" class="align-center" id="exp-val3" src="../_images/expVal3.svg" /></div>
 <div class="section" id="entanglement-entropy">
-<h3><a class="toc-backref" href="#id13"><span class="section-number">8.2.3. </span>Entanglement Entropy</a><a class="headerlink" href="#entanglement-entropy" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id13"><span class="section-number">7.2.3. </span>Entanglement Entropy</a><a class="headerlink" href="#entanglement-entropy" title="Permalink to this heading">#</a></h3>
 <p>The mixed canonical form with a diagonal <span class="math notranslate nohighlight">\(C\)</span> now allows to straightforwardly write down a
 Schmidt decomposition of the state across an arbitrary bond in the chain</p>
 <div class="math notranslate nohighlight">
@@ -441,7 +441,7 @@ entanglement entropy</p>
 \[S = -\sum_i C_i^2 \log(C_i^2) .\]</div>
 </div>
 <div class="section" id="truncation">
-<h3><a class="toc-backref" href="#id14"><span class="section-number">8.2.4. </span>Truncation</a><a class="headerlink" href="#truncation" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id14"><span class="section-number">7.2.4. </span>Truncation</a><a class="headerlink" href="#truncation" title="Permalink to this heading">#</a></h3>
 <p>The mixed canonical form also enables efficient truncatation of an MPS. The sum in the above
 Schmidt decomposition can be truncated, giving rise to a new MPS that has a reduced bond
 dimension for that bond. This truncation is optimal in the sense that the norm between the
@@ -456,7 +456,7 @@ require a variational optimization of the cost function.</p>
 \[\left | \left | ~\left | \Psi(A) \right \rangle - \left | \Psi(\tilde{A}) \right \rangle ~\right | \right |^2.\]</div>
 </div>
 <div class="section" id="code-example-mpskit-infinitemps">
-<h3><a class="toc-backref" href="#id15"><span class="section-number">8.2.5. </span>Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a><a class="headerlink" href="#code-example-mpskit-infinitemps" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id15"><span class="section-number">7.2.5. </span>Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.InfiniteMPS</span></code></a><a class="headerlink" href="#code-example-mpskit-infinitemps" title="Permalink to this heading">#</a></h3>
 <p>The Julia package <a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a> provides many tools
 for working with infinite MPS. Without going into much detail, we can already check some
 aspects of our discussion above with this numerical implementation.</p>
@@ -505,7 +505,7 @@ tensors <span class="math notranslate nohighlight">\(A_C\)</span> and <span clas
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 0.9999999999999999
 norm(mps.AC[1]) = 0.9999999999999999
-norm(mps.CR[1]) = 1.0
+norm(mps.CR[1]) = 1.0000000000000002
 </pre></div>
 </div>
 </div>
@@ -541,7 +541,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- 0.821992711120626 - 0.010422003264619086im
+ 0.010065799218033364 - 0.015591564796576961im
 </pre></div>
 </div>
 </div>
@@ -554,7 +554,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4682543695237864
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.46729447132106205
 </pre></div>
 </div>
 </div>
@@ -657,19 +657,19 @@ the next section.</p>
    6. Matrix Product States
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="MatrixProductOperators.html">
-   7. Matrix Product Operators
-  </a>
- </li>
  <li class="toctree-l1 current active active">
   <a class="current reference internal" href="#">
-   8. Infinite Matrix Product States
+   7. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Algorithms.html">
-   9. Tensor Network Algorithms
+   8. Tensor Network Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MatrixProductOperators.html">
+   9. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
