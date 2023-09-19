@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. Getting Started with Numerics &#8212; TensorTutorials</title>
+    <title>9. Tensor Network Algorithms &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -116,12 +116,14 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/Software';</script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/Algorithms';</script>
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. (Multi-) Linear Algebra" href="LinearAlgebra.html" />
-    <link rel="prev" title="1. Quantum Many-Body Theory" href="QuantumManyBody.html" />
+    <link rel="next" title="10. Applications" href="Applications.html" />
+    <link rel="prev" title="8. Infinite Matrix Product States" href="InfiniteMPS.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
@@ -131,13 +133,13 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@" />
-<meta name="twitter:title" content="Getting Started with Numerics"/>
+<meta name="twitter:title" content="Tensor Network Algorithms"/>
 <meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
 <meta name="twitter:creator" content="@">
 <meta name="twitter:image" content="">
 
 <!-- Opengraph tags -->
-<meta property="og:title" content="Getting Started with Numerics" />
+<meta property="og:title" content="Tensor Network Algorithms" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="None" />
 <meta property="og:image" content="" />
@@ -155,7 +157,7 @@ const thebe_selector_output = ".output, .cell_output"
 
         <div class="qe-main">
 
-            <div class="qe-page" id=1-Introduction/Software>
+            <div class="qe-page" id=2-MatrixProductStates/Algorithms>
 
                 <div class="qe-page__toc">
 
@@ -169,10 +171,16 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-control">2.1. Version Control</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#julia">2.2. Julia</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#julia-packages">2.3. Julia Packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noteworthy-tensor-network-software">2.4. Noteworthy Tensor Network Software</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-quantum-systems">9.1. Simulating Quantum Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-evolving-block-decimation-tebd">9.2. Time-Evolving Block Decimation (TEBD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-one-dimensional-nearest-neighbor-hamiltonians">9.2.1. Example: One-Dimensional Nearest-Neighbor Hamiltonians</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groundstate-search">9.3. Groundstate Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imaginary-time-evolution">9.3.1. Imaginary Time Evolution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">9.4. Conclusion</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -202,7 +210,7 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
 
-                        <p class="qe-page__header-subheading">Getting Started with Numerics</p>
+                        <p class="qe-page__header-subheading">Tensor Network Algorithms</p>
 
                     </div>
 
@@ -217,61 +225,149 @@ const thebe_selector_output = ".output, .cell_output"
                     
                     <div>
                         
-  <div class="tex2jax_ignore mathjax_ignore section" id="getting-started-with-numerics">
-<h1><span class="section-number">2. </span>Getting Started with Numerics<a class="headerlink" href="#getting-started-with-numerics" title="Permalink to this heading">#</a></h1>
-<p>On this page, there are some links with relevant information for getting started with
-numerical computing. We point to some references for the Julia programming language, as well
-as some resources for learning about version control software.</p>
-<div class="section" id="version-control">
-<h2><span class="section-number">2.1. </span>Version Control<a class="headerlink" href="#version-control" title="Permalink to this heading">#</a></h2>
-<p>Version control software is a tool used in software development (and sometimes in other
-fields) to manage and track changes made to a project’s source code, documents, or any other
-set of files. It allows multiple contributors to work collaboratively on a project, keeping
-a history of changes, and facilitating the organization and synchronization of different
-versions of the project. The most popular version control system is
-<a class="reference external" href="https://git-scm.com/">git</a>, which is a free tool developed by Linus Torvalds in 2005, and
-has become the de facto standard in the software development industry.</p>
-<p>Again, multiple resources are available for learning about git. From the official website,
-the book <a class="reference external" href="https://git-scm.com/book/en/v2">Pro Git</a> is a good place to start.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-algorithms">
+<h1><span class="section-number">9. </span>Tensor Network Algorithms<a class="headerlink" href="#tensor-network-algorithms" title="Permalink to this heading">#</a></h1>
+<p>Having introduced tensor networks in general, with a focus on the case of MPS, we now turn
+to the question of how to use them to solve specific problems. While a large number of
+tensor network algorithms have been developed, many of them more advanced and/or efficient
+than the ones we will discuss here, we will focus on a few simple algorithms that are easy
+to understand and implement. Importantly, these algorithms are also the building blocks of
+more advanced algorithms, for example in higher spatial dimensions.</p>
+<p>Effectively, we have already seen how to use MPS to compute expectation values or
+correlation functions, or derive all kind of properties. Here, we focus on how to obtain the
+desired MPS in the first place. In other words, given a certain problem, how can we optimize
+an MPS, or a more general tensor network, to solve it?</p>
+<div class="section" id="simulating-quantum-systems">
+<h2><span class="section-number">9.1. </span>Simulating Quantum Systems<a class="headerlink" href="#simulating-quantum-systems" title="Permalink to this heading">#</a></h2>
+<p>As a first example, let us consider the problem of simulating a quantum system. We can
+formalize this idea as follows: Given a Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>, and some initial state
+<span class="math notranslate nohighlight">\(\ket{\psi_0}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span>, is there a way to compute the <em>time-evolved state</em>
+<span class="math notranslate nohighlight">\(\ket{\psi(t)} = e^{-i H t} \ket{\psi_0}\)</span> at some later time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>In general, this is a very hard problem. For example, one could naively try to
+<a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_exponential#Computing_the_matrix_exponential">compute the matrix exponential</a>,
+but this quickly becomes prohibitively expensive, as the dimension of the Hamiltonian scales
+exponentially with the number of particles. However, for physically relevant systems the
+Hamiltonian does not consist of a random matrix, but rather exhibits additional structure
+that can be used to simplify the problem.</p>
 </div>
-<div class="section" id="julia">
-<h2><span class="section-number">2.2. </span>Julia<a class="headerlink" href="#julia" title="Permalink to this heading">#</a></h2>
-<p>In order to get started with Julia, there are many resources already available. The
-<a class="reference external" href="https://docs.julialang.org/en/v1/">official documentation</a> is a good place to start, and a
-full <em>getting started</em> exposition can be found for example
-<a class="reference external" href="https://julia.quantecon.org/intro.html">here</a>. There is also a
-<a class="reference external" href="https://julialang.org/learning/">learning page</a> that has tutorials on different topics, a
-list of books, and much more.</p>
-<p>Additionally, there is an active <a class="reference external" href="https://discourse.julialang.org/">forum</a> for asking
-questions, as well as a <a class="reference external" href="https://julialang.org/slack/">slack channel</a> and a stack overflow
-page.</p>
+<div class="section" id="time-evolving-block-decimation-tebd">
+<h2><span class="section-number">9.2. </span>Time-Evolving Block Decimation (TEBD)<a class="headerlink" href="#time-evolving-block-decimation-tebd" title="Permalink to this heading">#</a></h2>
+<p>A particularly powerful example can be found for systems with local interactions, where the
+Hamiltonian is of the form:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_{i,j} h_{ij}\]</div>
+<p>where <span class="math notranslate nohighlight">\(h_{ij}\)</span> denotes a local operator, acting only on a small number of sites. In this
+case, although <span class="math notranslate nohighlight">\(e^{-i H t}\)</span> is unfeasible to compute, each of the constituent terms act only
+on a much smaller subsystem and therefore <span class="math notranslate nohighlight">\(e^{-ih_{ij}t}\)</span> can be computed efficiently.
+However, as these terms generally do not commute, we cannot simply apply them one after the
+other. Instead, we can use the first-order Suzuki-Trotter decomposition to approximate the
+time-evolution operator, which states that for any two Hermitian operators <span class="math notranslate nohighlight">\(A4 and \)</span>B<span class="math notranslate nohighlight">\(, and
+any real number \)</span>\Delta t$, we have:</p>
+<div class="math notranslate nohighlight" id="equation-trotter-first">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-trotter-first" title="Permalink to this equation">#</a></span>\[e^{(A + B) \Delta t} = e^{A \Delta t} e^{B \Delta t} + \mathcal O(\Delta t^2).\]</div>
+<p>If we now split the full time interval <span class="math notranslate nohighlight">\(t\)</span> into <span class="math notranslate nohighlight">\(m\)</span> steps, we obtain the approximation</p>
+<div class="math notranslate nohighlight">
+\[e^{-i H t} = \left( e^{-i H_e \frac{t}{m}} e^{-i H_o \frac{t}{m}} \right)^m + \mathcal O
+\left( \frac{t^2}{m}\right)\]</div>
+<p>where the approximation error can be managed by choosing a sufficiently large <span class="math notranslate nohighlight">\(m\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There actually exist entire families of such exponential product approximations up to a
+given order <span id="id1">[<a class="reference internal" href="../References.html#id16">HS05</a>]</span>. For our purposes however, it is sufficient to
+illustrate a simulation procedure using this first-order approximation.</p>
 </div>
-<div class="section" id="julia-packages">
-<h2><span class="section-number">2.3. </span>Julia Packages<a class="headerlink" href="#julia-packages" title="Permalink to this heading">#</a></h2>
-<p>Julia has a very active open-source community, and many packages are available for different
-purposes. These typically have their own documentation, and are hosted on GitHub. An
-(incomplete) list of packages that are relevant for this course are given below:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/Jutho/TensorKit.jl">TensorKit.jl</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Jutho/TensorOperations.jl">TensorOperations.jl</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Jutho/KrylovKit.jl">KrylovKit.jl</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Jutho/OptimKit.jl">OptimKit.jl</a></p></li>
-<li><p><a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a></p></li>
-<li><p><a class="reference external" href="https://github.com/quantumghent/PEPSKit.jl">PEPSKit.jl</a></p></li>
-</ul>
-<p>Also check out the <a class="reference external" href="https://github.com/quantumghent">GitHub page for our organization</a>,
-which hosts and/or links many of the relevant software repositories.</p>
+<div class="section" id="example-one-dimensional-nearest-neighbor-hamiltonians">
+<h3><span class="section-number">9.2.1. </span>Example: One-Dimensional Nearest-Neighbor Hamiltonians<a class="headerlink" href="#example-one-dimensional-nearest-neighbor-hamiltonians" title="Permalink to this heading">#</a></h3>
+<p>We can put the discussion above into practice by applying it to the example of a nearest-neighbour Hamiltonian on a one-dimensional lattice:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_{n=1}^N h_{n,n+1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of sites and we are assuming periodic boundary conditions. We now
+want to simulate the dynamics of this Hamiltonian in an efficient way using the
+aforementioned approximation Eq. <a class="reference internal" href="Algorithms-backup.html#equation-trotter-first">()</a>. The simplest way to do this is to
+split the local terms into two groups, where terms within a group commute with each other,
+but not with terms in the other group. For example, we could split the Hamiltonian into even
+(<span class="math notranslate nohighlight">\(H_e\)</span>) and odd terms (<span class="math notranslate nohighlight">\(H_o\)</span>):</p>
+<div class="math notranslate nohighlight" id="equation-hamsplit">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-hamsplit" title="Permalink to this equation">#</a></span>\[H_e = \sum_n h_{(2n, 2n+1)}, \qquad H_o = \sum_n h_{(2n+1, 2n+2)}.\]</div>
+<p>It is a simple exercise to show that the local terms within a group commute, as they act on
+non-overlapping sites. Therefore, if we can find a MPS representation of the initial state,
+the procedure for simulating the time evolution is as follows:</p>
+<a class="reference internal image-reference" href="../_images/tebd_mps.svg" id="tebd-mps"><img alt="../_images/tebd_mps.svg" class="align-center" height="321" id="tebd-mps" src="../_images/tebd_mps.svg" width="736" /></a>
+<p>This procedure does not solve the problem as-is, as evaluating this network exactly would
+still require a bond dimension which grows exponentially with the number of layers <span class="math notranslate nohighlight">\(m\)</span>.
+Instead, we can retain an efficient description by locally truncating the bond dimension, by
+computing an SVD an retaining only the largest <span class="math notranslate nohighlight">\(\chi\)</span> singular values.</p>
+<div class="figure align-center" id="tebd-trunc">
+<a class="reference internal image-reference" href="../_images/tebd_trunc.svg"><img alt="../_images/tebd_trunc.svg" height="128" src="../_images/tebd_trunc.svg" width="398" /></a>
 </div>
-<div class="section" id="noteworthy-tensor-network-software">
-<h2><span class="section-number">2.4. </span>Noteworthy Tensor Network Software<a class="headerlink" href="#noteworthy-tensor-network-software" title="Permalink to this heading">#</a></h2>
-<p>There are many additional software libraries available for tensor network computations, or
-more generally for quantum physics research. Below you can find an incomplete list of some
-of these.</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://itensor.org/">ITensor</a> Julia/C++ library for tensor network calculations</p></li>
-<li><p><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/">TenPy</a> Python library for tensor network calculations</p></li>
-<li><p><a class="reference external" href="https://quimb.readthedocs.io/en/latest/">QUIMB</a> Python library for quantum information many-body calculations</p></li>
-</ul>
+</div>
+</div>
+<div class="section" id="groundstate-search">
+<h2><span class="section-number">9.3. </span>Groundstate Search<a class="headerlink" href="#groundstate-search" title="Permalink to this heading">#</a></h2>
+<p>Another important problem in quantum physics is the determination of the groundstate of a
+given Hamiltonian. Again, this can be made more formal as follows: Given a Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>,
+is there a way to find the state <span class="math notranslate nohighlight">\(\ket{\psi_0}\)</span> that minimizes the expectation value
+<span class="math notranslate nohighlight">\(\bra{\psi} H \ket{\psi}\)</span>.</p>
+<p>In fact, this problem faces the same difficulty as the one discussed above, namely that the
+naive solution strategy involves finding the eigenvector of the Hamiltonian matrix with the
+smallest eigenvalue, which again scales exponentially with the number of particles. However,
+as before, we can exploit the structure of the Hamiltonian to find a more efficient
+solution.</p>
+<div class="section" id="imaginary-time-evolution">
+<h3><span class="section-number">9.3.1. </span>Imaginary Time Evolution<a class="headerlink" href="#imaginary-time-evolution" title="Permalink to this heading">#</a></h3>
+<p>In fact, the problem of finding groundstates can be mapped to the problem of simulating
+dynamics, by making use of a trick known as <em>imaginary time evolution</em>. The idea is to
+consider the time evolution operator <span class="math notranslate nohighlight">\(e^{-i H t}\)</span>, but to replace the real time <span class="math notranslate nohighlight">\(t\)</span> by an
+imaginary time <span class="math notranslate nohighlight">\(\tau = i t\)</span>. If we now consider the limit <span class="math notranslate nohighlight">\(\tau \to \infty\)</span> and deal with
+the normalization appropriately, we can see that applying the evolution operator to a state
+<span class="math notranslate nohighlight">\(\ket{\psi_0}\)</span> will effectively project it on its lowest energy eigenstate, as all other
+eigenstates will be damped out exponentially. In other words, we can find the groundstate of
+a Hamiltonian by simulating its dynamics for a sufficiently long imaginary time.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\lim_{\tau \to \infty} e^{-i H \tau} \ket{\psi_0} &amp;= \lim_{\tau \to \infty} \sum_i e^{- E_i \tau} \ket{\psi_i} \bra{\psi_i} \psi_0 \\ 
+&amp;= \lim_{\tau \to \infty} e^{- E_0 \tau} \left(\ket{\psi_0} \bra{\psi_0} + \sum_{i&gt;0}e^{(-E_i + E_0) \tau}\ket{\psi_i}\bra{\psi_i} \right) \\ 
+&amp;\approx e^{- E_0 \tau} \ket{\psi_0} \bra{\psi_0}
+\end{align}\end{split}\]</div>
+<p>where we have made use of the fact that all but the first term in the sum are damped out. In
+this regard, the groundstate search problem can also be tackled with the TEBD algorithm
+discussed above, by simply replacing the real time <span class="math notranslate nohighlight">\(t\)</span> by an imaginary time <span class="math notranslate nohighlight">\(\tau\)</span> and
+continuing time-evolution until convergence is reached.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2><span class="section-number">9.4. </span>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>We have now seen a first example of algorithms that can be used for optimizing tensor
+networks, either to simulate dynamics or to find groundstates. We conclude by mentioning
+that this is only the tip of the iceberg, and that there exist many more algorithms that can
+be used to solve a variety of problems.</p>
+<div class="admonition-outlook admonition">
+<p class="admonition-title">Outlook</p>
+<p>To close out this lecture, we briefly comment on the higher dimensional generalizations of
+the TEBD procedure and the difficulties this brings with it. For local quantum Hamiltonians
+in higher dimensions we can follow a similar procedure, where we split the full Hamiltonian
+into sum of parts that each only contain non-overlapping local terms. Time evolution can
+then be simulated by applying a similar sequence of layers, where in each layer we evolve
+with all local operators in a given Hamiltonian part in parallel.</p>
+<p>The problem with this approach however is that the local update step <span class="xref std std-ref">tebd_trunc</span> is
+ill-conditioned for higher-dimensional networks if the full quantum state is is not taken
+into account for the truncation. Indeed, while in the one-dimensional case the rest of the
+network surrounding the sites we want to update can be brought into account exactly by
+working in appropriate gauge, this is not possible in general. Consider for example a
+general network where want to apply some update to the central site,</p>
+<a class="reference internal image-reference" href="../_images/tensor_network.svg" id="tensor-network"><img alt="../_images/tensor_network.svg" class="align-center" height="186" id="tensor-network" src="../_images/tensor_network.svg" width="324" /></a>
+<p>Since this network contains loops, there is no way to exactly capture the surrounding
+network in general. One instead has to resort to approximation techniques for the
+<em>environments</em> of a given update site, where the quality of the environment approximations
+directly affects the stability of the local update. The simplest way of doing this is to use
+the so-called <em>simple update</em> procedure <span id="id2">[<a class="reference internal" href="../References.html#id18" title="H. C. Jiang, Z. Y. Weng, and T. Xiang. Accurate determination of tensor network state of quantum lattice models in two dimensions. Physical Review Letters, 101(9):090603, August 2008. URL: http://arxiv.org/abs/0806.3719, arXiv:0806.3719, doi:10.1103/PhysRevLett.101.090603.">JWX08</a>]</span> where all loops in the
+network are simply ignored and the environment is approximated by a product state,</p>
+<a class="reference internal image-reference" href="../_images/simple_update.svg" id="simple-update"><img alt="../_images/simple_update.svg" class="align-center" height="108" id="simple-update" src="../_images/simple_update.svg" width="328" /></a>
+<p>More accurate results can be obtained by taking into account the full quantum state of the
+system in each local update by means of the <em>full update</em> procedure
+<span id="id3">[<a class="reference internal" href="../References.html#id19" title="J. Jordan, R. Orús, G. Vidal, F. Verstraete, and J. I. Cirac. Classical Simulation of Infinite-Size Quantum Lattice Systems in Two Spatial Dimensions. Physical Review Letters, 101(25):250602, December 2008. URL: https://link.aps.org/doi/10.1103/PhysRevLett.101.250602, doi:10.1103/PhysRevLett.101.250602.">JOrusV+08</a>]</span>. However, this gain in accuracy comes with a substantial
+increase in computational cost due to the full environment approximation at each step.</p>
+</div>
 </div>
 </div>
 
@@ -288,7 +384,7 @@ of these.</p>
         },
         kernelOptions: {
             name: "julia-1.9",
-            path: "./1-Introduction"
+            path: "./2-MatrixProductStates"
         },
         predefinedOutput: true
     }
@@ -329,29 +425,29 @@ of these.</p>
   Introduction
  </span>
 </p>
-<ul class="current nav bd-sidenav nav sidenav_l1">
+<ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="QuantumManyBody.html">
+  <a class="reference internal" href="../1-Introduction/QuantumManyBody.html">
    1. Quantum Many-Body Theory
   </a>
  </li>
- <li class="toctree-l1 current active active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Software.html">
    2. Getting Started with Numerics
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="LinearAlgebra.html">
+  <a class="reference internal" href="../1-Introduction/LinearAlgebra.html">
    3. (Multi-) Linear Algebra
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="TensorNetworks.html">
+  <a class="reference internal" href="../1-Introduction/TensorNetworks.html">
    4. Tensor Network Theory
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Symmetries.html">
+  <a class="reference internal" href="../1-Introduction/Symmetries.html">
    5. Symmetries in Quantum Many-Body Physics
   </a>
  </li>
@@ -361,29 +457,29 @@ of these.</p>
   Matrix Product States
  </span>
 </p>
-<ul class="nav bd-sidenav nav sidenav_l1">
+<ul class="current nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
+  <a class="reference internal" href="MatrixProductStates.html">
    6. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
+  <a class="reference internal" href="MatrixProductOperators.html">
    7. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
+  <a class="reference internal" href="InfiniteMPS.html">
    8. Infinite Matrix Product States
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
    9. Tensor Network Algorithms
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
+  <a class="reference internal" href="Applications.html">
    10. Applications
   </a>
  </li>
@@ -452,7 +548,7 @@ of these.</p>
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/1-Introduction/Software.md" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-MatrixProductStates/Algorithms.md" download><i data-feather="github"></i></a></li>
                 </ul>
 
             </div>
@@ -481,18 +577,18 @@ of these.</p>
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/Software.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/Algorithms.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/1-Introduction/Software.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/2-MatrixProductStates/Algorithms.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/Software.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/Algorithms.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -522,9 +618,9 @@ of these.</p>
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "1-Introduction/Software";
+                const pageName = "2-MatrixProductStates/Algorithms";
                 const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
-                const urlPath = "tree/TensorTutorials.notebooks/1-Introduction/Software.ipynb";
+                const urlPath = "tree/TensorTutorials.notebooks/2-MatrixProductStates/Algorithms.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
