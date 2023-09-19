@@ -117,13 +117,14 @@ const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/QuantumManyBody';</script>
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. Tensor Network Theory" href="TensorNetworks.html" />
+    <link rel="next" title="2. Getting Started with Numerics" href="Software.html" />
     <link rel="prev" title="Tensor Network Methods with Julia" href="../intro.html" />
 
 <!-- Normal Meta Tags -->
-<meta name="author" context="QuantumGhent" />
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
 <meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
 <meta name="description" content=This website presents a set of lectures on Tensor Network methods />
 
@@ -197,7 +198,7 @@ const thebe_selector_output = ".output, .cell_output"
 
                     </div>
 
-                    <p class="qe-page__header-authors">QuantumGhent</p>
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
 
                 </div> <!-- .page__header -->
 
@@ -283,35 +284,23 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="TensorNetworks.html">
-   2. Tensor Network Theory
+  <a class="reference internal" href="Software.html">
+   2. Getting Started with Numerics
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Julia.html">
-   3. Getting started with Julia
+  <a class="reference internal" href="LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworks.html">
+   4. Tensor Network Theory
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Symmetries.html">
-   4. Symmetries in quantum many-body physics
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Tensors
- </span>
-</p>
-<ul class="nav bd-sidenav nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../2-Tensors/TensorKit.html">
-   5. TensorKit.jl
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../2-Tensors/TensorOperations.html">
-   6. TensorOperations.jl
+   5. Symmetries in Quantum Many-Body Physics
   </a>
  </li>
 </ul>
@@ -322,28 +311,28 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
-   7. Matrix Product States
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
+   6. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
-   8. Infinite Matrix Product States
+  <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
+   7. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
-   9. Algorithms
+  <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
+   8. Tensor Network Algorithms
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
-   10. Matrix Product Operators
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
+   9. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../3-MatrixProductStates/Applications.html">
-   11. Applications
+  <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
+   10. Applications
   </a>
  </li>
 </ul>
@@ -354,8 +343,8 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
-   12. Fixed-Point algorithms
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   11. Fixed-Point algorithms
   </a>
  </li>
 </ul>
@@ -367,7 +356,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   12. References
   </a>
  </li>
 </ul>
@@ -406,7 +395,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/1-Introduction/QuantumManyBody.md" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/1-Introduction/QuantumManyBody.md" download><i data-feather="github"></i></a></li>
                 </ul>
 
             </div>
@@ -435,18 +424,18 @@ const thebe_selector_output = ".output, .cell_output"
                 <span class="label">Public</span>
                 <select id="launcher-public-input">
                 
-                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/1-Introduction/QuantumManyBody.ipynb">Colab</option>
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/QuantumManyBody.ipynb">Colab</option>
                 
                 </select>
                 <i class="fas fa-check-circle"></i>
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials" data-urlpath="tree/TensorTutorials/1-Introduction/QuantumManyBody.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/1-Introduction/QuantumManyBody.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
-            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials/blob/main/1-Introduction/QuantumManyBody.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/QuantumManyBody.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
             <script>
                 // QuantEcon Notebook Launcher
                 const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
@@ -477,8 +466,8 @@ const thebe_selector_output = ".output, .cell_output"
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
                 const pageName = "1-Introduction/QuantumManyBody";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials";
-                const urlPath = "tree/TensorTutorials/1-Introduction/QuantumManyBody.ipynb";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/1-Introduction/QuantumManyBody.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
 
