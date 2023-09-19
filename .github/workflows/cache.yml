@@ -1,33 +1,24 @@
-name: Deploy PR previews
-
+name: Build Cache
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - closed
-
-concurrency: preview-${{ github.ref }}
-
+  push:
+    branches:
+      - main
 jobs:
-  deploy-preview:
-    runs-on: ubuntu-20.04
+  cache:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      # Install dependencies
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v4
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
           cache: 'pip'
       - run: pip install -r lectures/requirements.txt
       - name: Install LaTeX dependencies
         run: |
-            sudo apt-get -qq update
-            sudo apt-get install -y     \
+          sudo apt-get -qq update
+          sudo apt-get install -y     \
             texlive-latex-recommended \
             texlive-latex-extra       \
             texlive-fonts-recommended \
@@ -38,21 +29,23 @@ jobs:
             texlive-luatex            \
             dvipng                    \
             ghostscript               \
-            cm-super
+            cm-super 
       - name: Set up Julia
         uses: julia-actions/setup-julia@v1
         with:
-            version: 1.9
+          version: 1.9
       - name: Install IJulia and Setup Project
         shell: bash
         run: |
-            julia -e 'using Pkg; Pkg.add("IJulia");'
-            julia --project=lectures --threads auto -e 'using Pkg; Pkg.instantiate();'
+          julia -e 'using Pkg; Pkg.add("IJulia");'
+          julia --project=lectures --threads auto -e 'using Pkg; Pkg.instantiate();'
       - uses: julia-actions/cache@v1
-      - name: Build the book
+      - name: Build HTML
+        shell: bash -l {0}
         run: |
-            jupyter-book build lectures --path-output ./
-      - name: Deploy preview
-        uses: rossjrw/pr-preview-action@v1
+          jb build lectures --path-output ./ 
+      - name: Upload the "_build" folder (cache)
+        uses: actions/upload-artifact@v2
         with:
-          source-dir: _build/html
+          name: build-cache
+          path: _build
