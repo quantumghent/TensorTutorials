@@ -14,7 +14,7 @@ kernelspec:
 
 # Time Evolution
 
-In this segment of the tutorial, we delve into some time evolution techniques for MPS. In particular we will focus on the [TDVP](TDVP_header) and [Time Evolution MPO](TMPO_header) methods. Another method (i)[TEBD](tebd) has already been explained in an earlier section. Following this we briefly explain how [imaginary time evolution](Imag_header) can be used to find ground states and how [thermal density matrices][FinTemp_header] can be simulated using MPS.
+In this segment of the tutorial, we delve into some time evolution techniques for MPS. In particular we will focus on the [TDVP](TDVP_header) and [Time Evolution MPO](TMPO_header) methods. Another method (i)[TEBD](tebd) has already been explained in an earlier section. Following this we briefly explain how [imaginary time evolution](Imag_header) can be used to find ground states and how [thermal density matrices](FinTemp_header) can be simulated using MPS.
 At the end of this section we offer some basic [code examples](code_header).
 
 In the case of quantum many body systems time evolution amounts to solving the time dependent Schrodinger equation
@@ -68,7 +68,7 @@ This type of ODE can be solved by a splitting method {cite}`Lubich_2015` i.e. we
 ```{math}
 \frac{d}{dt} \ket{\Psi(A)} = -i \hat{H}_{eff}^{A_C}[ A_C(n)]
 ```
-end 
+and 
 ```{math}
 \frac{d}{dt} \ket{\Psi(A)}= i \hat{H}_{eff}^{C}[ C(n)]
 ```
@@ -111,7 +111,13 @@ At the end of the chain one only updates the $A_C$ since there is no $C$ there.
 
 Doing the above left to right sweep gives a first order integrator i.e. we have solved the time evolution up to order $\mathcal{O}(dt^2)$. Since the terms can be solved in any order we can also perform a reverse sweep i.e. working from right to left. Combining this with the left to right sweep yields a second order integrator (because the reverse sweep is the adjoint of the forwards sweep).
 
-For an infinite MPS one could also do a sweep-like update until some criteria converges to obtain new tensors $\{A_L,C,A_C,A_R\}$. However this can be costly since one has to iterate until convergence. Instead we can exploit the translational invariance of the system by demanding that $C=\tilde{C}$. Since $\tilde{C}=\exp(idt \hat{H}_{\text{eff}}^{C}) C(n,t+dt)$ we can turn things around and find $C(n,t+dt)=\exp(-idt \hat{H}_{\text{eff}}^{C}) C(n)$. Given the newly found $C(n,t+dt)$ and $A_C(n,t+dt)$ one can determine a new $A_L$, giving a MPS for $t+dt$.
+For an infinite MPS one could also do a sweep-like update until some criteria converges to obtain new tensors $\{A_L,C,A_C,A_R\}$. However this can be costly since one has to iterate until convergence. Instead we can exploit the translational invariance of the system by demanding that $C=\tilde{C}$. Since $\tilde{C}=\exp(idt \hat{H}_{\text{eff}}^{C}) C(n,t+dt)$ we can turn things around and find 
+
+```{math}
+C(n,t+dt)=\exp(-idt \hat{H}_{\text{eff}}^{C}) C(n)
+```
+
+Given the newly found $C(n,t+dt)$ and $A_C(n,t+dt)$ one can determine a new $A_L$, giving a MPS for $t+dt$.
 
 ```{note}
 Unlike other time evolution methods, TDVP retains some of the physical 
@@ -212,7 +218,7 @@ e^{-\beta H} = (e^{-\Delta \tau \hat{H}})^M\rho(0)(e^{-\Delta \tau \hat{H}})^M
 with $\Delta \tau = \frac{\beta}{2M}$ {cite}`FiniteTemperature`. 
 
 (code_header)=
-## Code example: `MPSKit.timestep`
+## Code example: `MPSKit.timestep,make_time_mpo`
 Below is some code on how MPSKit and MPSKitModels can be used out-of-the-box to perform time evolution.
 
 ```{code-cell} julia
@@ -276,17 +282,19 @@ scatter!(a,ts,sz_tmpo2,label="tmpo 2nd")
 
 ```{code-cell} julia
 # We can also find the groundstate using imaginary time evolution
+H    = transverse_field_ising(;J=1.0,g=0.35);
+
 Ψ    = InfiniteMPS([2],[50]); #random MPS
-Ψenv = environments(Ψ,H₀) ;
+Ψenv = environments(Ψ,H) ;
 dt = 0.1;
 Es = zeros(50);
-Es[1] = real(expectation_value(Ψ,H₀,envs)[1]);
+Es[1] = real(expectation_value(Ψ,H,envs)[1]);
 for n in 2:50
-    (Ψ,Ψenv) = timestep(Ψ,H₀,-1im*dt,alg,Ψenv)
-    Es[n] = real(expectation_value(Ψ,H₀,Ψenv)[1])
+    (Ψ,Ψenv) = timestep(Ψ,H,-1im*dt,TDVP(),Ψenv)
+    Es[n] = real(expectation_value(Ψ,H,Ψenv)[1])
 end
 
 b = plot(xlabel="iter",ylabel="<H>");
-hline!([real(E_gs)],label="gs")
+hline!([-1.030867019],label="Exact solution")
 scatter!(b,Es,label="")
 ```
