@@ -16,9 +16,9 @@ parts:
   numbered: true
   chapters:
   - file: 2-MatrixProductStates/MatrixProductStates
-  - file: 2-MatrixProductStates/MatrixProductOperators
   - file: 2-MatrixProductStates/InfiniteMPS
   - file: 2-MatrixProductStates/Algorithms
+  - file: 2-MatrixProductStates/MatrixProductOperators
   - file: 2-MatrixProductStates/Applications
 - caption: Tensor Network Algorithms
   numbered: true
