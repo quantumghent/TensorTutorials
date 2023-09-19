@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: TensorTutorials
-author: QuantumGhent
+author: Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort
 logo: logo.png
 
 # Force re-execution of notebooks on each build.
@@ -67,9 +67,9 @@ sphinx:
     html_theme_options:
       header_organisation_url: https://quantumghent.github.io/
       header_organisation: QuantumGroup@UGent
-      repository_url: https://github.com/quantumghent/TensorTutorials
+      repository_url: https://github.com/quantumghent/TensorTutorials/
       repository_branch: main
-      nb_repository_url: https://github.com/quantumghent/TensorTutorials.notebooks
+      nb_repository_url: https://github.com/quantumghent/TensorTutorials.notebooks/
       nb_branch: main
       description: This website presents a set of lectures on Tensor Network methods
       keywords: Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics
