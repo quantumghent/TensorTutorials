@@ -127,17 +127,16 @@ Perhaps the most natural way to perform the time evolution would be to write the
 \exp(-\tau\hat{H}) = \hat{1} + \tau\hat{H} + \frac{\tau^2}{2}\hat{H}^2 + \mathcal{O}(\tau^3)
 ```
 The MPO approximation of the time evolution operator then boils down to implementing powers of $\hat{H}$ in an efficient (i.e. with the lowest possible MPO bond dimension) and size-extensive way {cite}`vandamme2023efficient`. For example, for a MPO Hamiltonian of the form
-```{math}
-:label: MPOHam
-
-to be done
+```{image} /_static/figures/timeev/MPOHam.png
+:name: MPOHam
+:align: center
 ```
 
 which corresponds to the Hamiltonian
 ```{math}
 \hat{H} = \sum_i \hat{D}_i + \hat{C}_i \hat{B}_{i+1}
 ```
-The first order approximation of $\exp(-\tau\hat{H})$ is given in MPO form by
+The first order approximation of $U=\exp(-\tau\hat{H})$ is given in MPO form by
 
 ```{image} /_static/figures/timeev/TimeMPO_1stOrder.png
 :name: FirstOrder
@@ -193,21 +192,19 @@ It is possible to use time evolution methods to construct thermal density operat
 :name: DensityMatrix
 :align: center
 ```
-
 with the constraint that 
 ```{image} /_static/figures/timeev/Mconstraint.png
 :name: Mconstraint
 :align: center
 ```
-
-This particula form ensures that $\rho$ is a positive semi-definite and thus physical {cite}`FiniteTemperature`. Note that for $d_a=1$ we obtain the density matrix of a pure state. We can represent $\rho$ as the density matrix of pure state (i.e. a MPS) by introducing ancillas $\{\ket{a_k}\}$ so that
+Here the triangles represent an isometry that fuses the two legs together into a bigger leg. This particular form ensures that $\rho$ is a positive semi-definite operator and thus physical {cite}`FiniteTemperature`. Note that for $d_k=1$ we obtain the density matrix of a pure state. We can represent $\rho$ as the density matrix of pure state (i.e. a MPS) by introducing ancillas $\{\ket{a_k}\}$ so that
 
 ```{image} /_static/figures/timeev/AncillaMPS.png
 :name: AncillaMPS
 :align: center
 ```
 
-where the thicker physical legs indicate that they contain both the spins and the ancillas. One immediately sees that $\rho=\text{Tr}_a({\ket{\Psi}\bra{\Psi}})$. The thermal density operators $\rho(\beta)$ for any $\beta$ can then be found by starting from the $\beta=0$ state $\rho(0)=\mathbf{1}$ and performing imaginary time evolution
+where the thicker physical legs indicate that they contain both the $s$ and $a$ degrees of freedom. One immediately sees that $\rho=\text{Tr}_a({\ket{\Psi}\bra{\Psi}})$. The thermal density operators $\rho(\beta)$ for any $\beta$ can then be found by starting from the $\beta=0$ state $\rho(0)=\mathbf{1}$ and performing imaginary time evolution
 
 ```{math}
 e^{-\beta H} = (e^{-\Delta \tau \hat{H}})^M\rho(0)(e^{-\Delta \tau \hat{H}})^M
