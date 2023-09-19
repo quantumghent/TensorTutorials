@@ -119,6 +119,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/Symmetries';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/1-Introduction/Symmetries.html" />
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -141,7 +142,7 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Opengraph tags -->
 <meta property="og:title" content="Symmetries in Quantum Many-Body Physics" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="None" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/1-Introduction/Symmetries.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
 <meta property="og:site_name" content="TensorTutorials" />
@@ -711,7 +712,7 @@ cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [6.94543e-310 6.94542e-310; 6.94542e-310 6.94543e-310]
+  1/2 =&gt; [0.0 6.90831e-310; 6.90831e-310 0.0]
 </pre></div>
 </div>
 </div>
@@ -744,7 +745,7 @@ categorical symmetries. These symmetries are beyond the scope of these notes. Th
 categorical symmetries are not described by groups but by more general and intricate
 algebraic structures called fusion categories, of which (finite) groups and their
 representations are specific examples. For an example of how spin chains with categorical
-symmetries can be constructed, see for example <span id="id2">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical review letters, 98(16):160409, 2007.">FTL+07</a>]</span>. TensorKit
+symmetries can be constructed, see for example <span id="id2">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">FTL+07</a>]</span>. TensorKit
 allows for an efficient construction and storage of tensors which are symmetric with
 respect to these more general kind of symmetries.</p></li>
 </ul>
@@ -844,18 +845,18 @@ respect to these more general kind of symmetries.</p></li>
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
-   7. Matrix Product Operators
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
-   8. Infinite Matrix Product States
+   7. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
-   9. Tensor Network Algorithms
+   8. Tensor Network Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
+   9. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
@@ -912,7 +913,7 @@ respect to these more general kind of symmetries.</p></li>
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
                     <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
                     <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
-                    <li><a href="https://github.com/quantumghent" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
                 </ul>
 
                 <ul class="qe-toolbar__links">

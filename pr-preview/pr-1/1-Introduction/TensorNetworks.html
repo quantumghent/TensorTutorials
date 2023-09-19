@@ -119,6 +119,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/TensorNetworks';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/1-Introduction/TensorNetworks.html" />
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -141,7 +142,7 @@ const thebe_selector_output = ".output, .cell_output"
 <!-- Opengraph tags -->
 <meta property="og:title" content="Tensor Network Theory" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="None" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/1-Introduction/TensorNetworks.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
 <meta property="og:site_name" content="TensorTutorials" />
@@ -242,29 +243,29 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-theory">
-<h1><a class="toc-backref" href="#id7"><span class="section-number">4. </span>Tensor Network Theory</a><a class="headerlink" href="#tensor-network-theory" title="Permalink to this heading">#</a></h1>
+<h1><a class="toc-backref" href="#id9"><span class="section-number">4. </span>Tensor Network Theory</a><a class="headerlink" href="#tensor-network-theory" title="Permalink to this heading">#</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#tensor-network-theory" id="id7">Tensor Network Theory</a></p>
+<li><p><a class="reference internal" href="#tensor-network-theory" id="id9">Tensor Network Theory</a></p>
 <ul>
-<li><p><a class="reference internal" href="#overview" id="id8">Overview</a></p></li>
-<li><p><a class="reference internal" href="#graphical-notation-and-tensor-operations" id="id9">Graphical Notation and Tensor Operations</a></p></li>
-<li><p><a class="reference internal" href="#network-contractions" id="id10">Network Contractions</a></p></li>
-<li><p><a class="reference internal" href="#tensor-factorizations" id="id11">Tensor Factorizations</a></p></li>
-<li><p><a class="reference internal" href="#conclusion" id="id12">Conclusion</a></p></li>
+<li><p><a class="reference internal" href="#overview" id="id10">Overview</a></p></li>
+<li><p><a class="reference internal" href="#graphical-notation-and-tensor-operations" id="id11">Graphical Notation and Tensor Operations</a></p></li>
+<li><p><a class="reference internal" href="#network-contractions" id="id12">Network Contractions</a></p></li>
+<li><p><a class="reference internal" href="#tensor-factorizations" id="id13">Tensor Factorizations</a></p></li>
+<li><p><a class="reference internal" href="#conclusion" id="id14">Conclusion</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="overview">
-<h2><a class="toc-backref" href="#id8"><span class="section-number">4.1. </span>Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id10"><span class="section-number">4.1. </span>Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this lecture we will introduce the basic concepts of tensor network theory. We will start
 with a brief overview of the history of tensor networks and their relevance to modern
 physics. We will then introduce the graphical notation that is often used to simplify
 expressions, and discuss the relevant operations and decompositions along with their
 computation complexity and their relevance to quantum many-body physics.</p>
-<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, may 2017. URL: https://dx.doi.org/10.1088/1751-8121/aa6dc3, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
+<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
 <p>This lecture also serves as a brief introduction to
 <a class="reference external" href="https://github.com/Jutho/TensorOperations.jl">TensorOperations.jl</a>, and showcases some more
 features of <a class="reference external" href="https://github.com/Jutho/TensorKit.jl">TensorKit.jl</a> as well. Note that
@@ -328,18 +329,19 @@ relevant to the study of quantum physics and machine learning.</p>
 </div>
 </div>
 <div class="section" id="graphical-notation-and-tensor-operations">
-<h2><a class="toc-backref" href="#id9"><span class="section-number">4.2. </span>Graphical Notation and Tensor Operations</a><a class="headerlink" href="#graphical-notation-and-tensor-operations" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id11"><span class="section-number">4.2. </span>Graphical Notation and Tensor Operations</a><a class="headerlink" href="#graphical-notation-and-tensor-operations" title="Permalink to this heading">#</a></h2>
 <p>One of the main advantages of tensor networks is that they admit a very intuitive graphical
 notation, which greatly simplifies the expressions involving numerous indices. This notation
 is based on the idea of representing a single tensor as a node in a graph, where the indices
 of the tensor are depicted by legs sticking out of it, one for each vector space. As an
 example, a rank-four tensor <span class="math notranslate nohighlight">\(R\)</span> can be represented as:</p>
-<img alt="../_images/R-tensor.svg" class="align-center" id="r-tensor" src="../_images/R-tensor.svg" /><div class="section" id="indexing">
+<a class="reference internal image-reference" href="../_images/R-tensor.svg" id="r-tensor"><img alt="../_images/R-tensor.svg" class="align-center" height="67" id="r-tensor" src="../_images/R-tensor.svg" width="274" /></a>
+<div class="section" id="indexing">
 <h3><span class="section-number">4.2.1. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h3>
 <p>In this notation, the individual components of the tensor can be recoverd by fixing the open
 legs of a diagram to some value, and the resulting diagram is then a scalar. For example,
 the component <span class="math notranslate nohighlight">\(R_{i_1,i_2,i_3,i_4}\)</span> is given by:</p>
-<!-- TODO: insert figure -->
+<a class="reference internal image-reference" href="../_images/indexing.svg" id="id2"><img alt="../_images/indexing.svg" class="align-center" height="115" id="id2" src="../_images/indexing.svg" width="176" /></a>
 </div>
 <div class="section" id="grouping-and-splitting-of-indices">
 <h3><span class="section-number">4.2.2. </span>Grouping and Splitting of Indices<a class="headerlink" href="#grouping-and-splitting-of-indices" title="Permalink to this heading">#</a></h3>
@@ -351,7 +353,8 @@ make this distinction.</p>
 <p>Furthermore, this naturally gives a notion of grouping and splitting of indices, which is
 just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and
 the inverse operation. For example, the following diagrams are equivalent:</p>
-<img alt="../_images/grouping.svg" class="align-center" id="grouping" src="../_images/grouping.svg" /><p>Owing to the freedom in choice of basis, the precise details of grouping and splitting are
+<a class="reference internal image-reference" href="../_images/grouping.svg" id="grouping"><img alt="../_images/grouping.svg" class="align-center" height="51" id="grouping" src="../_images/grouping.svg" width="512" /></a>
+<p>Owing to the freedom in choice of basis, the precise details of grouping and splitting are
 not unique. One specific choice of convention is the tensor product basis, which is
 precisely the one we have used in the discussion of multi-linear algebra. More concretely,
 one choice that is often used is the <em>Kronecker product</em>, which in the setting of
@@ -397,7 +400,8 @@ such diagram represents the <em>outer product</em> of two tensors. This is repre
 tensors being placed next to each other. The value of the resulting network is simply the
 product of the constituents. For example, the outer product of a rank three tensor <span class="math notranslate nohighlight">\(A\)</span> and a
 rank two tensor <span class="math notranslate nohighlight">\(B\)</span> is given by:</p>
-<img alt="../_images/outer-product.svg" class="align-center" id="outer-product" src="../_images/outer-product.svg" /></div>
+<a class="reference internal image-reference" href="../_images/outer-product.svg" id="outer-product"><img alt="../_images/outer-product.svg" class="align-center" height="132" id="outer-product" src="../_images/outer-product.svg" width="336" /></a>
+</div>
 <div class="section" id="traces">
 <h3><span class="section-number">4.2.4. </span>Traces<a class="headerlink" href="#traces" title="Permalink to this heading">#</a></h3>
 <p>More complicated diagrams can be constructed by joining some of the legs of the constituent
@@ -406,28 +410,35 @@ over the corresponding indices.</p>
 <p>If two legs from a single tensor are joined, this signifies a (partial) <em>trace</em> of a tensor
 over these indices. For example, the trace of a rank three tensor <span class="math notranslate nohighlight">\(A\)</span> over two of its
 indices is given by:</p>
-<img alt="../_images/trace.svg" class="align-center" id="trace" src="../_images/trace.svg" /><p>In this notation, the cyclic property of the trace follows by sliding one of the matrices
+<a class="reference internal image-reference" href="../_images/trace.svg" id="trace"><img alt="../_images/trace.svg" class="align-center" height="57" id="trace" src="../_images/trace.svg" width="399" /></a>
+<p>In this notation, the cyclic property of the trace follows by sliding one of the matrices
 around the loop of the diagram. As this only changes the placement of the tensors in the
 network, and not the value, the graphic proof of <span class="math notranslate nohighlight">\(\text{Tr}(AB) = \text{Tr}(BA)\)</span> is found.</p>
-<img alt="../_images/trace-cyclic.svg" class="align-center" id="trace-cyclic" src="../_images/trace-cyclic.svg" /></div>
+<a class="reference internal image-reference" href="../_images/trace-cyclic.svg" id="trace-cyclic"><img alt="../_images/trace-cyclic.svg" class="align-center" height="74" id="trace-cyclic" src="../_images/trace-cyclic.svg" width="720" /></a>
+</div>
 <div class="section" id="contractions">
 <h3><span class="section-number">4.2.5. </span>Contractions<a class="headerlink" href="#contractions" title="Permalink to this heading">#</a></h3>
 <p>The most common tensor operation used is <em>contraction</em>, which is the joining of legs from
 different tensors. This can equivalently be thought of as a tensor product followed by a
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
 is drawn as:</p>
-<img alt="../_images/contraction.svg" class="align-center" id="contraction" src="../_images/contraction.svg" /><p>Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
+<a class="reference internal image-reference" href="../_images/contraction.svg" id="contraction"><img alt="../_images/contraction.svg" class="align-center" height="69" id="contraction" src="../_images/contraction.svg" width="366" /></a>
+<p>Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.</p>
-<!-- TODO: insert figure -->
+<a class="reference internal image-reference" href="../_images/vecvec.svg" id="vecvec"><img alt="../_images/vecvec.svg" class="align-center" height="28" id="vecvec" src="../_images/vecvec.svg" width="84" /></a>
+<a class="reference internal image-reference" href="../_images/matvec.svg" id="matvec"><img alt="../_images/matvec.svg" class="align-center" height="30" id="matvec" src="../_images/matvec.svg" width="109" /></a>
+<a class="reference internal image-reference" href="../_images/matmat.svg" id="matmat"><img alt="../_images/matmat.svg" class="align-center" height="28" id="matmat" src="../_images/matmat.svg" width="136" /></a>
+<a class="reference internal image-reference" href="../_images/tr.svg" id="tr"><img alt="../_images/tr.svg" class="align-center" height="36" id="tr" src="../_images/tr.svg" width="44" /></a>
 </div>
 </div>
 <div class="section" id="network-contractions">
-<h2><a class="toc-backref" href="#id10"><span class="section-number">4.3. </span>Network Contractions</a><a class="headerlink" href="#network-contractions" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id12"><span class="section-number">4.3. </span>Network Contractions</a><a class="headerlink" href="#network-contractions" title="Permalink to this heading">#</a></h2>
 <p>Combining the operations defined above, it is possible to construct arbitrarily complicated
 <em>tensor networks</em>, which can then be evaluated by a sequence of pair-wise operations. The
 result then reduces to a tensor which has a rank equal to the number of open legs in the
 network. For example, the following diagram represents a generic tensor network:</p>
-<img alt="_static/1-Introduction/network.svg" class="align-center" id="network" src="_static/1-Introduction/network.svg" /><div class="section" id="notation">
+<a class="reference internal image-reference" href="../_images/network.svg" id="network"><img alt="../_images/network.svg" class="align-center" height="155" id="network" src="../_images/network.svg" width="766" /></a>
+<div class="section" id="notation">
 <h3><span class="section-number">4.3.1. </span>Notation<a class="headerlink" href="#notation" title="Permalink to this heading">#</a></h3>
 <p>In order to evaluate such networks, it is necessary to define a notational convention for
 specifying a network with text. One of the most common conventions is that of
@@ -462,7 +473,7 @@ with a minor modification, the <a class="reference external" href="https://arxiv
 introduced. In this notation, the indices of a tensor are assigned integers, and pairwise
 operations happen in increasing order. Similarly, negative integers are assigned to open
 legs, which determine their resulting position. For example, the diagram from
-<a href="#id2"><span class="problematic" id="id3">network</span></a> can be written as:</p>
+<a href="#id3"><span class="problematic" id="id4">network</span></a> can be written as:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
@@ -478,8 +489,8 @@ legs, which determine their resulting position. For example, the diagram from
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 2.41856  2.33028
- 3.87758  3.66224
+ 8.83381  9.28199
+ 5.67282  5.90297
 </pre></div>
 </div>
 </div>
@@ -509,16 +520,16 @@ infeasible to compute the optimal order. Take for example a ladder-shaped networ
 of particular relevance in the context of Matrix Product States, we can highlight a few
 possible contraction orders, for which we leave it as an exercise to determine the
 computational complexity:</p>
-<!-- ladder1 -->
-<!-- ladder2 -->
+<a class="reference internal image-reference" href="../_images/ladder1.svg" id="ladder1"><img alt="../_images/ladder1.svg" class="align-center" height="117" id="ladder1" src="../_images/ladder1.svg" width="842" /></a>
+<a class="reference internal image-reference" href="../_images/ladder2.svg" id="ladder2"><img alt="../_images/ladder2.svg" class="align-center" height="117" id="ladder2" src="../_images/ladder2.svg" width="839" /></a>
 <p>Determining the optimal order however is a problem that is known to be NP-hard, and thus no
 algorithm exists that can efficiently compute optimal orders for larger networks.
 Nevertheless, efficient implementations allows finding optimal orders for networks of up to
-30-40 tensors <span id="id4">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Phys. Rev. E, 90:033315, Sep 2014. URL: https://link.aps.org/doi/10.1103/PhysRevE.90.033315, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>, but other methods exist that can be used to
+30-40 tensors <span id="id5">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>, but other methods exist that can be used to
 determine good (not necessarily optimal) contraction orders.</p>
 <p>TensorOperations comes with some built-in tools for facilitating this process, and in
 particular the <code class="docutils literal notranslate"><span class="pre">opt</span></code> keyword can be used to enable the use of the algorithm from
-<span id="id5">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Phys. Rev. E, 90:033315, Sep 2014. URL: https://link.aps.org/doi/10.1103/PhysRevE.90.033315, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>. Because this uses the Julia macro system, this can be done at
+<span id="id6">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>. Because this uses the Julia macro system, this can be done at
 compilation time, and in other words only needs to be computed once.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -530,8 +541,8 @@ compilation time, and in other words only needs to be computed once.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 2.41856  2.33028
- 3.87758  3.66224
+ 8.83381  9.28199
+ 5.67282  5.90297
 </pre></div>
 </div>
 </div>
@@ -539,7 +550,7 @@ compilation time, and in other words only needs to be computed once.</p>
 </div>
 </div>
 <div class="section" id="tensor-factorizations">
-<h2><a class="toc-backref" href="#id11"><span class="section-number">4.4. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id13"><span class="section-number">4.4. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
 <p>Linear maps admit various kinds of factorizations, which are instrumental in a variety of
 applications. They can be used to generate orthogonal bases, to find low-rank
 approximations, or to find eigenvalues and vectors. In the context of tensors, the
@@ -580,7 +591,8 @@ form:</p>
 <p>where <span class="math notranslate nohighlight">\(v\)</span> is an eigenvector of <span class="math notranslate nohighlight">\(A\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
 <p>For tensors, the eigenvalue decomposition is defined similarly, and the equivalent equation
 is diagrammatically represented as:</p>
-<!-- TODO: insert image --><div class="cell docutils container">
+<a class="reference internal image-reference" href="../_images/eig.svg" id="eig"><img alt="../_images/eig.svg" class="align-center" height="99" id="eig" src="../_images/eig.svg" width="351" /></a>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">)</span><span class="w"> </span><span class="c"># codomain and domain equal for eigendecomposition</span>
 <span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
@@ -604,11 +616,13 @@ any rectangular matrix <span class="math notranslate nohighlight">\(A\)</span>. 
 <span class="math notranslate nohighlight">\(A = U \Sigma V^\dagger\)</span> where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> are isometric matrices
 (<span class="math notranslate nohighlight">\(U^\dagger U = V^\dagger V = \mathbb{1}\)</span>), and <span class="math notranslate nohighlight">\(\Sigma\)</span> is a diagonal matrix of singular
 values. The SVD is typically used to find low-rank approximations for matrices, and it was
-shown <span id="id6">[]</span> that the best rank-<span class="math notranslate nohighlight">\(k\)</span> approximation is given by the
+shown <span id="id7">[]</span> that the best rank-<span class="math notranslate nohighlight">\(k\)</span> approximation is given by the
 SVD, where <span class="math notranslate nohighlight">\(\Sigma\)</span> is truncated to the first (largest) <span class="math notranslate nohighlight">\(k\)</span> singular values.</p>
 <p>Again, a tensorial version is defined by first grouping indices to form a matrix, and then
 applying the SVD to that matrix.</p>
-<img alt="../_images/svd.svg" class="align-center" id="svd" src="../_images/svd.svg" /><div class="cell docutils container">
+<a class="reference internal image-reference" href="../_images/svd.svg" id="svd"><img alt="../_images/svd.svg" class="align-center" height="99" id="svd" src="../_images/svd.svg" width="351" /></a>
+<a class="reference internal image-reference" href="../_images/unitary.svg" id="unitary"><img alt="../_images/unitary.svg" class="align-center" height="101" id="unitary" src="../_images/unitary.svg" width="426" /></a>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
@@ -644,7 +658,8 @@ matrix <span class="math notranslate nohighlight">\(A\)</span> is a factorizatio
 a positive semi-definite Hermitian matrix. It can be interpreted as decomposing a linear
 transformation into a rotation/reflection <span class="math notranslate nohighlight">\(U\)</span>, combined with a scaling <span class="math notranslate nohighlight">\(P\)</span>. The polar
 decomposition is unique for all matrices that are full rank.</p>
-<!-- TODO: insert image polar --><div class="cell docutils container">
+<a class="reference internal image-reference" href="../_images/polar.svg" id="id8"><img alt="../_images/polar.svg" class="align-center" height="99" id="id8" src="../_images/polar.svg" width="318" /></a>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
@@ -665,7 +680,9 @@ of the form <span class="math notranslate nohighlight">\(x = R^{-1} Q^\dagger b\
 of the triangular structure (for example by Gaussian elimination). Additionally, for
 overdetermined linear systems, the QR decomposition can be used to find the least-squares
 solution.</p>
-<!-- TODO: insert image QR --><div class="cell docutils container">
+<a class="reference internal image-reference" href="../_images/qr.svg" id="qr"><img alt="../_images/qr.svg" class="align-center" height="99" id="qr" src="../_images/qr.svg" width="318" /></a>
+<a class="reference internal image-reference" href="../_images/leftOrth.svg" id="leftorth"><img alt="../_images/leftOrth.svg" class="align-center" height="101" id="leftorth" src="../_images/leftOrth.svg" width="136" /></a>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
@@ -708,7 +725,7 @@ corresponding to zero singular values.</p>
 </div>
 </div>
 <div class="section" id="conclusion">
-<h2><a class="toc-backref" href="#id12"><span class="section-number">4.5. </span>Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id14"><span class="section-number">4.5. </span>Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
 <p>In this lecture we have introduced the basic concepts of tensor network theory. We have
 defined tensors and the operations that are commonly performed, as well as the graphical
 notation that is used to represent them. We have also discussed the computational complexity
@@ -810,18 +827,18 @@ have discussed the most common tensor factorizations, and how they can be used.<
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
-   7. Matrix Product Operators
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
-   8. Infinite Matrix Product States
+   7. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
-   9. Tensor Network Algorithms
+   8. Tensor Network Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
+   9. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
@@ -878,7 +895,7 @@ have discussed the most common tensor factorizations, and how they can be used.<
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
                     <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
                     <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
-                    <li><a href="https://github.com/quantumghent" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
                 </ul>
 
                 <ul class="qe-toolbar__links">
