@@ -1,8 +1,20 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Julia
+  language: julia
+  name: julia-1.9
+---
+
 # Matrix Product Operators
 
 If Matrix Product States are a tensor network way of representing quantum states in one
 dimensions, we can similarly use tensor networks to represent the operators that act on
-those states. Matrix Product Operators (MPOs) form a structured and convenient description
+these states. Matrix Product Operators (MPOs) form a structured and convenient description
 of such operators, that can capture most (if not all) relevant operators. Additionally, they
 also form a natural way of representing the transfer matrix of a 2D statistical mechanical
 system, and can even be used to study higher dimensional systems by mapping them to quasi-1D
@@ -16,17 +28,19 @@ virtual indices:
 ## Statistical Mechanics in 2D
 
 Before discussing one-dimensional transfer matrices, let us first consider how partition
-functions of two-dimensional classical many-body systems can be naturally represented as
-a tensor network. To this end, consider the partition function of the [classical Ising model](https://en.wikipedia.org/wiki/Ising_model),
+functions of two-dimensional classical many-body systems can be naturally represented as a
+tensor network. To this end, consider the partition function of the
+[classical Ising model](https://en.wikipedia.org/wiki/Ising_model),
 
 ```{math}
-Z(\beta) = \sum_\sigma e^{-\beta H(\sigma)}
+\mathcal Z = \sum_{\{s_i\}} \text{e}^{-\beta H(\{s_i\})},
 ```
 
-where $\sigma$ is a configuration of spins, and $H(\sigma)$ is the corresponding energy, as determined by the Hamiltonian:
+where $s_i$ denotes a configuration of spins, and $H(\{s_i\})$ is the corresponding
+energy, as determined by the Hamiltonian:
 
 ```{math}
-H(σ) = -J \sum_{\langle i,j \rangle} \sigma_i \sigma_j - h \sum_i \sigma_i
+H(\{s_i\}) = -J \sum_{\langle i,j \rangle} s_i s_j - h \sum_i s_i
 ```
 
 where the first sum is over nearest neighbors, and the second sum is over all sites. 
@@ -34,10 +48,10 @@ where the first sum is over nearest neighbors, and the second sum is over all si
 ### Partition Functions as Tensor Networks
 
 As the expression for the partition function is an exponential of a sum, we can also write
-it as a product of exponentials, and it is an easy exercise to show that this is equivalent
-to contracting the following network, where the tensors at the vertices are Kronecker
-deltas, which denote the spins at each site, and the tensors on the edges are exponentials
-of the local Hamiltonian that represent the interactions between spins:
+it as a product of exponentials, and it is left as an exercise to show that this is
+equivalent to contracting the following network, where the tensors at the vertices are
+Kronecker deltas, which denote the spins at each site, and the tensors on the edges are
+exponentials of the local Hamiltonian that represent the interactions between spins:
 
 <!-- Insert image of tensor network -->
 
@@ -47,7 +61,11 @@ of the network. Finally, it is more common to absorb the edge tensors into the v
 tensors by explicitly contracting them, such that the remaining network consists of tensors
 at the vertices only:
 
-<!-- Insert image of tensor network -->
+```{image} /_static/figures/alg/partition_function.svg
+:scale: 12%
+:name: partfunc
+:align: center
+```
 
 ```{note}
 Because there are two edges per vertex, an intuitive way of absorbing the edge tensors is to
@@ -62,15 +80,22 @@ resulting in a rotation-symmetric form.
 In order to then evaluate the partition function, we can use the
 [Transfer-matrix method](https://en.wikipedia.org/wiki/Transfer-matrix_method), which is a
 technique that splits the two-dimensional network into rows (or columns) of so-called
-transfer matrices, which are easily seen to be represented as MPOs. In fact, this method has
-led to the famous exact solution of the two-dimensional Ising model by Onsager.
-{cite}`Onsager1944`.
+transfer matrices, which are already represented as MPOs. In fact, this method has even led
+to the famous exact solution of the two-dimensional Ising model by Onsager.
+{cite}`onsager1944crystal`.
 
-In the context of tensor networks, this technique is particularly useful as efficient
-algorithms exist to determine the product of an MPO with an MPS, either exactly or
-approximately. This allows us to efficiently split the computation of the partition function
-in a sequence of one-dimensional contractions, thus reducing the complexity of the problem
-by solving it layer by layer.
+In the context of tensor networks, this technique is even useful beyond exactly solvable
+cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
+approximate manner. This allows us to efficiently split the computation of the partition
+function in a sequence of one-dimensional contractions, thus reducing the complexity of the
+problem by solving it layer by layer. For example, one can resort to _boundary MPS
+techniques_ {cite}`zauner-stauber2018variational`.
+
+```{image} /_static/figures/alg/boundary_mps.svg
+:scale: 12%
+:name: boundary_mps
+:align: center
+```
 
 ### Thermodynamic Limit
 
@@ -83,10 +108,10 @@ insight that allows for this is that the partition function may be written as
 Z = \lim_{N \to \infty} \mathrm{Tr} \left( T^N \right)
 ```
 
-where $T$ is the transfer matrix, and $N$ is the number of rows (or columns) in the network.
-If we then consider the spectral decomposition of the transfer matrix, we can easily show
-that as the number of rows goes to infinity, the largest eigenvalue of the transfer matrix
-dominates, and the partition function is given by
+where $T$ is the row-to-row transfer matrix, and $N$ is the number of rows (or columns) in
+the network. If we then consider the spectral decomposition of the transfer matrix, we can
+easily show that as the number of rows goes to infinity, the largest eigenvalue of the
+transfer matrix dominates, and the partition function is given by
 
 ```{math}
 Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N
@@ -131,7 +156,7 @@ algorithms are commonly referred to as _boundary methods_.
 
 For quantum systems in one spatial dimension, the construction of MPOs boils down to the
 ability to write a sum of local operators in MPO-form. The resulting operator has a very
-specific structure, and is often referred to as a "Jordan block" MPO.
+specific structure, and is often referred to as a *Jordan block MPO*.
 
 ### Jordan Block MPOs
 
@@ -171,7 +196,7 @@ H = V_L M^{\otimes N} V_R
 ```
 
 ```{note}
-While the above example can be constructed from building blocks that are just local
+While the above example can be constructed from building blocks that are strictly local
 operators, this is not always the case, especially when symmetries are involved. In those
 cases, the elements of the matrix $M$ have additional virtual legs that are contracted
 between different sites.
@@ -179,7 +204,7 @@ between different sites.
 
 ### Finite-State Machines
 
-In fact, an intuitive approach of constructing such MPOs is to consider the sum of local
+An intuitive approach to construct such MPOs is to consider the sum of local
 terms by virtue of a
 [finite-state machine](https://en.wikipedia.org/wiki/Finite-state_machine). This is a
 mathematical model of computation that consists of a finite set of states, and a set of
@@ -272,4 +297,4 @@ entanglement in two-dimensional systems.
 In conclusion, Matrix Product Operators are a powerful tool to represent quantum operators
 as well as transfer matrices. They allow for efficient and versatile expressions of
 expectation values, and form the building block for many tensor network algorithms, both in
-(1+1) or (2+0) dimensions as well as even beyond.
+(1+1) or (2+0) dimensions, as well as in higher dimensions.
