@@ -24,6 +24,7 @@ parts:
   numbered: true
   chapters:
   - file: 3-Algorithms/FixedpointAlgorithms
+  - file: 3-Algorithms/TimeEvolutionAlgorithms
 - caption: Other
   numbered: true
   chapters:
