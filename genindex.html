@@ -367,7 +367,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <li data-tippy-content="Download Notebook"><a href="/_notebooks/genindex.ipynb" download><i data-feather="download-cloud"></i></a></li>
                     <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials/blob/main/lectures/" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/" download><i data-feather="github"></i></a></li>
                 </ul>
 
             </div>
@@ -403,7 +403,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
             <li class="launcher-private">
                 <span class="label">Private</span>
-                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks" data-urlpath="tree/TensorTutorials.notebooks/genindex.ipynb" data-branch=main>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/genindex.ipynb" data-branch=main>
                 <i class="fas fa-check-circle"></i>
             </li>
             </ul>
@@ -438,7 +438,7 @@ const thebe_selector_output = ".output, .cell_output"
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
                 const pageName = "genindex";
-                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
                 const urlPath = "tree/TensorTutorials.notebooks/genindex.ipynb";
                 const branch = "main"
                 const launchNotebookLink = document.getElementById('advancedLaunchButton');
