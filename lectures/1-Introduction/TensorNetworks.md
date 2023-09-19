@@ -159,7 +159,7 @@ indices is given by:
 
 In this notation, the cyclic property of the trace follows by sliding one of the matrices
 around the loop of the diagram. As this only changes the placement of the tensors in the
-network, and not the value, the graphic proof of $\Tr{AB} = \Tr{BA}$ is found.
+network, and not the value, the graphic proof of $\Tr (AB) = \Tr (BA)$ is found.
 
 ```{image} /_static/1-Introduction/trace-cyclic.svg
 :name: trace-cyclic
@@ -232,7 +232,7 @@ D = rand(2, 2, 2)
 E = rand(2, 2)
 F = rand(2, 2)
 @tensor begin
-    A[-1, -2] := B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
+    A[-1, -2] := B[-1, 1, 2, 3] * C[3, 5, 6, 7, -2] * D[2, 4, 5] * E[1, 4] * F[6, 7]
 end
 ```
 
