@@ -62,15 +62,18 @@ sphinx:
      ]
     highlight_language: julia
     html_favicon: _static/lectures-favicon.ico
+    html_baseurl: https://quantumghent.github.io/TensorTutorials
     html_theme: quantumghent_book_theme
     html_static_path: ['_static']
     html_theme_options:
       header_organisation_url: https://quantumghent.github.io/
+      header_organisation_github: https://github.com/quantumghent/
       header_organisation: QuantumGroup@UGent
       repository_url: https://github.com/quantumghent/TensorTutorials/
       repository_branch: main
       nb_repository_url: https://github.com/quantumghent/TensorTutorials.notebooks/
       nb_branch: main
+      nb_url: https://quantumghent.github.io/TensorTutorials/
       description: This website presents a set of lectures on Tensor Network methods
       keywords: Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics
       analytics:
