@@ -27,7 +27,7 @@ versions of the project. The most popular version control system is
 has become the de facto standard in the software development industry.
 
 Again, multiple resources are available for learning about git. From the official website,
-the book [Pro Git}(https://git-scm.com/book/en/v2) is a good place to start.
+the book [Pro Git](https://git-scm.com/book/en/v2) is a good place to start.
 
 ## Julia
 
@@ -39,7 +39,8 @@ full _getting started_ exposition can be found for example
 list of books, and much more.
 
 Additionally, there is an active [forum](https://discourse.julialang.org/) for asking
-questions, as well as a [slack channel](https://julialang.org/slack/) and a stack overflow page.
+questions, as well as a [slack channel](https://julialang.org/slack/) and a stack overflow
+page.
 
 ## Julia Packages
 
@@ -53,6 +54,9 @@ purposes. These typically have their own documentation, and are hosted on GitHub
 - [OptimKit.jl](https://github.com/Jutho/OptimKit.jl)
 - [MPSKit.jl](https://github.com/maartenvd/MPSKit.jl)
 - [PEPSKit.jl](https://github.com/quantumghent/PEPSKit.jl)
+
+Also check out the [GitHub page for our organization](https://github.com/quantumghent),
+which hosts and/or links many of the relevant software repositories.
 
 ## Noteworthy Tensor Network Software
 
