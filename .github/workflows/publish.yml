@@ -69,14 +69,14 @@ jobs:
         rsync -r  _build/jupyter/ _build/html/_notebooks/
     - name: Build the book
       run: |
-        jupyter-book build lectures/
+        jupyter-book build lectures --path-output ./
 
     # Push the book's HTML to github-pages
     - name: GitHub Pages action
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        folder: lectures/_build/html
+        folder: _build/html
         clean-exclude: pr-preview
       
     - name: Prepare notebooks sync

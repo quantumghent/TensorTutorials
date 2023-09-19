@@ -51,8 +51,8 @@ jobs:
       - uses: julia-actions/cache@v1
       - name: Build the book
         run: |
-            jupyter-book build lectures/
+            jupyter-book build lectures --path-output ./
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: lectures/_build/html
+          source-dir: _build/html

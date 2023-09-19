@@ -159,7 +159,7 @@ indices is given by:
 
 In this notation, the cyclic property of the trace follows by sliding one of the matrices
 around the loop of the diagram. As this only changes the placement of the tensors in the
-network, and not the value, the graphic proof of $\Tr{AB} = \Tr{BA}$ is found.
+network, and not the value, the graphic proof of $\text{Tr}(AB) = \text{Tr}(BA)$ is found.
 
 ```{image} /_static/1-Introduction/trace-cyclic.svg
 :name: trace-cyclic
@@ -232,7 +232,7 @@ D = rand(2, 2, 2)
 E = rand(2, 2)
 F = rand(2, 2)
 @tensor begin
-    A[-1, -2] := B[-1, 1, 2, 3] * C[3, 4, 5, 6, -2] * D[2, 4, 5] * E[1, 4] * F[5, 6]
+    A[-1, -2] := B[-1, 1, 2, 3] * C[3, 5, 6, 7, -2] * D[2, 4, 5] * E[1, 4] * F[6, 7]
 end
 ```
 
@@ -334,9 +334,8 @@ is diagrammatically represented as:
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S1) # codomain and domain equal for eigendecomposition
-partition = ((1, 5, 3), (4, 2, 6))
-D, V = eig(A, partition)
-@test permute(A, partition) * V ≈ V * D
+D, V = eig(A)
+@test A * V ≈ V * D
 ```
 
 ### Singular Value Decomposition
@@ -361,7 +360,7 @@ applying the SVD to that matrix.
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
-partition = ((1, 2), (4, 3, 5))
+partition = ((1, 2), (3, 4, 5))
 U, S, V = tsvd(A, partition)
 @test permute(A, partition) ≈ U * S * V
 @test U' * U ≈ id(domain(U))
@@ -380,7 +379,7 @@ decomposition is unique for all matrices that are full rank.
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
-partition = ((1, 2), (4, 3, 5))
+partition = ((1, 2), (3, 4, 5))
 Q, P = leftorth(A, partition; alg=Polar())
 @test permute(A, partition) ≈ Q * P
 @test Q' * Q ≈ id(domain(Q))
@@ -400,7 +399,7 @@ solution.
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
-partition = ((1, 2), (4, 3, 5))
+partition = ((1, 2), (3, 4, 5))
 Q, R = leftorth(A, partition; alg=QR())
 @test permute(A, partition) ≈ Q * R
 @test Q' * Q ≈ id(domain(Q))
@@ -427,7 +426,7 @@ corresponding to zero singular values.
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
-partition = ((1, 2), (4, 3, 5))
+partition = ((1, 2), (3, 4, 5))
 N = leftnull(A, partition)
 @test norm(N' * permute(A, partition)) ≈ 0
 @test N * N' ≈ id(codomain(N))

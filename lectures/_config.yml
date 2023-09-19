@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: TensorTutorials
-author: QuantumGhent
+author: Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort
 logo: logo.png
 
 # Force re-execution of notebooks on each build.
