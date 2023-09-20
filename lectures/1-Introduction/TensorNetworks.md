@@ -191,29 +191,29 @@ is drawn as:
 Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.
 
-```{image} /_static/TensorNetworks/vecvec.svg
+| Conventional | Einstein | Tensor Network |
+| ------------:|:--------:|:-------------- |
+| $\langle \vec{x}, \vec{u} \rangle$ | $x_i y_i $ | ```{image} /_static/TensorNetworks/vecvec.svg
 :scale: 12%
 :name: vecvec
 :align: center
-```
-
-```{image} /_static/TensorNetworks/matvec.svg
+``` |
+| $A \vec{x}$ | $A_{ij} x_j$ | ```{image} /_static/TensorNetworks/matvec.svg
 :scale: 12%
 :name: matvec
 :align: center
-```
-
-```{image} /_static/TensorNetworks/matmat.svg
+``` |
+| $A B$ | $A_{ij} B_{jk}$ | ```{image} /_static/TensorNetworks/matmat.svg
 :scale: 12%
 :name: matmat
 :align: center
-```
-
-```{image} /_static/TensorNetworks/tr.svg
+``` |
+| $\text{Tr}(A)$ | $A_{ii}$ | ```{image} /_static/TensorNetworks/tr.svg
 :scale: 12%
 :name: tr
 :align: center
-```
+``` |
+| --- | --- | --- |
 
 
 ## Network Contractions
