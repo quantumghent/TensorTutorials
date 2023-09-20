@@ -17,23 +17,15 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 ------------------
 A = TensorMap(randn, ComplexF64, S1, S2)
 partition = ((1, 2), (3, 4, 5))
-U, S, V = tsvd(A, partition)
-@test permute(A, partition) ≈ U * S * V
-@test U' * U ≈ id(domain(U))
-@test V * V' ≈ id(codomain(V))
+Q, P = leftorth(A, partition....; alg=Polar())
+@test permute(A, partition) ≈ Q * P
+@test Q' * Q ≈ id(domain(Q))
 ------------------
 
 
-MethodError: no method matching tsvd(::TensorMap{ComplexSpace, 3, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ::Tuple{Tuple{Int64, Int64}, Tuple{Int64, Int64, Int64}})
-
-[0mClosest candidates are:
-[0m  tsvd(::AbstractTensorMap; trunc, p, alg)
-[0m[90m   @[39m [35mTensorKit[39m [90m~/.julia/packages/TensorKit/MikvC/src/tensors/[39m[90m[4mfactorizations.jl:253[24m[39m
-[0m  tsvd(::AbstractTensorMap, [91m::Tuple{Vararg{Int64, N}} where N[39m, [91m::Tuple{Vararg{Int64, N}} where N[39m; kwargs...)
-[0m[90m   @[39m [35mTensorKit[39m [90m~/.julia/packages/TensorKit/MikvC/src/tensors/[39m[90m[4mfactorizations.jl:50[24m[39m
-
+syntax: missing comma or ) in argument list
 
 Stacktrace:
  [1] top-level scope
-   @ In[8]:3
+   @ In[9]:3
 

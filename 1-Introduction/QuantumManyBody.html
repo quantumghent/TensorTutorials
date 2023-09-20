@@ -679,7 +679,7 @@ find</p>
 <p>This more general exprression is also valid for fermions, where every <span class="math notranslate nohighlight">\(n_j\)</span> is restricted to
 be zero or one. In fact, the values <span class="math notranslate nohighlight">\(n_j\)</span> for <span class="math notranslate nohighlight">\(j=1,\ldots,L\)</span> completely characterise the
 state, and can thus be used to relabel the basis. Instead of specifying the mode <span class="math notranslate nohighlight">\(j_k\)</span> that
-each particle <span class="math notranslate nohighlight">\(k=1,\ldots,N\)</span> occuppies (where the labeling of the particles is arbitrary
+each particle <span class="math notranslate nohighlight">\(k=1,\ldots,N\)</span> occupies (where the labeling of the particles is arbitrary
 because they are identical), we can move to a mode-based description and thus specify the
 number of particles in each mode, also known as the mode occupation number. We can then
 refer to the basis vectors as</p>
@@ -756,8 +756,8 @@ sectors, by creating (adding) or annihilating (removing) particles in the system
 particular, we denote with <span class="math notranslate nohighlight">\(\hat{a}_j^+\)</span> the operator that adds a new particle in the mode
 <span class="math notranslate nohighlight">\(j\)</span> in the system and with <span class="math notranslate nohighlight">\(\hat{a}_j^-\)</span> the operator that removes a particle that is in
 mode <span class="math notranslate nohighlight">\(j\)</span> from the system. As it turns out that both operators are related via the adjoint,
-i.e. <span class="math notranslate nohighlight">\(\braket{\Phi| hat{a}_j^+ \Psi} = \braket{hat{a}_j^- \Phi | \Psi}\)</span>, we use the simpler
-notation <span class="math notranslate nohighlight">\(\hat{a}_j\)</span> for the <em>annihilation operator</em> and <span class="math notranslate nohighlight">\(\hat{a}_j^\dagger\)</span> for the
+i.e. <span class="math notranslate nohighlight">\(\braket{\Phi| \hat{a}_j^+ \Psi} = \braket{\hat{a}_j^- \Phi | \Psi}\)</span>, we use the
+simpler notation <span class="math notranslate nohighlight">\(\hat{a}_j\)</span> for the <em>annihilation operator</em> and <span class="math notranslate nohighlight">\(\hat{a}_j^\dagger\)</span> for the
 <em>creation operator</em>. To construct these operators in a mathematically precise and
 constructive way is actually somewhat tedious (but see
 <a class="reference external" href="https://en.wikipedia.org/wiki/Second_quantization#Creation_and_annihilation_operators">Wikipedia</a>).
@@ -774,7 +774,7 @@ the (anti)symmetrized states satisfy</p>
 <div class="math notranslate nohighlight">
 \[[\hat{a}_i, \hat{a}_j^\dagger] = \delta_{i,j}\ (\text{bosons})\quad\text{or}\quad
 \{\hat{a}_i,\hat{a}_j^\dagger\} = \delta_{i,j}\ (\text{fermions}).\]</div>
-<p>With respect to the normalized basis vectors using number occupation representation, we have</p>
+<p>With respect to the normalized basis vectors, using the occupation representation, we have</p>
 <div class="math notranslate nohighlight">
 \[\ket{n_1, n_2, \ldots, n_L} = \frac{1}{\sqrt{n_1! n_2! \cdots n_L!}}
 (\hat{a}_1^\dagger)^{n_1} (\hat{a}_2^\dagger)^{n_2} \cdots (\hat{a}_L^\dagger)^{n_L}
@@ -956,22 +956,18 @@ necessarily orthogonal) states <span class="math notranslate nohighlight">\(\{\k
 probabilities <span class="math notranslate nohighlight">\(p_1, p_2, \ldots\)</span> that sum up to one, then the state of the system is
 given by</p>
 <div class="math notranslate nohighlight">
-\[\]</div>
+\[\hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} +
+\ldots\]</div>
 </li>
 </ol>
-<p>\hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} + \ldots</p>
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Note</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">necessarily</span><span class="w"> </span><span class="n">correspond</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">spectral</span><span class="w"> </span><span class="n">decomposition</span><span class="w"> </span><span class="n">of</span>
-<span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="o">$</span><span class="p">,</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">states</span><span class="w"> </span><span class="o">$\</span><span class="kt">ket</span><span class="p">{</span><span class="o">\</span><span class="kt">Psi_i</span><span class="p">}</span><span class="o">$</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">necessarily</span><span class="w"> </span><span class="n">orthogonal</span><span class="o">.</span><span class="w"> </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">nonetheless</span>
-<span class="n">a</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="o">.</span><span class="w"> </span><span class="n">More</span><span class="w"> </span><span class="n">generally</span><span class="p">,</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="w"> </span><span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_1</span><span class="o">$</span><span class="w"> </span><span class="n">and</span>
-<span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_2</span><span class="o">$</span><span class="p">,</span><span class="w"> </span><span class="n">aany</span><span class="w"> </span><span class="n">convex</span><span class="w"> </span><span class="n">combination</span><span class="w"> </span><span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_2</span><span class="o">$</span>
-<span class="n">with</span><span class="w"> </span><span class="n">thus</span><span class="w"> </span><span class="o">$</span><span class="mi">0</span><span class="w"> </span><span class="o">\</span><span class="n">leq</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">\</span><span class="n">leq</span><span class="w"> </span><span class="mi">1</span><span class="o">$</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="o">.</span>
-
-<span class="n">To</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">mixed</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">associate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Von</span><span class="w"> </span><span class="n">Neumann</span><span class="w"> </span><span class="n">entropy</span>
-
-<span class="sb">```{math}</span>
-<span class="sb">S(\hat{\rho}) = - \mathrm{Tr}\left[\hat{\rho}\log \hat{\rho}\right] = - \sum_{n} p_n \log(p_n)</span>
-</pre></div>
-</div>
+<p>Note that this does not necessarily correspond to the spectral decomposition of
+<span class="math notranslate nohighlight">\(\hat{\rho}\)</span>, as the states <span class="math notranslate nohighlight">\(\ket{\Psi_i}\)</span> are not necessarily orthogonal. It is nonetheless
+a valid density operator. More generally, given two density operator <span class="math notranslate nohighlight">\(\hat{\rho}_1\)</span> and
+<span class="math notranslate nohighlight">\(\hat{\rho}_2\)</span>, aany convex combination <span class="math notranslate nohighlight">\(\hat{\rho} = p \hat{\rho}_1 + (1-p) \hat{\rho}_2\)</span>
+with thus <span class="math notranslate nohighlight">\(0 \leq p \leq 1\)</span> is a valid density operator.</p>
+<p>To a mixed state, we can associate the Von Neumann entropy</p>
+<div class="math notranslate nohighlight">
+\[S(\hat{\rho}) = - \mathrm{Tr}\left[\hat{\rho}\log \hat{\rho}\right] = - \sum_{n} p_n \log(p_n)\]</div>
 <p>with <span class="math notranslate nohighlight">\(p_n\)</span> the eigenvalues of <span class="math notranslate nohighlight">\(\hat{\rho}\)</span>. For a pure state, the Von Neumann entropy
 evaluates to zero (using <span class="math notranslate nohighlight">\(\lim_{x\to 0} x \log x = 0\)</span>). The maximal value of the Von Neumann
 entropy is obtained when all values <span class="math notranslate nohighlight">\(p_n\)</span> are equal so that <span class="math notranslate nohighlight">\(\hat{\rho} \sim \hat{1}\)</span>.

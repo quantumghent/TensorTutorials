@@ -284,14 +284,15 @@ operations are well-defined:</p>
 </ul>
 <p>Given two such vector spaces (not necessarily distinct) it is possible to define a linear
 map between them, which is just a function that preserves the vector space structure. In
-other words, a linear map <span class="math notranslate nohighlight">\(A \colon W ← V\)</span> maps vectors from one vector space <span class="math notranslate nohighlight">\(V\)</span> to another
-vector space <span class="math notranslate nohighlight">\(W\)</span>. Because of the structure of vector spaces, and the requirement of
-linearity, such a map is completely determined by its action on the basis vectors of <span class="math notranslate nohighlight">\(V\)</span>.
+other words, a linear map <span class="math notranslate nohighlight">\(A \colon V \rightarrow W\)</span> maps vectors from one vector space <span class="math notranslate nohighlight">\(V\)</span>
+to another vector space <span class="math notranslate nohighlight">\(W\)</span>. Because of the structure of vector spaces, and the requirement
+of linearity, such a map is completely determined by its action on the basis vectors of <span class="math notranslate nohighlight">\(V\)</span>.
 This leads in a very natural way to the notion of a matrix by considering the following
-construction, where <span class="math notranslate nohighlight">\(v_i\)</span> are the components of <span class="math notranslate nohighlight">\(\vec{v}\)</span> and <span class="math notranslate nohighlight">\(w_i\)</span> are the components of <span class="math notranslate nohighlight">\(\vec{w}\)</span>:</p>
+construction, where <span class="math notranslate nohighlight">\(v_i\)</span> are the components of <span class="math notranslate nohighlight">\(\vec{v}\)</span> and <span class="math notranslate nohighlight">\(w_i\)</span> are the components of
+<span class="math notranslate nohighlight">\(\vec{w}\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-linear-map">
 <span class="eqno">(3.1)<a class="headerlink" href="#equation-eq-linear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{array}{rcl}
-A &amp; : &amp; W \leftarrow V\\
+A &amp; : &amp; V \rightarrow W\\
   &amp;   &amp; \vec{v} ↦ A(\vec{v}) \equiv \sum_j A_{ij} v_j = w_i \equiv \vec{w}
 \end{array}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_{ij}\)</span> are the components of the matrix <span class="math notranslate nohighlight">\(A\)</span> in these bases. In other words, the
@@ -319,6 +320,21 @@ that follows this very closely:</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
 </pre></div>
 </div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For linear maps, both notations <span class="math notranslate nohighlight">\(V \rightarrow W\)</span> and <span class="math notranslate nohighlight">\(W \leftarrow V\)</span> are used to denote
+their codomain and domain. The choice of notation is mostly a matter of taste, as left to
+right might seem more conventional for a language that reads from left to right, while right
+to left is more natural when considering the mathematical usage, where matrices typically
+act on vectors from left to right. In TensorKit, both notations are supported through the
+<code class="docutils literal notranslate"><span class="pre">→</span></code> and <code class="docutils literal notranslate"><span class="pre">←</span></code> operators, and a Unicode-less version is also available, which defaults to <code class="docutils literal notranslate"><span class="pre">←</span></code>.
+Thus, the following are all equivalent:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">→</span><span class="w"> </span><span class="n">W</span><span class="p">)</span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">V</span><span class="p">)</span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -365,8 +381,8 @@ a vector in <span class="math notranslate nohighlight">\(V \otimes W\)</span> is
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×3 StridedViews.StridedView{Float64, 2, Matrix{Float64}, typeof(identity)}:
- 0.319061  0.777392  0.75204
- 0.496092  0.555828  0.258234
+ 0.860404  0.203051  0.116267
+ 0.771544  0.810601  0.151123
 </pre></div>
 </div>
 </div>
