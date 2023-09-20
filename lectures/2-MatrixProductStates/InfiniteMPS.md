@@ -57,7 +57,7 @@ techniques apply just as well to the multi-site unit cell case.
 One of the central objects when working with MPS in the thermodynamic limit is the transfer operator or
 *transfer matrix*, defined in our case as
 
-```{image} /_static/InfiniteMPS/imps/tm.svg
+```{image} /_static/InfiniteMPS/tm.svg
 :scale: 12%
 :name: transfer_matrix
 :align: center
