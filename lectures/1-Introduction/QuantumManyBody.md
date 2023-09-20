@@ -905,9 +905,10 @@ Mixed states arise in the quantum world in two scenarios:
     probabilities $p_1, p_2, \ldots$ that sum up to one, then the state of the system is
     given by
 	
-	 ```{math}
-   \hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} + \ldots
-   ```
+    ```{math}
+    \hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} +
+    \ldots
+    ```
 
 Note that this does not necessarily correspond to the spectral decomposition of
 $\hat{\rho}$, as the states $\ket{\Psi_i}$ are not necessarily orthogonal. It is nonetheless
