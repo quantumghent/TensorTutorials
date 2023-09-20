@@ -19,7 +19,7 @@ After our introduction on [quantum many body systems](many_body_intro) and [tens
 
 Consider a quantum many body system which consists of physical spins with a local Hilbert space $
 \mathbb H_i = \mathbb C^d $ of dimension $ d $, which we will call the *physical dimension*, are located at every site $ i $ of some lattice $ \Lambda $. This gives rise to a total Hilbert space of the system $ \mathbb H
-= \bigotimes_{i = 1}^{N} \mathcal H_\lambda = \left( \mathbb C^d \right)^{\otimes
+= \bigotimes_{i = 1}^{N} \mathbb H_i = \left( \mathbb C^d \right)^{\otimes
 N}$ where $ N = |\Lambda| $ is the total number of sites in the lattice. A general quantum state in this [many-body Hilbert space](many_body) can be represented in terms a set of $d^N$ complex coefficients $C_{s_1,s_2,...,s_N} \in \mathbb C$, where $s_i\in \{0,...,d-1\}$, with respect to the computational basis as
 ```{math}
 \ket{\psi} = \sum_{s_1,s_2,...,s_N} C_{s_1,s_2,...,s_N}\ket{s_1,s_2,...,s_N}.
@@ -61,7 +61,7 @@ To see why this is the case, let us study the entanglement entropy of a tensor n
 ```
 We now want to quantify the entanglement between the shaded region $ \mathcal A$ with the rest of the system for this specific state. To this end, we first recall the formula for the bipartite entanglement entropy Eq. {eq}`entanglement_entropy`, and note that the number of terms in this expression is determined by the number of nonzero Schmidt coefficients, the latter of which is referred to as the *Schmidt rank*. Looking back now at our initial decomposition of the full state tensor $C$ by splitting out its first index above, we see that the Shchmidt rank is precisely given by the bond dimension $D$ across this cut. From this, you should be able to convince yourself that the entanglement entropy across this cut is determined by the bond dimension as $S \sim \log(D)$. Extending this line of reasoning to our question of the entanglement between the region $ \mathcal A$ and the rest of the system, we see that each virtual leg connecting $\mathcal A$ to the rest of the system contributes a term $\log(D)$ to the entanglement entropy. Therefore we arrive at
 ```{math}
-S(\mathcal A) \sim \log(D) \partial \; \mathcal A,
+S(\mathcal A) \sim \log(D) \; \partial \mathcal A,
 ```
 where $ \partial \mathcal A $ is the size boundary of $\mathcal A$ (which in this two-dimensional case is its circumference).
 
