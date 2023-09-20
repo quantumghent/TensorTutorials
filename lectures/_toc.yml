@@ -8,21 +8,23 @@ parts:
   numbered: true
   chapters:
   - file: 1-Introduction/QuantumManyBody
+  - file: 1-Introduction/Software
+  - file: 1-Introduction/LinearAlgebra
   - file: 1-Introduction/TensorNetworks
-  - file: 1-Introduction/Julia
-- caption: Tensors
-  numbered: true
-  chapters:
-  - file: 2-Tensors/TensorKit
-  - file: 2-Tensors/TensorOperations
+  - file: 1-Introduction/Symmetries
 - caption: Matrix Product States
   numbered: true
   chapters:
-  - file: 3-MatrixProductStates/MatrixProductStates
-  - file: 3-MatrixProductStates/MatrixProductOperators
-  - file: 3-MatrixProductStates/InfiniteMPS
-  - file: 3-MatrixProductStates/Algorithms
-  - file: 3-MatrixProductStates/Applications
+  - file: 2-MatrixProductStates/MatrixProductStates
+  - file: 2-MatrixProductStates/InfiniteMPS
+  - file: 2-MatrixProductStates/Algorithms
+  - file: 2-MatrixProductStates/MatrixProductOperators
+  - file: 2-MatrixProductStates/Applications
+- caption: Tensor Network Algorithms
+  numbered: true
+  chapters:
+  - file: 3-Algorithms/FixedpointAlgorithms
+  - file: 3-Algorithms/TimeEvolutionAlgorithms
 - caption: Other
   numbered: true
   chapters:
