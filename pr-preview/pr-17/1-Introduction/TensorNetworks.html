@@ -419,7 +419,7 @@ different tensors. This can equivalently be thought of as a tensor product follo
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
 is drawn as:</p>
 <a class="reference internal image-reference" href="../_images/contraction.svg" id="contraction"><img alt="../_images/contraction.svg" class="align-center" height="69" id="contraction" src="../_images/contraction.svg" width="366" /></a>
-<p>Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
+<p>Familiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -530,8 +530,8 @@ legs, which determine their resulting position. For example, the diagram from
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 3.70753  3.90159
- 2.82652  3.19266
+ 4.19208  3.54047
+ 3.60173  2.59071
 </pre></div>
 </div>
 </div>
@@ -582,8 +582,8 @@ compilation time, and in other words only needs to be computed once.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 3.70753  3.90159
- 2.82652  3.19266
+ 4.19208  3.54047
+ 3.60173  2.59071
 </pre></div>
 </div>
 </div>
@@ -667,7 +667,7 @@ applying the SVD to that matrix.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tsvd</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span>
+<span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tsvd</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">)</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">U</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">U</span><span class="p">))</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span><span class="o">&#39;</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">codomain</span><span class="p">(</span><span class="n">V</span><span class="p">))</span>
@@ -675,18 +675,7 @@ applying the SVD to that matrix.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">MethodError</span>: no method matching tsvd(::TensorMap{ComplexSpace, 3, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ::Tuple{Tuple{Int64, Int64}, Tuple{Int64, Int64, Int64}})
-
-<span class="n">Closest</span> <span class="n">candidates</span> <span class="n">are</span><span class="p">:</span>
-  <span class="n">tsvd</span><span class="p">(::</span><span class="n">AbstractTensorMap</span><span class="p">;</span> <span class="n">trunc</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alg</span><span class="p">)</span>
-   <span class="o">@</span> <span class="n">TensorKit</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">TensorKit</span><span class="o">/</span><span class="n">MikvC</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">tensors</span><span class="o">/</span><span class="n">factorizations</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">253</span>
-  <span class="n">tsvd</span><span class="p">(::</span><span class="n">AbstractTensorMap</span><span class="p">,</span> <span class="p">::</span><span class="n">Tuple</span><span class="p">{</span><span class="n">Vararg</span><span class="p">{</span><span class="n">Int64</span><span class="p">,</span> <span class="n">N</span><span class="p">}}</span> <span class="n">where</span> <span class="n">N</span><span class="p">,</span> <span class="p">::</span><span class="n">Tuple</span><span class="p">{</span><span class="n">Vararg</span><span class="p">{</span><span class="n">Int64</span><span class="p">,</span> <span class="n">N</span><span class="p">}}</span> <span class="n">where</span> <span class="n">N</span><span class="p">;</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
-   <span class="o">@</span> <span class="n">TensorKit</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">TensorKit</span><span class="o">/</span><span class="n">MikvC</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">tensors</span><span class="o">/</span><span class="n">factorizations</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">50</span>
-
-
-<span class="ne">Stacktrace</span>:
- <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
-   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">]:</span><span class="mi">3</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Test Passed</span>
 </pre></div>
 </div>
 </div>
@@ -704,9 +693,18 @@ decomposition is unique for all matrices that are full rank.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">Polar</span><span class="p">())</span>
+<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">....</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">Polar</span><span class="p">())</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">Q</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">syntax</span>: missing comma or ) in argument list
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span><span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -727,7 +725,7 @@ solution.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">QR</span><span class="p">())</span>
+<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">QR</span><span class="p">())</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">R</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">Q</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
 </pre></div>
@@ -756,7 +754,7 @@ corresponding to zero singular values.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftnull</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span>
+<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftnull</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">)</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">N</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">))</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="mi">0</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">N</span><span class="o">&#39;</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">codomain</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
 </pre></div>
