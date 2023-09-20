@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6. Matrix Product States &#8212; TensorTutorials</title>
+    <title>7. Matrix Product States &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -64,12 +64,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -83,9 +83,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -123,8 +123,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="7. Infinite Matrix Product States" href="InfiniteMPS.html" />
-    <link rel="prev" title="5. Symmetries in Quantum Many-Body Physics" href="../1-Introduction/Symmetries.html" />
+    <link rel="next" title="8. Infinite Matrix Product States" href="InfiniteMPS.html" />
+    <link rel="prev" title="6. Tensor Network States" href="TensorNetworkStates.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
@@ -172,13 +172,12 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">6.1. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-product-states-through-succesive-svd">6.2. Matrix product states through succesive SVD</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-product-states-through-projected-entangled-pairs">6.3. Matrix product states through projected entangled pairs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entanglement-of-matrix-product-states">6.4. Entanglement of Matrix product states</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gauge-freedom-of-mps">6.5. Gauge freedom of MPS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values-of-matrix-product-states">6.6. Expectation values of Matrix product states</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-functions-of-matrix-product-states">6.7. Correlation functions of Matrix product states.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-matrix-product-state">7.1. A Matrix Product State</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entanglement-in-mps">7.2. Entanglement in MPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gauge-freedom">7.3. Gauge Freedom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">7.4. Expectation Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-functions">7.5. Correlation Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-mpskit-finitemps">7.6. Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.FiniteMPS</span></code></a></li>
 </ul>
                             <p class="logo">
                                 
@@ -224,80 +223,77 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="matrix-product-states">
-<h1><span class="section-number">6. </span>Matrix Product States<a class="headerlink" href="#matrix-product-states" title="Permalink to this heading">#</a></h1>
-<ol class="arabic simple">
-<li><p>Matrix Product States</p>
-<ul class="simple">
-<li><p>MPS as a polynomial Ansatz</p></li>
-<li><p>entanglement and area laws</p></li>
-<li><p>gauge freedom</p></li>
-<li><p>expectation values</p></li>
-<li><p>correlators</p></li>
-</ul>
-</li>
-</ol>
-<div class="section" id="introduction">
-<h2><span class="section-number">6.1. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
-<p>Consider a quantum system of <span class="math notranslate nohighlight">\(N\)</span> particles, where each particle can be in in <span class="math notranslate nohighlight">\(d\)</span> different states (we call this a system of qudits). The total Hilbert space is of this system is spanned by <span class="math notranslate nohighlight">\(d^N\)</span> basis states. This means that if we want to track all possible states of our system, we need to track an exponential amount of states. This is called <strong>the dimensionality curse</strong> and is one of the prime reasons why studying systems with many particles is difficult. To circumvent this problem we can only consider a small corner of the full Hilbert space and hope that the essential physics of our system is represented by this small corner. One such small corner is parametrized by <strong>matrix product states (MPS)</strong>, which has been succesful in describing the physics of many different interacting quantum systems.</p>
+<h1><span class="section-number">7. </span>Matrix Product States<a class="headerlink" href="#matrix-product-states" title="Permalink to this heading">#</a></h1>
+<p>Having introduced tensor network states in general in the previous section, we now turn to the specific case of one spatial dimension. In this setting we will discuss matrix product states and their properties.</p>
+<div class="section" id="a-matrix-product-state">
+<h2><span class="section-number">7.1. </span>A Matrix Product State<a class="headerlink" href="#a-matrix-product-state" title="Permalink to this heading">#</a></h2>
+<p>We work in the same setting as the section on <a class="reference internal" href="TensorNetworkStates.html#tensor-network-states"><span class="std std-ref">tensor network states</span></a>, where now our physical spins of local physical dimension <span class="math notranslate nohighlight">\(d\)</span> are laid out on a linear chain with <span class="math notranslate nohighlight">\(N\)</span> sites. As before, we can decompose the full tensor of coefficients <span class="math notranslate nohighlight">\(C\)</span> of a given quantum state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} C_{s_1,s_2,...,s_N}\ket{s_1,s_2,...,s_N}.\]</div>
+<p>into a contraction of local tensors by consecutive SVDs, where each time we only keep some suitable number of singular values <span class="math notranslate nohighlight">\(D_i\)</span> for every cut. For the case of <span class="math notranslate nohighlight">\(N=4\)</span> we can explicitly carry out this full procedure in the following way:</p>
+<a class="reference internal image-reference" href="../_images/svd1.svg" id="svd"><img alt="../_images/svd1.svg" class="align-center" height="224" id="svd" src="../_images/svd1.svg" width="478" /></a>
+<p>Absorbing the bond tensors <span class="math notranslate nohighlight">\(\lambda^{(i)}\)</span> into the neighboring site tensor we end up with a <em>matrix product state</em> (MPS),</p>
+<a class="reference internal image-reference" href="../_images/fmps.svg" id="fmps"><img alt="../_images/fmps.svg" class="align-center" height="46" id="fmps" src="../_images/fmps.svg" width="408" /></a>
+<p>Once again, the horizontal edges connecting the different site tensors are called <em>virtual bonds</em> and the dimension <span class="math notranslate nohighlight">\(D_i\)</span> of these bonds is called the <em>bond dimension</em>. This bond dimension controls the precision of our low-rank approximation, where in the limit of increasing bond dimension an MPS can approximate any quantum state to arbitrary precision. However, in accordance with our <a class="reference internal" href="TensorNetworkStates.html#area-laws"><span class="std std-ref">previous discussion</span></a> we expect to be able to describe low-energy states of local Hamiltonians using a maximal bond dimension <span class="math notranslate nohighlight">\(D\)</span> that is <em>constant in the system size</em>.</p>
+<p>To see where the ‘matrix product’ in the name comes from, we can write the such a state in a more explicit form as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} \sum_{k,l,...,z\in{0,D-1}} A^{(1)}_{s_1,k}A^{(2)}_{k,s_2,l}...A^{(N)}_{z,s_2,l} \ket{s_1,s_2,...,s_N}\]</div>
+<p>Interpreting the <span class="math notranslate nohighlight">\(A_{s_i}^{(i)}\)</span> as <span class="math notranslate nohighlight">\(D \times D\)</span> matrices, we indeed recognize that the each corresponding coefficent in the computational basis is given by their matrix product. This becomes even more explicit if we consider periodic boundary conditions <span class="math notranslate nohighlight">\(N \sim 1\)</span>, where we can write a corresponding MPS</p>
+<a class="reference internal image-reference" href="../_images/pfmps.svg" id="pfmps"><img alt="../_images/pfmps.svg" class="align-center" height="61" id="pfmps" src="../_images/pfmps.svg" width="437" /></a>
+<p>as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} {\rm Tr} \left[A^{(1)}A^{(2)}...A^{(N)}\right] \ket{s_1,s_2,...,s_N}.\]</div>
+<p>This class of can be used as a variational anzatz to for example perform <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html#time-evolution"><span class="std std-ref">time evolution</span></a> or <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html#fixed-point-algorithms"><span class="std std-ref">find ground states</span></a> within the manifold of MPS of a given bond dimension <span class="math notranslate nohighlight">\(D\)</span>. Before moving on to MPS algorithms, we first summarize some of the key properties that make these states so easy to work with.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, one could introduce MPS as a so-called <em>projected entangled-pair state</em> (PEPS) in the following way. Consider again our chain of length <span class="math notranslate nohighlight">\(N\)</span>, where we now place two ancillary spins of dimension <span class="math notranslate nohighlight">\(D\)</span> on every site. We then maximally entangle each of these ancillary spins with the corresponding spin on the neighboring site, resulting in a chain of entangled pairs of the form <span class="math notranslate nohighlight">\(\ket{\phi}=\sum_{j=0}^{d-1}\ket{dd}\)</span>. Finally, we project the two spins at each site onto the local physical Hilbert space of dimension <span class="math notranslate nohighlight">\(d\)</span>, resulting in a state</p>
+<a class="reference internal image-reference" href="../_images/peps.svg" id="id1"><img alt="../_images/peps.svg" class="align-center" height="84" id="id1" src="../_images/peps.svg" width="781" /></a>
+<p>If we write the projectors <span class="math notranslate nohighlight">\(\mathcal P^{(i)}: \mathbb {C}^D \otimes \mathbb{C}^D \rightarrow \mathbb{C}^d\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{P}^{(i)} = \sum_{s_i,\alpha,\beta}A_{k, s_i, l}^{(i)}\ket{s_i}\bra{kl},\]</div>
+<p>you should be able to see that the resulting state is precisely an MPS with tensors <span class="math notranslate nohighlight">\(A^{(i)}\)</span>. While it may seem a bit involved, this construction has a very natural generalization to two and more spatial dimensions, where it has been put to extensive use.</p>
 </div>
-<div class="section" id="matrix-product-states-through-succesive-svd">
-<h2><span class="section-number">6.2. </span>Matrix product states through succesive SVD<a class="headerlink" href="#matrix-product-states-through-succesive-svd" title="Permalink to this heading">#</a></h2>
-<p>We can represent every basis state of our <span class="math notranslate nohighlight">\(N\)</span> qudit Hilbert space as <span class="math notranslate nohighlight">\(\ket{s_1s_2...s_N}\)</span>, where <span class="math notranslate nohighlight">\(s_i\in \{0,...,d-1\}\)</span>. To specify a general quantum state can be expressed as a linear combination of these basis states. We can write</p>
-<div class="math notranslate nohighlight">
-\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} C_{s_1,s_2,...,s_N}\ket{s_1s_2...s_N}.\]</div>
-<p>So for a general state we need the values of all the different <span class="math notranslate nohighlight">\(C_{s_1,s_2,...,s_N}\)</span>, hence we need to track <span class="math notranslate nohighlight">\(d^N\)</span> complex numbers. Let us perform some tricks to handle this exponential number of coefficients. First we are going to isolate the first index by interpreting the coefficients as a <span class="math notranslate nohighlight">\(d\)</span> by <span class="math notranslate nohighlight">\(d^{N-1}\)</span> matrix. Next we can write this matrix as</p>
-<div class="math notranslate nohighlight">
-\[C_{s_1,s_2,...,s_N} = \sum_{k\in{0,D-1}} U_{s_1,k}C_{k,s_2,...,s_N}',\]</div>
-<p>where <span class="math notranslate nohighlight">\(U\)</span> is a <span class="math notranslate nohighlight">\(d\)</span> by <span class="math notranslate nohighlight">\(D\)</span> matrix and <span class="math notranslate nohighlight">\(C'\)</span> is a <span class="math notranslate nohighlight">\(D\)</span> by <span class="math notranslate nohighlight">\(d^{N-1}\)</span> matrix. One can find such a matrix by performing an <strong>Singular-Value-Decomposition (SVD)</strong> on the original matrix <span class="math notranslate nohighlight">\(C\)</span>. A SVD decomposes the original matrix <span class="math notranslate nohighlight">\(C\)</span> as <span class="math notranslate nohighlight">\(U\Sigma V^\dagger\)</span> with <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> unitaries and <span class="math notranslate nohighlight">\(\Sigma\)</span> a diagonal matrix containing the singular values of <span class="math notranslate nohighlight">\(C\)</span>. <span class="math notranslate nohighlight">\(\Sigma\)</span> will be a <span class="math notranslate nohighlight">\(d\)</span> by <span class="math notranslate nohighlight">\(d^{N-1}\)</span> matrix with rank(<span class="math notranslate nohighlight">\(C\)</span>) non-zero elements. One can then define <span class="math notranslate nohighlight">\(C'\)</span> as <span class="math notranslate nohighlight">\(\Sigma V^\dagger\)</span>.</p>
-<p>So far it seems that we made things worse, we now need to store <span class="math notranslate nohighlight">\(d^2\)</span> elements of <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(d^N\)</span> elements of <span class="math notranslate nohighlight">\(C'\)</span>. We can make things better by making a <strong>low rank approximation</strong> of the state instead of representing the full state. This low rank approximation can be made by <strong>truncating</strong> <span class="math notranslate nohighlight">\(\Sigma\)</span> by only retaining the largest <span class="math notranslate nohighlight">\(D\)</span> singular values. This truncates <span class="math notranslate nohighlight">\(C'\)</span> to a <span class="math notranslate nohighlight">\(D\)</span> by <span class="math notranslate nohighlight">\(d^{N-1}\)</span> matrix. <span class="math notranslate nohighlight">\(D\)</span> is called the bond dimension and increasing <span class="math notranslate nohighlight">\(D\)</span> will give you a better approximation of the original state.</p>
-<img alt="../_images/svd1.svg" class="align-center" id="svd1" src="../_images/svd1.svg" /><p>By isolating the first index of our original tensor <span class="math notranslate nohighlight">\(C\)</span> and by performing an SVD and truncating, we have gained a low rank approximation of the original tensor <span class="math notranslate nohighlight">\(C\)</span>. Now we can use the same trick on index 2. We can do this by writing</p>
-<div class="math notranslate nohighlight">
-\[C_{s_1,s_2,...,s_N} = \sum_{k,l\in{0,D-1}} U^1_{s_1,k}U^2_{k,s_2,l}C_{l,s_3,...,s_N}'.\]</div>
-<p>The above equation is an equality if <span class="math notranslate nohighlight">\(D = {\rm rank}(C)\)</span>, but again we are free to choose a lower bond dimension to make an approximation of <span class="math notranslate nohighlight">\(C\)</span>. By performing succesive SVD’s we decompose/approximate our original tensor <span class="math notranslate nohighlight">\(C\)</span> as a “<strong>product of matrices</strong>”. We hence write</p>
-<div class="math notranslate nohighlight">
-\[C_{s_1,s_2,...,s_N} = \sum_{k,l,...,z\in{0,D-1}} U^1_{s_1,k}U^2_{k,s_2,l}...U^N_{z,s_2,l}.\]</div>
-<p>Notice that our original state is now given by a contraction of <span class="math notranslate nohighlight">\(N\)</span> three leg tensors. A state that can be written in this way is called a <strong>matrix product state</strong>. In principle any state can be written as a MPS, but one would need a large bond dimensions for an arbitray state. The true power lies in using MPS as a variational ansatz. One can fix the bond dimension <span class="math notranslate nohighlight">\(D\)</span> and find the optimal MPS within this subspace. Furthermore many systems are translationally invariant meaning that one can use the same tensor <span class="math notranslate nohighlight">\(U\)</span> on every site, which gives a huge compression of information.</p>
-<img alt="../_images/svd2.svg" class="align-center" id="svd2" src="../_images/svd2.svg" /><img alt="../_images/fmps.svg" class="align-center" id="fmps" src="../_images/fmps.svg" /></div>
-<div class="section" id="matrix-product-states-through-projected-entangled-pairs">
-<h2><span class="section-number">6.3. </span>Matrix product states through projected entangled pairs<a class="headerlink" href="#matrix-product-states-through-projected-entangled-pairs" title="Permalink to this heading">#</a></h2>
-<p>Another approach to construct a MPS is by using projected entangled pairs. Consider a chain with <span class="math notranslate nohighlight">\(N\)</span> sites. On every site we place 2 qudits, giving us a local Hilbert space of <span class="math notranslate nohighlight">\(\mathbb{C}^D\otimes\mathbb{C}^D\)</span> on each site. Now we maximally entangle each qudit with the nearest qubit on a neighbouring site. We have now a chain of entangled pairs, where the full quantum state of the chain is given by</p>
-<div class="math notranslate nohighlight">
-\[\ket{\psi} = \bigotimes_i=1^{N}\sum_{j=0}^{D-1}\ket{jj}.\]</div>
-<p>Next we construct a map <span class="math notranslate nohighlight">\(f: \mathbb{C}^D \otimes \mathbb{C}^D \xrightarrow \mathbb{C}^d\)</span> acting on a local site. This map projects the <span class="math notranslate nohighlight">\(D^2\)</span>-dimensional “virtual” Hilbert space onto a “physical” <span class="math notranslate nohighlight">\(d\)</span>-dimensional Hilbert space. Acting with <span class="math notranslate nohighlight">\(f\)</span> on each site gives a <span class="math notranslate nohighlight">\(d\)</span>-dimensional quantum chain with entanglement shared between neighbouring sites. Since the state is fully determined by the map <span class="math notranslate nohighlight">\(f\)</span>, which can be represented as a <span class="math notranslate nohighlight">\(D\)</span> by <span class="math notranslate nohighlight">\(d\)</span> by <span class="math notranslate nohighlight">\(D\)</span> three leg tensor it is clear that this construction indeed gives rise to a MPS. One advantage of this construction is that it allows for easy generalization to higher dimensions.</p>
-<img alt="../_images/peps.svg" class="align-center" id="peps" src="../_images/peps.svg" /></div>
-<div class="section" id="entanglement-of-matrix-product-states">
-<h2><span class="section-number">6.4. </span>Entanglement of Matrix product states<a class="headerlink" href="#entanglement-of-matrix-product-states" title="Permalink to this heading">#</a></h2>
-<p>One important question is which states can be represented by an MPS and what are their properties. To answer this question we will look at the entanglement structure of a MPS. Consider a MPS with a fixed bond dimension <span class="math notranslate nohighlight">\(D\)</span>. We can choose any bond of the MPS to make a bipartition of the MPS, where all sites to the left of the bond are in one partition and all sites to the right of the partition are in the other partition. One can now calculate the entanglement entropy <span class="math notranslate nohighlight">\(S\)</span> between these two partitions. To calculate this we will use the SVD decomposition. If we perform an SVD along the bond, then the singular values will completely determine the entanglement structure between the two partitions. The entanglement entropy is then given by</p>
-<div class="math notranslate nohighlight">
-\[S = -\sum_i|\sigma_i|^2\log{(|\sigma_i|^2)}.\]</div>
-<p>Each bond we cut to make the bipartition will contribute to the total entanglement entropy. To bipartition a MPS we only need to cross one bond giving us a constant <span class="math notranslate nohighlight">\(S\)</span>. In higher dimensional systems the amount of bonds that you need to cross to bipartition the system will scale with the area of the partition, hence the entanglement entropy also scales with the area. This is scaling relation is called an area law. This leads us to the following statement: “Any state with an area law for the entanglement entropy can be arbitrarily good approximated by an MPS wiht <strong>poly</strong><span class="math notranslate nohighlight">\((N)\)</span> bond dimension.”. The small corner that MPS parametrizes is thus given by the weakly entangled states that are governed by an area law. This seems very restrictive however it appears that many of the relevant states for different physical systems fall within this class.</p>
 </div>
-<div class="section" id="gauge-freedom-of-mps">
-<h2><span class="section-number">6.5. </span>Gauge freedom of MPS<a class="headerlink" href="#gauge-freedom-of-mps" title="Permalink to this heading">#</a></h2>
-<p>Not all MPS describe different physical states. One can perform a set of transofrmations on a MPS to get a different MPS, but with the physical state unchanged. These transformations are called <strong>gauge transformations</strong>. When describing a physical state by a MPS, one is free to choose its specific representation. This freedom is called a <strong>gauge freedom</strong>. The gauge transforms that leave a MPS invariant are given by basis transforms on the virtual level. If one starts with a MPS given by the tensors <span class="math notranslate nohighlight">\(U_{k,s_i,l}\)</span>, one can get an equivalent MPS described by tensors <span class="math notranslate nohighlight">\(V_{m,s_i,n}=\sum_{k,l} B_{m,k}U_{k,s_i,l}B^{-1}_{l,n}\)</span>, where <span class="math notranslate nohighlight">\(B\)</span> describes a basis transform.</p>
-<p>A physical state can be described by many different MPS by using the gauge freedom. One can wonder if the same state can be described by two MPS that are not related by a gauge transform. This question is answered by the <strong>fundamental theorem of MPS</strong>, which states that any two translationally invariant MPS are equal if and only if their tensors are related by a gauge transform. So the gauge freedom is the only freedom we have in describing a physical state by an MPS.</p>
-<p>This gauge transform can be exploited in various algorithms by defining canoncial forms. One common canonical form is the left-canonical form given by the condition <span class="math notranslate nohighlight">\(\sum_{s_i=0}^{d-1}U^\dagger_{s_i}U_{s_i} = \textbf{id}_{D\times D}\)</span>.</p>
-<img alt="../_images/gauge.svg" class="align-center" id="gauge" src="../_images/gauge.svg" /><img alt="../_images/leftOrth2.svg" class="align-center" id="leftorth" src="../_images/leftOrth2.svg" /></div>
-<div class="section" id="expectation-values-of-matrix-product-states">
-<h2><span class="section-number">6.6. </span>Expectation values of Matrix product states<a class="headerlink" href="#expectation-values-of-matrix-product-states" title="Permalink to this heading">#</a></h2>
-<p>It is important to know how to compute expectation values of operators acting on a MPS. Consider an operator <span class="math notranslate nohighlight">\(O_i\)</span> acting on site i of a state given by a MPS <span class="math notranslate nohighlight">\(\ket{\psi[U]}\)</span>. To calculate this expectation value we introduce the object</p>
+<div class="section" id="entanglement-in-mps">
+<h2><span class="section-number">7.2. </span>Entanglement in MPS<a class="headerlink" href="#entanglement-in-mps" title="Permalink to this heading">#</a></h2>
+<p>As a first property we study the entanglement structure of an MPS. Consider an MPS with a fixed bond dimension <span class="math notranslate nohighlight">\(D\)</span>. We can choose any bond of the MPS to make a bipartition of the MPS, where all sites to the left of the bond belong to one subsystem and all sites to the right of the partition belong to the other subsystem. Performing an SVD across this bond, just as we have done in our initial construction, gives us a corresponding set of singular values <span class="math notranslate nohighlight">\(s_i\)</span>. As we have seen <a class="reference internal" href="../1-Introduction/QuantumManyBody.html#entanglement"><span class="std std-ref">before</span></a>, the squares of these singular values are the Schmidt coefficients of the bipartition, and make up the <em>entanglement spectrum</em> of the MPS. The entanglement spectrum of a given low-energy state encodes many interesting properties of the corresponding system, and can for example be used to recognize symmetries and detect phase transitions.</p>
+<p>The same Schmidt coefficients can be used to compute the bipartitie entanglement entropy across the cut as</p>
 <div class="math notranslate nohighlight">
-\[\mathbb{E}_O = \sum_{i,j=0}^{d-1}O_{ij}U_i\otimes \bar{U}_j.\]</div>
-<p>We call this the <span class="math notranslate nohighlight">\(O\)</span>-transfer matrix. In the case of <span class="math notranslate nohighlight">\(O=\textbf{id}\)</span> we refer to it as the transfer matrix. The transfer matrix allows us to easily represent the expectation value <span class="math notranslate nohighlight">\(\braket{\psi|O_iO_j|\psi}\)</span>. For a finite MPS with periodic boundary one can calculate this as</p>
+\[S = -\sum_i s_i^2 \log(s_i^2).\]</div>
+<p>For one-dimensional states which obey an area law, the maximum entropy across a cut is bounded by a constant. Again we see that by increasing the bond dimension sufficiently we will always be able to saturate this value of <span class="math notranslate nohighlight">\(S\)</span>, confirming our previous statement that MPS faithfully capture these states. Furthermore, even for states that do not satisfy an area law such as critical state, carefully relating entanglement properties such as the entanglement entropy to the correlation length (which are then both controlled by the bond dimension) allows to derive many key properties of the critical system.</p>
+</div>
+<div class="section" id="gauge-freedom">
+<h2><span class="section-number">7.3. </span>Gauge Freedom<a class="headerlink" href="#gauge-freedom" title="Permalink to this heading">#</a></h2>
+<p>Not all MPS describe different physical states. One can perform a set of transformations on an MPS to change the local tensors, but with the physical state unchanged. These transformations are called <em>gauge transformations</em>. The freedom to choose a particular MPS representation when describing a given physical state is also called a <em>gauge freedom</em>. The gauge transforms that leave a MPS invariant are given by basis transforms on the virtual level. Given such a basis transform <span class="math notranslate nohighlight">\(M\)</span> as a <span class="math notranslate nohighlight">\(D\times D\)</span> invertible matrix, it is easy to see that the following procedure relates two different MPS which encode the same physical state,</p>
+<a class="reference internal image-reference" href="../_images/gauge.svg" id="gauge"><img alt="../_images/gauge.svg" class="align-center" height="170" id="gauge" src="../_images/gauge.svg" width="743" /></a>
+<p>where the <span class="math notranslate nohighlight">\(B^{(i)}\)</span> tensors are obtained by absorbing <span class="math notranslate nohighlight">\(M^{-1}\)</span> and <span class="math notranslate nohighlight">\(M\)</span> on the left and right virtual index of <span class="math notranslate nohighlight">\(A^{(i)}\)</span> respectively.</p>
+<p>Since a physical state can be described by many different MPS by using virtue of the gauge freedom, one can wonder if the same state can be described by two MPS that are not related by a gauge transform. This question is answered by the <em>fundamental theorem of MPS</em>, which states that any two translationally invariant MPS are equal if and only if their tensors are related by a gauge transform. So the gauge freedom is the only freedom we have in describing a physical state by an MPS.</p>
+<p>From a more practical point of view, this gauge freedom be exploited in various algorithms by making use of so-called <em>canonical forms</em>. One common canonical form for example is the <em>left-canonical form</em>, where we gauge transform a given MPS tensor <span class="math notranslate nohighlight">\(A\)</span> to a different tenor <span class="math notranslate nohighlight">\(A_L\)</span> which satisfies the condition <span class="math notranslate nohighlight">\(\sum_{s_i=0}^{d-1}A^\dagger_{s_i}U_{s_i} = \mathbb 1_{D\times D}\)</span>, or in pictures,</p>
+<a class="reference internal image-reference" href="../_images/leftOrth2.svg" id="leftorth"><img alt="../_images/leftOrth2.svg" class="align-center" height="122" id="leftorth" src="../_images/leftOrth2.svg" width="153" /></a>
+<p>A similar can be imposed to obtain the <em>right-canonical form</em> in a finite MPS, we can bring the tensors in left- or right canonical form as we wish by factorizing them into appropriate isometries using the <a class="reference internal" href="../1-Introduction/TensorNetworks.html#factorizations"><span class="std std-ref">QR or polar decomposition</span></a>. This moving of the gauge has proved essential in finite MPS algorithms, as we will see <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html#fixed-point-algorithms"><span class="std std-ref">later</span></a>.</p>
+</div>
+<div class="section" id="expectation-values">
+<h2><span class="section-number">7.4. </span>Expectation Values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h2>
+<p>Another key feature of MPS is that expectation values of local operators can be computed efficiently Consider an operator <span class="math notranslate nohighlight">\(O_i\)</span> acting on site i of a state given by a MPS <span class="math notranslate nohighlight">\(\ket{\psi[A]}\)</span>. To calculate this expectation value we introduce the object</p>
+<a class="reference internal image-reference" href="../_images/transfer.svg" id="transfer"><img alt="../_images/transfer.svg" class="align-center" height="122" id="transfer" src="../_images/transfer.svg" width="293" /></a>
+<p>which we will call the <span class="math notranslate nohighlight">\(O\)</span>-transfer matrix. In the case of <span class="math notranslate nohighlight">\(O=\mathbb 1\)</span> we just call it the transfer matrix. For a finite MPS with periodic boundary this can be written succinctly as</p>
 <div class="math notranslate nohighlight">
 \[\braket{\psi|O_i|\psi} = Tr\left(\mathbb{E}^{i}\mathbb{E}_O\mathbb{E}^{N-i-1}\right).\]</div>
-<p>This shows another powerful aspect of MPS, namely expectation values of MPS are easy to calculate.</p>
-<img alt="../_images/transfer.svg" class="align-center" id="transfer" src="../_images/transfer.svg" /></div>
-<div class="section" id="correlation-functions-of-matrix-product-states">
-<h2><span class="section-number">6.7. </span>Correlation functions of Matrix product states.<a class="headerlink" href="#correlation-functions-of-matrix-product-states" title="Permalink to this heading">#</a></h2>
-<p>The method to calculate expectation values can be easily generalized to calculate two point correlators of a MPS. Consider two operators <span class="math notranslate nohighlight">\(O_i\)</span> and <span class="math notranslate nohighlight">\(Q_j\)</span> each acting on respectively site <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. The correlator between these two operators is denoted by <span class="math notranslate nohighlight">\(\braket{\psi|O_iQ_j|\psi}\)</span>. By using the transfer matrix we can easily calculate this correlator as</p>
+<p>This quantity can be evaluated <a class="reference internal" href="../1-Introduction/TensorNetworks.html#contraction-order"><span class="std std-ref">efficiently by contracting the corresponding diagram from end to end</span></a>.</p>
+</div>
+<div class="section" id="correlation-functions">
+<h2><span class="section-number">7.5. </span>Correlation Functions<a class="headerlink" href="#correlation-functions" title="Permalink to this heading">#</a></h2>
+<p>The method to calculate expectation values can be easily generalized to calculate two point correlators of a MPS. Consider two operators <span class="math notranslate nohighlight">\(O_i\)</span> and <span class="math notranslate nohighlight">\(Q_j\)</span> each acting on respectively site <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. The correlator between these two operators is denoted by <span class="math notranslate nohighlight">\(\braket{\psi|O_i O_j|\psi}\)</span>, and corresponds to the contraction</p>
+<a class="reference internal image-reference" href="../_images/corrFunc1.svg" id="corrfunc"><img alt="../_images/corrFunc1.svg" class="align-center" height="122" id="corrfunc" src="../_images/corrFunc1.svg" width="658" /></a>
+<p>Adopting the transfer matrix notation this becomes</p>
 <div class="math notranslate nohighlight">
-\[\braket{\psi|O_iQ_j|\psi} = Tr\left(\mathbb{E}^{i}\mathbb{E}_O\mathbb{E}^{j-i-1}\mathbb{E}_Q\mathbb{E}^{N-j-1}\right).\]</div>
-<p>If we work in the thermodynamic limit we get</p>
-<div class="math notranslate nohighlight">
-\[\braket{\psi|O_iQ_j|\psi} = Tr\left(\mathbb{E}^{\infty}\mathbb{E}_O\mathbb{E}^{j-i-1}\mathbb{E}_Q\mathbb{E}^{\infty}\right).\]</div>
-<p>Here it is clear that the dependence of this correlator on <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> comes only from <span class="math notranslate nohighlight">\(\mathbb{E}^{j-i-1}\)</span>, which is controlled by the eigenvalues of <span class="math notranslate nohighlight">\(\mathbb{E}\)</span>. One can always normalize the state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> such that the dominant eigenvalue of <span class="math notranslate nohighlight">\(\mathbb{E}\)</span> is 1 and the others lie within the unit disk. This means that the exponential dependence on the eigenvalue corresponds to an exponential decay, hence the correlator of an MPS always has exponentially decaying correlations. This is a very important property of MPS, because it shows for which systems the groundstate can be well approximated by a MPS. For gapped systems it is well-known that the correlations decay exponentially, hence all gapped groundstates can be well approximated by a MPS. However gapless systems, which have power law decay for correlations, cannot be fully captured by MPS.</p>
-<img alt="../_images/corrFunc1.svg" class="align-center" id="corrfunc" src="../_images/corrFunc1.svg" /></div>
+\[\braket{\psi|O_i O_j|\psi} = {\rm Tr}\left(\mathbb{E}^{i}\mathbb{E}_O\mathbb{E}^{j-i-1}\mathbb{E}_O\mathbb{E}^{N-j-1}\right).\]</div>
+<p>Clearly, the dependence of the correlator on the sites <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> is only in the powers of <span class="math notranslate nohighlight">\(\mathbb{E}\)</span>, which is controlled by the eigenvalues of <span class="math notranslate nohighlight">\(\mathbb{E}\)</span>. One can always normalize the state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> such that the dominant eigenvalue of <span class="math notranslate nohighlight">\(\mathbb{E}\)</span> is 1 and the others lie within the unit disk. This means that the exponential dependence on the eigenvalue corresponds to an exponential decay, meaning that an MPS always has exponentially decaying correlations. We will return to this point in more detail when <span class="xref myst">considering infinite systems in the next section</span>.</p>
+</div>
+<div class="section" id="code-example-mpskit-finitemps">
+<h2><span class="section-number">7.6. </span>Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.FiniteMPS</span></code><a class="headerlink" href="#code-example-mpskit-finitemps" title="Permalink to this heading">#</a></h2>
+<p>To be added.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -387,29 +383,34 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
  <li class="toctree-l1 current active active">
   <a class="current reference internal" href="#">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="InfiniteMPS.html">
-   7. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Algorithms.html">
-   8. Tensor Network Algorithms
+   9. A Simple Tensor Network Algorithm
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductOperators.html">
-   9. Matrix Product Operators
+   10. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Applications.html">
-   10. Applications
+   11. Applications
   </a>
  </li>
 </ul>
@@ -421,12 +422,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
-   11. Fixed-Point algorithms
+   12. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
-   12. Time Evolution
+   13. Time Evolution
   </a>
  </li>
 </ul>
@@ -438,7 +439,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>

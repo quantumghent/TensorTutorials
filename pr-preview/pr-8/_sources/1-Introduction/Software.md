@@ -27,7 +27,9 @@ versions of the project. The most popular version control system is
 has become the de facto standard in the software development industry.
 
 Again, multiple resources are available for learning about git. From the official website,
-the book [Pro Git](https://git-scm.com/book/en/v2) is a good place to start.
+the book [Pro Git](https://git-scm.com/book/en/v2) is a good place to start. For a more
+dynamic approach, you can learn git through
+[this interactive tutorial](https://learngitbranching.js.org/).
 
 ## Julia
 

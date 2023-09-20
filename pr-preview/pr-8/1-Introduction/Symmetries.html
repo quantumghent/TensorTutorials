@@ -64,12 +64,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -83,9 +83,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -123,7 +123,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6. Matrix Product States" href="../2-MatrixProductStates/MatrixProductStates.html" />
+    <link rel="next" title="6. Tensor Network States" href="../2-MatrixProductStates/TensorNetworkStates.html" />
     <link rel="prev" title="4. Tensor Network Theory" href="TensorNetworks.html" />
 
 <!-- Normal Meta Tags -->
@@ -326,7 +326,7 @@ these symmetries can be broken by the ground state subspace, and this pattern of
 breaking is a hallmark feature of different phases of the model. Different phases can be
 probed by a local order parameter which does not commute with the symmetries. This paradigm
 of classifying phases based on symmetry principles was first put forward by Landau
-<span id="id1">[<a class="reference internal" href="../References.html#id21" title="L. D. Landau. On the theory of phase transitions. Zh. Eksp. Teor. Fiz., 7:19–32, 1937. doi:10.1016/B978-0-08-010586-4.50034-1.">Lan37</a>]</span>, and since then bears his name.</p>
+<span id="id1">[<a class="reference internal" href="../References.html#id21" title="L. D. Landau. On the theory of phase transitions. Journal of Experimental and Theoretical Physics, 7:19–32, 1937. doi:10.1016/B978-0-08-010586-4.50034-1.">Landau, 1937</a>]</span>, and since then bears his name.</p>
 </div>
 <div class="section" id="noether-and-conserved-quantitites">
 <h3><span class="section-number">5.1.2. </span>Noether and Conserved Quantitites<a class="headerlink" href="#noether-and-conserved-quantitites" title="Permalink to this heading">#</a></h3>
@@ -668,7 +668,7 @@ we would write</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(ProductSpace(Rep[SU₂](1=&gt;1)) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
 * Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
 [:, :, 1] =
- 0.0
+ 6.94882124540023e-310
 </pre></div>
 </div>
 </div>
@@ -687,7 +687,7 @@ and codomain are as expected:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1 =&gt; [0.0;;]
+  1 =&gt; [6.94882e-310;;]
 </pre></div>
 </div>
 </div>
@@ -718,7 +718,7 @@ cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [6.93802e-310 6.93802e-310; 6.93802e-310 6.938e-310]
+  1/2 =&gt; [6.94881e-310 6.94881e-310; 6.94881e-310 6.94882e-310]
 </pre></div>
 </div>
 </div>
@@ -751,7 +751,7 @@ categorical symmetries. These symmetries are beyond the scope of these notes. Th
 categorical symmetries are not described by groups but by more general and intricate
 algebraic structures called fusion categories, of which (finite) groups and their
 representations are specific examples. For an example of how spin chains with categorical
-symmetries can be constructed, see for example <span id="id4">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">FTL+07</a>]</span>. TensorKit
+symmetries can be constructed, see for example <span id="id4">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">Feiguin <em>et al.</em>, 2007</a>]</span>. TensorKit
 allows for an efficient construction and storage of tensors which are symmetric with
 respect to these more general kind of symmetries.</p></li>
 </ul>
@@ -846,28 +846,33 @@ respect to these more general kind of symmetries.</p></li>
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
-   7. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
-   8. Tensor Network Algorithms
+   9. A Simple Tensor Network Algorithm
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
-   9. Matrix Product Operators
+   10. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
-   10. Applications
+   11. Applications
   </a>
  </li>
 </ul>
@@ -879,12 +884,12 @@ respect to these more general kind of symmetries.</p></li>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
-   11. Fixed-Point algorithms
+   12. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
-   12. Time Evolution
+   13. Time Evolution
   </a>
  </li>
 </ul>
@@ -896,7 +901,7 @@ respect to these more general kind of symmetries.</p></li>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>

@@ -64,12 +64,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -83,9 +83,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -243,7 +243,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-theory">
-<h1><a class="toc-backref" href="#id9"><span class="section-number">4. </span>Tensor Network Theory</a><a class="headerlink" href="#tensor-network-theory" title="Permalink to this heading">#</a></h1>
+<span id="tensor-networks"></span><h1><a class="toc-backref" href="#id9"><span class="section-number">4. </span>Tensor Network Theory</a><a class="headerlink" href="#tensor-network-theory" title="Permalink to this heading">#</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -265,7 +265,7 @@ with a brief overview of the history of tensor networks and their relevance to m
 physics. We will then introduce the graphical notation that is often used to simplify
 expressions, and discuss the relevant operations and decompositions along with their
 computation complexity and their relevance to quantum many-body physics.</p>
-<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
+<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">Bridgeman and Chubb, 2017</a>]</span>.</p>
 <p>This lecture also serves as a brief introduction to
 <a class="reference external" href="https://github.com/Jutho/TensorOperations.jl">TensorOperations.jl</a>, and showcases some more
 features of <a class="reference external" href="https://github.com/Jutho/TensorKit.jl">TensorKit.jl</a> as well. Note that
@@ -423,12 +423,22 @@ different tensors. This can equivalently be thought of as a tensor product follo
 trace. For example, the contraction between two pairs of indices of two rank-three tensors
 is drawn as:</p>
 <a class="reference internal image-reference" href="../_images/contraction.svg" id="contraction"><img alt="../_images/contraction.svg" class="align-center" height="69" id="contraction" src="../_images/contraction.svg" width="366" /></a>
-<p>Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
+<p>Familiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\langle \vec{x}, \vec{y} \rangle = x_i y_i\)</span></p>
 <a class="reference internal image-reference" href="../_images/vecvec.svg" id="vecvec"><img alt="../_images/vecvec.svg" class="align-center" height="28" id="vecvec" src="../_images/vecvec.svg" width="84" /></a>
+</li>
+<li><p><span class="math notranslate nohighlight">\(A \vec{x} = A_{ij} x_j\)</span></p>
 <a class="reference internal image-reference" href="../_images/matvec.svg" id="matvec"><img alt="../_images/matvec.svg" class="align-center" height="30" id="matvec" src="../_images/matvec.svg" width="109" /></a>
+</li>
+<li><p><span class="math notranslate nohighlight">\(A B = A_{ij} B_{jk}\)</span></p>
 <a class="reference internal image-reference" href="../_images/matmat.svg" id="matmat"><img alt="../_images/matmat.svg" class="align-center" height="28" id="matmat" src="../_images/matmat.svg" width="136" /></a>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\text{Tr}(A) = A_{ii}\)</span></p>
 <a class="reference internal image-reference" href="../_images/tr.svg" id="tr"><img alt="../_images/tr.svg" class="align-center" height="36" id="tr" src="../_images/tr.svg" width="44" /></a>
+</li>
+</ul>
 </div>
 </div>
 <div class="section" id="network-contractions">
@@ -489,15 +499,15 @@ legs, which determine their resulting position. For example, the diagram from
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 4.62022  5.01023
- 3.98263  4.13271
+ 2.89744  3.49722
+ 2.94342  3.23798
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="contraction-order-and-complexity">
-<h3><span class="section-number">4.3.2. </span>Contraction Order and Complexity<a class="headerlink" href="#contraction-order-and-complexity" title="Permalink to this heading">#</a></h3>
+<span id="contraction-order"></span><h3><span class="section-number">4.3.2. </span>Contraction Order and Complexity<a class="headerlink" href="#contraction-order-and-complexity" title="Permalink to this heading">#</a></h3>
 <p>While tensor networks are defined in such a way that their values are independent of the
 order of pairwise operations, the computational complexity of evaluating a network can vary
 wildly based on the chosen order. Even for simple matrix-matrix-vector multiplication, the
@@ -525,11 +535,11 @@ computational complexity:</p>
 <p>Determining the optimal order however is a problem that is known to be NP-hard, and thus no
 algorithm exists that can efficiently compute optimal orders for larger networks.
 Nevertheless, efficient implementations allows finding optimal orders for networks of up to
-30-40 tensors <span id="id5">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>, but other methods exist that can be used to
+30-40 tensors <span id="id5">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">Pfeifer <em>et al.</em>, 2014</a>]</span>, but other methods exist that can be used to
 determine good (not necessarily optimal) contraction orders.</p>
 <p>TensorOperations comes with some built-in tools for facilitating this process, and in
 particular the <code class="docutils literal notranslate"><span class="pre">opt</span></code> keyword can be used to enable the use of the algorithm from
-<span id="id6">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>. Because this uses the Julia macro system, this can be done at
+<span id="id6">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">Pfeifer <em>et al.</em>, 2014</a>]</span>. Because this uses the Julia macro system, this can be done at
 compilation time, and in other words only needs to be computed once.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -541,8 +551,8 @@ compilation time, and in other words only needs to be computed once.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 4.62022  5.01023
- 3.98263  4.13271
+ 2.89744  3.49722
+ 2.94342  3.23798
 </pre></div>
 </div>
 </div>
@@ -550,7 +560,7 @@ compilation time, and in other words only needs to be computed once.</p>
 </div>
 </div>
 <div class="section" id="tensor-factorizations">
-<h2><a class="toc-backref" href="#id13"><span class="section-number">4.4. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
+<span id="factorizations"></span><h2><a class="toc-backref" href="#id13"><span class="section-number">4.4. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
 <p>Linear maps admit various kinds of factorizations, which are instrumental in a variety of
 applications. They can be used to generate orthogonal bases, to find low-rank
 approximations, or to find eigenvalues and vectors. In the context of tensors, the
@@ -626,7 +636,7 @@ applying the SVD to that matrix.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tsvd</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span>
+<span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tsvd</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">)</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">U</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">U</span><span class="p">))</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span><span class="o">&#39;</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">codomain</span><span class="p">(</span><span class="n">V</span><span class="p">))</span>
@@ -634,18 +644,7 @@ applying the SVD to that matrix.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">MethodError</span>: no method matching tsvd(::TensorMap{ComplexSpace, 3, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ::Tuple{Tuple{Int64, Int64}, Tuple{Int64, Int64, Int64}})
-
-<span class="n">Closest</span> <span class="n">candidates</span> <span class="n">are</span><span class="p">:</span>
-  <span class="n">tsvd</span><span class="p">(::</span><span class="n">AbstractTensorMap</span><span class="p">;</span> <span class="n">trunc</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alg</span><span class="p">)</span>
-   <span class="o">@</span> <span class="n">TensorKit</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">TensorKit</span><span class="o">/</span><span class="n">MikvC</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">tensors</span><span class="o">/</span><span class="n">factorizations</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">253</span>
-  <span class="n">tsvd</span><span class="p">(::</span><span class="n">AbstractTensorMap</span><span class="p">,</span> <span class="p">::</span><span class="n">Tuple</span><span class="p">{</span><span class="n">Vararg</span><span class="p">{</span><span class="n">Int64</span><span class="p">,</span> <span class="n">N</span><span class="p">}}</span> <span class="n">where</span> <span class="n">N</span><span class="p">,</span> <span class="p">::</span><span class="n">Tuple</span><span class="p">{</span><span class="n">Vararg</span><span class="p">{</span><span class="n">Int64</span><span class="p">,</span> <span class="n">N</span><span class="p">}}</span> <span class="n">where</span> <span class="n">N</span><span class="p">;</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
-   <span class="o">@</span> <span class="n">TensorKit</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">TensorKit</span><span class="o">/</span><span class="n">MikvC</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">tensors</span><span class="o">/</span><span class="n">factorizations</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">50</span>
-
-
-<span class="ne">Stacktrace</span>:
- <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
-   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">]:</span><span class="mi">3</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Test Passed</span>
 </pre></div>
 </div>
 </div>
@@ -663,9 +662,18 @@ decomposition is unique for all matrices that are full rank.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">Polar</span><span class="p">())</span>
+<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">....</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">Polar</span><span class="p">())</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">Q</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">syntax</span>: missing comma or ) in argument list
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span><span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -686,7 +694,7 @@ solution.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">QR</span><span class="p">())</span>
+<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">QR</span><span class="p">())</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">R</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">Q</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
 </pre></div>
@@ -715,7 +723,7 @@ corresponding to zero singular values.</p>
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
 <span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftnull</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span>
+<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftnull</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">)</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">N</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">))</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="mi">0</span>
 <span class="nd">@test</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">N</span><span class="o">&#39;</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">codomain</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
 </pre></div>
@@ -822,28 +830,33 @@ have discussed the most common tensor factorizations, and how they can be used.<
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
-   7. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
-   8. Tensor Network Algorithms
+   9. A Simple Tensor Network Algorithm
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
-   9. Matrix Product Operators
+   10. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
-   10. Applications
+   11. Applications
   </a>
  </li>
 </ul>
@@ -855,12 +868,12 @@ have discussed the most common tensor factorizations, and how they can be used.<
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
-   11. Fixed-Point algorithms
+   12. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
-   12. Time Evolution
+   13. Time Evolution
   </a>
  </li>
 </ul>
@@ -872,7 +885,7 @@ have discussed the most common tensor factorizations, and how they can be used.<
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>

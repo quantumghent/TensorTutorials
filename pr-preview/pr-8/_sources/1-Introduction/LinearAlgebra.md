@@ -59,16 +59,17 @@ operations are well-defined:
 
 Given two such vector spaces (not necessarily distinct) it is possible to define a linear
 map between them, which is just a function that preserves the vector space structure. In
-other words, a linear map $A \colon W ← V$ maps vectors from one vector space $V$ to another
-vector space $W$. Because of the structure of vector spaces, and the requirement of
-linearity, such a map is completely determined by its action on the basis vectors of $V$.
+other words, a linear map $A \colon V \rightarrow W$ maps vectors from one vector space $V$
+to another vector space $W$. Because of the structure of vector spaces, and the requirement
+of linearity, such a map is completely determined by its action on the basis vectors of $V$.
 This leads in a very natural way to the notion of a matrix by considering the following
-construction, where $v_i$ are the components of $\vec{v}$ and $w_i$ are the components of $\vec{w}$:
+construction, where $v_i$ are the components of $\vec{v}$ and $w_i$ are the components of
+$\vec{w}$:
 
 ```{math}
 :label: eq:linear_map
 \begin{array}{rcl}
-A & : & W \leftarrow V\\
+A & : & V \rightarrow W\\
   &   & \vec{v} ↦ A(\vec{v}) \equiv \sum_j A_{ij} v_j = w_i \equiv \vec{w}
 \end{array}
 ```
@@ -94,6 +95,22 @@ w = A * v
 
 w[1] ≈ A[1,1] * v[1] + A[1,2] * v[2]
 ```
+
+````{note}
+For linear maps, both notations $V \rightarrow W$ and $W \leftarrow V$ are used to denote
+their codomain and domain. The choice of notation is mostly a matter of taste, as left to
+right might seem more conventional for a language that reads from left to right, while right
+to left is more natural when considering the mathematical usage, where matrices typically
+act on vectors from left to right. In TensorKit, both notations are supported through the
+`→` and `←` operators, and a Unicode-less version is also available, which defaults to `←`.
+Thus, the following are all equivalent:
+
+```{code-block} julia
+A = TensorMap(rand, Float64, V → W)
+A = TensorMap(rand, Float64, W ← V)
+A = TensorMap(rand, Float64, W, V)
+```
+````
 
 ## Tensors and Tensor Products
 

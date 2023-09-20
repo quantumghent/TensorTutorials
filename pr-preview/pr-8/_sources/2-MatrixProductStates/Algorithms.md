@@ -10,7 +10,7 @@ kernelspec:
   name: julia-1.9
 ---
 
-# Tensor Network Algorithms
+# A Simple Tensor Network Algorithm
 
 Having introduced tensor networks in general, with a focus on the case of MPS, we now turn
 to the question of how to use them to solve specific problems. While a large number of
@@ -38,6 +38,7 @@ exponentially with the number of particles. However, for physically relevant sys
 Hamiltonian does not consist of a random matrix, but rather exhibits additional structure
 that can be used to simplify the problem.
 
+(tebd)=
 ## Time-Evolving Block Decimation (TEBD)
 
 A particularly powerful example can be found for systems with local interactions, where the

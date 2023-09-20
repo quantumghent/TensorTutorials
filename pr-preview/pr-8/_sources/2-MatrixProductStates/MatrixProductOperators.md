@@ -25,6 +25,7 @@ virtual indices:
 
 <!-- Insert image MPO -->
 
+(statmech_mpo)=
 ## Statistical Mechanics in 2D
 
 Before discussing one-dimensional transfer matrices, let us first consider how partition
@@ -177,6 +178,7 @@ a 1D boundary MPS can be determined, which admits 0D boundary tensors. This kind
 algorithms are commonly referred to as _boundary methods_.
 ```
 
+(hamiltonian_mpo)=
 ## Quantum Mechanics in 1+1D
 
 For quantum systems in one spatial dimension, the construction of MPOs boils down to the

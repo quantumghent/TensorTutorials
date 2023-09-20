@@ -10,6 +10,7 @@ kernelspec:
 	name: julia-1.9
 ---
 
+(many_body_intro)=
  # Quantum Many-Body Physics
 
 ## Quantum Mechanics and its Postulates
@@ -235,6 +236,7 @@ complicated. Typically, we want to build only an effective quantum description o
 at the level of fundamental particles and the standard model (which is also only an
 effective model valid up to some energy scale).
 
+(many_body)=
 ## The Hilbert Space of Many-Body Physics
 
 All of the previous axioms remain valid for a composite system consisting of several quantum
@@ -556,7 +558,7 @@ find
 This more general exprression is also valid for fermions, where every $n_j$ is restricted to
 be zero or one. In fact, the values $n_j$ for $j=1,\ldots,L$ completely characterise the
 state, and can thus be used to relabel the basis. Instead of specifying the mode $j_k$ that
-each particle $k=1,\ldots,N$ occuppies (where the labeling of the particles is arbitrary
+each particle $k=1,\ldots,N$ occupies (where the labeling of the particles is arbitrary
 because they are identical), we can move to a mode-based description and thus specify the
 number of particles in each mode, also known as the mode occupation number. We can then
 refer to the basis vectors as
@@ -643,8 +645,8 @@ sectors, by creating (adding) or annihilating (removing) particles in the system
 particular, we denote with $\hat{a}_j^+$ the operator that adds a new particle in the mode
 $j$ in the system and with $\hat{a}_j^-$ the operator that removes a particle that is in
 mode $j$ from the system. As it turns out that both operators are related via the adjoint,
-i.e. $\braket{\Phi| hat{a}_j^+ \Psi} = \braket{hat{a}_j^- \Phi | \Psi}$, we use the simpler
-notation $\hat{a}_j$ for the *annihilation operator* and $\hat{a}_j^\dagger$ for the
+i.e. $\braket{\Phi| \hat{a}_j^+ \Psi} = \braket{\hat{a}_j^- \Phi | \Psi}$, we use the
+simpler notation $\hat{a}_j$ for the *annihilation operator* and $\hat{a}_j^\dagger$ for the
 *creation operator*. To construct these operators in a mathematically precise and
 constructive way is actually somewhat tedious (but see
 [Wikipedia](https://en.wikipedia.org/wiki/Second_quantization#Creation_and_annihilation_operators)).
@@ -670,7 +672,7 @@ From the normalisation of these states, it also follows that
 \{\hat{a}_i,\hat{a}_j^\dagger\} = \delta_{i,j}\ (\text{fermions}).
 ```
 
-With respect to the normalized basis vectors using number occupation representation, we have
+With respect to the normalized basis vectors, using the occupation representation, we have
 
 ```{math}
 \ket{n_1, n_2, \ldots, n_L} = \frac{1}{\sqrt{n_1! n_2! \cdots n_L!}}
@@ -905,9 +907,10 @@ Mixed states arise in the quantum world in two scenarios:
     probabilities $p_1, p_2, \ldots$ that sum up to one, then the state of the system is
     given by
 	
-	 ```{math}
-   \hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} + \ldots
-   ```
+    ```{math}
+    \hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} +
+    \ldots
+    ```
 
 Note that this does not necessarily correspond to the spectral decomposition of
 $\hat{\rho}$, as the states $\ket{\Psi_i}$ are not necessarily orthogonal. It is nonetheless
@@ -939,6 +942,7 @@ thus proportional to the volume of the system.
 Depending on the context, the interpretation and meaning of the Von Neumann entropy can
 differ, as we discuss below.
 
+(entanglement)=
 ### From Tensor Products to Mixed States and Entanglement
 
 Consider a bipartite system composed of two subsystems $A$ and $B$, with thus $\mathbb{H} =
@@ -1068,6 +1072,7 @@ $s_i$, or rather their squares $p_i = (s_i)^2$ are referred to as Schmidt coeffi
 together make up the **entanglement spectrum**. The entanglement entropy is then given by
 
 ```{math}
+:label: entanglement_entropy
 S = - \sum_{i} p_i \log(p_i)
 ```
 
@@ -1179,6 +1184,7 @@ especially in the high energy physics literature, i.e. in the context of quantum
 theory, holography and quantum gravity.
 ```
 
+(zero_temp)=
 ### Quantum Many-Body Physics at Zero Temperature
 
 As quantum effects are most pronounced at zero temperature, we typically assume to be

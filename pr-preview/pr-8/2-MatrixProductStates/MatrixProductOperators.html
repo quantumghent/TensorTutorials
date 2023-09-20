@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>9. Matrix Product Operators &#8212; TensorTutorials</title>
+    <title>10. Matrix Product Operators &#8212; TensorTutorials</title>
     
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
@@ -64,12 +64,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -83,9 +83,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -123,8 +123,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="10. Applications" href="Applications.html" />
-    <link rel="prev" title="8. Tensor Network Algorithms" href="Algorithms.html" />
+    <link rel="next" title="11. Applications" href="Applications.html" />
+    <link rel="prev" title="9. A Simple Tensor Network Algorithm" href="Algorithms.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
@@ -172,22 +172,22 @@ const thebe_selector_output = ".output, .cell_output"
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-mechanics-in-2d">9.1. Statistical Mechanics in 2D</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partition-functions-as-tensor-networks">9.1.1. Partition Functions as Tensor Networks</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-matrices">9.1.2. Transfer Matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thermodynamic-limit">9.1.3. Thermodynamic Limit</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">9.1.4. Expectation Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-mechanics-in-2d">10.1. Statistical Mechanics in 2D</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partition-functions-as-tensor-networks">10.1.1. Partition Functions as Tensor Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-matrices">10.1.2. Transfer Matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thermodynamic-limit">10.1.3. Thermodynamic Limit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">10.1.4. Expectation Values</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics-in-1-1d">9.2. Quantum Mechanics in 1+1D</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-block-mpos">9.2.1. Jordan Block MPOs</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-state-machines">9.2.2. Finite-State Machines</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.3. Expectation Values</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-mpos-in-the-thermodynamic-limit">9.2.4. Jordan MPOs in the Thermodynamic Limit</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-1d-systems">9.2.5. Quasi-1D Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics-in-1-1d">10.2. Quantum Mechanics in 1+1D</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-block-mpos">10.2.1. Jordan Block MPOs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-state-machines">10.2.2. Finite-State Machines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.2.3. Expectation Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-mpos-in-the-thermodynamic-limit">10.2.4. Jordan MPOs in the Thermodynamic Limit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-1d-systems">10.2.5. Quasi-1D Systems</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">9.3. Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">10.3. Conclusion</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -233,7 +233,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="matrix-product-operators">
-<h1><span class="section-number">9. </span>Matrix Product Operators<a class="headerlink" href="#matrix-product-operators" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">10. </span>Matrix Product Operators<a class="headerlink" href="#matrix-product-operators" title="Permalink to this heading">#</a></h1>
 <p>If Matrix Product States are a tensor network way of representing quantum states in one
 dimensions, we can similarly use tensor networks to represent the operators that act on
 these states. Matrix Product Operators (MPOs) form a structured and convenient description
@@ -245,7 +245,7 @@ systems.</p>
 virtual indices:</p>
 <!-- Insert image MPO -->
 <div class="section" id="statistical-mechanics-in-2d">
-<h2><span class="section-number">9.1. </span>Statistical Mechanics in 2D<a class="headerlink" href="#statistical-mechanics-in-2d" title="Permalink to this heading">#</a></h2>
+<span id="statmech-mpo"></span><h2><span class="section-number">10.1. </span>Statistical Mechanics in 2D<a class="headerlink" href="#statistical-mechanics-in-2d" title="Permalink to this heading">#</a></h2>
 <p>Before discussing one-dimensional transfer matrices, let us first consider how partition
 functions of two-dimensional classical many-body systems can be naturally represented as a
 tensor network. To this end, consider the partition function of the
@@ -258,7 +258,7 @@ energy, as determined by the Hamiltonian:</p>
 \[H(\{s_i\}) = -J \sum_{\langle i,j \rangle} s_i s_j\]</div>
 <p>where the first sum is over nearest neighbors.</p>
 <div class="section" id="partition-functions-as-tensor-networks">
-<h3><span class="section-number">9.1.1. </span>Partition Functions as Tensor Networks<a class="headerlink" href="#partition-functions-as-tensor-networks" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.1.1. </span>Partition Functions as Tensor Networks<a class="headerlink" href="#partition-functions-as-tensor-networks" title="Permalink to this heading">#</a></h3>
 <p>As the expression for the partition function is an exponential of a sum, we can also write
 it as a product of exponentials, which can be reduced to the following network:</p>
 <a class="reference internal image-reference" href="_static/figures/mpo/partition_function_1.svg" id="partfunc"><img alt="_static/figures/mpo/partition_function_1.svg" class="align-center" id="partfunc" src="_static/figures/mpo/partition_function_1.svg" /></a>
@@ -283,23 +283,23 @@ edges, resulting in a rotation-invariant form.</p>
 </div>
 </div>
 <div class="section" id="transfer-matrices">
-<h3><span class="section-number">9.1.2. </span>Transfer Matrices<a class="headerlink" href="#transfer-matrices" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.1.2. </span>Transfer Matrices<a class="headerlink" href="#transfer-matrices" title="Permalink to this heading">#</a></h3>
 <p>In order to then evaluate the partition function, we can use the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Transfer-matrix_method">Transfer-matrix method</a>, which is a
 technique that splits the two-dimensional network into rows (or columns) of so-called
 transfer matrices, which are already represented as MPOs. In fact, this method has even led
 to the famous exact solution of the two-dimensional Ising model by Onsager.
-<span id="id2">[<a class="reference internal" href="../References.html#id20" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Phys. Rev., 65:117–149, Feb 1944. URL: https://link.aps.org/doi/10.1103/PhysRev.65.117, doi:10.1103/PhysRev.65.117.">Ons44</a>]</span>.</p>
+<span id="id2">[<a class="reference internal" href="../References.html#id20" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Physical Review, 65:117–149, 1944. doi:10.1103/PhysRev.65.117.">Onsager, 1944</a>]</span>.</p>
 <p>In the context of tensor networks, this technique is even useful beyond exactly solvable
 cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
 approximate manner. This allows us to efficiently split the computation of the partition
 function in a sequence of one-dimensional contractions, thus reducing the complexity of the
 problem by solving it layer by layer. For example, one can resort to <em>boundary MPS
-techniques</em> <span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>.</p>
+techniques</em> <span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">Zauner-Stauber <em>et al.</em>, 2018</a>]</span>.</p>
 <a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
 </div>
 <div class="section" id="thermodynamic-limit">
-<h3><span class="section-number">9.1.3. </span>Thermodynamic Limit<a class="headerlink" href="#thermodynamic-limit" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.1.3. </span>Thermodynamic Limit<a class="headerlink" href="#thermodynamic-limit" title="Permalink to this heading">#</a></h3>
 <p>Importantly, this technique is not limited to finite systems, and in fact allows for the
 computation of the partition function of systems directly in the thermodynamic limit,
 alleviating the need to consider finite-size effects and extrapolation techniques. The key
@@ -317,7 +317,7 @@ words, the partition function can be computed if it is possible to find the larg
 eigenvalue of the transfer matrix, for which efficient algorithms exist.</p>
 </div>
 <div class="section" id="expectation-values">
-<h3><span class="section-number">9.1.4. </span>Expectation Values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.1.4. </span>Expectation Values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
 <p>In order to compute relevant quantities for such systems, we can verify that the expectation
 value of an operator <span class="math notranslate nohighlight">\(O\)</span> is given by the weighing the value of that operator for a given
 microstate, with the probability of that microstate:</p>
@@ -345,12 +345,12 @@ algorithms are commonly referred to as <em>boundary methods</em>.</p>
 </div>
 </div>
 <div class="section" id="quantum-mechanics-in-1-1d">
-<h2><span class="section-number">9.2. </span>Quantum Mechanics in 1+1D<a class="headerlink" href="#quantum-mechanics-in-1-1d" title="Permalink to this heading">#</a></h2>
+<span id="hamiltonian-mpo"></span><h2><span class="section-number">10.2. </span>Quantum Mechanics in 1+1D<a class="headerlink" href="#quantum-mechanics-in-1-1d" title="Permalink to this heading">#</a></h2>
 <p>For quantum systems in one spatial dimension, the construction of MPOs boils down to the
 ability to write a sum of local operators in MPO-form. The resulting operator has a very
 specific structure, and is often referred to as a <em>Jordan block MPO</em>.</p>
 <div class="section" id="jordan-block-mpos">
-<h3><span class="section-number">9.2.1. </span>Jordan Block MPOs<a class="headerlink" href="#jordan-block-mpos" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.2.1. </span>Jordan Block MPOs<a class="headerlink" href="#jordan-block-mpos" title="Permalink to this heading">#</a></h3>
 <p>For example, if we consider the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Transverse-field_Ising_model">Transverse-field Ising model</a>,</p>
 <div class="math notranslate nohighlight">
@@ -383,7 +383,7 @@ between different sites.</p>
 </div>
 </div>
 <div class="section" id="finite-state-machines">
-<h3><span class="section-number">9.2.2. </span>Finite-State Machines<a class="headerlink" href="#finite-state-machines" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.2.2. </span>Finite-State Machines<a class="headerlink" href="#finite-state-machines" title="Permalink to this heading">#</a></h3>
 <p>An intuitive approach to construct such MPOs is to consider the sum of local
 terms by virtue of a
 <a class="reference external" href="https://en.wikipedia.org/wiki/Finite-state_machine">finite-state machine</a>. This is a
@@ -409,7 +409,7 @@ of generic local terms, and even approximate long-range interactions by a sum of
 exponentials.</p>
 </div>
 <div class="section" id="id4">
-<h3><span class="section-number">9.2.3. </span>Expectation Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.2.3. </span>Expectation Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>In order to compute expectation values of such MPOs, we can use the same technique as
 before, and sandwich the MPO between two MPSs.</p>
 <!-- Insert image of expectation value -->
@@ -435,7 +435,7 @@ which is equivalent to all terms ending at that site.</p>
 intuition.</p>
 </div>
 <div class="section" id="jordan-mpos-in-the-thermodynamic-limit">
-<h3><span class="section-number">9.2.4. </span>Jordan MPOs in the Thermodynamic Limit<a class="headerlink" href="#jordan-mpos-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.2.4. </span>Jordan MPOs in the Thermodynamic Limit<a class="headerlink" href="#jordan-mpos-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
 <p>In the thermodynamic limit, the same MPO construction can be used to represent the infinite
 sum of local terms. However, special care must be taken when considering expectation values,
 as now only local expectation values are well-defined, and the total energy diverges with
@@ -445,7 +445,7 @@ divergent parts are already removed. This construction can be found in more deta
 <span id="id5">[]</span>.</p>
 </div>
 <div class="section" id="quasi-1d-systems">
-<h3><span class="section-number">9.2.5. </span>Quasi-1D Systems<a class="headerlink" href="#quasi-1d-systems" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.2.5. </span>Quasi-1D Systems<a class="headerlink" href="#quasi-1d-systems" title="Permalink to this heading">#</a></h3>
 <p>Finally, it is worth noting that the MPO construction can also be used to study
 two-dimensional systems, by mapping them to quasi-one-dimensional systems. This is typically
 achieved by imposing periodic boundary conditions in one of the spatial directions, and then
@@ -459,7 +459,7 @@ entanglement in two-dimensional systems.</p>
 </div>
 </div>
 <div class="section" id="conclusion">
-<h2><span class="section-number">9.3. </span>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">10.3. </span>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
 <p>In conclusion, Matrix Product Operators are a powerful tool to represent quantum operators
 as well as transfer matrices. They allow for efficient and versatile expressions of
 expectation values, and form the building block for many tensor network algorithms, both in
@@ -555,28 +555,33 @@ expectation values, and form the building block for many tensor network algorith
 </p>
 <ul class="current nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="InfiniteMPS.html">
-   7. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Algorithms.html">
-   8. Tensor Network Algorithms
+   9. A Simple Tensor Network Algorithm
   </a>
  </li>
  <li class="toctree-l1 current active active">
   <a class="current reference internal" href="#">
-   9. Matrix Product Operators
+   10. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Applications.html">
-   10. Applications
+   11. Applications
   </a>
  </li>
 </ul>
@@ -588,12 +593,12 @@ expectation values, and form the building block for many tensor network algorith
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
-   11. Fixed-Point algorithms
+   12. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
-   12. Time Evolution
+   13. Time Evolution
   </a>
  </li>
 </ul>
@@ -605,7 +610,7 @@ expectation values, and form the building block for many tensor network algorith
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>

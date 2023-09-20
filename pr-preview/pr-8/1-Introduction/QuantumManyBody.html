@@ -64,12 +64,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -83,9 +83,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -240,7 +240,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="quantum-many-body-physics">
-<h1><span class="section-number">1. </span>Quantum Many-Body Physics<a class="headerlink" href="#quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
+<span id="many-body-intro"></span><h1><span class="section-number">1. </span>Quantum Many-Body Physics<a class="headerlink" href="#quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
 <div class="section" id="quantum-mechanics-and-its-postulates">
 <h2><span class="section-number">1.1. </span>Quantum Mechanics and its Postulates<a class="headerlink" href="#quantum-mechanics-and-its-postulates" title="Permalink to this heading">#</a></h2>
 <p>While the energy levels of the hydrogen atom played an important role in the historical
@@ -431,7 +431,7 @@ effective model valid up to some energy scale).</p>
 </div>
 </div>
 <div class="section" id="the-hilbert-space-of-many-body-physics">
-<h2><span class="section-number">1.2. </span>The Hilbert Space of Many-Body Physics<a class="headerlink" href="#the-hilbert-space-of-many-body-physics" title="Permalink to this heading">#</a></h2>
+<span id="many-body"></span><h2><span class="section-number">1.2. </span>The Hilbert Space of Many-Body Physics<a class="headerlink" href="#the-hilbert-space-of-many-body-physics" title="Permalink to this heading">#</a></h2>
 <p>All of the previous axioms remain valid for a composite system consisting of several quantum
 degrees of freedom. However, we need to know how to describe the state of the system, and
 thus more specifically, how to define the Hilbert space associated to such a system. It
@@ -679,7 +679,7 @@ find</p>
 <p>This more general exprression is also valid for fermions, where every <span class="math notranslate nohighlight">\(n_j\)</span> is restricted to
 be zero or one. In fact, the values <span class="math notranslate nohighlight">\(n_j\)</span> for <span class="math notranslate nohighlight">\(j=1,\ldots,L\)</span> completely characterise the
 state, and can thus be used to relabel the basis. Instead of specifying the mode <span class="math notranslate nohighlight">\(j_k\)</span> that
-each particle <span class="math notranslate nohighlight">\(k=1,\ldots,N\)</span> occuppies (where the labeling of the particles is arbitrary
+each particle <span class="math notranslate nohighlight">\(k=1,\ldots,N\)</span> occupies (where the labeling of the particles is arbitrary
 because they are identical), we can move to a mode-based description and thus specify the
 number of particles in each mode, also known as the mode occupation number. We can then
 refer to the basis vectors as</p>
@@ -756,8 +756,8 @@ sectors, by creating (adding) or annihilating (removing) particles in the system
 particular, we denote with <span class="math notranslate nohighlight">\(\hat{a}_j^+\)</span> the operator that adds a new particle in the mode
 <span class="math notranslate nohighlight">\(j\)</span> in the system and with <span class="math notranslate nohighlight">\(\hat{a}_j^-\)</span> the operator that removes a particle that is in
 mode <span class="math notranslate nohighlight">\(j\)</span> from the system. As it turns out that both operators are related via the adjoint,
-i.e. <span class="math notranslate nohighlight">\(\braket{\Phi| hat{a}_j^+ \Psi} = \braket{hat{a}_j^- \Phi | \Psi}\)</span>, we use the simpler
-notation <span class="math notranslate nohighlight">\(\hat{a}_j\)</span> for the <em>annihilation operator</em> and <span class="math notranslate nohighlight">\(\hat{a}_j^\dagger\)</span> for the
+i.e. <span class="math notranslate nohighlight">\(\braket{\Phi| \hat{a}_j^+ \Psi} = \braket{\hat{a}_j^- \Phi | \Psi}\)</span>, we use the
+simpler notation <span class="math notranslate nohighlight">\(\hat{a}_j\)</span> for the <em>annihilation operator</em> and <span class="math notranslate nohighlight">\(\hat{a}_j^\dagger\)</span> for the
 <em>creation operator</em>. To construct these operators in a mathematically precise and
 constructive way is actually somewhat tedious (but see
 <a class="reference external" href="https://en.wikipedia.org/wiki/Second_quantization#Creation_and_annihilation_operators">Wikipedia</a>).
@@ -774,7 +774,7 @@ the (anti)symmetrized states satisfy</p>
 <div class="math notranslate nohighlight">
 \[[\hat{a}_i, \hat{a}_j^\dagger] = \delta_{i,j}\ (\text{bosons})\quad\text{or}\quad
 \{\hat{a}_i,\hat{a}_j^\dagger\} = \delta_{i,j}\ (\text{fermions}).\]</div>
-<p>With respect to the normalized basis vectors using number occupation representation, we have</p>
+<p>With respect to the normalized basis vectors, using the occupation representation, we have</p>
 <div class="math notranslate nohighlight">
 \[\ket{n_1, n_2, \ldots, n_L} = \frac{1}{\sqrt{n_1! n_2! \cdots n_L!}}
 (\hat{a}_1^\dagger)^{n_1} (\hat{a}_2^\dagger)^{n_2} \cdots (\hat{a}_L^\dagger)^{n_L}
@@ -956,22 +956,18 @@ necessarily orthogonal) states <span class="math notranslate nohighlight">\(\{\k
 probabilities <span class="math notranslate nohighlight">\(p_1, p_2, \ldots\)</span> that sum up to one, then the state of the system is
 given by</p>
 <div class="math notranslate nohighlight">
-\[\]</div>
+\[\hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} +
+\ldots\]</div>
 </li>
 </ol>
-<p>\hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} + \ldots</p>
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Note</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">necessarily</span><span class="w"> </span><span class="n">correspond</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">spectral</span><span class="w"> </span><span class="n">decomposition</span><span class="w"> </span><span class="n">of</span>
-<span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="o">$</span><span class="p">,</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">states</span><span class="w"> </span><span class="o">$\</span><span class="kt">ket</span><span class="p">{</span><span class="o">\</span><span class="kt">Psi_i</span><span class="p">}</span><span class="o">$</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">necessarily</span><span class="w"> </span><span class="n">orthogonal</span><span class="o">.</span><span class="w"> </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">nonetheless</span>
-<span class="n">a</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="o">.</span><span class="w"> </span><span class="n">More</span><span class="w"> </span><span class="n">generally</span><span class="p">,</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="w"> </span><span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_1</span><span class="o">$</span><span class="w"> </span><span class="n">and</span>
-<span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_2</span><span class="o">$</span><span class="p">,</span><span class="w"> </span><span class="n">aany</span><span class="w"> </span><span class="n">convex</span><span class="w"> </span><span class="n">combination</span><span class="w"> </span><span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_2</span><span class="o">$</span>
-<span class="n">with</span><span class="w"> </span><span class="n">thus</span><span class="w"> </span><span class="o">$</span><span class="mi">0</span><span class="w"> </span><span class="o">\</span><span class="n">leq</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">\</span><span class="n">leq</span><span class="w"> </span><span class="mi">1</span><span class="o">$</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="o">.</span>
-
-<span class="n">To</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">mixed</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">associate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Von</span><span class="w"> </span><span class="n">Neumann</span><span class="w"> </span><span class="n">entropy</span>
-
-<span class="sb">```{math}</span>
-<span class="sb">S(\hat{\rho}) = - \mathrm{Tr}\left[\hat{\rho}\log \hat{\rho}\right] = - \sum_{n} p_n \log(p_n)</span>
-</pre></div>
-</div>
+<p>Note that this does not necessarily correspond to the spectral decomposition of
+<span class="math notranslate nohighlight">\(\hat{\rho}\)</span>, as the states <span class="math notranslate nohighlight">\(\ket{\Psi_i}\)</span> are not necessarily orthogonal. It is nonetheless
+a valid density operator. More generally, given two density operator <span class="math notranslate nohighlight">\(\hat{\rho}_1\)</span> and
+<span class="math notranslate nohighlight">\(\hat{\rho}_2\)</span>, aany convex combination <span class="math notranslate nohighlight">\(\hat{\rho} = p \hat{\rho}_1 + (1-p) \hat{\rho}_2\)</span>
+with thus <span class="math notranslate nohighlight">\(0 \leq p \leq 1\)</span> is a valid density operator.</p>
+<p>To a mixed state, we can associate the Von Neumann entropy</p>
+<div class="math notranslate nohighlight">
+\[S(\hat{\rho}) = - \mathrm{Tr}\left[\hat{\rho}\log \hat{\rho}\right] = - \sum_{n} p_n \log(p_n)\]</div>
 <p>with <span class="math notranslate nohighlight">\(p_n\)</span> the eigenvalues of <span class="math notranslate nohighlight">\(\hat{\rho}\)</span>. For a pure state, the Von Neumann entropy
 evaluates to zero (using <span class="math notranslate nohighlight">\(\lim_{x\to 0} x \log x = 0\)</span>). The maximal value of the Von Neumann
 entropy is obtained when all values <span class="math notranslate nohighlight">\(p_n\)</span> are equal so that <span class="math notranslate nohighlight">\(\hat{\rho} \sim \hat{1}\)</span>.
@@ -987,7 +983,7 @@ thus proportional to the volume of the system.</p>
 differ, as we discuss below.</p>
 </div>
 <div class="section" id="from-tensor-products-to-mixed-states-and-entanglement">
-<h3><span class="section-number">1.4.2. </span>From Tensor Products to Mixed States and Entanglement<a class="headerlink" href="#from-tensor-products-to-mixed-states-and-entanglement" title="Permalink to this heading">#</a></h3>
+<span id="entanglement"></span><h3><span class="section-number">1.4.2. </span>From Tensor Products to Mixed States and Entanglement<a class="headerlink" href="#from-tensor-products-to-mixed-states-and-entanglement" title="Permalink to this heading">#</a></h3>
 <p>Consider a bipartite system composed of two subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, with thus <span class="math notranslate nohighlight">\(\mathbb{H} =
 \mathbb{H}^{(A)} \otimes \mathbb{H}^{(B)}\)</span>. Now suppose that we are only interested in
 measuring observables that act non-trivially on subsystem <span class="math notranslate nohighlight">\(A\)</span>. This might be the case if
@@ -1093,8 +1089,8 @@ state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span>), which w
 <p>Hence, the reduced matrices appear immidiately in diagonalised form. The singular values
 <span class="math notranslate nohighlight">\(s_i\)</span>, or rather their squares <span class="math notranslate nohighlight">\(p_i = (s_i)^2\)</span> are referred to as Schmidt coefficients, and
 together make up the <strong>entanglement spectrum</strong>. The entanglement entropy is then given by</p>
-<div class="math notranslate nohighlight">
-\[S = - \sum_{i} p_i \log(p_i)\]</div>
+<div class="math notranslate nohighlight" id="equation-entanglement-entropy">
+<span class="eqno">(1.1)<a class="headerlink" href="#equation-entanglement-entropy" title="Permalink to this equation">#</a></span>\[S = - \sum_{i} p_i \log(p_i)\]</div>
 <p>In all of this, it is clear that subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> were treated on equal footing, and
 it does in fact not matter which of the two is chosen to probe the entanglement structure of
 the state.</p>
@@ -1179,7 +1175,7 @@ theory, holography and quantum gravity.</p>
 </div>
 </div>
 <div class="section" id="quantum-many-body-physics-at-zero-temperature">
-<h3><span class="section-number">1.4.4. </span>Quantum Many-Body Physics at Zero Temperature<a class="headerlink" href="#quantum-many-body-physics-at-zero-temperature" title="Permalink to this heading">#</a></h3>
+<span id="zero-temp"></span><h3><span class="section-number">1.4.4. </span>Quantum Many-Body Physics at Zero Temperature<a class="headerlink" href="#quantum-many-body-physics-at-zero-temperature" title="Permalink to this heading">#</a></h3>
 <p>As quantum effects are most pronounced at zero temperature, we typically assume to be
 operating in this regime. It then follows that we are mostly interested in the lowest energy
 states of the Hamiltonian, and in particular in the ground state(s).</p>
@@ -1526,28 +1522,33 @@ to study and characterize quantum many body systems.
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
-   7. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
-   8. Tensor Network Algorithms
+   9. A Simple Tensor Network Algorithm
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
-   9. Matrix Product Operators
+   10. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
-   10. Applications
+   11. Applications
   </a>
  </li>
 </ul>
@@ -1559,12 +1560,12 @@ to study and characterize quantum many body systems.
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
-   11. Fixed-Point algorithms
+   12. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
-   12. Time Evolution
+   13. Time Evolution
   </a>
  </li>
 </ul>
@@ -1576,7 +1577,7 @@ to study and characterize quantum many body systems.
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>
