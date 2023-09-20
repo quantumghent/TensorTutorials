@@ -191,10 +191,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-many-body-physics-at-finite-temperature">1.4.3. Quantum many-body physics at finite temperature</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-many-body-physics-at-zero-temperature">1.4.4. Quantum many-body physics at zero temperature</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-dynamics-and-quenches">1.4.5. Quantum dynamics and quenches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observables-and-static-and-dynamic-correlation-functions">1.4.6. Observables and static and dynamic correlation functions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observables-and-static-and-dynamic-correlation-functions">1.5. Observables and static and dynamic correlation functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-to-classical-mapping">1.6. Quantum-to-classical mapping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-to-classical-mapping">1.5. Quantum-to-classical mapping</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -1108,7 +1108,7 @@ together. This has the advantage that the infinite temperature state can be writ
 state can then be obtained as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\ket{\Psi_\beta} &amp;= \frac{1}{\sqrt{Z(\beta)}} \sum_{j=1}^{d} \left(\mathrm{e}^{-\frac{\beta}{2} \hat{H}} \ket{j}_S \right)\otimes \ket{j}_E \\
-&amp;= \frac{1}{\sqrt{Z(\beta)}} \exp\left(-\frac{\beta}{2} \hat{H}\right) \ket{\Psi_0} \end{split}\]</div>
+&amp;= \frac{1}{\sqrt{Z(\beta)}} \exp\left(-\frac{\beta}{2} \hat{H} \otimes \hat{1}_E \right) \ket{\Psi_0} \end{split}\]</div>
 <p>This expression now looks remarkibly similar to how to compute a time-evolved state, by
 replacing <span class="math notranslate nohighlight">\(-\mathrm{i} t \mapsto -\beta/2\)</span>. Hence, methods that solve Schrödinger’s equation
 and are sufficiently general to also work with imaginary values of the time coordinate can
@@ -1216,13 +1216,13 @@ to its complement behaving as an environment or heat bath. The larger the subsys
 longer it will take before thermalisation is complete, and the overall state of the global
 system remains a pure state, albeit a highly entangled one.</p>
 </div>
-</div>
 <div class="section" id="observables-and-static-and-dynamic-correlation-functions">
-<h2><span class="section-number">1.5. </span>Observables and static and dynamic correlation functions<a class="headerlink" href="#observables-and-static-and-dynamic-correlation-functions" title="Permalink to this heading">#</a></h2>
+<h3><span class="section-number">1.4.6. </span>Observables and static and dynamic correlation functions<a class="headerlink" href="#observables-and-static-and-dynamic-correlation-functions" title="Permalink to this heading">#</a></h3>
 <p>TO BE WRITTEN!</p>
 </div>
+</div>
 <div class="section" id="quantum-to-classical-mapping">
-<h2><span class="section-number">1.6. </span>Quantum-to-classical mapping<a class="headerlink" href="#quantum-to-classical-mapping" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.5. </span>Quantum-to-classical mapping<a class="headerlink" href="#quantum-to-classical-mapping" title="Permalink to this heading">#</a></h2>
 <p>In this final section, we introduce a general technique that essentially enables us to map
 any quantum lattice system in <span class="math notranslate nohighlight">\(d\)</span> dimensions to a classical partition function in <span class="math notranslate nohighlight">\(d+1\)</span>
 dimensions, up to some caveats that we will return to at the end of this section.</p>

@@ -990,7 +990,7 @@ and still has an overall tensor product structure. A purification of the finite 
 state can then be obtained as
 
 $$\ket{\Psi_\beta} &= \frac{1}{\sqrt{Z(\beta)}} \sum_{j=1}^{d} \left(\mathrm{e}^{-\frac{\beta}{2} \hat{H}} \ket{j}_S \right)\otimes \ket{j}_E \\
-&= \frac{1}{\sqrt{Z(\beta)}} \exp\left(-\frac{\beta}{2} \hat{H}\right) \ket{\Psi_0} $$
+&= \frac{1}{\sqrt{Z(\beta)}} \exp\left(-\frac{\beta}{2} \hat{H} \otimes \hat{1}_E \right) \ket{\Psi_0} $$
 
 This expression now looks remarkibly similar to how to compute a time-evolved state, by 
 replacing $-\mathrm{i} t \mapsto -\beta/2$. Hence, methods that solve Schrödinger's equation
@@ -1105,7 +1105,7 @@ to its complement behaving as an environment or heat bath. The larger the subsys
 longer it will take before thermalisation is complete, and the overall state of the global
 system remains a pure state, albeit a highly entangled one.
 
-## Observables and static and dynamic correlation functions
+### Observables and static and dynamic correlation functions
 
 TO BE WRITTEN!
 
