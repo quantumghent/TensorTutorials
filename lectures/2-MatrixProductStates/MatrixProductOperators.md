@@ -119,12 +119,12 @@ t = TensorMap(ComplexF64[exp(β) exp(-β); exp(-β) exp(β)], ℂ^2, ℂ^2)
 q = sqrt(t)
 
 # construct vertex tensors
-δ = TensorMap(zeros, ComplexF64, ℂ^2 ⊗ ℂ^2 ⊗ ℂ^2 ⊗ ℂ^2)
+δ = TensorMap(zeros, ComplexF64, ℂ^2 ⊗ ℂ^2, ℂ^2 ⊗ ℂ^2)
 δ[1, 1, 1, 1] = 1.0
 δ[2, 2, 2, 2] = 1.0
 
 # absorb edge tensors
-@tensor O{-1 -2; -3 -4] := δ[1 2; 3 4] * q[-1; 1] * q[-2; 2] * q[3; -3] * q[4; -4]
+@tensor O[-1 -2; -3 -4] := δ[1 2; 3 4] * q[-1; 1] * q[-2; 2] * q[3; -3] * q[4; -4]
 ```
 
 ### Transfer Matrices
@@ -201,8 +201,8 @@ For example, in the case of the magnetisation $O = \sigma_z$, the tensor $M$ can
 explicitly constructed as follows:
 
 ```{code-cell} julia
-O = TensorMap(ComplexF64[1.0 0.0; 0.0 -1.0], ℂ^2, ℂ^2)
-@tensor M[-1 -2; -3 -4] := δ[1 2; 3 4] * O[4; 5] * q[-1; 1] * q[-2; 2] * q[3; -3] * q[5; -4]
+Z = TensorMap(ComplexF64[1.0 0.0; 0.0 -1.0], ℂ^2, ℂ^2)
+@tensor M[-1 -2; -3 -4] := δ[1 2; 3 4] * Z[4; 5] * q[-1; 1] * q[-2; 2] * q[3; -3] * q[5; -4]
 ```
 
 Using this network, the expectation value can be computed by first contracting the top and
