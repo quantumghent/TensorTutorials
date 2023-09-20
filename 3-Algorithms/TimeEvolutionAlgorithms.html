@@ -244,7 +244,7 @@ study real-time dynamics.</p>
 <p>One should keep in mind that time evolution in general will increase the entanglement of the
 state so that in practice time evolution can only be done with Tensor Networks for
 relatively modest times. For example in case of a quench the entanglement for 1D systems
-grows as <span class="math notranslate nohighlight">\(S \sim t\)</span> , (see <span id="id1">[<a class="reference internal" href="../References.html#id11" title="Pasquale Calabrese and John Cardy. Evolution of entanglement entropy in one-dimensional systems. Journal of Statistical Mechanics: Theory and Experiment, 2005(04):P04010, 2005. arXiv:cond-mat/0503393, doi:10.1088/1742-5468/2005/04/p04010.">CC05</a>]</span>) so that the bond dimension <span class="math notranslate nohighlight">\(D \sim
+grows as <span class="math notranslate nohighlight">\(S \sim t\)</span> , (see <span id="id1">[<a class="reference internal" href="../References.html#id11" title="Pasquale Calabrese and John Cardy. Evolution of entanglement entropy in one-dimensional systems. Journal of Statistical Mechanics: Theory and Experiment, 2005(04):P04010, 2005. arXiv:cond-mat/0503393, doi:10.1088/1742-5468/2005/04/p04010.">Calabrese and Cardy, 2005</a>]</span>) so that the bond dimension <span class="math notranslate nohighlight">\(D \sim
 \exp(at)\)</span> in order to accurately follow the dynamics.</p>
 </div>
 <div class="contents topic" id="contents">
@@ -281,18 +281,18 @@ parametrization in terms of <span class="math notranslate nohighlight">\(A(t)\)<
 equation on the level of the <span class="math notranslate nohighlight">\(A\)</span> matrices and try to solve the above equation. This gives a
 complicated set of (non-linear) equations that can be solved by one’s favourite finite
 difference scheme, but requires the inversion of matrices with small singular values (and
-thus numerical instabilities) <span id="id2">[<a class="reference internal" href="../References.html#id5" title="Jutho Haegeman, J Ignacio Cirac, Tobias J Osborne, Iztok Pižorn, Henri Verschelde, and Frank Verstraete. Time-dependent variational principle for quantum lattices. Physical Review Letters, 107(7):070601, 2011. arXiv:1103.0936, doi:10.1103/PhysRevLett.107.070601.">HCO+11</a>]</span>, <span id="id3">[<a class="reference internal" href="../References.html#id13" title="Jutho Haegeman, Christian Lubich, Ivan Oseledets, Bart Vandereycken, and Frank Verstraete. Unifying time evolution and optimization with matrix product states. Physical Review B, 94:165116, 2016. arXiv:1408.5056, doi:10.1103/PhysRevB.94.165116.">HLO+16</a>]</span>. Instead, it
+thus numerical instabilities) <span id="id2">[<a class="reference internal" href="../References.html#id5" title="Jutho Haegeman, J Ignacio Cirac, Tobias J Osborne, Iztok Pižorn, Henri Verschelde, and Frank Verstraete. Time-dependent variational principle for quantum lattices. Physical Review Letters, 107(7):070601, 2011. arXiv:1103.0936, doi:10.1103/PhysRevLett.107.070601.">Haegeman <em>et al.</em>, 2011</a>]</span>, <span id="id3">[<a class="reference internal" href="../References.html#id13" title="Jutho Haegeman, Christian Lubich, Ivan Oseledets, Bart Vandereycken, and Frank Verstraete. Unifying time evolution and optimization with matrix product states. Physical Review B, 94:165116, 2016. arXiv:1408.5056, doi:10.1103/PhysRevB.94.165116.">Haegeman <em>et al.</em>, 2016</a>]</span>. Instead, it
 turns out that a natural and inversion free way of solving this equation is possible if we
 use the gauge freedom of MPS.</p>
 <p>For a finite MPS, one can show that in the mixed gauge the action of the projection operator
-onto <span class="math notranslate nohighlight">\(\hat{H}\ket{\Psi(A)}\)</span> is given by <span id="id4">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span></p>
+onto <span class="math notranslate nohighlight">\(\hat{H}\ket{\Psi(A)}\)</span> is given by <span id="id4">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">Vanderstraeten <em>et al.</em>, 2019</a>]</span></p>
 <img alt="../_images/TDVPProjector.png" class="align-center" id="tdvpprojector" src="../_images/TDVPProjector.png" />
 <p>The projector action consists of two sums, one where each term acts on the <span class="math notranslate nohighlight">\(A_C\)</span> on site <span class="math notranslate nohighlight">\(n\)</span>
 and the other on the bond tensor <span class="math notranslate nohighlight">\(C\)</span> to the right of it. As a result <a class="reference internal" href="#equation-tdvpeq">(12.2)</a> now
 resembles an ODE of the form</p>
 <div class="math notranslate nohighlight" id="equation-splittingode">
 <span class="eqno">(12.3)<a class="headerlink" href="#equation-splittingode" title="Permalink to this equation">#</a></span>\[\frac{d}{dt} Y = A(Y) + B(Y)\]</div>
-<p>This type of ODE can be solved by a splitting method <span id="id5">[<a class="reference internal" href="../References.html#id12" title="Christian Lubich, Ivan V. Oseledets, and Bart Vandereycken. Time integration of tensor trains. SIAM Journal on Numerical Analysis, 53(2):917–941, 2015. arXiv:1407.2042, doi:10.1137/140976546.">LOV15</a>]</span> i.e. we solve
+<p>This type of ODE can be solved by a splitting method <span id="id5">[<a class="reference internal" href="../References.html#id12" title="Christian Lubich, Ivan V. Oseledets, and Bart Vandereycken. Time integration of tensor trains. SIAM Journal on Numerical Analysis, 53(2):917–941, 2015. arXiv:1407.2042, doi:10.1137/140976546.">Lubich <em>et al.</em>, 2015</a>]</span> i.e. we solve
 <span class="math notranslate nohighlight">\(\frac{d}{dt} Y = A(Y)\)</span> and <span class="math notranslate nohighlight">\(\frac{d}{dt} Y = B(Y)\)</span> seperately and then combine the two
 results to obtain an approximate solution to <a class="reference internal" href="#equation-splittingode">(12.3)</a>. Applying this idea to
 <a class="reference internal" href="#equation-tdvpeq">(12.2)</a> we thus need to solve equations of the form</p>
@@ -348,7 +348,7 @@ MPS for <span class="math notranslate nohighlight">\(t+dt\)</span>.</p>
 Schrodinger equation it is trying to solve. First of all, it acts trivial on (numerical)
 eigenstates of <span class="math notranslate nohighlight">\(\hat{H}\)</span> since then <span class="math notranslate nohighlight">\(\hat{H}_{\text{eff}}^{A_C}[A_C] \propto A_C\)</span> and the
 whole MPS picks up a phase equal to <span class="math notranslate nohighlight">\(e^{-i dtE}\)</span>. In addition it conserves energy and is
-time-reversible for time-independent Hamiltonians <span id="id6">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">VHV19</a>]</span>.</p>
+time-reversible for time-independent Hamiltonians <span id="id6">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">Vanderstraeten <em>et al.</em>, 2019</a>]</span>.</p>
 </div>
 </div>
 <div class="section" id="time-evolution-mpo">
@@ -361,7 +361,7 @@ approximated up to any order by its trunctated Taylor series</p>
 \[\exp(-\tau\hat{H}) = \hat{1} + \tau\hat{H} + \frac{\tau^2}{2}\hat{H}^2 + \mathcal{O}(\tau^3)\]</div>
 <p>The MPO approximation of the time evolution operator then boils down to implementing powers
 of <span class="math notranslate nohighlight">\(\hat{H}\)</span> in an efficient (i.e. with the lowest possible MPO bond dimension) and
-size-extensive way <span id="id7">[<a class="reference internal" href="../References.html#id9" title="Maarten Van Damme, Jutho Haegeman, Ian McCulloch, and Laurens Vanderstraeten. Efficient higher-order matrix product operators for time evolution. 2023. arXiv:2302.14181.">DHMV23</a>]</span>. For example, for a MPO Hamiltonian of the
+size-extensive way <span id="id7">[<a class="reference internal" href="../References.html#id9" title="Maarten Van Damme, Jutho Haegeman, Ian McCulloch, and Laurens Vanderstraeten. Efficient higher-order matrix product operators for time evolution. 2023. arXiv:2302.14181.">Damme <em>et al.</em>, 2023</a>]</span>. For example, for a MPO Hamiltonian of the
 form</p>
 <img alt="../_images/MPOHam.png" class="align-center" id="mpoham" src="../_images/MPOHam.png" />
 <p>which corresponds to the Hamiltonian</p>
@@ -380,7 +380,7 @@ from the MPO form of H and multiplying with the appropriate factor of τ. This c
 visualised as follows</p>
 <img alt="../_images/FirstOrderTrick.png" class="align-center" id="firstordertrick" src="../_images/FirstOrderTrick.png" />
 <p>This method can be extended to any desired order in <span class="math notranslate nohighlight">\(\tau\)</span> as outlined in
-<span id="id8">[<a class="reference internal" href="../References.html#id9" title="Maarten Van Damme, Jutho Haegeman, Ian McCulloch, and Laurens Vanderstraeten. Efficient higher-order matrix product operators for time evolution. 2023. arXiv:2302.14181.">DHMV23</a>]</span>.</p>
+<span id="id8">[<a class="reference internal" href="../References.html#id9" title="Maarten Van Damme, Jutho Haegeman, Ian McCulloch, and Laurens Vanderstraeten. Efficient higher-order matrix product operators for time evolution. 2023. arXiv:2302.14181.">Damme <em>et al.</em>, 2023</a>]</span>.</p>
 </div>
 <div class="section" id="imaginary-time-evolution">
 <span id="imag-header"></span><h2><a class="toc-backref" href="#id14"><span class="section-number">12.3. </span>Imaginary Time Evolution</a><a class="headerlink" href="#imaginary-time-evolution" title="Permalink to this heading">#</a></h2>
@@ -412,7 +412,7 @@ The idea here is to write <span class="math notranslate nohighlight">\(\rho\)</s
 <img alt="../_images/Mconstraint.png" class="align-center" id="mconstraint" src="../_images/Mconstraint.png" />
 <p>Here the triangles represent an isometry that fuses the two legs together into a bigger leg.
 This particular form ensures that <span class="math notranslate nohighlight">\(\rho\)</span> is a positive semi-definite operator and thus
-physical <span id="id9">[<a class="reference internal" href="../References.html#id10" title="F. Verstraete, J. J. Garc\'ıa-Ripoll, and J. I. Cirac. Matrix product density operators: simulation of finite-temperature and dissipative systems. Physical Review Letters, 93:207204, 2004. arXiv:cond-mat/0406426, doi:10.1103/PhysRevLett.93.207204.">VGarciaRC04</a>]</span>. Note that for <span class="math notranslate nohighlight">\(d_k=1\)</span> we obtain the density matrix of a
+physical <span id="id9">[<a class="reference internal" href="../References.html#id10" title="F. Verstraete, J. J. Garc\'ıa-Ripoll, and J. I. Cirac. Matrix product density operators: simulation of finite-temperature and dissipative systems. Physical Review Letters, 93:207204, 2004. arXiv:cond-mat/0406426, doi:10.1103/PhysRevLett.93.207204.">Verstraete <em>et al.</em>, 2004</a>]</span>. Note that for <span class="math notranslate nohighlight">\(d_k=1\)</span> we obtain the density matrix of a
 pure state. We can represent <span class="math notranslate nohighlight">\(\rho\)</span> as the density matrix of pure state (i.e. a MPS) by
 introducing ancillas <span class="math notranslate nohighlight">\(\{\ket{a_k}\}\)</span> so that</p>
 <img alt="../_images/AncillaMPS.png" class="align-center" id="ancillamps" src="../_images/AncillaMPS.png" />
@@ -422,7 +422,7 @@ density operators <span class="math notranslate nohighlight">\(\rho(\beta)\)</sp
 <span class="math notranslate nohighlight">\(\beta=0\)</span> state <span class="math notranslate nohighlight">\(\rho(0)=\mathbf{1}\)</span> and performing imaginary time evolution</p>
 <div class="math notranslate nohighlight">
 \[e^{-\beta H} = (e^{-\Delta \tau \hat{H}})^M\rho(0)(e^{-\Delta \tau \hat{H}})^M\]</div>
-<p>with <span class="math notranslate nohighlight">\(\Delta \tau = \frac{\beta}{2M}\)</span> <span id="id10">[<a class="reference internal" href="../References.html#id10" title="F. Verstraete, J. J. Garc\'ıa-Ripoll, and J. I. Cirac. Matrix product density operators: simulation of finite-temperature and dissipative systems. Physical Review Letters, 93:207204, 2004. arXiv:cond-mat/0406426, doi:10.1103/PhysRevLett.93.207204.">VGarciaRC04</a>]</span>.</p>
+<p>with <span class="math notranslate nohighlight">\(\Delta \tau = \frac{\beta}{2M}\)</span> <span id="id10">[<a class="reference internal" href="../References.html#id10" title="F. Verstraete, J. J. Garc\'ıa-Ripoll, and J. I. Cirac. Matrix product density operators: simulation of finite-temperature and dissipative systems. Physical Review Letters, 93:207204, 2004. arXiv:cond-mat/0406426, doi:10.1103/PhysRevLett.93.207204.">Verstraete <em>et al.</em>, 2004</a>]</span>.</p>
 </div>
 <div class="section" id="code-example-mpskit-timestep-make-time-mpo">
 <span id="code-header"></span><h2><a class="toc-backref" href="#id16"><span class="section-number">12.5. </span>Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.timestep,make_time_mpo</span></code></a><a class="headerlink" href="#code-example-mpskit-timestep-make-time-mpo" title="Permalink to this heading">#</a></h2>
@@ -505,7 +505,23 @@ evolution.</p>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling LogExpFunctionsInverseFunctionsExt [1e5f9c58-a15c-5ce5-87cf-a68a2eda25d9]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling IJuliaExt [2f4121a4-3b3a-5ce6-9c5e-1f2673ce168a]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">InterruptException</span>:
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">_include_from_serialized</span><span class="p">(</span><span class="n">pkg</span><span class="p">::</span><span class="n">Base</span><span class="o">.</span><span class="n">PkgId</span><span class="p">,</span> <span class="n">path</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">ocachepath</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">depmods</span><span class="p">::</span><span class="n">Vector</span><span class="p">{</span><span class="n">Any</span><span class="p">})</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1052</span>
+ <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">_tryrequire_from_serialized</span><span class="p">(</span><span class="n">pkg</span><span class="p">::</span><span class="n">Base</span><span class="o">.</span><span class="n">PkgId</span><span class="p">,</span> <span class="n">path</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">ocachepath</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1442</span>
+ <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">_require</span><span class="p">(</span><span class="n">pkg</span><span class="p">::</span><span class="n">Base</span><span class="o">.</span><span class="n">PkgId</span><span class="p">,</span> <span class="n">env</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1816</span>
+ <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="n">_require_prelocked</span><span class="p">(</span><span class="n">uuidkey</span><span class="p">::</span><span class="n">Base</span><span class="o">.</span><span class="n">PkgId</span><span class="p">,</span> <span class="n">env</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1660</span>
+ <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">macro</span> <span class="n">expansion</span>
+   <span class="o">@</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1648</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="n">macro</span> <span class="n">expansion</span>
+   <span class="o">@</span> <span class="o">./</span><span class="n">lock</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">267</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="n">require</span><span class="p">(</span><span class="n">into</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">mod</span><span class="p">::</span><span class="n">Symbol</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1611</span>
 </pre></div>
 </div>
 </div>
