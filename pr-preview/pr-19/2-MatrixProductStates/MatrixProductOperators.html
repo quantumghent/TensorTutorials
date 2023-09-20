@@ -1,0 +1,932 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9. Matrix Product Operators &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/MatrixProductOperators';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/MatrixProductOperators.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="10. Applications" href="Applications.html" />
+    <link rel="prev" title="8. Tensor Network Algorithms" href="Algorithms.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Matrix Product Operators"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Matrix Product Operators" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/MatrixProductOperators.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=2-MatrixProductStates/MatrixProductOperators>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-mechanics-in-2d">9.1. Statistical Mechanics in 2D</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partition-functions-as-tensor-networks">9.1.1. Partition Functions as Tensor Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-matrices">9.1.2. Transfer Matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thermodynamic-limit">9.1.3. Thermodynamic Limit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">9.1.4. Expectation Values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics-in-1-1d">9.2. Quantum Mechanics in 1+1D</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-block-mpos">9.2.1. Jordan Block MPOs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-state-machines">9.2.2. Finite-State Machines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.3. Expectation Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-mpos-in-the-thermodynamic-limit">9.2.4. Jordan MPOs in the Thermodynamic Limit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-1d-systems">9.2.5. Quasi-1D Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpskitmodels-and-the-mpoham-macro">9.2.6. MPSKitModels and the <code class="docutils literal notranslate"><span class="pre">@mpoham</span></code> Macro</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">9.3. Conclusion</a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Matrix Product Operators</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="matrix-product-operators">
+<h1><span class="section-number">9. </span>Matrix Product Operators<a class="headerlink" href="#matrix-product-operators" title="Permalink to this heading">#</a></h1>
+<p>If Matrix Product States are a tensor network way of representing quantum states in one
+dimensions, we can similarly use tensor networks to represent the operators that act on
+these states. Matrix Product Operators (MPOs) form a structured and convenient description
+of such operators, that can capture most (if not all) relevant operators. Additionally, they
+also form a natural way of representing the transfer matrix of a 2D statistical mechanical
+system, and can even be used to study higher dimensional systems by mapping them to quasi-1D
+systems.</p>
+<p>In this lecture, we will discuss the construction of MPOs, as well as showcase their use
+through <a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a> and
+<a class="reference external" href="https://github.com/maartenvd/MPSKitModels.jl">MPSKitModels.jl</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">TensorKit</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MPSKit</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MPSKitModels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKitModels [ca635005-6f8c-4cd1-b51d-8491250ef2ab]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In general, an MPO is a chain of tensors, where each tensor has two physical indices and two
+virtual indices:</p>
+<!-- Insert image MPO -->
+<div class="section" id="statistical-mechanics-in-2d">
+<h2><span class="section-number">9.1. </span>Statistical Mechanics in 2D<a class="headerlink" href="#statistical-mechanics-in-2d" title="Permalink to this heading">#</a></h2>
+<p>Before discussing one-dimensional transfer matrices, let us first consider how partition
+functions of two-dimensional classical many-body systems can be naturally represented as a
+tensor network. To this end, consider the partition function of the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Ising_model">classical Ising model</a>,</p>
+<div class="math notranslate nohighlight">
+\[\mathcal Z = \sum_{\{s_i\}} \text{e}^{-\beta H(\{s_i\})},\]</div>
+<p>where <span class="math notranslate nohighlight">\(s_i\)</span> denotes a configuration of spins, and <span class="math notranslate nohighlight">\(H(\{s_i\})\)</span> is the corresponding
+energy, as determined by the Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[H(\{s_i\}) = -J \sum_{\langle i,j \rangle} s_i s_j\]</div>
+<p>where the first sum is over nearest neighbors.</p>
+<div class="section" id="partition-functions-as-tensor-networks">
+<h3><span class="section-number">9.1.1. </span>Partition Functions as Tensor Networks<a class="headerlink" href="#partition-functions-as-tensor-networks" title="Permalink to this heading">#</a></h3>
+<p>As the expression for the partition function is an exponential of a sum, we can also write
+it as a product of exponentials, which can be reduced to the following network:</p>
+<a class="reference internal image-reference" href="../_images/partition_function_1.svg" id="partfunc"><img alt="../_images/partition_function_1.svg" class="align-center" height="286" id="partfunc" src="../_images/partition_function_1.svg" width="343" /></a>
+<p>Here, the black dots at the vertices represent Kronecker <span class="math notranslate nohighlight">\(\delta\)</span>-tensors,</p>
+<a class="reference internal image-reference" href="../_images/kronecker.svg" id="kronecker"><img alt="../_images/kronecker.svg" class="align-center" height="97" id="kronecker" src="../_images/kronecker.svg" width="316" /></a>
+<p>and the matrices <span class="math notranslate nohighlight">\(t\)</span> encode the Boltzmann weights associated to each nearest-neighbor interaction,</p>
+<a class="reference internal image-reference" href="../_images/boltzmann.svg" id="boltzmann"><img alt="../_images/boltzmann.svg" class="align-center" height="65" id="boltzmann" src="../_images/boltzmann.svg" width="253" /></a>
+<p>It is then simple, albeit somewhat involved to check that contracting this network gives
+rise to the partition function, where the sum over all configurations is converted into the
+summations in the contractions of the network. Finally, it is more common to absorb the edge
+tensors into the vertex tensors by explicitly contracting them, such that the remaining
+network consists of tensors at the vertices only:</p>
+<a class="reference internal image-reference" href="../_images/partition_function.svg" id="id1"><img alt="../_images/partition_function.svg" class="align-center" height="241" id="id1" src="../_images/partition_function.svg" width="297" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because there are two edges per vertex, an intuitive way of absorbing the edge tensors is to
+absorb for example the left and bottom edge tensors into the vertex tensor. However, this
+leads to a slightly asymmetric form, and more commonly the square root <span class="math notranslate nohighlight">\(q\)</span> of the Boltzmann
+matrices is taken, such that each vertex tensor absorbs such a factor from each of the
+edges, resulting in a rotation-invariant form.</p>
+<a class="reference internal image-reference" href="../_images/boltzmann_mpo.svg" id="boltzmann-mpo"><img alt="../_images/boltzmann_mpo.svg" class="align-center" height="109" id="boltzmann-mpo" src="../_images/boltzmann_mpo.svg" width="220" /></a>
+</div>
+<p>In particular, the construction of the operator that makes up the MPO can be achieved in a
+few lines of code, through the use of TensorKit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">β</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+
+<span class="c"># construct edge tensors</span>
+<span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="kt">ComplexF64</span><span class="p">[</span><span class="n">exp</span><span class="p">(</span><span class="n">β</span><span class="p">)</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">β</span><span class="p">);</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">β</span><span class="p">)</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="n">β</span><span class="p">)],</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="c"># construct vertex tensors</span>
+<span class="n">δ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">zeros</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="n">δ</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+
+<span class="c"># absorb edge tensors</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="kt">O</span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kt">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>MethodError: no method matching TensorMap(::typeof(zeros), ::Type{ComplexF64}, ::ProductSpace{ComplexSpace, 4})
+
+Closest candidates are:
+  TensorMap(::Any, ::Type{T}, ::ProductSpace{S}, ::ProductSpace{S}) where {S&lt;:ElementarySpace, T&lt;:Number}
+   @ TensorKit ~/.julia/packages/TensorKit/MikvC/src/tensors/tensor.jl:169
+  TensorMap(::Any, ::Type{T}, ::TensorSpace{S}, ::TensorSpace{S}) where {T&lt;:Number, S&lt;:ElementarySpace}
+   @ TensorKit ~/.julia/packages/TensorKit/MikvC/src/tensors/tensor.jl:199
+  TensorMap(::Any, ::Type{&lt;:Number}, ::TensorKit.HomSpace{S, ProductSpace{S, N₁}, ProductSpace{S, N₂}} where {N₁, N₂}) where S&lt;:ElementarySpace
+   @ TensorKit ~/.julia/packages/TensorKit/MikvC/src/tensors/tensor.jl:208
+  ...
+
+
+Stacktrace:
+ [1] top-level scope
+   @ In[2]:8
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="transfer-matrices">
+<h3><span class="section-number">9.1.2. </span>Transfer Matrices<a class="headerlink" href="#transfer-matrices" title="Permalink to this heading">#</a></h3>
+<p>In order to then evaluate the partition function, we can use the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Transfer-matrix_method">Transfer-matrix method</a>, which is a
+technique that splits the two-dimensional network into rows (or columns) of so-called
+transfer matrices, which are already represented as MPOs. In fact, this method has even led
+to the famous exact solution of the two-dimensional Ising model by Onsager.
+<span id="id2">[<a class="reference internal" href="../References.html#id20" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Physical Review, 65:117–149, 1944. doi:10.1103/PhysRev.65.117.">Ons44</a>]</span>.</p>
+<!-- Insert image of transfer matrix -->
+<p>In the context of tensor networks, this technique is even useful beyond exactly solvable
+cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
+approximate manner. This allows us to efficiently split the computation of the partition
+function in a sequence of one-dimensional contractions, thus reducing the complexity of the
+problem by solving it layer by layer.</p>
+</div>
+<div class="section" id="thermodynamic-limit">
+<h3><span class="section-number">9.1.3. </span>Thermodynamic Limit<a class="headerlink" href="#thermodynamic-limit" title="Permalink to this heading">#</a></h3>
+<p>Importantly, this technique is not limited to finite systems, and in fact allows for the
+computation of the partition function of systems directly in the thermodynamic limit,
+alleviating the need to consider finite-size effects and extrapolation techniques. The key
+insight that allows for this is that the partition function may be written as</p>
+<div class="math notranslate nohighlight">
+\[\mathcal Z = \lim_{N \to \infty} \mathrm{Tr} \left( T^N \right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(T\)</span> is the row-to-row transfer matrix, and <span class="math notranslate nohighlight">\(N\)</span> is the number of rows (or columns) in
+the network. If we then consider the spectral decomposition of the transfer matrix, we can
+easily show that as the number of rows goes to infinity, the largest eigenvalue of the
+transfer matrix dominates, and the partition function is given by</p>
+<div class="math notranslate nohighlight">
+\[\mathcal Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N \braket{\psi}{\psi}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_{\mathrm{max}}\)</span> is the largest eigenvalue of the transfer matrix, and
+<span class="math notranslate nohighlight">\(\ket{\psi}\)</span> is the corresponding (MPS) eigenvector. In other words, the partition function
+can be computed if it is possible to find the largest eigenvalue of the transfer matrix, for
+which efficient algorithms exist.</p>
+<p>For example, one can resort to many types of <em>boundary MPS techniques</em>
+<span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>, which are a generic class of algorithms to
+numerically solve these kinds of problems. In particular, they all rely on an efficient way
+of finding an (approximate) solution to the following problem:</p>
+<a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
+</div>
+<div class="section" id="expectation-values">
+<h3><span class="section-number">9.1.4. </span>Expectation Values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
+<p>In order to compute relevant quantities for such systems, we can verify that the expectation
+value of an operator <span class="math notranslate nohighlight">\(O\)</span> is given by the weighing the value of that operator for a given
+microstate, with the probability of that microstate:</p>
+<div class="math notranslate nohighlight">
+\[\langle O \rangle = \frac{1}{\mathcal Z} \sum_{\{s_i\}} O(\{s_i\})\text{e}^{-\beta
+H(\{s_i\})}\]</div>
+<p>For a local operator <span class="math notranslate nohighlight">\(O_i\)</span>, this can again be written as a tensor network, where a single
+Kronecker tensor at a vertex is replaced with a tensor measuring the operator, and then
+absorbing the remaining edge tensors:</p>
+<!-- Insert image of expectation value -->
+<p>For example, in the case of the magnetisation <span class="math notranslate nohighlight">\(O = \sigma_z\)</span>, the tensor <span class="math notranslate nohighlight">\(M\)</span> can be
+explicitly constructed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="kt">ComplexF64</span><span class="p">[</span><span class="mf">1.0</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">O</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using this network, the expectation value can be computed by first contracting the top and
+bottom part, replacing them by their fixed-point MPS representations, and then contracting
+the remaining MPS-MPO-MPS sandwich. This is achieved by similarly contracting the left and
+right part, replacing them by their fixed-point tensors, which are commonly called the
+<em>environments</em> <span class="math notranslate nohighlight">\(G_L\)</span> and <span class="math notranslate nohighlight">\(G_R\)</span>, respectively. The final resulting network is then just a
+local network, which can be contracted efficiently.</p>
+<!-- Insert image of expectation value with environments -->
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This process of sequentally reducing the dimensionality of the network can even be further
+extended, where 3D systems can be studied by first determining a 2D boundary PEPS, for which
+a 1D boundary MPS can be determined, which admits 0D boundary tensors. This kind of
+algorithms are commonly referred to as <em>boundary methods</em>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="quantum-mechanics-in-1-1d">
+<h2><span class="section-number">9.2. </span>Quantum Mechanics in 1+1D<a class="headerlink" href="#quantum-mechanics-in-1-1d" title="Permalink to this heading">#</a></h2>
+<p>For quantum systems in one spatial dimension, the construction of MPOs boils down to the
+ability to write a sum of local operators in MPO-form. The resulting operator has a very
+specific structure, and is often referred to as a <em>Jordan block MPO</em>.</p>
+<div class="section" id="jordan-block-mpos">
+<h3><span class="section-number">9.2.1. </span>Jordan Block MPOs<a class="headerlink" href="#jordan-block-mpos" title="Permalink to this heading">#</a></h3>
+<p>For example, if we consider the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Transverse-field_Ising_model">Transverse-field Ising model</a>,</p>
+<div class="math notranslate nohighlight">
+\[H = -J \sum X_j X_{j+1} - h \sum Z_j\]</div>
+<p>it can be represented as an MPO through the (operator-valued) matrix,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}W = \begin{pmatrix}
+1 &amp; X &amp; -hZ \\ 
+0 &amp; 0 &amp; -JX \\
+0 &amp; 0 &amp; 1
+\end{pmatrix}\end{split}\]</div>
+<p>along with the boundary vectors,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}v_L = \begin{pmatrix}
+1 &amp; 0 &amp; 0
+\end{pmatrix}
+, \qquad 
+v_R = \begin{pmatrix}
+0 \\ 0 \\ 1
+\end{pmatrix}\end{split}\]</div>
+<p>The Hamiltonian on <span class="math notranslate nohighlight">\(N\)</span> sites is then given by the contraction</p>
+<div class="math notranslate nohighlight">
+\[H = V_L W^{\otimes N} V_R\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While the above example can be constructed from building blocks that are strictly local
+operators, this is not always the case, especially when symmetries are involved. In those
+cases, the elements of the matrix <span class="math notranslate nohighlight">\(W\)</span> have additional virtual legs that are contracted
+between different sites.</p>
+</div>
+</div>
+<div class="section" id="finite-state-machines">
+<h3><span class="section-number">9.2.2. </span>Finite-State Machines<a class="headerlink" href="#finite-state-machines" title="Permalink to this heading">#</a></h3>
+<p>An intuitive approach to construct such MPOs is to consider the sum of local
+terms by virtue of a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Finite-state_machine">finite-state machine</a>. This is a
+mathematical model of computation that consists of a finite set of states, and a set of
+transitions between those states. In the context of MPOs, this is realised by associating
+each <em>virtual level</em> with a state, and each transition then corresponds to applying a local
+operator. In that regard, the MPO is then a representation of the state of the finite-state
+machine, and the matrix <span class="math notranslate nohighlight">\(W\)</span> is the transition matrix of the machine.</p>
+<p>In general, the matrix <span class="math notranslate nohighlight">\(W\)</span> can then be thought of as a block matrix with entries</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+1 &amp; C &amp; D \\
+0 &amp; A &amp; B \\
+0 &amp; 0 &amp; 1
+\end{pmatrix}\end{split}\]</div>
+<p>which corresponds to the finite-state diagram:</p>
+<!-- Insert image of finite-state diagram -->
+<p>It can then be shown that this MPO generates all single-site local operators <span class="math notranslate nohighlight">\(D\)</span>, two-site
+operators <span class="math notranslate nohighlight">\(CB\)</span>, three-site operators <span class="math notranslate nohighlight">\(CAB\)</span>, and so on. In other words, the MPO is a
+representation of the sum of all local operators, and by carefully extending the structure
+of the blocks <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, and <span class="math notranslate nohighlight">\(D\)</span>, it is possible to construct MPOs that represent sums
+of generic local terms, and even approximate long-range interactions by a sum of
+exponentials.</p>
+<p>To gain a bit more understanding of this, we can use the following code to reconstruct the
+total sum of local terms, starting from the Jordan MPO construction:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Symbolics</span>
+
+<span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
+<span class="c"># generate W matrices</span>
+<span class="nd">@variables</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span>
+<span class="n">Ws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">l</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+<span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+<span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w">    </span><span class="mi">1</span><span class="p">]</span>
+<span class="k">end</span>
+
+<span class="c"># generate boundary vectors</span>
+<span class="n">Vₗ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="o">&#39;</span>
+<span class="n">Vᵣ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c"># expand the MPO</span>
+<span class="n">expand</span><span class="p">(</span><span class="n">Vₗ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">prod</span><span class="p">(</span><span class="n">W</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vᵣ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">9.2.3. </span>Expectation Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>In order to compute expectation values of such MPOs, we can use the same technique as
+before, and sandwich the MPO between two MPSs.</p>
+<!-- Insert image of expectation value -->
+<p>However, care must be taken when the goal is to determine a local expectation value density,
+as this is not necessarily well-defined. In fact, the MPO represents the sum of all local
+terms, and sandwiching it will always lead to the total energy. In order to consistently
+define local contributions, a choice must be made how to <em>distribute</em> this among the sites.
+For example, even in the case of two-site local operators, it is unclear if this local
+expectation value should be accredited to the left, or right site, or even split between
+both sites. In the implementation of MPSKit, the chosen convention is to distribute the
+expectation value evenly among its starting and ending point, in order to not overcount
+contributions of long-range interactions.</p>
+<p>Typically this is achieved by renormalizing the environment tensors in a particular way,
+such that then local expectation values can be obtained by either contracting the first row
+of <span class="math notranslate nohighlight">\(W\)</span> with the right regularized environment, or the last column of <span class="math notranslate nohighlight">\(W\)</span> with the left
+regularized environment. This respectively yields the expectation value of all terms
+starting at that site, or all terms ending at that site.</p>
+<p>Again, it can prove instructive to write this out explicitly for some small examples to gain
+some intuition. Doing this programatically, we get all terms starting at some site as
+follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Ws_reg_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ws</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="kt">Ref</span><span class="p">([</span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">])</span>
+<span class="n">expand</span><span class="p">(</span><span class="n">Vₗ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_right</span><span class="p">[</span><span class="k">end</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_right</span><span class="p">[</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_right</span><span class="p">[</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vᵣ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>and similarly all terms ending at some site as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Ws_reg_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ws</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="kt">Ref</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span>
+<span class="n">expand</span><span class="p">(</span><span class="n">Vₗ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_left</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_left</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_left</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vᵣ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="jordan-mpos-in-the-thermodynamic-limit">
+<h3><span class="section-number">9.2.4. </span>Jordan MPOs in the Thermodynamic Limit<a class="headerlink" href="#jordan-mpos-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
+<p>In the thermodynamic limit, the same MPO construction can be used to represent the infinite
+sum of local terms. However, special care must be taken when considering expectation values,
+as now only local expectation values are well-defined, and the total energy diverges with
+the system size.</p>
+<p>This is achieved by considering the same regularization of the environment tensors, such
+that the divergent parts are automatically removed. This construction can be found in more
+detail in <span id="id5">[<a class="reference internal" href="../References.html#id22" title="C. Hubig, I. P. McCulloch, and U. Schollwöck. Generic construction of efficient matrix product operators. Phys. Rev. B, 95:035129, Jan 2017. URL: https://link.aps.org/doi/10.1103/PhysRevB.95.035129, doi:10.1103/PhysRevB.95.035129.">HMSchollwock17</a>]</span>.</p>
+</div>
+<div class="section" id="quasi-1d-systems">
+<h3><span class="section-number">9.2.5. </span>Quasi-1D Systems<a class="headerlink" href="#quasi-1d-systems" title="Permalink to this heading">#</a></h3>
+<p>Finally, it is worth noting that the MPO construction can also be used to study
+two-dimensional systems, by mapping them to quasi-one-dimensional systems. This is typically
+achieved by imposing periodic boundary conditions in one of the spatial directions, and then
+<em>snaking</em> an MPS through the resulting lattice. In effect, this leads to a one-dimensional
+model with longer-range interactions, which can then be studied using the standard MPS
+techniques. However, the
+<a class="reference external" href="https://en.wikipedia.org/wiki/No_free_lunch_theorem">no free lunch theorem</a> applies here as
+well, and the resulting model will typically require a bond dimension that grows
+exponentially with the periodic system size, in order to achieve the area law of
+entanglement in two-dimensional systems.</p>
+</div>
+<div class="section" id="mpskitmodels-and-the-mpoham-macro">
+<h3><span class="section-number">9.2.6. </span>MPSKitModels and the <code class="docutils literal notranslate"><span class="pre">&#64;mpoham</span></code> Macro<a class="headerlink" href="#mpskitmodels-and-the-mpoham-macro" title="Permalink to this heading">#</a></h3>
+<p>While the above construction of MPOs is quite general, it is also quite cumbersome to
+manually construct, especially when dealing with complicated lattices or non-trivial unit
+cells. To this end, the package
+<a class="reference external" href="https://github.com/maartenvd/MPSKitModels.jl">MPSKitModels.jl</a> offers a convenient way of
+constructing these MPOs automatically, by virtue of the <code class="docutils literal notranslate"><span class="pre">&#64;mpoham</span></code> macro. This macro allows
+for the construction of MPOs by specifying the local operators that are present in the
+Hamiltonian, and the lattice on which they act. For example, we can construct the MPO for
+the Heisenberg models with nearest- or next-nearest-neighbor interactions as follows:</p>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">J₁</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.2</span>
+<span class="n">SS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S_exchange</span><span class="p">()</span><span class="w"> </span><span class="c"># predefined operator in MPSKitModels</span>
+
+<span class="n">lattice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteChain</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">H₁</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@mpoham</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₁</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">lattice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteCylinder</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">H₂</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@mpoham</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₁</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">J₂</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span>
+<span class="n">lattice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteCylinder</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">H₃</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@mpoham</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₁</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₂</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">next_nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2><span class="section-number">9.3. </span>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>In conclusion, Matrix Product Operators are a powerful tool to represent quantum operators
+as well as transfer matrices. They allow for efficient and versatile expressions of
+expectation values, and form the building block for many tensor network algorithms, both in
+(1+1) or (2+0) dimensions, as well as in higher dimensions.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./2-MatrixProductStates"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/QuantumManyBody.html">
+   1. Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Software.html">
+   2. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/TensorNetworks.html">
+   4. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Symmetries.html">
+   5. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="MatrixProductStates.html">
+   6. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="InfiniteMPS.html">
+   7. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Algorithms.html">
+   8. Tensor Network Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   9. Matrix Product Operators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Applications.html">
+   10. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   11. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
+   12. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   13. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-MatrixProductStates/MatrixProductOperators.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/MatrixProductOperators.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/2-MatrixProductStates/MatrixProductOperators.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/MatrixProductOperators.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "2-MatrixProductStates/MatrixProductOperators";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/2-MatrixProductStates/MatrixProductOperators.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>

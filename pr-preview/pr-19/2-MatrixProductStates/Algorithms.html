@@ -1,0 +1,679 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8. Tensor Network Algorithms &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/Algorithms';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/Algorithms.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9. Matrix Product Operators" href="MatrixProductOperators.html" />
+    <link rel="prev" title="7. Infinite Matrix Product States" href="InfiniteMPS.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Tensor Network Algorithms"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Tensor Network Algorithms" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/Algorithms.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=2-MatrixProductStates/Algorithms>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-quantum-systems">8.1. Simulating Quantum Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-evolving-block-decimation-tebd">8.2. Time-Evolving Block Decimation (TEBD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-one-dimensional-nearest-neighbor-hamiltonians">8.2.1. Example: One-Dimensional Nearest-Neighbor Hamiltonians</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groundstate-search">8.3. Groundstate Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imaginary-time-evolution">8.3.1. Imaginary Time Evolution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">8.4. Conclusion</a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Tensor Network Algorithms</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-algorithms">
+<h1><span class="section-number">8. </span>Tensor Network Algorithms<a class="headerlink" href="#tensor-network-algorithms" title="Permalink to this heading">#</a></h1>
+<p>Having introduced tensor networks in general, with a focus on the case of MPS, we now turn
+to the question of how to use them to solve specific problems. While a large number of
+tensor network algorithms have been developed, many of them more advanced and/or efficient
+than the ones we will discuss here, we will focus on a few simple algorithms that are easy
+to understand and implement. Importantly, these algorithms are also the building blocks of
+more advanced algorithms, for example in higher spatial dimensions.</p>
+<p>Effectively, we have already seen how to use MPS to compute expectation values or
+correlation functions, or derive all kind of properties. Here, we focus on how to obtain the
+desired MPS in the first place. In other words, given a certain problem, how can we optimize
+an MPS, or a more general tensor network, to solve it?</p>
+<div class="section" id="simulating-quantum-systems">
+<h2><span class="section-number">8.1. </span>Simulating Quantum Systems<a class="headerlink" href="#simulating-quantum-systems" title="Permalink to this heading">#</a></h2>
+<p>As a first example, let us consider the problem of simulating a quantum system. We can
+formalize this idea as follows: Given a Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>, and some initial state
+<span class="math notranslate nohighlight">\(\ket{\psi_0}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span>, is there a way to compute the <em>time-evolved state</em>
+<span class="math notranslate nohighlight">\(\ket{\psi(t)} = e^{-i H t} \ket{\psi_0}\)</span> at some later time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>In general, this is a very hard problem. For example, one could naively try to
+<a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_exponential#Computing_the_matrix_exponential">compute the matrix exponential</a>,
+but this quickly becomes prohibitively expensive, as the dimension of the Hamiltonian scales
+exponentially with the number of particles. However, for physically relevant systems the
+Hamiltonian does not consist of a random matrix, but rather exhibits additional structure
+that can be used to simplify the problem.</p>
+</div>
+<div class="section" id="time-evolving-block-decimation-tebd">
+<h2><span class="section-number">8.2. </span>Time-Evolving Block Decimation (TEBD)<a class="headerlink" href="#time-evolving-block-decimation-tebd" title="Permalink to this heading">#</a></h2>
+<p>A particularly powerful example can be found for systems with local interactions, where the
+Hamiltonian is of the form:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_{i,j} h_{ij}\]</div>
+<p>where <span class="math notranslate nohighlight">\(h_{ij}\)</span> denotes a local operator, acting only on a small number of sites. In this
+case, although <span class="math notranslate nohighlight">\(e^{-i H t}\)</span> is unfeasible to compute, each of the constituent terms act only
+on a much smaller subsystem and therefore <span class="math notranslate nohighlight">\(e^{-ih_{ij}t}\)</span> can be computed efficiently.
+However, as these terms generally do not commute, we cannot simply apply them one after the
+other. Instead, we can use the first-order Suzuki-Trotter decomposition to approximate the
+time-evolution operator, which states that for any two Hermitian operators <span class="math notranslate nohighlight">\(A4 and \)</span>B<span class="math notranslate nohighlight">\(, and
+any real number \)</span>\Delta t$, we have:</p>
+<div class="math notranslate nohighlight" id="equation-trotter-first">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-trotter-first" title="Permalink to this equation">#</a></span>\[e^{(A + B) \Delta t} = e^{A \Delta t} e^{B \Delta t} + \mathcal O(\Delta t^2).\]</div>
+<p>If we now split the full time interval <span class="math notranslate nohighlight">\(t\)</span> into <span class="math notranslate nohighlight">\(m\)</span> steps, we obtain the approximation</p>
+<div class="math notranslate nohighlight">
+\[e^{-i H t} = \left( e^{-i H_e \frac{t}{m}} e^{-i H_o \frac{t}{m}} \right)^m + \mathcal O
+\left( \frac{t^2}{m}\right)\]</div>
+<p>where the approximation error can be managed by choosing a sufficiently large <span class="math notranslate nohighlight">\(m\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There actually exist entire families of such exponential product approximations up to a
+given order <span id="id1">[<a class="reference internal" href="../References.html#id16" title="Naomichi Hatano and Masuo Suzuki. Finding Exponential Product Formulas of Higher Orders. In Quantum Annealing and Other Optimization Methods, volume 679, pages 37–68. 2005. arXiv:math-ph/0506007, doi:10.1007/11526216_2.">HS05</a>]</span>. For our purposes however, it is sufficient to
+illustrate a simulation procedure using this first-order approximation.</p>
+</div>
+<div class="section" id="example-one-dimensional-nearest-neighbor-hamiltonians">
+<h3><span class="section-number">8.2.1. </span>Example: One-Dimensional Nearest-Neighbor Hamiltonians<a class="headerlink" href="#example-one-dimensional-nearest-neighbor-hamiltonians" title="Permalink to this heading">#</a></h3>
+<p>We can put the discussion above into practice by applying it to the example of a nearest-neighbour Hamiltonian on a one-dimensional lattice:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_{n=1}^N h_{n,n+1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of sites and we are assuming periodic boundary conditions. We now
+want to simulate the dynamics of this Hamiltonian in an efficient way using the
+aforementioned approximation Eq. <a class="reference internal" href="Algorithms-backup.html#equation-trotter-first">()</a>. The simplest way to do this is to
+split the local terms into two groups, where terms within a group commute with each other,
+but not with terms in the other group. For example, we could split the Hamiltonian into even
+(<span class="math notranslate nohighlight">\(H_e\)</span>) and odd terms (<span class="math notranslate nohighlight">\(H_o\)</span>):</p>
+<div class="math notranslate nohighlight" id="equation-hamsplit">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-hamsplit" title="Permalink to this equation">#</a></span>\[H_e = \sum_n h_{(2n, 2n+1)}, \qquad H_o = \sum_n h_{(2n+1, 2n+2)}.\]</div>
+<p>It is a simple exercise to show that the local terms within a group commute, as they act on
+non-overlapping sites. Therefore, if we can find a MPS representation of the initial state,
+the procedure for simulating the time evolution is as follows:</p>
+<a class="reference internal image-reference" href="../_images/tebd_mps.svg" id="tebd-mps"><img alt="../_images/tebd_mps.svg" class="align-center" height="321" id="tebd-mps" src="../_images/tebd_mps.svg" width="736" /></a>
+<p>This procedure does not solve the problem as-is, as evaluating this network exactly would
+still require a bond dimension which grows exponentially with the number of layers <span class="math notranslate nohighlight">\(m\)</span>.
+Instead, we can retain an efficient description by locally truncating the bond dimension, by
+computing an SVD an retaining only the largest <span class="math notranslate nohighlight">\(\chi\)</span> singular values.</p>
+<div class="figure align-center" id="tebd-trunc">
+<a class="reference internal image-reference" href="../_images/tebd_trunc.svg"><img alt="../_images/tebd_trunc.svg" height="128" src="../_images/tebd_trunc.svg" width="398" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="groundstate-search">
+<h2><span class="section-number">8.3. </span>Groundstate Search<a class="headerlink" href="#groundstate-search" title="Permalink to this heading">#</a></h2>
+<p>Another important problem in quantum physics is the determination of the groundstate of a
+given Hamiltonian. Again, this can be made more formal as follows: Given a Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>,
+is there a way to find the state <span class="math notranslate nohighlight">\(\ket{\psi_0}\)</span> that minimizes the expectation value
+<span class="math notranslate nohighlight">\(\bra{\psi} H \ket{\psi}\)</span>.</p>
+<p>In fact, this problem faces the same difficulty as the one discussed above, namely that the
+naive solution strategy involves finding the eigenvector of the Hamiltonian matrix with the
+smallest eigenvalue, which again scales exponentially with the number of particles. However,
+as before, we can exploit the structure of the Hamiltonian to find a more efficient
+solution.</p>
+<div class="section" id="imaginary-time-evolution">
+<h3><span class="section-number">8.3.1. </span>Imaginary Time Evolution<a class="headerlink" href="#imaginary-time-evolution" title="Permalink to this heading">#</a></h3>
+<p>In fact, the problem of finding groundstates can be mapped to the problem of simulating
+dynamics, by making use of a trick known as <em>imaginary time evolution</em>. The idea is to
+consider the time evolution operator <span class="math notranslate nohighlight">\(e^{-i H t}\)</span>, but to replace the real time <span class="math notranslate nohighlight">\(t\)</span> by an
+imaginary time <span class="math notranslate nohighlight">\(\tau = i t\)</span>. If we now consider the limit <span class="math notranslate nohighlight">\(\tau \to \infty\)</span> and deal with
+the normalization appropriately, we can see that applying the evolution operator to a state
+<span class="math notranslate nohighlight">\(\ket{\psi_0}\)</span> will effectively project it on its lowest energy eigenstate, as all other
+eigenstates will be damped out exponentially. In other words, we can find the groundstate of
+a Hamiltonian by simulating its dynamics for a sufficiently long imaginary time.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\lim_{\tau \to \infty} e^{-i H \tau} \ket{\psi_0} &amp;= \lim_{\tau \to \infty} \sum_i e^{- E_i \tau} \ket{\psi_i} \bra{\psi_i} \psi_0 \\ 
+&amp;= \lim_{\tau \to \infty} e^{- E_0 \tau} \left(\ket{\psi_0} \bra{\psi_0} + \sum_{i&gt;0}e^{(-E_i + E_0) \tau}\ket{\psi_i}\bra{\psi_i} \right) \\ 
+&amp;\approx e^{- E_0 \tau} \ket{\psi_0} \bra{\psi_0}
+\end{align}\end{split}\]</div>
+<p>where we have made use of the fact that all but the first term in the sum are damped out. In
+this regard, the groundstate search problem can also be tackled with the TEBD algorithm
+discussed above, by simply replacing the real time <span class="math notranslate nohighlight">\(t\)</span> by an imaginary time <span class="math notranslate nohighlight">\(\tau\)</span> and
+continuing time-evolution until convergence is reached.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2><span class="section-number">8.4. </span>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>We have now seen a first example of algorithms that can be used for optimizing tensor
+networks, either to simulate dynamics or to find groundstates. We conclude by mentioning
+that this is only the tip of the iceberg, and that there exist many more algorithms that can
+be used to solve a variety of problems.</p>
+<div class="admonition-outlook admonition">
+<p class="admonition-title">Outlook</p>
+<p>To close out this lecture, we briefly comment on the higher dimensional generalizations of
+the TEBD procedure and the difficulties this brings with it. For local quantum Hamiltonians
+in higher dimensions we can follow a similar procedure, where we split the full Hamiltonian
+into sum of parts that each only contain non-overlapping local terms. Time evolution can
+then be simulated by applying a similar sequence of layers, where in each layer we evolve
+with all local operators in a given Hamiltonian part in parallel.</p>
+<p>The problem with this approach however is that the local update step <span class="xref std std-ref">tebd_trunc</span> is
+ill-conditioned for higher-dimensional networks if the full quantum state is is not taken
+into account for the truncation. Indeed, while in the one-dimensional case the rest of the
+network surrounding the sites we want to update can be brought into account exactly by
+working in appropriate gauge, this is not possible in general. Consider for example a
+general network where want to apply some update to the central site,</p>
+<a class="reference internal image-reference" href="../_images/tensor_network.svg" id="tensor-network"><img alt="../_images/tensor_network.svg" class="align-center" height="186" id="tensor-network" src="../_images/tensor_network.svg" width="324" /></a>
+<p>Since this network contains loops, there is no way to exactly capture the surrounding
+network in general. One instead has to resort to approximation techniques for the
+<em>environments</em> of a given update site, where the quality of the environment approximations
+directly affects the stability of the local update. The simplest way of doing this is to use
+the so-called <em>simple update</em> procedure <span id="id2">[<a class="reference internal" href="../References.html#id18" title="H. C. Jiang, Z. Y. Weng, and T. Xiang. Accurate determination of tensor network state of quantum lattice models in two dimensions. Physical Review Letters, 101(9):090603, 2008. arXiv:0806.3719, doi:10.1103/PhysRevLett.101.090603.">JWX08</a>]</span> where all loops in the
+network are simply ignored and the environment is approximated by a product state,</p>
+<a class="reference internal image-reference" href="../_images/simple_update.svg" id="simple-update"><img alt="../_images/simple_update.svg" class="align-center" height="108" id="simple-update" src="../_images/simple_update.svg" width="328" /></a>
+<p>More accurate results can be obtained by taking into account the full quantum state of the
+system in each local update by means of the <em>full update</em> procedure
+<span id="id3">[<a class="reference internal" href="../References.html#id19" title="J. Jordan, R. Orús, G. Vidal, F. Verstraete, and J. I. Cirac. Classical Simulation of Infinite-Size Quantum Lattice Systems in Two Spatial Dimensions. Physical Review Letters, 101(25):250602, 2008. arXiv:cond-mat/0703788, doi:10.1103/PhysRevLett.101.250602.">JOrusV+08</a>]</span>. However, this gain in accuracy comes with a substantial
+increase in computational cost due to the full environment approximation at each step.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./2-MatrixProductStates"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/QuantumManyBody.html">
+   1. Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Software.html">
+   2. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/TensorNetworks.html">
+   4. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Symmetries.html">
+   5. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="MatrixProductStates.html">
+   6. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="InfiniteMPS.html">
+   7. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   8. Tensor Network Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MatrixProductOperators.html">
+   9. Matrix Product Operators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Applications.html">
+   10. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   11. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
+   12. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   13. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-MatrixProductStates/Algorithms.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/Algorithms.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/2-MatrixProductStates/Algorithms.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/Algorithms.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "2-MatrixProductStates/Algorithms";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/2-MatrixProductStates/Algorithms.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>
