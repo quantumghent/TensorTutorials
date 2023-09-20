@@ -30,7 +30,7 @@ repository:
 sphinx:
   extra_extensions: [sphinx_multitoc_numbering, sphinxext.rediraffe, sphinx_tojupyter]
   config:
-    bibtex_reference_style: label
+    bibtex_reference_style: author_year
     bibtex_default_style: alpha
     nb_mime_priority_overrides: [
        # HTML

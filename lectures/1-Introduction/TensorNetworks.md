@@ -189,33 +189,33 @@ is drawn as:
 :align: center
 ```
 
-Famililiar examples of contraction are vector inner products, matrix-vector multiplication,
+Familiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.
 
-```{image} /_static/TensorNetworks/vecvec.svg
-:scale: 12%
-:name: vecvec
-:align: center
-```
-
-```{image} /_static/TensorNetworks/matvec.svg
-:scale: 12%
-:name: matvec
-:align: center
-```
-
-```{image} /_static/TensorNetworks/matmat.svg
-:scale: 12%
-:name: matmat
-:align: center
-```
-
-```{image} /_static/TensorNetworks/tr.svg
-:scale: 12%
-:name: tr
-:align: center
-```
-
+* $\langle \vec{x}, \vec{y} \rangle = x_i y_i$
+  ```{image} /_static/TensorNetworks/vecvec.svg
+  :scale: 12%
+  :name: vecvec
+  :align: center
+  ```
+* $A \vec{x} = A_{ij} x_j$
+  ```{image} /_static/TensorNetworks/matvec.svg
+  :scale: 12%
+  :name: matvec
+  :align: center
+  ```
+* $A B = A_{ij} B_{jk}$
+  ```{image} /_static/TensorNetworks/matmat.svg
+  :scale: 12%
+  :name: matmat
+  :align: center
+  ```
+* $\text{Tr}(A) = A_{ii}$
+  ```{image} /_static/TensorNetworks/tr.svg
+  :scale: 12%
+  :name: tr
+  :align: center
+  ```
 
 ## Network Contractions
 
@@ -418,7 +418,7 @@ applying the SVD to that matrix.
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
 partition = ((1, 2), (3, 4, 5))
-U, S, V = tsvd(A, partition)
+U, S, V = tsvd(A, partition...)
 @test permute(A, partition) ≈ U * S * V
 @test U' * U ≈ id(domain(U))
 @test V * V' ≈ id(codomain(V))
@@ -441,7 +441,7 @@ decomposition is unique for all matrices that are full rank.
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
 partition = ((1, 2), (3, 4, 5))
-Q, P = leftorth(A, partition; alg=Polar())
+Q, P = leftorth(A, partition....; alg=Polar())
 @test permute(A, partition) ≈ Q * P
 @test Q' * Q ≈ id(domain(Q))
 ```
@@ -471,7 +471,7 @@ solution.
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
 partition = ((1, 2), (3, 4, 5))
-Q, R = leftorth(A, partition; alg=QR())
+Q, R = leftorth(A, partition...; alg=QR())
 @test permute(A, partition) ≈ Q * R
 @test Q' * Q ≈ id(domain(Q))
 ```
@@ -498,7 +498,7 @@ corresponding to zero singular values.
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
 partition = ((1, 2), (3, 4, 5))
-N = leftnull(A, partition)
+N = leftnull(A, partition...)
 @test norm(N' * permute(A, partition)) ≈ 0
 @test N * N' ≈ id(codomain(N))
 ```
