@@ -273,33 +273,33 @@ $$ \braket{\psi_1^A \otimes \varphi_1^B | \psi_2^A \otimes \varphi_2^B } = \brak
 
 and then extend this definition by linearity (in the second argument and antilinearity in the first argument).
 
-In practice, given two finite-dimensional Hilbert spaces $\mathbb{H}^A \cong \mathbb{C}^{d_A}$
-and $\mathbb{H}^B \cong \mathbb{C}^{d_B}$ with a basis $\{ \ket{j}, j=1,\dots, d_A\}$
-and $\{\ket{k}, k=1,\dots, d_B\}$, the tensor product space is spanned by a basis composed
+In practice, given two finite-dimensional Hilbert spaces $\mathbb{H}^A \cong \mathbb{C}^{d^A}$
+and $\mathbb{H}^B \cong \mathbb{C}^{d^B}$ with a basis $\{ \ket{j}, j=1,\dots, d^A\}$
+and $\{\ket{k}, k=1,\dots, d^B\}$, the tensor product space is spanned by a basis composed
 of all products
 
-$$\{ \ket{j,k} = \ket{j} \otimes \ket{k}, j=1,\dots, d_A, k=1,\dots, d_B\}$$
+$$\{ \ket{j,k} = \ket{j} \otimes \ket{k}, j=1,\dots, d^A, k=1,\dots, d^B\}$$
 
-and thus has dimension $d_A \cdot d_B$. A general state $\ket{\Psi} \in \mathbb{H}^{A}\otimes \mathbb{H}^B$
+and thus has dimension $d^A \cdot d^B$. A general state $\ket{\Psi} \in \mathbb{H}^{A}\otimes \mathbb{H}^B$
 can then be expanded as
 
-$$ \ket{\Psi} = \sum_{j=1}^{d_A }\sum_{k=1}^{d_B} \Psi_{jk} \ket{j,k} $$
+$$ \ket{\Psi} = \sum_{j=1}^{d^A }\sum_{k=1}^{d^B} \Psi_{jk} \ket{j,k} $$
 
 The expansion coefficients $\Psi_{jk}$ thus have two indices, and it is often useful to
 think of them as a matrix. Note that we will almost always use this product basis, also
-sometimes referred to as the computational basis, for working with tensor product spaces.
-However, one can certainly also use more complicated basis choices, where the basis vectors
-are not simple product states. One well known choice that you might remember from your
-quantum mechanics course is in the case of two spin-1/2 systems. If we denote the basis for
-a single spin-1/2 system as $\{\ket{\uparrow},\ket{\downarrow}\}$, then the product basis
-for a system consisting of two spin-1/2 systems is given by 
+referred to as the *computational basis*, for working with tensor product spaces. However,
+one can certainly also use more complicated basis choices, where the basis vectors are not
+simple product states. One well known choice that you might remember from your quantum
+mechanics course is in the case of two spin-1/2 systems. If we denote the basis for a single
+spin-1/2 system as $\{\ket{\uparrow},\ket{\downarrow}\}$, then the product basis for a
+system consisting of two spin-1/2 systems is given by
 $\{\ket{\uparrow,\uparrow}, \ket{\downarrow,\uparrow}, \ket{\uparrow,\downarrow}, \ket{\downarrow,\downarrow}, \}$.
 However, in the context of spin coupling (see Section on Symmetries), one also uses the
 coupled basis
 
 ```{math}
 \ket{0,0} &= \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} - \ket{\downarrow,\uparrow}\right)\\
-\ket{1,1} &= \ket{\uparrow,\uparrow}\\
+\ket{1,+1} &= \ket{\uparrow,\uparrow}\\
 \ket{1,0} &= \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} + \ket{\downarrow,\uparrow}\right)\\
 \ket{1,-1} &= \ket{\downarrow,\downarrow}
 ```
@@ -313,7 +313,11 @@ product states as
 
 $$\left(\hat{A} \otimes \hat{B}\right) \left(\ket{\psi^A}\otimes \ket{\varphi^B}\right) = \left(\hat{A}\ket{\psi^A}\right) \otimes \left(\hat{B}\ket{\varphi^B}\right) $$
 
-and then extended by linearity. With respect to a product basis, the matrix representation
+and then extended by linearity. It furthermore holds that
+
+$$ (\hat{A}_1 \otimes \hat{B}_1) (\hat{A}_2 \otimes \hat{B}_2) = (\hat{A}_1 \hat{A}_2) \otimes (\hat{B}_1 \hat{B}_2).$$
+
+With respect to a product basis, the matrix representation
 of $\left(\hat{A} \otimes \hat{B}\right)$ is given by the
 [Kronecker product](https://en.wikipedia.org/wiki/Kronecker_product).
 
@@ -344,13 +348,15 @@ which can be interpreted as a single vector of length $2^N$, or as a $N$-dimensi
 where every tensor index ranges over the two values 0 and 1. This exponential increase of
 the Hilbert space dimension with the number of particles is exactly why the quantum
 many-body problem is so difficult, but also essential for providing a quantum computer with
-its speed-up.
+its speed-up. It is exactly these type of quantum states living in a many-body Hilbert
+space, which is thus composed of many tensor product factors, that we will represent as a
+tensor network.
 
-The Hamiltonian of a many-body system typically takes the form of a sum of terms, where
-every individual term acts nontrivially on only a few subsystems. One important example that
-will reappear throughout these tutorials is the "Quantum Ising Model with transverse
-magnetic field", which acts on a system composed of qubits or spin-1/2 particles, and is
-defined as
+Finally, we also have to specify the Hamiltonian of a many-body system. It typically takes
+the form of a sum of terms, where every individual term acts nontrivially on only a few
+subsystems. One important example that will reappear throughout these tutorials is the
+"Quantum Ising Model with transverse magnetic field", which acts on a system composed of
+qubits or spin-1/2 particles, and is defined as
 
 $$ \hat{H} = - J \sum_{\langle i, j \rangle} \sigma^z_i \otimes \sigma^z_j - h \sum_i \sigma^x_i $$
 
@@ -371,66 +377,73 @@ $\sigma^z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}$.
 ### Identical particles and Pauli's exclusion principle
 
 The tensor product construction needs to be revised when discussing the Hilbert space of a
-system composed of identical particles. Consider for example a system made out of $N$ 
+system composed of identical particles. Consider for example a system made out of $N$
 identical particles. To every individual particle we can associate a particular Hilbert
-space, which we denote as $\mathbb{H}^{(1)}$, for example $\mathbb{H}^{(1)} = L^2(\mathbb{R})$
-for a particle moving on the real line, or $\mathbb{H}^{(1)} = \mathbb{C}^L$ for a particle living
-on the sites of a chain of length $L$.
+space, which we denote as $\mathbb{H}^{(1)}$, for example
+$\mathbb{H}^{(1)} = L^2(\mathbb{R})$ for a particle moving on the real line, or 
+$\mathbb{H}^{(1)} = \mathbb{C}^L$ for a particle living on the sites of a chain of length
+$L$.
 
 If we temporarily assign each of the $N$ particles a label $n=1,\dots, N$, then the Hilbert
 space of the composite system would be given by the $N$-fold tensor product
-$\widetilde{\mathbb{H}}^{(N)} = \left(\mathbb{H}^{(1)}\right)^{\otimes N}$. However, for identical particles,
-our labeling is completely arbitrary. For the case of $N=2$ particles on a chain of $L$ sites,
-we cannot distinguish between the state $\ket{j_1, j_2}$ where particle $1$ is on site $j_1$
-and particle $2$ is on site $j_2$ versus the state $\ket{j_2, j_1}$ where site $j_1$ is occupied
-by the particle that we gave label $2$ and site $j_2$ is occupied by the particle with label $1$.
-A general redefinition of the particle labels amounts to a permutation, and we have to require
-that no physical measurement can distinguish between such permutations. Hence, this permutation
-invariance does not behave like a regular symmetry (like e.g. rotation symmetry, one can still construct 
-observables along preferred directions such that they can detect rotations).
+$\widetilde{\mathbb{H}}^{(N)} = \left(\mathbb{H}^{(1)}\right)^{\otimes N}$. However, for
+identical particles, our labeling is completely arbitrary. For the case of $N=2$ particles
+on a chain of $L$ sites, we cannot distinguish between the state $\ket{j_1, j_2}$ where
+particle $1$ is on site $j_1$ and particle $2$ is on site $j_2$ versus the state $\ket{j_2,
+j_1}$ where site $j_1$ is occupied by the particle that we gave label $2$ and site $j_2$ is
+occupied by the particle with label $1$. A general redefinition of the particle labels
+amounts to a permutation, and we have to require that no physical measurement can
+distinguish between such permutations. Hence, this permutation invariance does not behave
+like a regular symmetry (like e.g. rotation symmetry, one can still construct observables
+along preferred directions such that they can detect rotations).
 
-We are forced to restrict our tensor product Hilbert space $\left(\mathbb{H}^{(1)}\right)^{\otimes N}$
-to the subspace $\mathbb{H}^{(N)}$ of physical states which are not affected by acting with
-such permutations. Note that, due to the fact that quantum states actually correspond to rays
-of vectors, it is still allowed that the vectors in $\mathbb{H}^{(N)}$ pick up a phase factor
-when applying certain permutations. It is a result in the representation theory of the
-permutation group that there are only two possibilities. Either the phase factor is always 
-absent (or thus 1), or the phase factor is (-1) for odd permutations and (+1) for even
-permutations, i.e. the phase factor equals the sign(ature) of the permutation. Identical particles
-for which the phase factor is always one are known as *bosons*, whereas those with the nontrival 
-phase factor choice correspond to *fermions*. Indeed, the nontrivial phase factor automatically
-gives rise to *Pauli's exclusion principle*: two fermions cannot be in the same quantum state,
-since $P_{12} \ket{j_1,j_2} = \ket{j_2,j_1} = -\ket{j_1,j_2}$ and for $j_1=j_2$ we would thus
-find $\ket{j,j} = -\ket{j,j}$.
+We are forced to restrict our tensor product Hilbert space
+$\left(\mathbb{H}^{(1)}\right)^{\otimes N}$ to the subspace $\mathbb{H}^{(N)}$ of physical
+states which are not affected by acting with such permutations. Note that, due to the fact
+that quantum states actually correspond to rays of vectors, it is still allowed that the
+vectors in $\mathbb{H}^{(N)}$ pick up a phase factor when applying certain permutations. It
+is a result in the representation theory of the permutation group that there are only two
+possibilities. Either the phase factor is always absent (or thus 1), or the phase factor is
+(-1) for odd permutations and (+1) for even permutations, i.e. the phase factor equals the
+sign(ature) of the permutation. Identical particles for which the phase factor is always one
+are known as *bosons*, whereas those with the nontrival phase factor choice correspond to
+*fermions*. Indeed, the nontrivial phase factor automatically gives rise to *Pauli's
+exclusion principle*: two fermions cannot be in the same quantum state, since $P_{12}
+\ket{j_1,j_2} = \ket{j_2,j_1} = -\ket{j_1,j_2}$ and for $j_1=j_2$ we would thus find
+$\ket{j,j} = -\ket{j,j}$.
 
 Bosons are thus described by states which are symmetric under permutations, whereas fermions
 are described by states which are called antisymmetric. We can define an operator on
-$\tilde{\mathbb{H}}^{(N)} = $\left(\mathbb{H}^{(1)}\right)^{\otimes N}$ that maps any given
-state onto such a (anti)symmeric state, namely by first defining its action on product states
-as
+$\tilde{\mathbb{H}}^{(N)} = \left(\mathbb{H}^{(1)}\right)^{\otimes N}$ that maps any given
+state onto such a (anti)symmeric state, namely by first defining its action on product
+states as
 
 $$ \hat{S}^{\pm} \ket{\psi_1} \otimes \ket{\psi_2} \otimes \cdots \otimes \ket{\psi_N} = \frac{1}{\sqrt{N!}} \sum_{\sigma \in S_N} \epsilon_\sigma \ket{\psi_{\sigma(1)}} \otimes \ket{\psi_{\sigma(2)}} \otimes \cdots \otimes \ket{\psi_{\sigma(N)}} $$
 
-and then extending it by linearity. Here, $S_N$ is the symmetric group containing all permutations
-$\sigma$ of $N$ elements, where the permutation $\sigma$ is a bijective map from integers $j \in \{1,\dots,N\}$
-to a new number $\sigma(j) \in \{1,\dots,N\}$. The sign(ature) $\epsilon_\sigma$ of the permutation
-takes the value $+1$ or $-1$, depending on whether the permutation $\sigma$ can be obtained
-by composing an even or odd number of elementary transpositions. An elementary transposition 
-$\tau_{i,j}$ is a permutation which only interchanges the two numbers $i$ and $j \neq i$:
+and then extending it by linearity. Here, $S_N$ is the symmetric group containing all
+permutations $\sigma$ of $N$ elements, where the permutation $\sigma$ is a bijective map
+from integers $j \in \{1,\dots,N\}$ to a new number $\sigma(j) \in \{1,\dots,N\}$. The
+sign(ature) $\epsilon_\sigma$ of the permutation takes the value $+1$ or $-1$, depending on
+whether the permutation $\sigma$ can be obtained by composing an even or odd number of
+elementary transpositions. An elementary transposition $\tau_{i,j}$ is a permutation which
+only interchanges the two numbers $i$ and $j \neq i$:
 
 $$\tau_{i,j}(i) =j, \tau_{i,j}(j) = i, \tau_{i,j}(k) =k, \forall k\neq i \land k \neq j $$
 
 Note that $\hat{S}^{\pm}$ does not necessarily yield a normalised state, and can indeed even
-map a state to zero, in order to give rise to Pauli's exclusion principle: $\hat{S}^- \ket{j,j} = 0$.
-The image of $\hat{S}^{\pm}$ contains all states with the proper behaviour under relabeling
-permutations, and thus correspond to the physical Hilbert space for bosons or fermions:
+map a state to zero, in order to give rise to Pauli's exclusion principle:
+$\hat{S}^-\ket{j,j} = 0$. The image of $\hat{S}^{\pm}$ contains all states with the proper
+behaviour under relabeling permutations, and thus correspond to the physical Hilbert space
+for bosons or fermions:
 
 $$ \mathbb{H}^{(N)} = \hat{S}^{\pm} \widetilde{\mathbb{H}}^{(N)} = \hat{S}^{\pm} \left(\mathbb{H}^{(1)}\right)^{\otimes N} $$
 
-Note that in this case, the physical Hilbert space is not a tensor product. We had to define
-a larger auxiliary Hilbert space, $ \widetilde{\mathbb{H}}^{(N)}$, which is a tensor product.
-The physical Hilbert space can then be thought of as a subspace thereof. This situation also
-occurs in other places, most notably, in the case of gauge theories.
+Note that in this case, the physical Hilbert space is not a tensor product. However, we can
+think of it as a subspace of an auxiliary Hilbert space, $ \widetilde{\mathbb{H}}^{(N)}$, which is a tensor product.
+The restriction to this subspace  can thus be thought of as a constraint, and the same 
+scenario happens in other constrained quantum systems. The most notable example is that
+of quantum gauge theories, where there is an extensive set of constraints, namely that
+physical quantum states need to be gauge invariant.
 
 Now consider a single particle Hilbert space $\mathbb{H}^{(1)}$ with an orthonormal basis
 $\{\ket{j}, j=1,\ldots,L\}$, for example where $\ket{j}$ corresponds to the particle being
@@ -441,21 +454,22 @@ $L^N$ elements. Let us henceforth denote these states as
 
 $$ \ket{j_1,j_2,\ldots ,j_N} = \hat{S}^{\pm} \left(\ket{j_1} \otimes \ket{j_2} \otimes \cdots \otimes \ket{j_N}\right)$$
 
-The application of $\hat{S}^{\pm}$ will create certain linear dependences. In particular, states
-$ \ket{j_1,j_2, \ldots, j_N}$ that contain the same set of modes $j_k$, i.e. for which the $j_k$'s
-are related by a permutation, are equal (up to a sign in the case of $\hat{S}^-$). We can thus select
-a single state by ordering the $j_k$ arguments. Furthermore, in the case of $\hat{S}^{-}$, the
-state is mapped to zero as soon as two $j_k$ values coincide, so we can eliminate such states. If we
-thus restrict the set to states $\ket{j_1,j_2,\ldots ,j_N}$ which are such that the modes are
-ordered as $j_1 < j_2 < \ldots < j_N$ (for fermions) or $j_1 \leq j_2 \leq \ldots \leq j_N$ (for bosons),
-then we have a linearly indepenent set of states. For fermions, this implies in particular that
-we need to have $N \leq L$, there cannot be more fermions in the system then there are linearly
-independent modes (single particle states). 
+The application of $\hat{S}^{\pm}$ will create certain linear dependences. In particular,
+states $ \ket{j_1,j_2, \ldots, j_N}$ that contain the same set of modes $j_k$, i.e. for
+which the $j_k$'s are related by a permutation, are equal (up to a sign in the case of
+$\hat{S}^-$). We can thus select a single state by ordering the $j_k$ arguments.
+Furthermore, in the case of $\hat{S}^{-}$, the state is mapped to zero as soon as two $j_k$
+values coincide, so we can eliminate such states. If we thus restrict the set to states
+$\ket{j_1,j_2,\ldots ,j_N}$ which are such that the modes are ordered as
+$j_1<j_2<\ldots<j_N$ (for fermions) or $j_1 \leq j_2 \leq \ldots \leq j_N$ (for bosons),
+then we have a linearly indepenent set of states. For fermions, this implies in particular
+that we need to have $N \leq L$, there cannot be more fermions in the system then there are
+linearly independent modes (single particle states).
 
-Finally, one can wonder about the normalisation of these states. For fermions, the superposition 
-created by $\hat{S}^-$ contains $N!$ terms, which are mutually orthogonal, so that the 
-resulting state is normalised (because of the $1/\sqrt{N!}$ prefactor in the definition of 
-$\hat{S}^{-}$. More generally, one then finds
+Finally, one can wonder about the normalisation of these states. For fermions, the
+superposition created by $\hat{S}^-$ contains $N!$ terms, which are mutually orthogonal, so
+that the resulting state is normalised, because of the $1/\sqrt{N!}$ prefactor in the
+definition of $\hat{S}^{-}$. More generally, one then finds
 
 $$\braket{i_1 < i_2 < \ldots < i_N | j_1 < j_2 < \ldots < j_N} = \delta_{i_1,j_1} \delta_{i_2,j_2} \cdots \delta_{i_N,j_N}$$
 
@@ -467,11 +481,11 @@ the value $1, 2, \ldots, L$, i.e. the number of particles in mode $1, 2, \ldots,
 
 $$\braket{i_1 \leq i_2 \leq \ldots \leq i_N | j_1 \leq j_2 \leq \ldots \leq j_N} = (n_1! n_2! \cdots n_L!) \delta_{i_1,j_1} \delta_{i_2,j_2} \cdots \delta_{i_N,j_N}$$
 
-This more general exprression is also valid for fermions, where every $n_j$ is restricted to be
-zero or one. In fact, the values $n_j$ for $j=1,\ldots,L$ completely characterise the state, and
-can thus be used to relabel the basis. Instead of specifying the mode $j_k$
-that each particle $k=1,\ldots,N$ occuppies (where the labeling of the particles is arbitrary
-because they are identical), we can move to a mode-based description and thus specify the 
+This more general exprression is also valid for fermions, where every $n_j$ is restricted to
+be zero or one. In fact, the values $n_j$ for $j=1,\ldots,L$ completely characterise the
+state, and can thus be used to relabel the basis. Instead of specifying the mode $j_k$ that
+each particle $k=1,\ldots,N$ occuppies (where the labeling of the particles is arbitrary
+because they are identical), we can move to a mode-based description and thus specify the
 number of particles in each mode, also known as the mode occupation number. We can then
 refer to the basis vectors as
 
@@ -482,14 +496,15 @@ $\sum_{j=1}^{L} n_j = N$. Furthermore, we define these states to be normalised t
 absorb a suitable normalisation factor when defining $\ket{n_1, n_2, \ldots, n_L}$ in terms
 of the construction above. 
 
-This way of labelling the basis states now is again reminiscent of a tensor product structure,
-i.e.\ we could think of $\ket{n_1, n_2, \ldots, n_L}$ as the tensor product of states $\ket{n_j}$
-associated to every mode, and where the Hilbert space associated with such a mode is two-dimensional 
-in the case of fermions, or infinite-dimensional in the case of bosons.  However, there is still
-a global constraint $\sum_{j=1}^{L} n_j = N$ so that we cannot let the different $n_j$ values
-vary completely independently from each other. Furthermore, some caution is now needed as to
-what it means to have operators acting on these different "mode Hilbert spaces". The correct
-formalism is that of second quantisation, which we introduce next.
+This way of labelling the basis states now is again reminiscent of a tensor product
+structure, i.e. we could think of $\ket{n_1, n_2, \ldots, n_L}$ as the tensor product of
+states $\ket{n_j}$ associated to every mode, and where the Hilbert space associated with
+such a mode is two-dimensional in the case of fermions, or infinite-dimensional in the case
+of bosons. However, there is still a global constraint $\sum_{j=1}^{L} n_j = N$ so that we
+cannot let the different $n_j$ values vary completely independently from each other.
+Furthermore, some caution is now needed as to what it means to have operators acting on
+these different "mode Hilbert spaces". The correct formalism is that of second quantisation,
+which we introduce next.
 
 ```{note}
 In many applications, people do still work with the framework of first quantisation, and consider
@@ -512,77 +527,230 @@ to explicitly sum up all $N!$ terms.
 
 ## Fock space and second quantisation
 
-However, there is an easier formalism that is furthermore required when dealing with systems
-in which the precise number of particles $N$ might fluctuate. While non-relativistic processes
-do typically not create new particles, this can still be useful for providing an effective
-or approximate description. For example, the BCS theory of superconductivity is constructed
-by transforming into a description where the number of Cooper pairs can fluctuate.
-
-We start by defining the Fock space, which is the direct sum of all physical (symmetrised or
-antisymmetrised) Hilbert spaces $\mathbb{H}^{(N)}$ for different particle numbers $N$, going
-all the way from $N=0$:
+When working with basis vectors using the occuppation number representation, we might consider
+dropping the overall constraint $\sum_{j=1}^L n_j = N$. This amounts to working in a larger
+Hilbert space, which is known as the Fock space, and consists of the direct sum of all 
+physical (symmetrised or antisymmetrised) Hilbert spaces $\mathbb{H}^{(N)}$ for different 
+particle numbers $N$, going all the way from $N=0$:
 
 $$\mathbb{H} = \bigoplus_{N=0}^{+\infty} \mathbb{H}^{(N)}$$
 
-Note that we have not discussed the case $N=0$ before, as in the previou subsection we started
-the construction of $\mathbb{H}^{(N)}$ from a given single particle Hilbert space $\mathbb{H}^{(1)}$.
-When there are no particles in the system, there is only a single state in which it can be.
-Hence, for $N=0$ particles, the Hilbert space $\mathbb{H}^{(0)}$ is spanned by a single state,
-which we typically denote as $\ket{0}$ or $\ket{\Omega}$ and refer to as the *vacuum state*.
-We choose this state to be normalised, and thus note that $\ket{0}$ is very different from
-a the zero vector of the vector space, which has norm zero.
+In the case of fermions and with a finite-dimensional single-particle Hilbert space
+$\mathbb{H}^{(1)} \cong \mathbb{C}^L$, the upper limit in the direct sum is $N=L$, i.e.
+there are no states with $N > L$ and so the associated Hilbert spaces are zero-dimensional.
+This direct sum furthermore also contains the case $N=0$, which we have not discussed
+before. In the previou subsection we started the construction of $\mathbb{H}^{(N)}$ from a
+given single particle Hilbert space $\mathbb{H}^{(1)}$. When there are no particles in the
+system, there is only a single state in which it can be, corresponding to having all
+occupation numbers $n_j = 0$ for all $j$. Hence, for $N=0$ particles, the Hilbert space
+$\mathbb{H}^{(0)}$ is spanned by a single state, which we typically denote as
+$\ket{\Omega}=\ket{0,0,\dots,0}$ and refer to as the *vacuum state*. Note that this vacuum
+state is normalised, and is thus very different from an actual zero vector of the vector
+space, which has norm zero.
 
-The Fock space becomes a Hilbert space simply by incorporating the inner product from each
+The Fock space becomes a Hilbert space simply by incorporating the inner usproduct from each
 of its summands. States within the different summands of this direct sum are defined
 to be orthogonal, i.e. $\braket{\varphi^{(M)} \vert \psi^{(N)}}=0$ for all $M$-particle states
 $\ket{\varphi^{(M)}}$ and $N$-particle states $\ket{\psi^{(N)}}$ with $M \neq N$.
 
-Given the above mode occupation numbers, we can now use the states
+The main benefits of using the formalism of second quantisation are not about losing the
+overall particle number constraint, but for working with operators, in particular to
+describe (interacting) Hamiltonians. In first quantisation, we need to specify a Hamiltonian
+given a particular number of particles, i.e.\ the number of particles is an external parameter
+of the system. Using the Fock space, we can now define operators in such a way that their 
+action is immediately defined for states with an arbitrary number of particules, including
+even states which are superpositions over different particle numbers.
 
-$$\{\ket{n_1,n_2,\ldots,n_L}, n_j = 0,1\ \text{or}\ n_j = 0,1,2,\ldots\}$$
+Hereto, we first introduce operators that enable us to connect the different particle
+number sectors, by creating (adding) or annihilating (removing) particles in the system.
+In particular, we denote with $\hat{a}_j^+$ the operator that adds a new particle in
+the mode $j$ in the system and with $\hat{a}_j^-$ the operator that removes a particle that
+is in mode $j$ from the system. As it turns out that both operators are related via the
+adjoint, i.e. $\braket{\Phi| hat{a}_j^+ \Psi} = \braket{hat{a}_j^- \Phi | \Psi}$, we use
+the simpler notation $\hat{a}_j$ for the *annihilation operator* and $\hat{a}_j^\dagger$ for
+the *creation operator*. To construct these operators in a mathematically precise and 
+constructive way is actually somewhat tedious
+(but see [Wikipedia](https://en.wikipedia.org/wiki/Second_quantization#Creation_and_annihilation_operators)).
+We just summarize their main properties. In particular, we want to have the property that the
+(anti)symmetrized states satisfy
 
-as basis, where the global constraint can now be omitted. Aside from losing the global
-constraint, we have so far not yet gained anything and the different particle number sectors 
-cannot yet easily be related to each other. Hereto, we now introduce a set of operators on
-$\mathbb{H}$ which relate these different sectors by creating or annihilating a particle.
+$$ \ket{j_1,j_2, \ldots, j_N} = \hat{a}_{j_1}^\dagger \hat{a}_{j_2}^\dagger \cdots \hat{a}_{j_N}^\dagger\ket{\Omega} .$$
 
-TBC
+It is immediately clear that, because of the (anti)symmetry, this requires that
 
-## Interesting states in quantum many-body physics
+$$ [\hat{a}_i^\dagger, \hat{a}_j^\dagger] = 0\  (\text{bosons})\quad\text{or}\quad \{\hat{a}_i^\dagger,\hat{a}_j^\dagger\} = 0\  (\text{fermions}). $$
+
+From the normalisation of these states, it also follows that
+
+$$ [\hat{a}_i, \hat{a}_j^\dagger] = \delta_{i,j}\ (\text{bosons})\quad\text{or}\quad \{\hat{a}_i,\hat{a}_j^\dagger\} = \delta_{i,j}\  (\text{fermions}). $$
+
+With respect to the normalized basis vectors using number occupation representation, we have
+
+$$ \ket{n_1, n_2, \ldots, n_L} = \frac{1}{\sqrt{n_1! n_2! \cdots n_L!}} (\hat{a}_1^\dagger)^{n_1} (\hat{a}_2^\dagger)^{n_2}  \cdots (\hat{a}_L^\dagger)^{n_L} \ket{\Omega}$$
+
+which can be summarized using
+
+$$ \hat{a}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j} \ket{n_1, n_2, \ldots, n_j - 1, \ldots, n_L},\\
+\hat{a}_j^\dagger \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j+1} \ket{n_1, n_2, \ldots, n_j + 1, \ldots, n_L}. $$
+
+It then follows easily that the operator $\hat{n}_j = \hat{a}_j^\dagger \hat{a}_j$ satisfies
+
+$$\hat{n}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} = n_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L}$$
+
+and thus measures the number of particles in mode $j$. The operators $\hat{n}_j$ are referred
+to as *number operators*. The total number of particles can then be measured using
+
+$$ \hat{N} = \sum_{j=1}^{L} \hat{n}_j $$
+
+but the Fock space does of course contain states which are superpositions over different
+particle numbers (and which are thus not eigenstates of $\hat{N}$).
+
+Furthermore, by studying how single particle states $\ket{j} \equiv \hat{a}_j^\dagger
+\ket{\Omega}$ change under a change of single particle basis, or thus, a transformation to a
+new set of modes, we can deduce how the associated creation and annihilation operators
+transform. Suppose we have a different single-particle basis, which for clarity we label
+with greek letters $\kappa = 1,\ldots,L$. We then find
+
+$$ \ket{\kappa} = \hat{a}_\kappa^\dagger \ket{\Omega} = \sum_{j} \ket{j} \braket{j\vert\kappa} = \sum_{j} \braket{j\vert \kappa} \hat{a}_j^\dagger \ket{\Omega}$$
+
+from which we obtain
+
+$$ \hat{a}_\kappa^\dagger = \sum_{j} \braket{j\vert \kappa} \hat{a}_j^\dagger, \qquad\hat{a}_\kappa = \sum_{j} \braket{\kappa\vert j} \hat{a}_j.$$
+
+Note that the transformation matrix $\braket{j \vert \kappa}$ between two orthonormal bases
+correspond to a unitary matrix. These transformation rules will be employed often, for
+example, to switch between a position and momentum space representation.
+
+```{note}
+The bosonic creation and annihilation operators are of course reminiscent from the operators
+introduced for diagonalising the single particle harmonic oscillator model. Indeed, out of
+the bosonic creation and annihilation operator associated to every mode $j$ we can build two
+Hermitian operators
+
+$$ \hat{X}_j = \frac{1}{\sqrt{2}}(\hat{a}_j + \hat{a}_j^\dagger),\quad \hat{P}_j = \frac{-\mathrm{i}}{\sqrt{2}}(\hat{a}_j - \hat{a}_j^\dagger) $$
+
+which than satisfy the well known commutation relations 
+$\left[\hat{X}_j, \hat{P}_k\right] = \mathrm{i} \delta_{j,k}$. In second quantisation, the 
+Fock space of bosons built from a single particle system with $L$ modes can equivalently be
+thought of as a regular tensor product space of $L$ distinguishable quantum particles moving
+on the real line, or technically, as $\left(L^2(\mathbb{R})\right)^{\otimes L}$.
+```
+```{note}
+For fermions, we can also construct Hermitian operators out of the creation and annihilation
+operators, which we denote as
+
+$$ \hat{\eta}^{(1)}_j = \frac{1}{\sqrt{2}}(\hat{a}_j + \hat{a}_j^\dagger),\quad \hat{\eta}^{(2)}_j = \frac{-\mathrm{i}}{\sqrt{2}}(\hat{a}_j - \hat{a}_j^\dagger). $$
+
+In this case, we find that they satisfy the anticommutation relation
+
+$$ \{ \hat{\eta}^{(\alpha)}_j, \hat{\eta}^{(\beta)}_k \} = \delta_{\alpha,\beta} \delta_{j,k} $$
+
+so that the $\hat{\eta}^{(1)}$ type operators and $\hat{\eta}^{(2)}$ type operators behave
+similarly. In that case, one often uses a different notation by setting
+
+$$ \hat{\chi}_{2j-1} = \hat{\eta}^{(1)}_j = \frac{1}{\sqrt{2}}(\hat{a}_j + \hat{a}_j^\dagger),\quad \hat{\chi}_{2j} = \hat{\eta}^{(2)}_j = \frac{-\mathrm{i}}{\sqrt{2}}(\hat{a}_j - \hat{a}_j^\dagger)$$
+
+and thus $\{\hat{\chi}_k, \hat{\chi}_l\} = \delta_{k,l}$ for all $k, l = 1,\ldots, 2L$. These
+Hermitian fermionic operators are referred to as **Majorana operators**.
+
+Note furthermore that the Fock space of fermions built from a single particle system with $L$ modes
+looks remarkably like a system of $L$ qubits, i.e. the tensor product $(\mathbb{C}^2)^{\otimes L}$.
+While this is true for how the occupation number basis vectors are labelled, one important 
+fact is that the operators $\hat{a}_j$ and $\hat{a}_j^\dagger$ should not be thought of as
+local operators that act nontrivially on the single site $j$, and as the identity elsewhere,
+since they do not mutually commute, but rather anticommute. It is possible to map these 
+fermionic creation and annihilation operators to 'nonlocal' qubit operators using the 
+[Jordan-Wigner transformation](https://en.wikipedia.org/wiki/Jordan–Wigner_transformation).
+```
+
+With these creation and annihilation operators, we can now represent general operators in a
+way that does not depend on the precise number of particles in the system. The simplest case
+are 'single-particle' operators, i.e. operators that were defined with respect to the
+single-particle Hilbert space $\mathbb{H}^{(1)}$. The easiest case are operators which are
+are diagonal with respect to the chosen single-particle basis. In that case, every particle
+one of the eigenmodes of the single-particle operator will give a contribution that equals
+the associated eigenvalue. Hence, the many body representation of such an operator is given
+by
+
+$$ \hat{O}^{(1)} = \sum_{j} \lambda_j \ket{j}\bra{j} \quad \rightarrow \quad \hat{O} = \sum_{j} \lambda_j \hat{a}_j^\dagger \hat{a}_j .$$
+
+However, we can easily transform away from the basis of eigenmodes to a general set of modes,
+and then find
+
+$$ \hat{O}^{(1)} = \sum_{j,k} O_{j,k} \ket{j}\bra{k} \quad \rightarrow \quad \hat{O} = \sum_{j,k} O_{j,k} \hat{a}_j^\dagger \hat{a}_k .$$
+
+Vice versa, if you are given an operator that only contains terms where every term contains exactly one creation
+and one annilation operator, then it is especially easy to diagonalise this operator, since 
+one only needs to diagonalise the corresponding single-particle version of the operator. When
+the Hamiltonian of the many-body system is of this form, the system is said to be *free* or
+noninteracting.
+
+```{note}
+There is a larger class of operators that can easily be diagonalised, namely operators where
+every term is quadratic in the creation and annihilation operators. This means that every term
+contains either a creation and an annilation operator, or two creation operators, or two 
+annihilation operators. Such Hamiltonians are said to be quadratic or Gaussian, and can be
+diagonalised using a [Bogoliubov transformation](https://en.wikipedia.org/wiki/Bogoliubov_transformation).
+```
+
+Similarly, there exist two-particle operators, in particular, typical interaction terms in the
+Hamiltonian such as the Coulomb interaction between electrons. Such operators take the form
+
+$$\hat{O}^{(2)} = \sum_{j,k,l,m} O_{j,k; l,m} \ket{j,k} \bra{l,m}$$
+
+and can be translated to act on the full Fock space as
+
+$$\hat{O} = \sum_{j\leq k; l\leq m} O_{(j,k); (l,m)} \hat{a}_{j}^\dagger \hat{a}_k^\dagger \hat{a}_m \hat{a}_l = \frac{1}{4} \sum_{j, k; l, m} O_{(j,k); (l,m)} \hat{a}_{j}^\dagger \hat{a}_k^\dagger \hat{a}_m \hat{a}_l.$$
+
+As soon as such type of operators are present in the Hamiltonian (which thus contain more than
+two creation of annihilation operators), it becomes impossible to diagonalise the Hamiltonian
+based on a simple calculation in the single-particle Hilbert space, and the exponentially
+large many-body Hilbert space need to be considered.
+
+## Interesting states and observables in quantum many-body physics
 
 Having introduced the Hilbert space and Hamiltonian of quantum many-body systems, we still
-need to define which states we are actually interested in. So far, we have only mentioned
-that isolated systems have a quantum state which corresponds to a vector (or rather a ray of
-vectors) in its Hilbert space $\mathbb{H}$.
+need to define which states we are actually interested in, and which type of observables we
+want to compute for such states . So far, we have only mentioned that isolated systems have
+a quantum state which corresponds to a vector (or rather a ray of vectors) in its Hilbert
+space $\mathbb{H}$. Before answering this question, we first need to generalise our concept
+of a quantum state.
 
 ### Quantum states revisited
 
-More abstractly and generally, the quantum state of a system can be introduced as a map from 
-observables (operators) to numbers (expectation values). This is typically denoted as
-$\rho: \mathrm{End}(\mathbb{H}) \mapsto \mathbb{C}:\hat{A} \to \hat{A}$. Here, $\mathrm{End}(\mathbb{H})$
-is the set of linear operators (a.k.a endomorphisms) on $\mathbb{H}$. This set is itself a
-vector space, as we can consider linear combinations of linear operators. Furthermore, as we
-can compose linear operators, we have a multiplication, which makes $\mathrm{End}(\mathbb{H})$
-into an algebra. Finally, we have defined the concept of the adjoint of an operator, which in
-mathematics terminology gives $\mathrm{End}(\mathbb{H})$ the structure of a $C^\ast$-algebra.
+More abstractly and generally, the quantum state of a system can be introduced as a map from
+observables (operators) to numbers (expectation values). This is typically denoted as $\rho:
+\mathrm{End}(\mathbb{H}) \mapsto \mathbb{C}:\hat{A} \to \hat{A}$. Here,
+$\mathrm{End}(\mathbb{H})$ is the set of linear operators (a.k.a endomorphisms) on
+$\mathbb{H}$. This set is itself a vector space, as we can consider linear combinations of
+linear operators. Furthermore, as we can compose two linear operators and obtain a new
+linear operator, we have a product operation, which makes $\mathrm{End}(\mathbb{H})$ into an
+algebra. Finally, we have defined the concept of the adjoint of an operator, which in
+mathematics terminology gives $\mathrm{End}(\mathbb{H})$ the structure of a
+$C^\ast$-algebra.
 
-The map $\rho$ that represents a quantum state should have a number of properties, that generalise
-those of the case we have encountered so far, where 
-$\rho(\hat{A}) = \frac{\braket{\Psi\vert \hat{A} \vert \Psi}}{\braket{\Psi | \Psi}}$. In particular,
-this map is linear with respect to linear combinations of operators. This implies that it can
-be written as $\rho(\hat{A}) = \mathrm{Tr}\left[\hat{\rho}\hat{A}\right]$, where $\hat{\rho}$ is now
-itself an element of $ \mathrm{End}(\mathbb{H})$. Furthermore, we must have that our state
-gives rise to nonnegative and normalised probabilities, which implies that
+The map $\rho$ that represents a quantum state should have a number of properties, that
+generalise those of the case we have encountered so far, where
+$\rho(\hat{A}) = \frac{\braket{\Psi\vert \hat{A} \vert \Psi}}{\braket{\Psi | \Psi}}$. 
+In particular, this map is linear with respect to linear combinations of operators. This
+implies that it can be written as 
+$\rho(\hat{A}) = \mathrm{Tr}\left[\hat{\rho}\hat{A}\right]$, where $\hat{\rho}$ is now
+itself an element of $\mathrm{End}(\mathbb{H})$ (technically, $\rho$ is an element from
+the dual space of $\mathrm{End}(\mathbb{H})$). Furthermore, we must have that our state gives
+rise to nonnegative and normalised probabilities, which implies that
 * $\rho(\hat{1}) = \mathrm{Tr}\left[\hat{\rho}\right] = 1$
-* $\rho(\hat{P}) \geq 0$ for any projector, and more generally, for any positive definite operator $\hat{P}$.
-This implies that the associated operator $\hat{\rho}$, known as the **density operator** or
-density matrix (when expressed with respect to a chosen basis), is itself a positive (and thus
-self-adjoint) operator, which is furthermore normalised to have trace one.
+* $\rho(\hat{P}) \geq 0$ for any projector, and more generally, for any positive definite
+  operator $\hat{P}$. This implies that the associated operator $\hat{\rho}$, known as the
+  **density operator** or density matrix (when expressed with respect to a chosen basis), is
+  itself a positive (and thus self-adjoint) operator, which is furthermore normalised to
+  have trace one.
 
-The particular case where the state of the system was given by a vector $\ket{\Psi} \in \mathbb{H}$
-corresponds to $\hat{\rho} = \frac{\ket{\Psi}\bra{\Psi}}{\braket{\Psi\vert \Psi}}$ and thus
-satisfies $\hat{\rho}^2 = \hat{\rho}$, i.e. $\hat{\rho}$ is itself a projector. Such states are called
-*pure states*. All density operators which do not have this property are called *mixed states*.
+The particular case where the state of the system was given by a vector
+$\ket{\Psi}\in\mathbb{H}$ corresponds to
+$\hat{\rho}=\frac{\ket{\Psi}\bra{\Psi}}{\braket{\Psi\vert \Psi}}$ and thus satisfies
+$\hat{\rho}^2=\hat{\rho}$, i.e. $\hat{\rho}$ is itself a projector. Such states are called
+*pure states*. All density operators which do not have this property are called *mixed
+states*.
 
 Being positive definite operators, any density operator admits a spectral decomposition of the
 form
@@ -594,11 +762,15 @@ $\sum_{n} p_n =1 $ and $p_n \geq 0$ (which together also yields $p_n < 1$).
 
 Mixed states arise in the quantum world in two scenarios:
 
-1.	Even for an isolated system, it can happen that the state is not exaclty known and one
-	must deal with classical uncertaintity and probability. Indeed, a mixed state can be
-	interpreted as a statistical ensemble. If the system can be prepared into different 
-	(not necessarily orthogonal) states $\{\ket{\Psi_1}, \ket{\Psi_2}, \ldots\}$ with probabilities 
-	$p_1, p_2, \ldots$ that sum up to one, then the state of the system is given by
+1.	If the system is not isolated, but is rather a subsystem of a larger system and
+   interacting with its complement therein. This is discussed in the next section.
+
+2.	Even for an isolated system, it can happen that the state is not exaclty known and one
+   must deal with classical uncertaintity and probability. Indeed, a mixed state can be
+   interpreted as a statistical ensemble. If the system can be prepared into different (not
+   necessarily orthogonal) states $\{\ket{\Psi_1}, \ket{\Psi_2}, \ldots\}$ with
+   probabilities $p_1, p_2, \ldots$ that sum up to one, then the state of the system is
+   given by
 	
 	$$\hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} + \ldots $$
 
@@ -609,16 +781,25 @@ Mixed states arise in the quantum world in two scenarios:
 	$\hat{\rho} = p \hat{\rho}_1 + (1-p) \hat{\rho}_2$ with thus $0 \leq p \leq 1$ is a
 	valid density operator.
 
-2.	If the system is not isolated, but is rather a subsystem of a larger system and interacting with
-	its complement therein. This is discussed in the next section.
-
 To a mixed state, we can associate the Von Neumann entropy
 
 $$ S(\hat{\rho}) = - \mathrm{Tr}\left[\hat{\rho}\log \hat{\rho}\right] = - \sum_{n} p_n \log(p_n)$$
 
 with $p_n$ the eigenvalues of $\hat{\rho}$. For a pure state, the Von Neumann entropy
-evaluates to zero (using $\lim_{x\to 0} x \log x = 0$). Depending on the context, the
-interpretation and meaning of the Von Neumann entropy can differ, as we discuss below.
+evaluates to zero (using $\lim_{x\to 0} x \log x = 0$). The maximal value of the Von Neumann
+entropy is obtained when all values $p_n$ are equal so that $\hat{\rho} \sim \hat{1}$.
+Because of normalisation, we then have $p_n = 1/d$ with $d$ the Hilbert space dimension and
+thus obtain
+
+$$ 0 \leq S(\hat{\rho}) \leq \log d. $$
+
+In a many-body system, the Hilbert space dimension scales exponentially with the number of
+sites or number of degrees of freedom in the system. If we call this quantity the "volume"
+of the system, than we can conclude that the maximal value of the Von Neumann entropy is
+thus proportional to the volume of the system. 
+
+Depending on the context, the interpretation and meaning of the Von Neumann entropy can
+differ, as we discuss below.
 
 ### From tensor products to mixed states and entanglement
 
@@ -643,14 +824,14 @@ be obtained by observing that we can write
 ```{math}
 \braket{\Psi \vert \hat{O}^A \vert \Psi} &= \mathrm{Tr}\left[\hat{O} \otimes \hat{1}_B \ket{\Psi} \bra{\Psi}\right]\\
 &= \sum_{k = 1}^{d^A}\sum_{l = 1}^{d^B} \left(\bra{\psi_k} \otimes \bra{\varphi_l}\right) \left(\hat{O} \otimes \hat{1}_B\right) \ket{\Psi}\bra{\Psi}\left(\ket{\psi_k} \otimes \ket{\varphi_l}\right)\\
-&= \sum_{k = 1}^{d^A}] \bra{\psi_k} \hat{O} \left[ \sum_{l=1}^{d_B} \bra{\varphi_l} \ket{\Psi} \bra{\Psi} \ket{\varphi_l}\right] \ket{\psi_k}\\
+&= \sum_{k = 1}^{d^A}] \bra{\psi_k} \hat{O} \left[ \sum_{l=1}^{d^B} \bra{\varphi_l} \ket{\Psi} \bra{\Psi} \ket{\varphi_l}\right] \ket{\psi_k}\\
 &= \mathrm{Tr}_A \left[\hat{O} \mathrm{Tr}_B\left(\ket{\Psi}\bra{\Psi} \right)\right]\\
 &= \mathrm{Tr}\left[\hat{O} \hat{\rho}^{(A)}\right]
 ```
 
 Hence, subsystem $A$ an be described in terms of a mixed state that is obtained as
 
-$$ \hat{\rho}^A = \mathrm{Tr}_B \ket{\Psi}\bra{\Psi} = \sum_{l=1}^{d_B} \bra{\varphi_l} \ket{\Psi} \bra{\Psi} \ket{\varphi_l} $$
+$$ \hat{\rho}^A = \mathrm{Tr}_B \ket{\Psi}\bra{\Psi} = \sum_{l=1}^{d^B} \bra{\varphi_l} \ket{\Psi} \bra{\Psi} \ket{\varphi_l} $$
 
 This construction is known as a *partial trace* and the resulting mixed state of subsystem
 $A$ as the *reduced density operator*. It is based on the fact that by using a tensor
@@ -723,97 +904,294 @@ $$ \ket{\Psi} &= \sum_{i=1}^{\min(d^A,d^B)} s_i \ket{\psi^A_i} \otimes \ket{\psi
 \hat{\rho}^{(A)} &= \sum_{i=1}^{d^A} (s_i)^2 \ket{\psi^A_i} \bra{\psi^A_i}\\
 \hat{\rho}^{(B)} &= \sum_{i=1}^{d^b} (s_i)^2 \ket{\psi^B_i} \bra{\psi^B_i}$$
 
-Hence, the reduced matrices appear immietely in diagonalised form. The singular values $s_i$,
-or rather their squares $p_i = (s_i)^2 are referred to as the **entanglement spectrum**. The
-entanglement entropy is then given by
+Hence, the reduced matrices appear immidiately in diagonalised form. The singular values
+$s_i$, or rather their squares $p_i = (s_i)^2 are referred to as Schmidt coefficients,
+and together make up the **entanglement spectrum**. The entanglement entropy is then given by
 
 $$ S = - \sum_{i} p_i \log(p_i)$$
 
-In all of this, it is clear that subsystems $A$ and $B$ were treated on equal footing, and it
-does in fact not matter which of the two is chosen to probe the entanglement structure of
+In all of this, it is clear that subsystems $A$ and $B$ were treated on equal footing, and
+it does in fact not matter which of the two is chosen to probe the entanglement structure of
 the state.
+
+If the entanglement entropy evaluates to zero, the two subsystems $A$ and $B$ are said to be
+unentangled, and the state $\ket{\Psi}$ actually factorises as a tensor product
+$\ket{\psi^A} \otimes \ket{\psi^B}$. As soon as the entanglement entropy is nonzero, the two
+subsystems are entangled. As stated above, the entropy is upper bounded, in this case by the
+logarithm of the smallest of the two Hilbert space dimensions $d^A$ or $d^B$. Thus, if $d^A
+\leq d^B$, we find that the entanglement entropy satisfies
+
+$$ 0 \leq S \leq \log(d^A).$$
+
+It turns out that states that are randomly selected from the Hilbert space typically have
+an entanglement entropy that is close to maximal.
 
 ### Quantum many-body physics at finite temperature
 
-When a system is in contact with a large environment that acts as a heat bath at temperature $T$,
-then it will equilibrate so that the state of the system at equilibrium is given by the
-so-called Gibbs state
+With the concept of mixed states and quantum entanglement at hand, we can now discuss
+physically interesting states. Firstly, when considering a system that is in contact with a
+large environment that acts as a heat bath at temperature $T$, then it will equilibrate. The
+state of the system at equilibrium is then given by the so-called Gibbs state
 
-$$\hat{\rho} = \frac{\mathrm{e}^{-\beta \hat{H}}}{\mathrm{Tr}\left[\mathrm{e}^{-\beta \hat{H}}\right]}$$
+$$\hat{\rho} = \frac{1}{Z(\beta)} \mathrm{e}^{-\beta \hat{H}}$$
 
-with $\beta = \frac{1}{k_B T}$, $T$ de temperature, and $k_B$ Boltzmann's constant. Henceforth,
-we simply refer to $\beta$ as *inverse temperature*.
+where the normalization factor
 
-TBC
+$$Z(\beta) = \mathrm{Tr}\left[\mathrm{e}^{-\beta \hat{H}}\right]$$
+
+is typically referred to as the **partition function**. Here, $\beta = \frac{1}{k_B T}$ with
+$T$ de temperature and $k_B$ Boltzmann's constant. Henceforth, we simply refer to $\beta$ as
+*inverse temperature*.
+
+The Von Neumann entropy of the Gibbs state corresponds to the thermodynamical notion of
+entropy. In a many-body system, the thermal entropy at finite temperature will be extensive
+and thus scale with the volume of the system, just like the energy expectation value,
+so that together the free energy $E - T S$ is minimised.
+
+At infinite temperature ($\beta=0$), we obtain $\hat{\rho} \sim \hat{1}$ and the Von Neumann
+entropy reaches its upper bound. At zero temperature ($\beta \to +\infty$), we obtain 
+$$\hat{\rho} \sim \hat{P}_0$, with $\hat{P}_0$ the projector onto the eigenspace of lowest
+energy. Hence, in that case the Von Neumann entropy is given by $\log(d_0)$, with $d_0$ the
+lowest energy eigenvalue, i.e.\ the dimension of the ground state subspace. Most quantum
+lattice systems have a single or at least a small number of linearly indepenent ground
+states, so that $d_0$ is a small number independent of the system size. However, there are
+also cases where the number of ground states scales exponentially with the system size, and
+the thermal entropy remains extensive at zero temperature. This then constitutes a violation
+of the infamous third law of thermodynamics.
+
+While the heat bath or environment with which the system interacts is in practice typically
+much "larger" (in terms of number of degrees of freedom and thus Hilbert space dimension),
+we can use a property that any mixed state can be obtained as the reduced density operator
+from a pure state in a Hilbert space that is the tensor product of two copies of the
+system's Hilbert space, or thus, where the environment is just exactly as large as the 
+system. Writing a mixed state $\hat{\rho}$ as the reduced density operator of a pure state 
+$\ket{\Psi}$ in a Hilbert space $\mathbb{H} = \mathbb{H}^S \otimes \mathbb{H}^E$ is known as a
+*purification*. With respect to the purification, all expectation values can be obtained as
+
+$$ \mathrm{Tr}\left[\hat{O} \hat{\rho}\right] = \braket{\Psi \vert \hat{O} \otimes \hat{1}_E \vert \Psi}$$
+
+which can be an advantage if one has an efficient (mathematical, computational, …) formalism
+for working with pure states. We can thus always construct such a purification by just taking
+the environment to be a copy of the system. Note that the environment in this construction is
+merely an auxiliary tool, and has no physical meaning or relation to the actual environment.
+If the Hilbert space of the system is described by a basis $\{\ket{j}, j=1,\dots, d\}$,
+then we can first build a purification if the infinite temperature state as
+
+$$\ket{\Psi_0} = \sum_{j} \ket{j}_S \otimes \ket{j}_E$$
+
+In particular, if the system is a many-body system and $\ket{j}$ is itself already a tensor
+product basis state $\ket{j_1} \otimes \ket{j_2} \otimes \ldots$, we can organise the
+environment so that matching tensor product factors between system and environment are taken
+together. This has the advantage that the infinite temperature state can be written as
+
+$$\ket{\Psi_0} = \left(\sum_{j_1} \ket{j_1}_S \otimes \ket{j_1}_E\right) \otimes \left(\sum_{j_2} \ket{j_2}_S \otimes \ket{j_2}_E\right) \otimes \ldots $$
+
+and still has an overall tensor product structure. A purification of the finite temperature
+state can then be obtained as
+
+$$\ket{\Psi_\beta} &= \frac{1}{\sqrt{Z(\beta)}} \sum_{j=1}^{d} \left(\mathrm{e}^{-\frac{\beta}{2} \hat{H}} \ket{j}_S \right)\otimes \ket{j}_E \\
+&= \frac{1}{\sqrt{Z(\beta)}} \exp\left(-\frac{\beta}{2} \hat{H}\right) \ket{\Psi_0} $$
+
+This expression now looks remarkibly similar to how to compute a time-evolved state, by 
+replacing $-\mathrm{i} t \mapsto -\beta/2$. Hence, methods that solve Schrödinger's equation
+and are sufficiently general to also work with imaginary values of the time coordinate can
+be used to prepare thermal states.
+
+```{note}
+Purifications of thermal states are also referred to as *thermofield double states*,
+especially in the high energy physics literature, i.e. in the context of quantum field
+theory, holography and quantum gravity.
+```
 
 ### Quantum many-body physics at zero temperature
 
-TBC
+As quantum effects are most pronounced at zero temperature, we typically assume to be operating
+in this regime. It then follows that we are mostly interested in the lowest energy states of
+the Hamiltonian, and in particular in the ground state(s). 
+
+A trivial but nonetheless important property of ground states is that they can easily be
+characterised as states that minimise the expectation value $\braket{\Psi \vert \hat{H} | \Psi}$. Indeed, 
+this forms the basis for the variational principle. If we have a set of trial states, in which
+there are a number of free parameters, than we can construct an approximation to the ground
+state by 'simply' minimising the energy expectation value of the Hamiltonian with respect
+to these free parameters. How good this approximation is in practice depends on the
+properties of both the Hamiltonian and the trial states. However, one way to quantify
+the quality of the ground state approximation is by computing the energy variance
+
+$$ \braket{\Psi \vert (\hat{H} - \braket{\Psi \vert \hat{H} \vert \Psi})^2 \vert \Psi} = \braket{\Psi \vert \hat{H}^2 \vert \Psi} - \braket{\Psi \vert \hat{H} \vert \Psi}^2 .$$
+
+The Hamiltonians for quantum lattice systems that we are interested in, will typically
+contain a sum of terms where every individual term acts nontrivially only in a small patch
+of the lattice. For such Hamiltonians, the low-energy states have a special property.
+Hereto, we consider arbitrary bipartitions of the system, where one subsystem corresponds to
+a (connected) region of sites, whereas the complement, i.e.\ the remaining sites in the
+lattice, make up the second subsystem. The ground state will in general not factorize into a
+tensor product, as it contains correlations and entanglement between these two (arbitrarily
+chosen) subsystems. As pointed out above, the maximal value of entanglement entropy is given
+by the logarithm of the smallest of the two Hilbert space dimensions. Assuming that our
+chosen region of sites is smaller than its complement, its Hilbert space will itself scale
+exponentially with the number of sites in that region, i.e.\ with its volume. Hence, the
+entanglement entropy computed for such a bipartition has an upper bound that is proportional
+to the volume of the subsystem. As was also stated above, random states typically satisfy
+this upper bound. However, the special property of low-energy states of locally interacting
+Hamiltonians is exactly that they have much less entanglement. They typically have an
+entanglement entropy that only scales with the common area between the subsystem and its
+complement. This scaling behavior is referred to as the **area law of entanglement entropy**
+and provides the key motivation for approximating such low energy states using a tensor
+network decomposition. It indicates that the most important quantum correlations are short
+range (just like the interactions that generate them), and are thus situated across the
+boundary connecting the subsystem and its complement. However, this does not exclude that
+there is also a small amount of nontrivial long-range correlations in the system.
+
+Aside from the ground state, one might also be interested in the first excited states, as
+these will be important for understanding how the system at zero temperature reacts to
+external perturbations. In a macroscopically large many-body system, one should not expect
+that the energy spectrum consists of a number of discrete levels with gaps in between. The
+lowest-energy excited states in a quantum lattice system can typically be given a
+particle-like interpretation, as is well known from quantum field theory. They correspond to
+small bumps of energy, i.e. they can be thought of as perturbations of the ground state in a
+small region and thus have an anergy cost that does not scale with the system size. However,
+because of kinetic energy-like terms, actual eigenstates will not correspond to having this
+energy bump in a localized region, but will rather be in a superposition where the
+"particle" is delocalized. In particular, in the case of a translation invariant system, the
+eigenstates will also be momentum eigenstates, and thus describe a particle that is in a
+momentum superposition across the lattice. The energy (surplus) of such a particle like
+excitation will thus be a number $\epsilon(k)$ that is of order $1$ independent of the
+system size, and that depends on the specific momentum. If $\epsilon(k)$ is everywhere lower
+bounded by some value $\Delta$ (again indepenent of system size), then the system is said to
+be gapped. However, in some systems, $\epsilon(k)$ can become zero for particular values of
+$k$. Such systems are called gapless, and they often correspond to phase transition points,
+where the nature of the ground state radically changes if the parameters in the Hamiltonian
+are varied.
+
+The energy spectrum of a quantum lattice system will then consist of one or a few ground states,
+the energy of which is an extensive number that is most easily expresses as some energy density
+per site. To study the excited states, it is then convenient to shift the energy scale such that
+the ground state energy is zero. The lowest excited states will then correspond to particles
+which can be created at a certain momentum. In an energy-momentum diagram, their dispersion
+relation $\epsilon(k)$ will apear as an isolated band. Note that a system can have different
+types of such particle-like excitations, each with their own dispersion relation. Higher
+up in the energy spectrum we start to obtain regions corresponding to states with two- or 
+more particles, that are travelling independent from each other. For such states, the energy
+can be obtained simply as the sum of the indivual particles in the state, and since the
+relative momentum of the particles can change while keeping the total momentum fixed, the
+energy in such states can also vary continuously (at least in the thermodynamic limit). 
+
+### Quantum dynamics and quenches
+
+Aside from low-energy eigenstates of the Hamiltonian, we are often also interested in states
+that have a non-trivial time depence. One particular use case is where one starts from the
+ground state $\ket{\Psi_0}$ of a certain Hamiltonian $\hat{H}_0$, and then some parameters in the
+Hamiltonian are suddenly changed, so that the Hamiltonian now corresponds to a new operator
+$\hat{H}_1$. This sudden change is remniscent of quenching a system, and such a setup is called
+a global quench. We then want to compute
+
+$$\ket{\Psi(t)} = \exp(-\mathrm{i} t \hat{H}_1) \ket{\Psi_0}$$
+
+With respect to $\hat{H}_1$, the state $\ket{\Psi_0}$ will no longer be a ground state and
+most likely not even be an eigenstate. However, it will have a certain (extensive)
+energy expectation value that is preserved throughout the evolution.
+
+In terms of entanglement and correlations, even when $\ket{\Psi_0}$ is a state with an area
+law entanglement scaling (because it is a low-energy state of another local Hamiltonian,
+namely $\hat{H}_0$), the entanglement in the state will grow rapidly with time. Indeed, the
+bipartite entanglement entropy for will tend to grow linearly with time. From the
+perspective of a given subsystem, its entropy will grow from an initial value proportional
+to the area of the subsystem, until it saturates at a value that is propertional to the
+volume of the subsystem. This process is known as thermalisation, as it turns out that at
+that point, the subsystem is locally indistinguishable from a Gibbs state with a temperature
+set by the energy density of the initial state. The subsystem has thermalized with respect
+to its complement behaving as an environment or heat bath. The larger the subsystem, the
+longer it will take before thermalisation is complete, and the overall state of the global
+system remains a pure state, albeit a highly entangled one.
+
+## Observables and static and dynamic correlation functions
+
+TO BE WRITTEN!
 
 ## Quantum-to-classical mapping
 
 In this final section, we introduce a general technique that essentially enables us to map
-any quantum lattice system in $d$ dimensions to a classical partition function in $d+1$ dimensions, up to some caveats that we will return to at the end of this section.
+any quantum lattice system in $d$ dimensions to a classical partition function in $d+1$
+dimensions, up to some caveats that we will return to at the end of this section.
 
-TBC
+TO BE WRITTEN!
 
 <!-- 
 ### Suzuki-Trotter decomposition
-So far, we have only discussed isolated quantum systems, the state of which corresponds to 
-a vector (or a ray of vectors) in the Hilbert space. When the system is not isolated, it will
-entangle with its environment. However, if we are not interested in any observables of the 
-environment, we can still restrict to a description that only involves the system itself, at
-the expense of modelling the state of the system as a mixed state or density matrix. 
 
-discusse
-Thermal expectation values are given by
+Remember that thermal expectation values are given by
 
-$$\braket{\operator{O}} = \tr\left[\operator{O} \ec^{-\beta \ham}\right]/Z(\beta)= \tr\left[\ec^{-\beta \ham/2} \operator{O} \ec^{-\beta \ham/2}\right]/Z(\beta)$$
+$$\braket{\operator{O}} = \tr\left[\operator{O} \mathrm{e}^{-\beta \hat{H}}\right]/Z(\beta)= \tr\left[\mathrm{e}^{-\beta \hat{H}/2} \operator{O} \mathrm{e}^{-\beta \hat{H}/2}\right]/Z(\beta)$$
 
 with the thermal partition function $Z(\beta)$ given by
-$$Z(\beta) = \tr \ec^{-\beta \ham} = \sum_{s= \pm 1} \braket{s|\ec^{-\beta \ham}|s}.$$
 
-The ground state physics is encoded in the limit $\beta \to \infty$. Note that, if the system has a unique ground state, we can obtain the ground state $\ket{\psi}$ of a quantum system by starting from essentially a random state $\ket{\phi}$ and evolving it in imaginary time $\tau = -\ic t$ for sufficiently long
+$$Z(\beta) = \tr \mathrm{e}^{-\beta \hat{H}} = \sum_{s= \pm 1} \braket{s|\mathrm{e}^{-\beta \hat{H}}|s}.$$
 
-$$\ket{\psi_0} \sim \lim_{\tau \to \infty} \ec^{-\tau \ham} \ket{\phi}$$
+The ground state physics is encoded in the limit $\beta \to \infty$. Note that, if the
+system has a unique ground state, we can obtain the ground state $\ket{\Psi}$ of a quantum
+system by starting from essentially a random state $\ket{\Phi}$ and evolving it in imaginary
+time $\tau = -\ic t$ for sufficiently long
 
-Expanding the initial state $\ket{\phi}$ in the energy eigenbasis of $\ham$, we see that the only condition is that it is not orthogonal to the ground state (subspace). In addition, the ground state will be well approximated if $\tau \Delta E \gg 1$, with $\Delta E=E_1 - E_0$ the energy gap.\footnote{This imaginary time evolution forms the basic ingredient of several numerical algorithms for approximating ground states of quantum many body systems, often in combination with the Suzuki-Trotter decomposition which is introduced below.} 
- This approach yields the following expression for the ground state expectation value of on operator $\operator{O}$
-\begin{equation}
-\braket{\operator{O}} = \lim_{\tau\to\infty} \braket{\phi|\ec^{-\tau \ham} \operator{O} \ec^{-\tau \ham}|\phi}/\braket{\phi|\ec^{-2\tau \ham} |\phi}\label{eq:imaginartimeexpval}
-\end{equation}
-This expression can be compared with Eq.~\eqref{eq:thermalexpval} with $\beta = 2\tau$; the only difference is in the boundary conditions.
+$$\ket{\psi_0} \sim \lim_{\tau \to \infty} \mathrm{e}^{-\tau \hat{H}} \ket{\phi}$$
 
-For a quantum many body system, taking the exponential is as hard as determining the full diagonalisation of the hamiltonian, which is impossible due to the exponentially large Hilbert space. If the hamiltonian is a sum of local terms, each of these terms can be exponentiated easily, but for arbitrary $\tau$ there is no relation ship between $\exp(-\tau \sum_{i} \operator{h}_i)$ and the individual $\exp(-\tau \operator{h}_i)$, unless the different $\operator{h}_i$ commute. However, for an infinitesimal time step $\epsilon$, we can use to Baker-Campbell-Hausdorff formula (or better yet, the Zassenhaus formula) to obtain $\exp(-\epsilon \sum_{i} \operator{h}_i) = \prod_i \exp(-\epsilon \operator{h}_i) + \mathcal{O}(\epsilon^2)$. This then leads to the \emph{Suzuki-Trotter decomposition}
-\begin{equation}
-	\exp\left(-\tau \sum_{i} \operator{h}_i\right) = \lim_{M\to\infty} \left( \ec^{-\frac{\tau}{M} \sum_i \operator{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \ec^{-\frac{\tau}{M} \operator{h}_i} + \order(M^{-1})\right)^M 
-\end{equation}
-Note that splitting the time interval $[0,\tau]$ into small segments $\epsilon = \tau/M$ is also the starting point for deriving a path integral representation of the quantum partition function. The next step is to insert a resolution of the identity in between the $N$ different factors, where the labels of the basis will behave as classical degrees of freedom. For obtaining a path integral, the basis should be labeled by a number of continuous degrees of freedom, which can then become continuous functions of time in the limit $\epsilon\to 0$. Here, instead, we will keep $\epsilon$ small but finite, and use a discrete basis. 
-\subsection{From quantum to statistical mechanics}
-Let's start with a quantum system in $d=0$, i.e.\ a small number of spins, or in particular, a single spin, described by a hamiltonian
-\begin{equation}
-	\ham = - h_x \sigma^x - h_z \sigma^z
-\end{equation}
-While we could in principle exponentiate $\ham$ directly, we will treat it using the Suzuki-Trotter decomposition. Throughout the remainder of this section, we will use the $\sz$ basis, which we denote as $\ket{1} = \ket{\uparrow}$ and $\ket{-1} = \ket{\downarrow}$. Inserting resolutions of the identity, we write
-\begin{equation}
-	Z(\beta) = \tr \ec^{-\beta \ham} = \sum_{\{s_k\}=\pm 1} \braket{s_1|\ec^{-\epsilon \ham}|s_2}\cdots \braket{s_M-1| \ec^{-\epsilon \ham}|s_{M}} \cdots \braket{s_M| \ec^{-\epsilon \ham}|s_{M+1}}
-\end{equation}
-with $s_{M+1} = s_1$, $M\epsilon =\beta$, and where
-\begin{align*}
-	\braket{s_{i}|\ec^{-\epsilon H}|s_{i+1}} &= \braket{s_{i}|\ec^{-\epsilon H}|s_{i+1}} \approx  \braket{s_{i}|\ec^{\epsilon h_z \sz}\ec^{\epsilon h_x \sx}|s_{i+1}}\\
-	&=  \ec^{\epsilon h_z s_i} \braket{s_{i}|\cosh(\epsilon h_x) \one + \sinh(\epsilon h_x) \sx |s_{i+1}}\\
-	&= \ec^{K s_{i}s_{i+1} + h s_i + f_0}.
-\end{align*}
-\begin{exercise}
-Prove that the equality on the last line is obtained with , $K = -\frac{1}{2}\log \tanh(\epsilon h_x)$, $h = \epsilon h_z$ and $f_0 = \frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]$.
-\end{exercise}\\
-We thus obtain $Z(\beta) = \sum_{s_k} \ec^{\sum_{i=1}^{M}K s_i s_{i+1} + h s_i}$, the partition function of the one-dimensional classical Ising model with periodic boundary conditions. Indeed, $\braket{s_{i}|\ec^{-\epsilon H}|s_{i+1}}$ does exactly correspond to the transfer matrix, and diagonalising the transfer matrix is the most straightforward approach to solving the one-dimensional classical Ising model. 
+Expanding the initial state $\ket{\phi}$ in the energy eigenbasis of $\hat{H}$, we see that the only condition is that it is not orthogonal to the ground state (subspace). In addition, the ground state will be well approximated if $\tau \Delta E \gg 1$, with $\Delta E=E_1 - E_0$ the energy gap. This imaginary time evolution also forms the basic ingredient of several numerical algorithms for approximating ground states of quantum many body systems, often in combination with the Suzuki-Trotter decomposition which is introduced below.
+
+Using this approach, the following expression for the ground state expectation value of on
+operator $\operator{O}$ is obtained
+
+$$\braket{\hat{O}} = \lim_{\tau\to\infty} \braket{\phi\vert \mathrm{e}^{-\tau \hat{H}} \operator{O} \mathrm{e}^{-\tau \hat{H}}\vert \phi}/\braket{\phi\vert\mathrm{e}^{-2\tau \hat{H}} \vert\phi}$$
+
+This expression can be compared to the thermal expectation value with $\beta = 2\tau$; the
+only difference is in the boundary conditions.
+
+ For a quantum many body system, taking the exponential is as hard as determining the full
+diagonalisation of the hamiltonian, which is impossible due to the exponentially large
+Hilbert space. If the hamiltonian is a sum of local terms, each of these terms can be
+exponentiated easily, but for arbitrary $\tau$ there is no relation ship between $\exp(-\tau
+\sum_{i} \operator{h}_i)$ and the individual $\exp(-\tau \operator{h}_i)$, unless the
+different $\operator{h}_i$ commute. However, for an infinitesimal time step $\epsilon$, we
+can use to Baker-Campbell-Hausdorff formula (or better yet, the Zassenhaus formula) to
+obtain $\exp(-\epsilon \sum_{i} \operator{h}_i) = \prod_i \exp(-\epsilon \operator{h}_i) +
+\mathcal{O}(\epsilon^2)$. This then leads to the \emph{Suzuki-Trotter decomposition}
+\begin{equation} \exp\left(-\tau \sum_{i} \operator{h}_i\right) = \lim_{M\to\infty} \left(
+\mathrm{e}^{-\frac{\tau}{M} \sum_i \operator{h}_i} \right)^M =\lim_{M\to\infty}
+\left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \operator{h}_i} + \order(M^{-1})\right)^M
+\end{equation} Note that splitting the time interval $[0,\tau]$ into small segments
+$\epsilon = \tau/M$ is also the starting point for deriving a path integral representation
+of the quantum partition function. The next step is to insert a resolution of the identity
+in between the $N$ different factors, where the labels of the basis will behave as classical
+degrees of freedom. For obtaining a path integral, the basis should be labeled by a number
+of continuous degrees of freedom, which can then become continuous functions of time in the
+limit $\epsilon\to 0$. Here, instead, we will keep $\epsilon$ small but finite, and use a
+discrete basis. \subsection{From quantum to statistical mechanics} Let's start with a
+quantum system in $d=0$, i.e.\ a small number of spins, or in particular, a single spin,
+described by a hamiltonian \begin{equation} \hat{H} = - h_x \sigma^x - h_z \sigma^z
+\end{equation} While we could in principle exponentiate $\hat{H}$ directly, we will treat it
+using the Suzuki-Trotter decomposition. Throughout the remainder of this section, we will
+use the $\sz$ basis, which we denote as $\ket{1} = \ket{\uparrow}$ and $\ket{-1} =
+\ket{\downarrow}$. Inserting resolutions of the identity, we write \begin{equation} Z(\beta)
+= \tr \mathrm{e}^{-\beta \hat{H}} = \sum_{\{s_k\}=\pm 1} \braket{s_1|\mathrm{e}^{-\epsilon
+\hat{H}}|s_2}\cdots \braket{s_M-1| \mathrm{e}^{-\epsilon \hat{H}}|s_{M}} \cdots \braket{s_M|
+\mathrm{e}^{-\epsilon \hat{H}}|s_{M+1}} \end{equation} with $s_{M+1} = s_1$, $M\epsilon
+=\beta$, and where \begin{align*} \braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}} &=
+\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}} \approx \braket{s_{i}|\mathrm{e}^{\epsilon
+h_z \sz}\mathrm{e}^{\epsilon h_x \sx}|s_{i+1}}\\ &= \mathrm{e}^{\epsilon h_z s_i}
+\braket{s_{i}|\cosh(\epsilon h_x) \one + \sinh(\epsilon h_x) \sx |s_{i+1}}\\ &=
+\mathrm{e}^{K s_{i}s_{i+1} + h s_i + f_0}. \end{align*} \begin{exercise} Prove that the
+equality on the last line is obtained with , $K = -\frac{1}{2}\log \tanh(\epsilon h_x)$, $h
+= \epsilon h_z$ and $f_0 = \frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]$.
+\end{exercise}\\ We thus obtain $Z(\beta) = \sum_{s_k} \mathrm{e}^{\sum_{i=1}^{M}K s_i
+s_{i+1} + h s_i}$, the partition function of the one-dimensional classical Ising model with
+periodic boundary conditions. Indeed, $\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}}$ does
+exactly correspond to the transfer matrix, and diagonalising the transfer matrix is the most
+straightforward approach to solving the one-dimensional classical Ising model.
 
 \subsection{Higher dimensional generalisation}
 
 We now apply the same approach to the transverse field Ising model in $d$ dimensions, on a hypercubic lattice. We separate the hamiltonian in two parts according to
 \begin{equation}
-	\ham_{\text{TFIM}} = \left(-J\sum_{\braket{i,j}} \sz_i \sz_j  - h_z \sum_{i} \sz_i\right) + \left(- h_x \sum_{i} \sx_i\right)= \operator{H}_1 + \operator{H}_2
+	\hat{H}_{\text{TFIM}} = \left(-J\sum_{\braket{i,j}} \sz_i \sz_j  - h_z \sum_{i} \sz_i\right) + \left(- h_x \sum_{i} \sx_i\right)= \operator{H}_1 + \operator{H}_2
 \end{equation}
 Note that $\operator{H}_1$ and $\operator{H}_2$ in itself contain commuting terms, but of course don't mutually commute. We follow the same strategy, and will in every (imaginary) time step introduce a resolution of the identity using the tensor product $\sz$ basis. We now denote the basis at time step $k$ as $\ket{\{s_{i,k}\}}$, where $i$ labels a site in the $d$ dimensional lattice hosting the quantum degrees of freedom, and $k$ labels points along the imaginary time axis, which emerges as a new dimension in the problem. We find
 \begin{align*}
@@ -821,7 +1199,7 @@ Note that $\operator{H}_1$ and $\operator{H}_2$ in itself contain commuting term
 \end{align*}
 as $\operator{H}_1$ is diagonal in this basis, and 
 \begin{align*}
-\braket{\{s_{i,k}\}|\exp(-\epsilon \operator{H}_2)|\{s_{i,k+1}\}} = \prod_i \braket{s_{i,k}|\ec^{-\epsilon h_x \sx_i} | s_{i,k+1}}
+\braket{\{s_{i,k}\}|\exp(-\epsilon \operator{H}_2)|\{s_{i,k+1}\}} = \prod_i \braket{s_{i,k}|\mathrm{e}^{-\epsilon h_x \sx_i} | s_{i,k+1}}
  \sim \exp(K_\perp\sum_{i} s_{i,k} s_{i,k+1})
 \end{align*}
 with $K_\perp = \log \tanh(\epsilon h_x)$ as before. Here, we have now ignored an overall proportionality factor, which is irrelevant when using the partition function to compute expectation values. With this, we find
