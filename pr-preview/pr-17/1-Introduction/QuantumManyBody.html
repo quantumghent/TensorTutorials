@@ -1,0 +1,1745 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. Quantum Many-Body Physics &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/QuantumManyBody';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/1-Introduction/QuantumManyBody.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Getting Started with Numerics" href="Software.html" />
+    <link rel="prev" title="Tensor Network Methods with Julia" href="../intro.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Quantum Many-Body Physics"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Quantum Many-Body Physics" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/1-Introduction/QuantumManyBody.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=1-Introduction/QuantumManyBody>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics-and-its-postulates">1.1. Quantum Mechanics and its Postulates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-1-states">1.1.1. <strong>Postulate 1: States</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-2-observables">1.1.2. <strong>Postulate 2: Observables</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-3-measurements-expectation-values-and-collapse">1.1.3. <strong>Postulate 3: Measurements, Expectation Values and Collapse</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-4-dynamics">1.1.4. <strong>Postulate 4: Dynamics</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hilbert-space-of-many-body-physics">1.2. The Hilbert Space of Many-Body Physics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distinguisable-particles-and-tensor-products">1.2.1. Distinguisable Particles and Tensor Products</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identical-particles-and-pauli-s-exclusion-principle">1.2.2. Identical Particles and Pauli’s Exclusion Principle</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fock-space-and-second-quantisation">1.3. Fock Space and Second Quantisation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interesting-states-and-observables-in-quantum-many-body-physics">1.4. Interesting States and Observables in Quantum Many-Body Physics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-states-revisited">1.4.1. Quantum States Revisited</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-tensor-products-to-mixed-states-and-entanglement">1.4.2. From Tensor Products to Mixed States and Entanglement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-many-body-physics-at-finite-temperature">1.4.3. Quantum Many-Body Physics at Finite Temperature</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-many-body-physics-at-zero-temperature">1.4.4. Quantum Many-Body Physics at Zero Temperature</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-dynamics-and-quenches">1.4.5. Quantum Dynamics and Quenches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observables-and-static-and-dynamic-correlation-functions">1.4.6. Observables and Static and Dynamic Correlation Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-to-classical-mapping">1.5. Quantum-to-Classical Mapping</a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Quantum Many-Body Physics</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="quantum-many-body-physics">
+<h1><span class="section-number">1. </span>Quantum Many-Body Physics<a class="headerlink" href="#quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
+<div class="section" id="quantum-mechanics-and-its-postulates">
+<h2><span class="section-number">1.1. </span>Quantum Mechanics and its Postulates<a class="headerlink" href="#quantum-mechanics-and-its-postulates" title="Permalink to this heading">#</a></h2>
+<p>While the energy levels of the hydrogen atom played an important role in the historical
+development of quantum mechanics, it became almost immediately clear that the true challenge
+is in applying the laws of quantum mechanics to systems with many interacting particles or
+fields. Note that the formalism of quantum mechanics, and in particular its postulates, are
+generically valid and not restricted to the description of a single particle. Quantum field
+theory also follows these postulates and is thus not a generalisation of quantum mechanics,
+but rather a specific case of it. These postulates characterise the mathematical model by
+which quantum mechanics describes physical systems, and more specifically how it represents
+states, observables, measurements and dynamics. We briefly reiterate this postulates and
+base our discussion on the wonderfull lecture notes “Quantum Information and Computation” by
+John Preskill.</p>
+<div class="section" id="postulate-1-states">
+<h3><span class="section-number">1.1.1. </span><strong>Postulate 1: States</strong><a class="headerlink" href="#postulate-1-states" title="Permalink to this heading">#</a></h3>
+<p>The state of an isolated quantum system is associated to a ray of vectors in a complex
+Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>.</p>
+<p>A Hilbert space is a metric complete inner product space. Let us unpack this definition:</p>
+<ol class="arabic">
+<li><p><span class="math notranslate nohighlight">\(\mathbb{H}\)</span> is a vector space in this case over the complex numbers. We will denote
+elements of this vector space with Dirac’s ket notation <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>. In particular, we
+can build linear combinations</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = a \ket{\psi_1} + b \ket{\psi_2}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(a, b \in \mathbb{C}\)</span> and all <span class="math notranslate nohighlight">\(\ket{\psi_1}, \ket{\psi_2} \in \mathbb{H}\)</span>.</p>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\mathbb{H}\)</span> has an inner product, which maps to vecors <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> and <span class="math notranslate nohighlight">\(\ket{\varphi}\)</span>
+onto a scalar <span class="math notranslate nohighlight">\(\braket{\varphi|\psi} \in \mathbb{C}\)</span> with the properties of</p>
+<ul class="simple">
+<li><p>Linearity: <span class="math notranslate nohighlight">\(\bra{\varphi} ( a \ket{\psi_1} + b \ket{\psi_2}) = a \braket{ \varphi | \psi_1} + b \braket{ \varphi | \psi_2}\)</span></p></li>
+<li><p>Skew-symmetry: <span class="math notranslate nohighlight">\(\braket{ \varphi | \psi} = \braket{ \psi | \varphi}^\ast\)</span></p>
+<ul>
+<li><p>Positivity: <span class="math notranslate nohighlight">\(\braket{ \psi | \psi} \geq 0\)</span> with equality only if <span class="math notranslate nohighlight">\(\ket{\psi} = 0\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>This last property enables us to define a norm <span class="math notranslate nohighlight">\(\lVert \psi \rVert = \lVert \ket{\psi}
+ \rVert = \sqrt{\braket{\psi|\psi}}\)</span>, which satisfies known properties such as <span class="math notranslate nohighlight">\(\lVert \psi
+ \rVert = 0 \Leftrightarrow \ket{\psi} = 0\)</span> <span class="math notranslate nohighlight">\(\lVert a \ket{\psi} \rVert = \vert a\vert
+ \lVert \psi \rVert\)</span> and the triangle inequality <span class="math notranslate nohighlight">\(\lVert \ket{\varphi} + \ket{\psi} \rVert
+ \leq \lVert \varphi \rVert + \lVert \psi \rVert\)</span>.</p>
+<ol class="arabic" start="3">
+<li><p>The final property of metric completeness is a technical requirement that is only
+relevant in infinite-dimensional Hilbert spaces. Firstly, a metric is a notation of
+distance between the elements in <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>, which is provided by the norm of the
+difference, i.e. <span class="math notranslate nohighlight">\(d(\varphi, \psi) = \lVert \varphi - \psi \rVert\)</span>.</p>
+<p>Completeness of the metric is a specific property that guarantees that certain sequences
+of vectors are guaranteed to have a limit value that also exists in <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>. This
+is necessary to make sense of e.g. Fourier series.</p>
+</li>
+</ol>
+<p>The state of a quantum system is associated to a ray of vectors, which is the
+one-dimensional space <span class="math notranslate nohighlight">\(\{ a \ket{\psi} , \forall a \in \mathbb{C}\}\)</span> spanned by a single
+(nonzero) vector <span class="math notranslate nohighlight">\(\ket{\psi} \in \mathbb{H}\)</span>. We will describe the state of the system using
+a single representative <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> of this ray, which we typically choose such that
+<span class="math notranslate nohighlight">\(\braket{ \psi | \psi} = 1\)</span>. However, this does not fix the representative completely, as we
+can still add arbitrary phases <span class="math notranslate nohighlight">\(\exp(\mathrm{i}\alpha)\)</span>, i.e. <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> and
+<span class="math notranslate nohighlight">\(\mathrm{e}^{\mathrm{i}\alpha} \ket{\psi}\)</span> describe the same state.</p>
+<p>The best known Hilbert space from your courses on single-particle quantum mechanics is
+probably <span class="math notranslate nohighlight">\(L^2(\mathbb{R}^n)\)</span>, the Hilbert space for a single quantum particle moving in the
+<span class="math notranslate nohighlight">\(n\)</span>-dimensional coordinate space <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> (typically <span class="math notranslate nohighlight">\(n=1,2,3\)</span>). This Hilbert space
+corresponds to the space of all square-integrable functions <span class="math notranslate nohighlight">\(\psi:\mathbb{R}^d \to
+\mathbb{C}: x \mapsto \psi(x)\)</span> and the inner product is given by</p>
+<div class="math notranslate nohighlight">
+\[\braket{\varphi | \psi} = \int_{\mathbb{R}^n} \varphi(x)^\ast \psi(x)\,\mathrm{d} x\]</div>
+<p>However, this is already a complicated Hilbert space from a technical perspective. Hilbert
+spaces can also be finite-dimensional, i.e. <span class="math notranslate nohighlight">\(\mathbb{C}^d\)</span>, the space of column vectors of
+length <span class="math notranslate nohighlight">\(d\)</span>, with the standard Euclidean inner product</p>
+<div class="math notranslate nohighlight">
+\[\braket{\varphi | \psi} = \sum_{i=1}^d \varphi_i^\ast \psi_i\]</div>
+<p>These Hilbert spaces will be very important in our discussion. The simplest nontrivial case
+corresponds to <span class="math notranslate nohighlight">\(d=2\)</span> and the associated quantum system is known under various names. It is
+often referred to as a qubit in the context of quantum information theory. There are various
+ways in which qubits can be physically realised. Another common example of a two-dimensional
+Hilbert space is for describing the spin degree of freedom of an electron, or another
+particle with spin quantum number 1/2. Such a reduced description (forgetting about the
+position) is possible if the electron is localised in space, for example when it is strongly
+bound to an atom.</p>
+<p>If we do want to describe a particle that moves in space, we might also consider it to exist
+only at discrete positions in space, i.e. on a lattice. For example, on a one-dimensional
+lattice (a.k.a. a chain) with <span class="math notranslate nohighlight">\(L\)</span> sites, the Hilbert space would also correspond to
+<span class="math notranslate nohighlight">\(\mathbb{H} = \mathbb{C}^L\)</span> and the standard basis vectors <span class="math notranslate nohighlight">\(\vert j \rangle, j=1,\dots,L\)</span>
+correspond to the state of the system if the particle is exactly localised on site <span class="math notranslate nohighlight">\(j\)</span>. We
+can also consider infinitely large lattices, e.g. the one-dimensional chain where there is a
+site associated with every <span class="math notranslate nohighlight">\(j \in \mathbb{Z}\)</span> (or the n-dimensional hypercubic lattice
+<span class="math notranslate nohighlight">\(\mathbb{Z}^n\)</span>). The resulting Hilbert space is then spanned by the states <span class="math notranslate nohighlight">\(\vert j \rangle\)</span>
+for all <span class="math notranslate nohighlight">\(j \in \mathbb{Z}\)</span>, and is thus infinite-dimensional but with a straightforward
+countably infinite basis.</p>
+<p>Of course, our goal is to find the Hilbert space of a many body system. We return to this
+question below and devote a complete section to it.</p>
+</div>
+<div class="section" id="postulate-2-observables">
+<h3><span class="section-number">1.1.2. </span><strong>Postulate 2: Observables</strong><a class="headerlink" href="#postulate-2-observables" title="Permalink to this heading">#</a></h3>
+<p>Physical observables of the system correspond to self-adjoint (a.k.a. Hermitian) linear
+operators on the Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>.</p>
+<p>An operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> on <span class="math notranslate nohighlight">\(\mathbb{H}\)</span> is a linear map <span class="math notranslate nohighlight">\(\hat{A}:\mathbb{H} \to \mathbb{H}\)</span>,
+i.e. a map from vectors to vectors that satisfies</p>
+<div class="math notranslate nohighlight">
+\[\hat{A}( a \ket{\varphi} + b \lvert \psi \rangle) = a \hat{A}(\ket{\varphi}) + b
+\hat{A}(\ket{\psi})\]</div>
+<p>The adjoint of an operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> is a new operator <span class="math notranslate nohighlight">\(\hat{A}^\dagger\)</span> that is constructed
+such that</p>
+<div class="math notranslate nohighlight">
+\[\bra{\varphi} \hat{A} \psi \rangle = \langle \hat{A}^\dagger \varphi \ket{\psi}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\ket{\varphi}, \ket{\psi} \in \mathbb{H}\)</span> and where <span class="math notranslate nohighlight">\(\vert \hat{A}\psi \rangle =
+\hat{A} \ket{\psi}\)</span>. This definition requires that <span class="math notranslate nohighlight">\((a_1 \hat{A}_1 + a_2 \hat{A}_2)^\dagger
+= a_1^\ast \hat{A}_1^\dagger + a_2^\ast \hat{A}_2^\dagger\)</span> and <span class="math notranslate nohighlight">\((\hat{A}_1
+\hat{A}_2)^\dagger = \hat{A}_2^\dagger \hat{A}_1^\dagger\)</span>.</p>
+<p>A self-adjoint operator is an operator such that <span class="math notranslate nohighlight">\(\hat{A}^\dagger = \hat{A}\)</span> or thus</p>
+<div class="math notranslate nohighlight">
+\[\braket{\varphi | \hat{A} \psi } = \braket{ \hat{A}^\dagger \varphi | \psi}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\ket{\varphi}, \ket{\psi} \in \mathbb{H}\)</span>. Linear combinations of self-adjoint
+operators with real coefficients are self-adjoint. The composition of two self-adjoint
+linear operators <span class="math notranslate nohighlight">\(\hat{A}_1 \hat{A}_2\)</span> is self-adjoint if and only if</p>
+<div class="math notranslate nohighlight">
+\[\left[ \hat{A}_1 , \hat{A}_2 \right] = \hat{A}_1 \hat{A}_2 - \hat{A}_2 \hat{A}_1 = 0,\]</div>
+<p>i.e. if the operators also commute. Self-adjoint operators have real eigenvalues, and
+eigenvectors associated to distinct eigenvalues are orthogonal. In a finite-dimensional
+Hilbert space, self-adjoint operators admit a spectral decomposition</p>
+<div class="math notranslate nohighlight">
+\[\hat{A} = \sum_{n} \lambda_n \hat{P}_n\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{P}_n\)</span> is the spectral projector onto the eigenspace associated with <span class="math notranslate nohighlight">\(\lambda_n\)</span>.
+The spectral projectors satisfy <span class="math notranslate nohighlight">\(\hat{P}_n \hat{P}_m = \delta_{n,m} \hat{P}_n\)</span>,
+<span class="math notranslate nohighlight">\(\hat{P}_n^\dagger = \hat{P}_n\)</span> and <span class="math notranslate nohighlight">\(\sum_{n} \hat{P}_n = \mathbb{1}\)</span>, the identity
+operator. If <span class="math notranslate nohighlight">\(\lambda_n\)</span> has one-dimensional eigenspace spanned by the eigenvector
+<span class="math notranslate nohighlight">\(\vert\phi_n\rangle\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[\hat{P}_n = \frac{\vert \phi_n \rangle \langle \phi_n \vert}{\langle \phi_n \vert \phi_n \rangle}\]</div>
+<p>where the denominator can be omitted if the eigenvector is normalised.</p>
+<p>In the language of matrices, these properties can be rephrased as follows: With respect to
+an orthonormal basis choice, self-adjoint operators are represented as hermitian matrices.
+Such matrices can be diagonalised by a unitary transformation, or thus, we can construct a
+complete basis consisting of eigenvectors. With respect to this basis, the self-adjoint
+operator is represented by a diagonal matrix with real values on the diagonal.</p>
+</div>
+<div class="section" id="postulate-3-measurements-expectation-values-and-collapse">
+<h3><span class="section-number">1.1.3. </span><strong>Postulate 3: Measurements, Expectation Values and Collapse</strong><a class="headerlink" href="#postulate-3-measurements-expectation-values-and-collapse" title="Permalink to this heading">#</a></h3>
+<p>Given an observable to which we associate the operator <span class="math notranslate nohighlight">\(\hat{A}\)</span>, we now need to prescribe
+the result of measuring this observable with respect to a system that is in a state
+<span class="math notranslate nohighlight">\(\ket{\psi}\)</span>. The most compact way of describing the result is by stating that, the
+expectation value <span class="math notranslate nohighlight">\(\braket{\hat{A}}\)</span> (= the mean value of the measurement when averaging
+over an ensemble of identical copies of the system) is given by</p>
+<div class="math notranslate nohighlight">
+\[\braket{\hat{A}} = \frac{\braket{\psi \vert \hat{A} \vert \psi}}{\braket{\psi \vert \psi}}\]</div>
+<p>By exploiting the fact that this also prescribes the expectation value of all higher moments
+<span class="math notranslate nohighlight">\(\braket{\hat{A}^k}\)</span>, this determines the full probability distribution of the measurement
+outcome, and yields the more familiar result: The only possible measurement outcomes are
+given by the eigenvalues <span class="math notranslate nohighlight">\(\lambda_n\)</span> of <span class="math notranslate nohighlight">\(\hat{A}\)</span>, and for a system in state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>
+(now assumed normalized), the probability of obtaining <span class="math notranslate nohighlight">\(\lambda_n\)</span> is given by <span class="math notranslate nohighlight">\(p_n =
+\braket{\psi \vert \hat{P}_n \vert \psi}\)</span> with <span class="math notranslate nohighlight">\(\hat{P}_n\)</span> the spectral projector from
+above. In the case that <span class="math notranslate nohighlight">\(\lambda_n\)</span> has a single (linearly independent) eigenvector
+<span class="math notranslate nohighlight">\(\ket{\phi_n}\)</span> (also assumed normalised), this amounts to <span class="math notranslate nohighlight">\(p_n = \vert
+\braket{\phi_n|\psi}\vert^2\)</span>.</p>
+<p>There is a second part to the measurement postulate, which states that, if the measurement
+is immediately repeated (without intermediate dynamics, as described by the next postulate),
+then the same measurement outcome is obtained. Because the measurement outcome with respect
+to the initial state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> is probabilistic and can yield different results, this
+requires that after the first measurement, the state changes is changed. This is the
+well-known <strong>collapse</strong> of the wave function. More specifically, if a measurement of
+observable <span class="math notranslate nohighlight">\(\hat{A}\)</span> is performed in a system with state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> and the measurement
+value <span class="math notranslate nohighlight">\(\lambda_n\)</span> is obtained, then the state of the system changes to</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} \longrightarrow \frac{\hat{P}_n \ket{\psi}}{\lVert \hat{P}_n \ket{\psi}\rVert}.\]</div>
+<p>Note that the denominator cannot vanish, as otherwise the probability of having obtained
+measurement outcome <span class="math notranslate nohighlight">\(\lambda_n\)</span> would have been zero in the first place.</p>
+</div>
+<div class="section" id="postulate-4-dynamics">
+<h3><span class="section-number">1.1.4. </span><strong>Postulate 4: Dynamics</strong><a class="headerlink" href="#postulate-4-dynamics" title="Permalink to this heading">#</a></h3>
+<p>During time intervals without measurements, the state of an isolated quantum system evolves
+unitarily according to the (first order linear) differential equation</p>
+<div class="math notranslate nohighlight">
+\[\frac{\mathrm{d}\ }{\mathrm{d} t} \ket{\psi(t)} = - \mathrm{i} \hat{H}(t) \ket{\psi(t)}\]</div>
+<p>known as the Schr”{o}dinger equation, where <span class="math notranslate nohighlight">\(\hat{H}(t)\)</span> is the Hamiltonian of the system,
+which may itself be time-dependent. In the case of a time-independent Hamiltonian, we can
+define the evolution operator</p>
+<div class="math notranslate nohighlight">
+\[U(t, t') = \exp\left(-\mathrm{i}(t-t')\hat{H}\right)\]</div>
+<p>which relates states at different times via <span class="math notranslate nohighlight">\(\ket{\psi(t)} = \hat{U}(t, t') \ket{\psi(t')}\)</span>
+and is clearly a unitary operator. Clearly, we need to know the Hamiltonian of a system in
+order to even start thinking about modelling its quantum properties. We will always assume
+that the Hamiltonian is given. In practice, however, the situation can be much more
+complicated. Typically, we want to build only an effective quantum description of the system
+(e.g. only the electrons, only certain electrons, <span class="math notranslate nohighlight">\(\ldots\)</span>) and not start all the way down
+at the level of fundamental particles and the standard model (which is also only an
+effective model valid up to some energy scale).</p>
+</div>
+</div>
+<div class="section" id="the-hilbert-space-of-many-body-physics">
+<h2><span class="section-number">1.2. </span>The Hilbert Space of Many-Body Physics<a class="headerlink" href="#the-hilbert-space-of-many-body-physics" title="Permalink to this heading">#</a></h2>
+<p>All of the previous axioms remain valid for a composite system consisting of several quantum
+degrees of freedom. However, we need to know how to describe the state of the system, and
+thus more specifically, how to define the Hilbert space associated to such a system. It
+turns out that quantum mechanics forces us to distinguish two cases.</p>
+<div class="section" id="distinguisable-particles-and-tensor-products">
+<h3><span class="section-number">1.2.1. </span>Distinguisable Particles and Tensor Products<a class="headerlink" href="#distinguisable-particles-and-tensor-products" title="Permalink to this heading">#</a></h3>
+<p>Consider a quantum system composed out of two subsystems, which we call <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>,
+sometimes referred to as Alice and Bob in quantum information context. These can themselves
+already be many-body systems. Suppose we know the Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^A\)</span> in which to
+describe states of subsystem <span class="math notranslate nohighlight">\(A\)</span> when considered as an isolated system on itself, and
+analoguously for <span class="math notranslate nohighlight">\(\mathbb{H}^B\)</span>. Now consider both systems together, but where they do not
+interact, so that we can still treat them independently. In particular, we can prepare
+subsystem <span class="math notranslate nohighlight">\(A\)</span> in a state <span class="math notranslate nohighlight">\(\ket{\psi^A}\)</span> and subsystem <span class="math notranslate nohighlight">\(B\)</span> in a state <span class="math notranslate nohighlight">\(\ket{\psi^B}\)</span>. We
+should also be able to describe these two independent subsystems jointly, so that there must
+exist a map from the two arguments <span class="math notranslate nohighlight">\((\ket{\psi^A}, \ket{\varphi^B}) \in \mathbb{H}^A \times
+\mathbb{H}^B\)</span> to a single state which we denote as <span class="math notranslate nohighlight">\(\ket{ \psi^A} \otimes \ket{\varphi^B}\)</span>
+and that lives in a joint Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{AB}\)</span> that we have yet to determine.</p>
+<p>Now, it makes sense that, if we build superpositions in one of the two subsystems, while
+keeping the other fixed, this also correspond to a superposition in the joint description of
+both systems together. This leads to</p>
+<div class="math notranslate nohighlight">
+\[\left (a_1 \ket{\psi^A_1} + a_2 \ket{\psi^A_2}\right) \otimes \ket{\varphi^B} = a_1
+\ket{\psi^A_1 }\otimes \ket{\varphi^B} + a_2 \ket{\psi^A_1 }\otimes \ket{\varphi^B}\]</div>
+<p>and similarly</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi^A} \otimes \left(b_1 \ket{\varphi^B_1} + b_2 \ket{\varphi^A_2}\right) = b_1
+\ket{\psi^A }\otimes \ket{\varphi^B_1} + b_2 \ket{\psi^A }\otimes \ket{\varphi^B_2}.\]</div>
+<p>Hence, the Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{AB}\)</span> that we are trying to construct must contain all
+states <span class="math notranslate nohighlight">\(\ket{\psi^A} \otimes \ket{\varphi^B}\)</span> for all <span class="math notranslate nohighlight">\(\ket{\psi^A} \in \mathbb{H}^A\)</span> and
+all <span class="math notranslate nohighlight">\(\ket{\varphi^B} \in \mathbb{H}^B\)</span>, all possible linear combinations thereof (in order
+to be a vector space), but in such a way that the above equalities hold. This construction,
+which can be made mathematically precise, is known as the tensor product of vector spaces
+<span class="math notranslate nohighlight">\(\mathbb{H}^{AB} = \mathbb{H}^A \otimes \mathbb{H}^B\)</span>.</p>
+<p>We have also denoted the output of the map from two states <span class="math notranslate nohighlight">\((\ket{\psi^A}, \ket{\varphi^B})
+\in \mathbb{H}^A \times \mathbb{H}^B\)</span> to <span class="math notranslate nohighlight">\(\mathbb{H}^A \otimes \mathbb{H}^B\)</span> using the same
+tensor product symbol, and refer to such a state as a (tensor) product state <span class="math notranslate nohighlight">\(\ket{ \psi^A}
+\otimes \ket{\varphi^B}\)</span>. Importantly, however, the tensor product space <span class="math notranslate nohighlight">\(\mathbb{H}^A
+\otimes \mathbb{H}^B\)</span> certainly contains vectors which are not product states, such as</p>
+<div class="math notranslate nohighlight">
+\[a_1 \ket{ \psi_1^A} \otimes \ket{\varphi_1^B} + a_2 \ket{ \psi_2^A} \otimes
+\ket{\varphi_2^B}.\]</div>
+<p>This forms the basis for quantum correlations and the concept of (quantum) entanglement,
+which will be a fundamental property of quantum many-body systems. That the Hilbert space of
+a composite system is given by the tensor product of the individual Hilbert spaces is often
+introduced as a separate axiom. The deductive (but informal) argument just given can however
+be turned into a proof that depends only on the axioms given above (in fact only on the
+first two).</p>
+<p>As expected (and required), it can be shown that the tensor product of two Hilbert spaces is
+again a Hilbert space, if we define its inner product in the following way. We first define
+the inner product for product states as</p>
+<div class="math notranslate nohighlight">
+\[\braket{\psi_1^A \otimes \varphi_1^B | \psi_2^A \otimes \varphi_2^B } = \braket{\psi_1^A |
+\psi_2^A} \braket{\varphi_1^B | \varphi_2^B}\]</div>
+<p>and then extend this definition by linearity (in the second argument and antilinearity in
+the first argument).</p>
+<p>In practice, given two finite-dimensional Hilbert spaces <span class="math notranslate nohighlight">\(\mathbb{H}^A \cong
+\mathbb{C}^{d^A}\)</span> and <span class="math notranslate nohighlight">\(\mathbb{H}^B \cong \mathbb{C}^{d^B}\)</span> with a basis <span class="math notranslate nohighlight">\(\{ \ket{j},
+j=1,\dots, d^A\}\)</span> and <span class="math notranslate nohighlight">\(\{\ket{k}, k=1,\dots, d^B\}\)</span>, the tensor product space is spanned by
+a basis composed of all products</p>
+<div class="math notranslate nohighlight">
+\[\{ \ket{j,k} = \ket{j} \otimes \ket{k}, j=1,\dots, d^A, k=1,\dots, d^B\}\]</div>
+<p>and thus has dimension <span class="math notranslate nohighlight">\(d^A \cdot d^B\)</span>. A general state <span class="math notranslate nohighlight">\(\ket{\Psi} \in
+\mathbb{H}^{A}\otimes \mathbb{H}^B\)</span> can then be expanded as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\Psi} = \sum_{j=1}^{d^A }\sum_{k=1}^{d^B} \Psi_{jk} \ket{j,k}\]</div>
+<p>The expansion coefficients <span class="math notranslate nohighlight">\(\Psi_{jk}\)</span> thus have two indices, and it is often useful to
+think of them as a matrix. Note that we will almost always use this product basis, also
+referred to as the <em>computational basis</em>, for working with tensor product spaces. However,
+one can certainly also use more complicated basis choices, where the basis vectors are not
+simple product states. One well known choice that you might remember from your quantum
+mechanics course is in the case of two spin-1/2 systems. If we denote the basis for a single
+spin-1/2 system as <span class="math notranslate nohighlight">\(\{\ket{\uparrow},\ket{\downarrow}\}\)</span>, then the product basis for a
+system consisting of two spin-1/2 systems is given by <span class="math notranslate nohighlight">\(\{\ket{\uparrow,\uparrow},
+\ket{\downarrow,\uparrow}, \ket{\uparrow,\downarrow}, \ket{\downarrow,\downarrow}, \}\)</span>.
+However, in the context of spin coupling (see Section on Symmetries), one also uses the
+coupled basis</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{0,0} &amp;= \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} - \ket{\downarrow,\uparrow}\right)\\
+\ket{1,+1} &amp;= \ket{\uparrow,\uparrow}\\
+\ket{1,0} &amp;= \frac{1}{\sqrt{2}} \left(\ket{\uparrow,\downarrow} + \ket{\downarrow,\uparrow}\right)\\
+\ket{1,-1} &amp;= \ket{\downarrow,\downarrow}\end{split}\]</div>
+<p>Note that we also use the same tensor product notation as an operation to map operators from
+the subsystems into operators acting on the full tensor product Hilbert space. In
+particular, the process of measuring operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> in subsystem <span class="math notranslate nohighlight">\(A\)</span> and simultaneously
+operator <span class="math notranslate nohighlight">\(\hat{B}\)</span> in subsystem <span class="math notranslate nohighlight">\(B\)</span> is associated with an operator <span class="math notranslate nohighlight">\(\hat{A}\otimes \hat{B}\)</span>
+acting on <span class="math notranslate nohighlight">\(\mathbb{H}^A \otimes \mathbb{H}^B\)</span>, the action of which is first defined on the
+product states as</p>
+<div class="math notranslate nohighlight">
+\[\left(\hat{A} \otimes \hat{B}\right) \left(\ket{\psi^A}\otimes \ket{\varphi^B}\right) = \left(\hat{A}\ket{\psi^A}\right) \otimes \left(\hat{B}\ket{\varphi^B}\right)\]</div>
+<p>and then extended by linearity. It furthermore holds that</p>
+<div class="math notranslate nohighlight">
+\[(\hat{A}_1 \otimes \hat{B}_1) (\hat{A}_2 \otimes \hat{B}_2) = (\hat{A}_1 \hat{A}_2) \otimes (\hat{B}_1 \hat{B}_2).\]</div>
+<p>With respect to a product basis, the matrix representation of <span class="math notranslate nohighlight">\(\left(\hat{A} \otimes
+\hat{B}\right)\)</span> is given by the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Kronecker_product">Kronecker product</a>.</p>
+<p>When we are only interested in an operator <span class="math notranslate nohighlight">\(\hat{O}\)</span> acting on subsystem <span class="math notranslate nohighlight">\(A\)</span> without doing
+anything on subsystem <span class="math notranslate nohighlight">\(B\)</span>, we should create the operator <span class="math notranslate nohighlight">\(\hat{O} \otimes \hat{1}_B\)</span>, with
+<span class="math notranslate nohighlight">\(\hat{1}_B\)</span> the identity operator of the Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^B\)</span>. Often, we will omit
+this explicit tensor product with the identity operator, and simply use some notation which
+indicates that an operator acts on a certain subsystem, such as <span class="math notranslate nohighlight">\(\hat{O}^{(A)} = \hat{O}
+\otimes \hat{1}_B\)</span>. This also makes it explicit that operators defined on different
+subsystems, when lifted to act on the full Hilbert space, commute, i.e.</p>
+<div class="math notranslate nohighlight">
+\[\left[\hat{O}_1^{(A)} , \hat{O}_2^{(B)}\right] =
+\left[ \hat{O}_1 \otimes \hat{1}_B, \hat{1}_A \otimes \hat{O}_2\right] = 0.\]</div>
+<p>The tensor product construction extends readily to systems with multiple subsystems.
+Consider for example a system consisting of qubits, where every individual qubit has an
+associated Hilbert space <span class="math notranslate nohighlight">\(\mathbb{C}^2\)</span> with basis denoted as <span class="math notranslate nohighlight">\(\{\ket{0},\ket{1}\}\)</span>. The
+Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^N\)</span> of <span class="math notranslate nohighlight">\(N\)</span> qubits is then spanned by a computational basis which we
+can denote as</p>
+<div class="math notranslate nohighlight">
+\[\{\ket{s_1, s_2, \ldots, s_N} = \ket{s_1} \otimes \ket{s_2} \otimes \cdots \otimes
+\ket{s_N}; s_1 =0,1; s_2 =0,1; \ldots; s_n =0,1\}.\]</div>
+<p>Hence, the Hilbert space thus has dimension <span class="math notranslate nohighlight">\(2^N\)</span>, and a general state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> has
+expansion coefficients</p>
+<div class="math notranslate nohighlight">
+\[\Psi_{s_1,s_2, \ldots, s_N}\]</div>
+<p>which can be interpreted as a single vector of length <span class="math notranslate nohighlight">\(2^N\)</span>, or as a <span class="math notranslate nohighlight">\(N\)</span>-dimensional tensor,
+where every tensor index ranges over the two values 0 and 1. This exponential increase of
+the Hilbert space dimension with the number of particles is exactly why the quantum
+many-body problem is so difficult, but also essential for providing a quantum computer with
+its speed-up. It is exactly these type of quantum states living in a many-body Hilbert
+space, which is thus composed of many tensor product factors, that we will represent as a
+tensor network.</p>
+<p>Finally, we also have to specify the Hamiltonian of a many-body system. It typically takes
+the form of a sum of terms, where every individual term acts nontrivially on only a few
+subsystems. One important example that will reappear throughout these tutorials is the
+“Quantum Ising Model with transverse magnetic field”, which acts on a system composed of
+qubits or spin-1/2 particles, and is defined as</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = - J \sum_{\langle i, j \rangle} \sigma^z_i \otimes \sigma^z_j - h \sum_i
+\sigma^x_i\]</div>
+<p>Here, the summation variables <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> correspond to the sites of a lattice. The notation
+<span class="math notranslate nohighlight">\(\sum_{\langle i,j \rangle}\)</span> denotes a sum over pairs of neighbouring lattice sites <span class="math notranslate nohighlight">\(i\)</span> and
+<span class="math notranslate nohighlight">\(j\)</span>. The second sum contains terms <span class="math notranslate nohighlight">\(\sigma^x_i\)</span> which act nontrivially only on the site <span class="math notranslate nohighlight">\(i\)</span>,
+and as the identity operator elsewhere. If, for example, we enumerate the sites from <span class="math notranslate nohighlight">\(1\)</span> to
+<span class="math notranslate nohighlight">\(N\)</span>, it would act as</p>
+<div class="math notranslate nohighlight">
+\[\sigma^x_i = \underbrace{1 \otimes 1 \otimes \ldots \otimes 1}_{\text{$i-1$ factors}} \otimes \sigma^x \otimes \underbrace{1 \otimes \ldots \otimes 1}_{\text{$N-i-1$ factors}}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\sigma^x = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}\)</span> the Pauli x matrix, and <span class="math notranslate nohighlight">\(1\)</span>
+the <span class="math notranslate nohighlight">\(2 x 2\)</span> unit matrix. The first set of terms in <span class="math notranslate nohighlight">\(\hat{H}\)</span> acts nontrivially on two sites,
+and is defined analoguously, using the Pauli z matrices <span class="math notranslate nohighlight">\(\sigma^z = \begin{bmatrix} 1 &amp; 0 \\
+0 &amp; -1 \end{bmatrix}\)</span>.</p>
+</div>
+<div class="section" id="identical-particles-and-pauli-s-exclusion-principle">
+<h3><span class="section-number">1.2.2. </span>Identical Particles and Pauli’s Exclusion Principle<a class="headerlink" href="#identical-particles-and-pauli-s-exclusion-principle" title="Permalink to this heading">#</a></h3>
+<p>The tensor product construction needs to be revised when discussing the Hilbert space of a
+system composed of identical particles. Consider for example a system made out of <span class="math notranslate nohighlight">\(N\)</span>
+identical particles. To every individual particle we can associate a particular Hilbert
+space, which we denote as <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)}\)</span>, for example <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)} =
+L^2(\mathbb{R})\)</span> for a particle moving on the real line, or <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)} =
+\mathbb{C}^L\)</span> for a particle living on the sites of a chain of length <span class="math notranslate nohighlight">\(L\)</span>.</p>
+<p>If we temporarily assign each of the <span class="math notranslate nohighlight">\(N\)</span> particles a label <span class="math notranslate nohighlight">\(n=1, \dots, N\)</span>, then the Hilbert
+space of the composite system would be given by the <span class="math notranslate nohighlight">\(N\)</span>-fold tensor product
+<span class="math notranslate nohighlight">\(\widetilde{\mathbb{H}}^{(N)} = \left(\mathbb{H}^{(1)}\right)^{\otimes N}\)</span>. However, for
+identical particles, our labeling is completely arbitrary. For the case of <span class="math notranslate nohighlight">\(N=2\)</span> particles
+on a chain of <span class="math notranslate nohighlight">\(L\)</span> sites, we cannot distinguish between the state <span class="math notranslate nohighlight">\(\ket{j_1, j_2}\)</span> where
+particle <span class="math notranslate nohighlight">\(1\)</span> is on site <span class="math notranslate nohighlight">\(j_1\)</span> and particle <span class="math notranslate nohighlight">\(2\)</span> is on site <span class="math notranslate nohighlight">\(j_2\)</span> versus the state <span class="math notranslate nohighlight">\(\ket{j_2,
+j_1}\)</span> where site <span class="math notranslate nohighlight">\(j_1\)</span> is occupied by the particle that we gave label <span class="math notranslate nohighlight">\(2\)</span> and site <span class="math notranslate nohighlight">\(j_2\)</span> is
+occupied by the particle with label <span class="math notranslate nohighlight">\(1\)</span>. A general redefinition of the particle labels
+amounts to a permutation, and we have to require that no physical measurement can
+distinguish between such permutations. Hence, this permutation invariance does not behave
+like a regular symmetry (like e.g. rotation symmetry, one can still construct observables
+along preferred directions such that they can detect rotations).</p>
+<p>We are forced to restrict our tensor product Hilbert space
+<span class="math notranslate nohighlight">\(\left(\mathbb{H}^{(1)}\right)^{\otimes N}\)</span> to the subspace <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span> of physical
+states which are not affected by acting with such permutations. Note that, due to the fact
+that quantum states actually correspond to rays of vectors, it is still allowed that the
+vectors in <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span> pick up a phase factor when applying certain permutations. It
+is a result in the representation theory of the permutation group that there are only two
+possibilities. Either the phase factor is always absent (or thus 1), or the phase factor is
+(-1) for odd permutations and (+1) for even permutations, i.e. the phase factor equals the
+sign(ature) of the permutation. Identical particles for which the phase factor is always one
+are known as <em>bosons</em>, whereas those with the nontrival phase factor choice correspond to
+<em>fermions</em>. Indeed, the nontrivial phase factor automatically gives rise to <em>Pauli’s
+exclusion principle</em>: two fermions cannot be in the same quantum state, since <span class="math notranslate nohighlight">\(P_{12}
+\ket{j_1,j_2} = \ket{j_2,j_1} = -\ket{j_1,j_2}\)</span> and for <span class="math notranslate nohighlight">\(j_1=j_2\)</span> we would thus find
+<span class="math notranslate nohighlight">\(\ket{j,j} = -\ket{j,j}\)</span>.</p>
+<p>Bosons are thus described by states which are symmetric under permutations, whereas fermions
+are described by states which are called antisymmetric. We can define an operator on
+<span class="math notranslate nohighlight">\(\tilde{\mathbb{H}}^{(N)} = \left(\mathbb{H}^{(1)}\right)^{\otimes N}\)</span> that maps any given
+state onto such a (anti)symmeric state, namely by first defining its action on product
+states as</p>
+<div class="math notranslate nohighlight">
+\[\hat{S}^{\pm} \ket{\psi_1} \otimes \ket{\psi_2} \otimes \cdots \otimes \ket{\psi_N} =
+\frac{1}{\sqrt{N!}} \sum_{\sigma \in S_N} \epsilon_\sigma \ket{\psi_{\sigma(1)}} \otimes
+\ket{\psi_{\sigma(2)}} \otimes \cdots \otimes \ket{\psi_{\sigma(N)}}\]</div>
+<p>and then extending it by linearity. Here, <span class="math notranslate nohighlight">\(S_N\)</span> is the symmetric group containing all
+permutations <span class="math notranslate nohighlight">\(\sigma\)</span> of <span class="math notranslate nohighlight">\(N\)</span> elements, where the permutation <span class="math notranslate nohighlight">\(\sigma\)</span> is a bijective map
+from integers <span class="math notranslate nohighlight">\(j \in \{1,\dots,N\}\)</span> to a new number <span class="math notranslate nohighlight">\(\sigma(j) \in \{1,\dots,N\}\)</span>. The
+sign(ature) <span class="math notranslate nohighlight">\(\epsilon_\sigma\)</span> of the permutation takes the value <span class="math notranslate nohighlight">\(+1\)</span> or <span class="math notranslate nohighlight">\(-1\)</span>, depending on
+whether the permutation <span class="math notranslate nohighlight">\(\sigma\)</span> can be obtained by composing an even or odd number of
+elementary transpositions. An elementary transposition <span class="math notranslate nohighlight">\(\tau_{i,j}\)</span> is a permutation which
+only interchanges the two numbers <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j \neq i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\tau_{i,j}(i) =j, \tau_{i,j}(j) = i, \tau_{i,j}(k) =k, \forall k\neq i \land k \neq j\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> does not necessarily yield a normalised state, and can indeed even
+map a state to zero, in order to give rise to Pauli’s exclusion principle:
+<span class="math notranslate nohighlight">\(\hat{S}^-\ket{j,j} = 0\)</span>. The image of <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> contains all states with the proper
+behaviour under relabeling permutations, and thus correspond to the physical Hilbert space
+for bosons or fermions:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{H}^{(N)} = \hat{S}^{\pm} \widetilde{\mathbb{H}}^{(N)} = \hat{S}^{\pm} \left(\mathbb{H}^{(1)}\right)^{\otimes N}\]</div>
+<p>Note that in this case, the physical Hilbert space is not a tensor product. However, we can
+think of it as a subspace of an auxiliary Hilbert space, <span class="math notranslate nohighlight">\( \widetilde{\mathbb{H}}^{(N)}\)</span>,
+which is a tensor product. The restriction to this subspace can thus be thought of as a
+constraint, and the same scenario happens in other constrained quantum systems. The most
+notable example is that of quantum gauge theories, where there is an extensive set of
+constraints, namely that physical quantum states need to be gauge invariant.</p>
+<p>Now consider a single particle Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)}\)</span> with an orthonormal basis
+<span class="math notranslate nohighlight">\(\{\ket{j}, j=1,\ldots,L\}\)</span>, for example where <span class="math notranslate nohighlight">\(\ket{j}\)</span> corresponds to the particle being
+positioned on site <span class="math notranslate nohighlight">\(j\)</span> of a lattice with <span class="math notranslate nohighlight">\(L\)</span> sites. We also refer to these single particle
+states as modes. To construct a basis for <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span>, we can start from the tensor
+product basis of <span class="math notranslate nohighlight">\(\widetilde{\mathbb{H}}^{(N)}\)</span> and apply <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> to each of its
+<span class="math notranslate nohighlight">\(L^N\)</span> elements. Let us henceforth denote these states as</p>
+<div class="math notranslate nohighlight">
+\[\ket{j_1,j_2,\ldots ,j_N} = \hat{S}^{\pm} \left(\ket{j_1} \otimes \ket{j_2} \otimes \cdots
+\otimes \ket{j_N}\right)\]</div>
+<p>The application of <span class="math notranslate nohighlight">\(\hat{S}^{\pm}\)</span> will create certain linear dependences. In particular,
+states <span class="math notranslate nohighlight">\( \ket{j_1,j_2, \ldots, j_N}\)</span> that contain the same set of modes <span class="math notranslate nohighlight">\(j_k\)</span>, i.e. for
+which the <span class="math notranslate nohighlight">\(j_k\)</span>’s are related by a permutation, are equal (up to a sign in the case of
+<span class="math notranslate nohighlight">\(\hat{S}^-\)</span>). We can thus select a single state by ordering the <span class="math notranslate nohighlight">\(j_k\)</span> arguments.
+Furthermore, in the case of <span class="math notranslate nohighlight">\(\hat{S}^{-}\)</span>, the state is mapped to zero as soon as two <span class="math notranslate nohighlight">\(j_k\)</span>
+values coincide, so we can eliminate such states. If we thus restrict the set to states
+<span class="math notranslate nohighlight">\(\ket{j_1,j_2,\ldots ,j_N}\)</span> which are such that the modes are ordered as
+<span class="math notranslate nohighlight">\(j_1&lt;j_2&lt;\ldots&lt;j_N\)</span> (for fermions) or <span class="math notranslate nohighlight">\(j_1 \leq j_2 \leq \ldots \leq j_N\)</span> (for bosons),
+then we have a linearly independent set of states. For fermions, this implies in particular
+that we need to have <span class="math notranslate nohighlight">\(N \leq L\)</span>, there cannot be more fermions in the system then there are
+linearly independent modes (single particle states).</p>
+<p>Finally, one can wonder about the normalisation of these states. For fermions, the
+superposition created by <span class="math notranslate nohighlight">\(\hat{S}^-\)</span> contains <span class="math notranslate nohighlight">\(N!\)</span> terms, which are mutually orthogonal, so
+that the resulting state is normalised, because of the <span class="math notranslate nohighlight">\(1/\sqrt{N!}\)</span> prefactor in the
+definition of <span class="math notranslate nohighlight">\(\hat{S}^{-}\)</span>. More generally, one then finds</p>
+<div class="math notranslate nohighlight">
+\[\braket{i_1 &lt; i_2 &lt; \ldots &lt; i_N | j_1 &lt; j_2 &lt; \ldots &lt; j_N} = \delta_{i_1,j_1}
+\delta_{i_2,j_2} \cdots \delta_{i_N,j_N}\]</div>
+<p>For bosons, the situation is more complicated in the case that some <span class="math notranslate nohighlight">\(j_k\)</span> values coincide.
+Some of the <span class="math notranslate nohighlight">\(N!\)</span> terms created by <span class="math notranslate nohighlight">\(\hat{S}^+\)</span> are then equal and contribute differently to
+the norm. If we denote with <span class="math notranslate nohighlight">\(n_1, n_2, \ldots, n_L\)</span> the number of <span class="math notranslate nohighlight">\(j\)</span> values that equal the
+value <span class="math notranslate nohighlight">\(1, 2, \ldots, L\)</span>, i.e. the number of particles in mode <span class="math notranslate nohighlight">\(1, 2, \ldots, L\)</span>, then we
+find</p>
+<div class="math notranslate nohighlight">
+\[\braket{i_1 \leq i_2 \leq \ldots \leq i_N | j_1 \leq j_2 \leq \ldots \leq j_N} = (n_1! n_2!
+\cdots n_L!) \delta_{i_1,j_1} \delta_{i_2,j_2} \cdots \delta_{i_N,j_N}\]</div>
+<p>This more general exprression is also valid for fermions, where every <span class="math notranslate nohighlight">\(n_j\)</span> is restricted to
+be zero or one. In fact, the values <span class="math notranslate nohighlight">\(n_j\)</span> for <span class="math notranslate nohighlight">\(j=1,\ldots,L\)</span> completely characterise the
+state, and can thus be used to relabel the basis. Instead of specifying the mode <span class="math notranslate nohighlight">\(j_k\)</span> that
+each particle <span class="math notranslate nohighlight">\(k=1,\ldots,N\)</span> occuppies (where the labeling of the particles is arbitrary
+because they are identical), we can move to a mode-based description and thus specify the
+number of particles in each mode, also known as the mode occupation number. We can then
+refer to the basis vectors as</p>
+<div class="math notranslate nohighlight">
+\[\ket{n_1, n_2, \ldots, n_L}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_j = 0, 1\)</span> (fermions) or <span class="math notranslate nohighlight">\(n_j = 0,1,2, \ldots \)</span> (bosons) and furthermore
+<span class="math notranslate nohighlight">\(\sum_{j=1}^{L} n_j = N\)</span>. Furthermore, we define these states to be normalised to 1, i.e. we
+absorb a suitable normalisation factor when defining <span class="math notranslate nohighlight">\(\ket{n_1, n_2, \ldots, n_L}\)</span> in terms
+of the construction above.</p>
+<p>This way of labelling the basis states now is again reminiscent of a tensor product
+structure, i.e. we could think of <span class="math notranslate nohighlight">\(\ket{n_1, n_2, \ldots, n_L}\)</span> as the tensor product of
+states <span class="math notranslate nohighlight">\(\ket{n_j}\)</span> associated to every mode, and where the Hilbert space associated with
+such a mode is two-dimensional in the case of fermions, or infinite-dimensional in the case
+of bosons. However, there is still a global constraint <span class="math notranslate nohighlight">\(\sum_{j=1}^{L} n_j = N\)</span> so that we
+cannot let the different <span class="math notranslate nohighlight">\(n_j\)</span> values vary completely independently from each other.
+Furthermore, some caution is now needed as to what it means to have operators acting on
+these different “mode Hilbert spaces”. The correct formalism is that of second quantisation,
+which we introduce next.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In many applications, people do still work with the framework of first quantisation, and
+consider <span class="math notranslate nohighlight">\(N\)</span>-particle states constructed by symmetrising or antisymmetrising the tensor
+product of <span class="math notranslate nohighlight">\(N\)</span> single-particle states, in a so-called independent particle model or
+approximation. Such states are quite cumbersome to work with. As can already be seen, the
+antisymmetric case is slightly easier and is known as a Slater determinant. Indeed, the
+antisymmetrisation formula is reminiscent of the Leibniz formula of a determinant, and for
+example the inner product between two Slater determinants constructed from
+<span class="math notranslate nohighlight">\(\{\ket{\psi_n},n=1,\ldots,N\}\)</span> and <span class="math notranslate nohighlight">\(\{\ket{\varphi_n},n=1,\ldots,N\}\)</span> is given by the
+determinant of the matrix containing all overlaps <span class="math notranslate nohighlight">\(\braket{\varphi_m \vert \psi_n}\)</span>. Slater
+determinants form the basis of Hartree-Fock theory for approximating the state of electrons
+in an atom or molecule.</p>
+<p>The bosonic version occurs in the context of Bose-Einstein condensation and cold atom
+systems more generally. In that case, the inner product between two such states gives rise
+to a determinant-like formula, but without the minus signs. This construction is known as
+the permenant, but unlike the determinant it is very hard to compute in general and really
+requires to explicitly sum up all <span class="math notranslate nohighlight">\(N!\)</span> terms.</p>
+</div>
+</div>
+</div>
+<div class="section" id="fock-space-and-second-quantisation">
+<h2><span class="section-number">1.3. </span>Fock Space and Second Quantisation<a class="headerlink" href="#fock-space-and-second-quantisation" title="Permalink to this heading">#</a></h2>
+<p>When working with basis vectors using the occuppation number representation, we might
+consider dropping the overall constraint <span class="math notranslate nohighlight">\(\sum_{j=1}^L n_j = N\)</span>. This amounts to working in
+a larger Hilbert space, which is known as the Fock space, and consists of the direct sum of
+all physical (symmetrised or antisymmetrised) Hilbert spaces <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span> for
+different particle numbers <span class="math notranslate nohighlight">\(N\)</span>, going all the way from <span class="math notranslate nohighlight">\(N=0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{H} = \bigoplus_{N=0}^{+\infty} \mathbb{H}^{(N)}\]</div>
+<p>In the case of fermions and with a finite-dimensional single-particle Hilbert space
+<span class="math notranslate nohighlight">\(\mathbb{H}^{(1)} \cong \mathbb{C}^L\)</span>, the upper limit in the direct sum is <span class="math notranslate nohighlight">\(N=L\)</span>, i.e.
+there are no states with <span class="math notranslate nohighlight">\(N &gt; L\)</span> and so the associated Hilbert spaces are zero-dimensional.
+This direct sum furthermore also contains the case <span class="math notranslate nohighlight">\(N=0\)</span>, which we have not discussed
+before. In the previous subsection we started the construction of <span class="math notranslate nohighlight">\(\mathbb{H}^{(N)}\)</span> from a
+given single particle Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)}\)</span>. When there are no particles in the
+system, there is only a single state in which it can be, corresponding to having all
+occupation numbers <span class="math notranslate nohighlight">\(n_j = 0\)</span> for all <span class="math notranslate nohighlight">\(j\)</span>. Hence, for <span class="math notranslate nohighlight">\(N=0\)</span> particles, the Hilbert space
+<span class="math notranslate nohighlight">\(\mathbb{H}^{(0)}\)</span> is spanned by a single state, which we typically denote as
+<span class="math notranslate nohighlight">\(\ket{\Omega}=\ket{0,0,\dots,0}\)</span> and refer to as the <em>vacuum state</em>. Note that this vacuum
+state is normalised, and is thus very different from an actual zero vector of the vector
+space, which has norm zero.</p>
+<p>The Fock space becomes a Hilbert space simply by incorporating the inner product from each
+of its summands. States within the different summands of this direct sum are defined to be
+orthogonal, i.e. <span class="math notranslate nohighlight">\(\braket{\varphi^{(M)} \vert \psi^{(N)}}=0\)</span> for all <span class="math notranslate nohighlight">\(M\)</span>-particle states
+<span class="math notranslate nohighlight">\(\ket{\varphi^{(M)}}\)</span> and <span class="math notranslate nohighlight">\(N\)</span>-particle states <span class="math notranslate nohighlight">\(\ket{\psi^{(N)}}\)</span> with <span class="math notranslate nohighlight">\(M \neq N\)</span>.</p>
+<p>The main benefits of using the formalism of second quantisation are not about losing the
+overall particle number constraint, but for working with operators, in particular to
+describe (interacting) Hamiltonians. In first quantisation, we need to specify a Hamiltonian
+given a particular number of particles, i.e.\ the number of particles is an external
+parameter of the system. Using the Fock space, we can now define operators in such a way
+that their action is immediately defined for states with an arbitrary number of particles,
+including even states which are superpositions over different particle numbers.</p>
+<p>Hereto, we first introduce operators that enable us to connect the different particle number
+sectors, by creating (adding) or annihilating (removing) particles in the system. In
+particular, we denote with <span class="math notranslate nohighlight">\(\hat{a}_j^+\)</span> the operator that adds a new particle in the mode
+<span class="math notranslate nohighlight">\(j\)</span> in the system and with <span class="math notranslate nohighlight">\(\hat{a}_j^-\)</span> the operator that removes a particle that is in
+mode <span class="math notranslate nohighlight">\(j\)</span> from the system. As it turns out that both operators are related via the adjoint,
+i.e. <span class="math notranslate nohighlight">\(\braket{\Phi| hat{a}_j^+ \Psi} = \braket{hat{a}_j^- \Phi | \Psi}\)</span>, we use the simpler
+notation <span class="math notranslate nohighlight">\(\hat{a}_j\)</span> for the <em>annihilation operator</em> and <span class="math notranslate nohighlight">\(\hat{a}_j^\dagger\)</span> for the
+<em>creation operator</em>. To construct these operators in a mathematically precise and
+constructive way is actually somewhat tedious (but see
+<a class="reference external" href="https://en.wikipedia.org/wiki/Second_quantization#Creation_and_annihilation_operators">Wikipedia</a>).
+We just summarize their main properties. In particular, we want to have the property that
+the (anti)symmetrized states satisfy</p>
+<div class="math notranslate nohighlight">
+\[\ket{j_1,j_2, \ldots, j_N} = \hat{a}_{j_1}^\dagger \hat{a}_{j_2}^\dagger \cdots
+\hat{a}_{j_N}^\dagger\ket{\Omega}.\]</div>
+<p>It is immediately clear that, because of the (anti)symmetry, this requires that</p>
+<div class="math notranslate nohighlight">
+\[[\hat{a}_i^\dagger, \hat{a}_j^\dagger] = 0\ (\text{bosons})\quad\text{or}\quad
+\{\hat{a}_i^\dagger,\hat{a}_j^\dagger\} = 0\ (\text{fermions}).\]</div>
+<p>From the normalisation of these states, it also follows that</p>
+<div class="math notranslate nohighlight">
+\[[\hat{a}_i, \hat{a}_j^\dagger] = \delta_{i,j}\ (\text{bosons})\quad\text{or}\quad
+\{\hat{a}_i,\hat{a}_j^\dagger\} = \delta_{i,j}\ (\text{fermions}).\]</div>
+<p>With respect to the normalized basis vectors using number occupation representation, we have</p>
+<div class="math notranslate nohighlight">
+\[\ket{n_1, n_2, \ldots, n_L} = \frac{1}{\sqrt{n_1! n_2! \cdots n_L!}}
+(\hat{a}_1^\dagger)^{n_1} (\hat{a}_2^\dagger)^{n_2} \cdots (\hat{a}_L^\dagger)^{n_L}
+\ket{\Omega}\]</div>
+<p>which can be summarized using</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\hat{a}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &amp;= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j} \ket{n_1, n_2, \ldots, n_j - 1, \ldots, n_L},\\
+\hat{a}_j^\dagger \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &amp;= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j+1} \ket{n_1, n_2, \ldots, n_j + 1, \ldots, n_L}.
+\end{align}\end{split}\]</div>
+<p>It then follows easily that the operator <span class="math notranslate nohighlight">\(\hat{n}_j = \hat{a}_j^\dagger \hat{a}_j\)</span> satisfies</p>
+<div class="math notranslate nohighlight">
+\[\hat{n}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} = n_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L}\]</div>
+<p>and thus measures the number of particles in mode <span class="math notranslate nohighlight">\(j\)</span>. The operators <span class="math notranslate nohighlight">\(\hat{n}_j\)</span> are
+referred to as <em>number operators</em>. The total number of particles can then be measured using</p>
+<div class="math notranslate nohighlight">
+\[\hat{N} = \sum_{j=1}^{L} \hat{n}_j\]</div>
+<p>but the Fock space does of course contain states which are superpositions over different
+particle numbers (and which are thus not eigenstates of <span class="math notranslate nohighlight">\(\hat{N}\)</span>).</p>
+<p>Furthermore, by studying how single particle states <span class="math notranslate nohighlight">\(\ket{j} \equiv \hat{a}_j^\dagger
+\ket{\Omega}\)</span> change under a change of single particle basis, or thus, a transformation to a
+new set of modes, we can deduce how the associated creation and annihilation operators
+transform. Suppose we have a different single-particle basis, which for clarity we label
+with greek letters <span class="math notranslate nohighlight">\(\kappa = 1,\ldots,L\)</span>. We then find</p>
+<div class="math notranslate nohighlight">
+\[\ket{\kappa} = \hat{a}_\kappa^\dagger \ket{\Omega} = \sum_{j} \ket{j} \braket{j\vert\kappa}
+= \sum_{j} \braket{j\vert \kappa} \hat{a}_j^\dagger \ket{\Omega}\]</div>
+<p>from which we obtain</p>
+<div class="math notranslate nohighlight">
+\[\hat{a}_\kappa^\dagger = \sum_{j} \braket{j\vert \kappa} \hat{a}_j^\dagger,
+\qquad\hat{a}_\kappa = \sum_{j} \braket{\kappa\vert j} \hat{a}_j.\]</div>
+<p>Note that the transformation matrix <span class="math notranslate nohighlight">\(\braket{j \vert \kappa}\)</span> between two orthonormal bases
+correspond to a unitary matrix. These transformation rules will be employed often, for
+example, to switch between a position and momentum space representation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The bosonic creation and annihilation operators are of course reminiscent from the operators
+introduced for diagonalising the single particle harmonic oscillator model. Indeed, out of
+the bosonic creation and annihilation operator associated to every mode <span class="math notranslate nohighlight">\(j\)</span> we can build two
+Hermitian operators</p>
+<div class="math notranslate nohighlight">
+\[\hat{X}_j = \frac{1}{\sqrt{2}}(\hat{a}_j + \hat{a}_j^\dagger),\quad \hat{P}_j =
+\frac{-\mathrm{i}}{\sqrt{2}}(\hat{a}_j - \hat{a}_j^\dagger)\]</div>
+<p>which than satisfy the well known commutation relations <span class="math notranslate nohighlight">\(\left[\hat{X}_j, \hat{P}_k\right] =
+\mathrm{i} \delta_{j,k}\)</span>. In second quantisation, the Fock space of bosons built from a
+single particle system with <span class="math notranslate nohighlight">\(L\)</span> modes can equivalently be thought of as a regular tensor
+product space of <span class="math notranslate nohighlight">\(L\)</span> distinguishable quantum particles moving on the real line, or
+technically, as <span class="math notranslate nohighlight">\(\left(L^2(\mathbb{R})\right)^{\otimes L}\)</span>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For fermions, we can also construct Hermitian operators out of the creation and annihilation
+operators, which we denote as</p>
+<div class="math notranslate nohighlight">
+\[\hat{\eta}^{(1)}_j = \frac{1}{\sqrt{2}}(\hat{a}_j + \hat{a}_j^\dagger),\quad
+\hat{\eta}^{(2)}_j = \frac{-\mathrm{i}}{\sqrt{2}}(\hat{a}_j - \hat{a}_j^\dagger).\]</div>
+<p>In this case, we find that they satisfy the anticommutation relation</p>
+<div class="math notranslate nohighlight">
+\[\{ \hat{\eta}^{(\alpha)}_j, \hat{\eta}^{(\beta)}_k \} = \delta_{\alpha,\beta} \delta_{j,k}\]</div>
+<p>so that the <span class="math notranslate nohighlight">\(\hat{\eta}^{(1)}\)</span> type operators and <span class="math notranslate nohighlight">\(\hat{\eta}^{(2)}\)</span> type operators behave
+similarly. In that case, one often uses a different notation by setting</p>
+<div class="math notranslate nohighlight">
+\[\hat{\chi}_{2j-1} = \hat{\eta}^{(1)}_j = \frac{1}{\sqrt{2}}(\hat{a}_j +
+\hat{a}_j^\dagger),\quad \hat{\chi}_{2j} = \hat{\eta}^{(2)}_j =
+\frac{-\mathrm{i}}{\sqrt{2}}(\hat{a}_j - \hat{a}_j^\dagger)\]</div>
+<p>and thus <span class="math notranslate nohighlight">\(\{\hat{\chi}_k, \hat{\chi}_l\} = \delta_{k,l}\)</span> for all <span class="math notranslate nohighlight">\(k, l = 1,\ldots, 2L\)</span>.
+These Hermitian fermionic operators are referred to as <strong>Majorana operators</strong>.</p>
+<p>Note furthermore that the Fock space of fermions built from a single particle system with
+<span class="math notranslate nohighlight">\(L\)</span> modes looks remarkably like a system of <span class="math notranslate nohighlight">\(L\)</span> qubits, i.e. the tensor product
+<span class="math notranslate nohighlight">\((\mathbb{C}^2)^{\otimes L}\)</span>. While this is true for how the occupation number basis vectors
+are labelled, one important fact is that the operators <span class="math notranslate nohighlight">\(\hat{a}_j\)</span> and <span class="math notranslate nohighlight">\(\hat{a}_j^\dagger\)</span>
+should not be thought of as local operators that act nontrivially on the single site <span class="math notranslate nohighlight">\(j\)</span>,
+and as the identity elsewhere, since they do not mutually commute, but rather anticommute.
+It is possible to map these fermionic creation and annihilation operators to ‘nonlocal’
+qubit operators using the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Jordan%E2%80%93Wigner_transformation">Jordan-Wigner transformation</a>.</p>
+</div>
+<p>With these creation and annihilation operators, we can now represent general operators in a
+way that does not depend on the precise number of particles in the system. The simplest case
+are ‘single-particle’ operators, i.e. operators that were defined with respect to the
+single-particle Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}^{(1)}\)</span>. The easiest case are operators which are
+are diagonal with respect to the chosen single-particle basis. In that case, every particle
+one of the eigenmodes of the single-particle operator will give a contribution that equals
+the associated eigenvalue. Hence, the many-body representation of such an operator is given
+by</p>
+<div class="math notranslate nohighlight">
+\[\hat{O}^{(1)} = \sum_{j} \lambda_j \ket{j}\bra{j} \quad \rightarrow \quad \hat{O} = \sum_{j}
+\lambda_j \hat{a}_j^\dagger \hat{a}_j.\]</div>
+<p>However, we can easily transform away from the basis of eigenmodes to a general set of
+modes, and then find</p>
+<div class="math notranslate nohighlight">
+\[\hat{O}^{(1)} = \sum_{j,k} O_{j,k} \ket{j}\bra{k} \quad \rightarrow \quad \hat{O} =
+\sum_{j,k} O_{j,k} \hat{a}_j^\dagger \hat{a}_k.\]</div>
+<p>Vice versa, if you are given an operator that only contains terms where every term contains
+exactly one creation and one annilation operator, then it is especially easy to diagonalise
+this operator, since one only needs to diagonalise the corresponding single-particle version
+of the operator. When the Hamiltonian of the many-body system is of this form, the system is
+said to be <em>free</em> or noninteracting.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is a larger class of operators that can easily be diagonalised, namely operators where
+every term is quadratic in the creation and annihilation operators. This means that every
+term contains either a creation and an annilation operator, or two creation operators, or
+two annihilation operators. Such Hamiltonians are said to be quadratic or Gaussian, and can
+be diagonalised using a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Bogoliubov_transformation">Bogoliubov transformation</a>.</p>
+</div>
+<p>Similarly, there exist two-particle operators, in particular, typical interaction terms in
+the Hamiltonian such as the Coulomb interaction between electrons. Such operators take the
+form</p>
+<div class="math notranslate nohighlight">
+\[\hat{O}^{(2)} = \sum_{j,k,l,m} O_{j,k; l,m} \ket{j,k} \bra{l,m}\]</div>
+<p>and can be translated to act on the full Fock space as</p>
+<div class="math notranslate nohighlight">
+\[\hat{O} = \sum_{j\leq k; l\leq m} O_{(j,k); (l,m)} \hat{a}_{j}^\dagger \hat{a}_k^\dagger
+\hat{a}_m \hat{a}_l = \frac{1}{4} \sum_{j, k; l, m} O_{(j,k); (l,m)} \hat{a}_{j}^\dagger
+\hat{a}_k^\dagger \hat{a}_m \hat{a}_l.\]</div>
+<p>As soon as such type of operators are present in the Hamiltonian (which thus contain more
+than two creation of annihilation operators), it becomes impossible to diagonalise the
+Hamiltonian based on a simple calculation in the single-particle Hilbert space, and the
+exponentially large many-body Hilbert space need to be considered.</p>
+</div>
+<div class="section" id="interesting-states-and-observables-in-quantum-many-body-physics">
+<h2><span class="section-number">1.4. </span>Interesting States and Observables in Quantum Many-Body Physics<a class="headerlink" href="#interesting-states-and-observables-in-quantum-many-body-physics" title="Permalink to this heading">#</a></h2>
+<p>Having introduced the Hilbert space and Hamiltonian of quantum many-body systems, we still
+need to define which states we are actually interested in, and which type of observables we
+want to compute for such states. So far, we have only mentioned that isolated systems have a
+quantum state which corresponds to a vector (or rather a ray of vectors) in its Hilbert
+space <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>. Before answering this question, we first need to generalize our concept
+of a quantum state.</p>
+<div class="section" id="quantum-states-revisited">
+<h3><span class="section-number">1.4.1. </span>Quantum States Revisited<a class="headerlink" href="#quantum-states-revisited" title="Permalink to this heading">#</a></h3>
+<p>More abstractly and generally, the quantum state of a system can be introduced as a map from
+observables (operators) to numbers (expectation values). This is typically denoted as <span class="math notranslate nohighlight">\(\rho:
+\mathrm{End}(\mathbb{H}) \mapsto \mathbb{C}:\hat{A} \to \hat{A}\)</span>. Here,
+<span class="math notranslate nohighlight">\(\mathrm{End}(\mathbb{H})\)</span> is the set of linear operators (a.k.a endomorphisms) on
+<span class="math notranslate nohighlight">\(\mathbb{H}\)</span>. This set is itself a vector space, as we can consider linear combinations of
+linear operators. Furthermore, as we can compose two linear operators and obtain a new
+linear operator, we have a product operation, which makes <span class="math notranslate nohighlight">\(\mathrm{End}(\mathbb{H})\)</span> into an
+algebra. Finally, we have defined the concept of the adjoint of an operator, which in
+mathematics terminology gives <span class="math notranslate nohighlight">\(\mathrm{End}(\mathbb{H})\)</span> the structure of a
+<span class="math notranslate nohighlight">\(C^\ast\)</span>-algebra.</p>
+<p>The map <span class="math notranslate nohighlight">\(\rho\)</span> that represents a quantum state should have a number of properties, that
+generalise those of the case we have encountered so far, where <span class="math notranslate nohighlight">\(\rho(\hat{A}) =
+\frac{\braket{\Psi\vert \hat{A} \vert \Psi}}{\braket{\Psi | \Psi}}\)</span>. In particular, this map
+is linear with respect to linear combinations of operators. This implies that it can be
+written as <span class="math notranslate nohighlight">\(\rho(\hat{A}) = \mathrm{Tr}\left[\hat{\rho}\hat{A}\right]\)</span>, where <span class="math notranslate nohighlight">\(\hat{\rho}\)</span>
+is now itself an element of <span class="math notranslate nohighlight">\(\mathrm{End}(\mathbb{H})\)</span> (technically, <span class="math notranslate nohighlight">\(\rho\)</span> is an element
+from the dual space of <span class="math notranslate nohighlight">\(\mathrm{End}(\mathbb{H})\)</span>). Furthermore, we must have that our state
+gives rise to nonnegative and normalised probabilities, which implies that</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\rho(\hat{1}) = \mathrm{Tr}\left[\hat{\rho}\right] = 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho(\hat{P}) \geq 0\)</span> for any projector, and more generally, for any positive definite
+operator <span class="math notranslate nohighlight">\(\hat{P}\)</span>. This implies that the associated operator <span class="math notranslate nohighlight">\(\hat{\rho}\)</span>, known as the
+<strong>density operator</strong> or density matrix (when expressed with respect to a chosen basis),
+is itself a positive (and thus self-adjoint) operator, which is furthermore normalised
+to have trace one.</p></li>
+</ul>
+<p>The particular case where the state of the system was given by a vector
+<span class="math notranslate nohighlight">\(\ket{\Psi}\in\mathbb{H}\)</span> corresponds to
+<span class="math notranslate nohighlight">\(\hat{\rho}=\frac{\ket{\Psi}\bra{\Psi}}{\braket{\Psi\vert \Psi}}\)</span> and thus satisfies
+<span class="math notranslate nohighlight">\(\hat{\rho}^2=\hat{\rho}\)</span>, i.e. <span class="math notranslate nohighlight">\(\hat{\rho}\)</span> is itself a projector. Such states are called
+<em>pure states</em>. All density operators which do not have this property are called <em>mixed
+states</em>.</p>
+<p>Being positive definite operators, any density operator admits a spectral decomposition of
+the form</p>
+<div class="math notranslate nohighlight">
+\[\hat{\rho} = \sum_{n} p_n \ket{\Phi_n}\bra{\Phi_n}\]</div>
+<p>where the states <span class="math notranslate nohighlight">\(\{\ket{\Phi_n}\}\)</span> form an orthonormal set and the eigenvalues <span class="math notranslate nohighlight">\(p_n\)</span>
+satisfy <span class="math notranslate nohighlight">\(\sum_{n} p_n =1 \)</span> and <span class="math notranslate nohighlight">\(p_n \geq 0\)</span> (which together also yields <span class="math notranslate nohighlight">\(p_n &lt; 1\)</span>).</p>
+<p>Mixed states arise in the quantum world in two scenarios:</p>
+<ol class="arabic">
+<li><p>If the system is not isolated, but is rather a subsystem of a larger system and
+interacting with its complement therein. This is discussed in the next section.</p></li>
+<li><p>Even for an isolated system, it can happen that the state is not exaclty known and one
+must deal with classical uncertaintity and probability. Indeed, a mixed state can be
+interpreted as a statistical ensemble. If the system can be prepared into different (not
+necessarily orthogonal) states <span class="math notranslate nohighlight">\(\{\ket{\Psi_1}, \ket{\Psi_2}, \ldots\}\)</span> with
+probabilities <span class="math notranslate nohighlight">\(p_1, p_2, \ldots\)</span> that sum up to one, then the state of the system is
+given by</p>
+<div class="math notranslate nohighlight">
+\[\]</div>
+</li>
+</ol>
+<p>\hat{\rho} = p_1 \ket{\Psi_1}\bra{\Psi_1} + p_2 \ket{\Psi_2}\bra{\Psi_2} + \ldots</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Note</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">necessarily</span><span class="w"> </span><span class="n">correspond</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">spectral</span><span class="w"> </span><span class="n">decomposition</span><span class="w"> </span><span class="n">of</span>
+<span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="o">$</span><span class="p">,</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">states</span><span class="w"> </span><span class="o">$\</span><span class="kt">ket</span><span class="p">{</span><span class="o">\</span><span class="kt">Psi_i</span><span class="p">}</span><span class="o">$</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">necessarily</span><span class="w"> </span><span class="n">orthogonal</span><span class="o">.</span><span class="w"> </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">nonetheless</span>
+<span class="n">a</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="o">.</span><span class="w"> </span><span class="n">More</span><span class="w"> </span><span class="n">generally</span><span class="p">,</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="w"> </span><span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_1</span><span class="o">$</span><span class="w"> </span><span class="n">and</span>
+<span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_2</span><span class="o">$</span><span class="p">,</span><span class="w"> </span><span class="n">aany</span><span class="w"> </span><span class="n">convex</span><span class="w"> </span><span class="n">combination</span><span class="w"> </span><span class="o">$\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">\</span><span class="kt">hat</span><span class="p">{</span><span class="o">\</span><span class="kt">rho</span><span class="p">}</span><span class="n">_2</span><span class="o">$</span>
+<span class="n">with</span><span class="w"> </span><span class="n">thus</span><span class="w"> </span><span class="o">$</span><span class="mi">0</span><span class="w"> </span><span class="o">\</span><span class="n">leq</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">\</span><span class="n">leq</span><span class="w"> </span><span class="mi">1</span><span class="o">$</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="n">operator</span><span class="o">.</span>
+
+<span class="n">To</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">mixed</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">associate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Von</span><span class="w"> </span><span class="n">Neumann</span><span class="w"> </span><span class="n">entropy</span>
+
+<span class="sb">```{math}</span>
+<span class="sb">S(\hat{\rho}) = - \mathrm{Tr}\left[\hat{\rho}\log \hat{\rho}\right] = - \sum_{n} p_n \log(p_n)</span>
+</pre></div>
+</div>
+<p>with <span class="math notranslate nohighlight">\(p_n\)</span> the eigenvalues of <span class="math notranslate nohighlight">\(\hat{\rho}\)</span>. For a pure state, the Von Neumann entropy
+evaluates to zero (using <span class="math notranslate nohighlight">\(\lim_{x\to 0} x \log x = 0\)</span>). The maximal value of the Von Neumann
+entropy is obtained when all values <span class="math notranslate nohighlight">\(p_n\)</span> are equal so that <span class="math notranslate nohighlight">\(\hat{\rho} \sim \hat{1}\)</span>.
+Because of normalisation, we then have <span class="math notranslate nohighlight">\(p_n = 1/d\)</span> with <span class="math notranslate nohighlight">\(d\)</span> the Hilbert space dimension and
+thus obtain</p>
+<div class="math notranslate nohighlight">
+\[0 \leq S(\hat{\rho}) \leq \log d.\]</div>
+<p>In a many-body system, the Hilbert space dimension scales exponentially with the number of
+sites or number of degrees of freedom in the system. If we call this quantity the “volume”
+of the system, than we can conclude that the maximal value of the Von Neumann entropy is
+thus proportional to the volume of the system.</p>
+<p>Depending on the context, the interpretation and meaning of the Von Neumann entropy can
+differ, as we discuss below.</p>
+</div>
+<div class="section" id="from-tensor-products-to-mixed-states-and-entanglement">
+<h3><span class="section-number">1.4.2. </span>From Tensor Products to Mixed States and Entanglement<a class="headerlink" href="#from-tensor-products-to-mixed-states-and-entanglement" title="Permalink to this heading">#</a></h3>
+<p>Consider a bipartite system composed of two subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, with thus <span class="math notranslate nohighlight">\(\mathbb{H} =
+\mathbb{H}^{(A)} \otimes \mathbb{H}^{(B)}\)</span>. Now suppose that we are only interested in
+measuring observables that act non-trivially on subsystem <span class="math notranslate nohighlight">\(A\)</span>. This might be the case if
+subsystem <span class="math notranslate nohighlight">\(A\)</span> is the actual quantum system that we want to model, but it is not isolated and
+instead interacting with an environment, corresponding to subsystem <span class="math notranslate nohighlight">\(B\)</span>. With the axioms so
+far, we are forced to include the environment into our discussion. Only the combined system</p>
+<ul class="simple">
+<li><p>environment can be assigned a pure state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span>. However, this seems complete
+overkill, as the environment might extend the whole universe and so it will be impossible to
+know the complete state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span>. Since we are only interested in observables that act
+nontrivially on the system <span class="math notranslate nohighlight">\(A\)</span>, i.e. all observables that we want to measure take the form
+<span class="math notranslate nohighlight">\(\hat{O}^A = \hat{O} \otimes \hat{1}_B\)</span>, and thus we expect that a reduced and simplified
+description must exist.</p></li>
+</ul>
+<p>Let us now assume that the Hilbert space of subsystem <span class="math notranslate nohighlight">\(A\)</span> is spanned by a basis
+<span class="math notranslate nohighlight">\(\{\ket{\psi_k}, k=1,\dots, d^A\}\)</span> and the Hilbert space of subsystem <span class="math notranslate nohighlight">\(B\)</span> is spanned by a
+basis <span class="math notranslate nohighlight">\(\{\ket{\varphi_l}, l=1,\ldots, d^B\}\)</span>. A reduced description for the system <span class="math notranslate nohighlight">\(A\)</span> can
+be obtained by observing that we can write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\braket{\Psi \vert \hat{O}^A \vert \Psi} &amp;= \mathrm{Tr}\left[\hat{O} \otimes \hat{1}_B \ket{\Psi} \bra{\Psi}\right]\\
+&amp;= \sum_{k = 1}^{d^A}\sum_{l = 1}^{d^B} \left(\bra{\psi_k} \otimes \bra{\varphi_l}\right) \left(\hat{O} \otimes \hat{1}_B\right) \ket{\Psi}\bra{\Psi}\left(\ket{\psi_k} \otimes \ket{\varphi_l}\right)\\
+&amp;= \sum_{k = 1}^{d^A}] \bra{\psi_k} \hat{O} \left[ \sum_{l=1}^{d^B} \bra{\varphi_l} \ket{\Psi} \bra{\Psi} \ket{\varphi_l}\right] \ket{\psi_k}\\
+&amp;= \mathrm{Tr}_A \left[\hat{O} \mathrm{Tr}_B\left(\ket{\Psi}\bra{\Psi} \right)\right]\\
+&amp;= \mathrm{Tr}\left[\hat{O} \hat{\rho}^{(A)}\right]\end{split}\]</div>
+<p>Hence, subsystem <span class="math notranslate nohighlight">\(A\)</span> an be described in terms of a mixed state that is obtained as</p>
+<div class="math notranslate nohighlight">
+\[\hat{\rho}^A = \mathrm{Tr}_B \ket{\Psi}\bra{\Psi} = \sum_{l=1}^{d^B} \bra{\varphi_l}
+\ket{\Psi} \bra{\Psi} \ket{\varphi_l}\]</div>
+<p>This construction is known as a <em>partial trace</em> and the resulting mixed state of subsystem
+<span class="math notranslate nohighlight">\(A\)</span> as the <em>reduced density operator</em>. It is based on the fact that by using a tensor
+product basis for the joint Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H} = \mathbb{H}^{(A)} \otimes
+\mathbb{H}^{(B)}\)</span>, a trace operation leads to a double sum, namely one over all basis
+vectors for <span class="math notranslate nohighlight">\(\mathbb{H}^A\)</span> and one over all basis vectors for <span class="math notranslate nohighlight">\(\mathbb{H}^B\)</span>. Hence, the
+complete trace can be interpreted as the composition of two partial traces, one over
+subsystem <span class="math notranslate nohighlight">\(A\)</span> and one over subsystem <span class="math notranslate nohighlight">\(B\)</span>. If all relevant operators act trivially on <span class="math notranslate nohighlight">\(B\)</span>,
+the partial trace over <span class="math notranslate nohighlight">\(B\)</span> can be performed directly on the state <span class="math notranslate nohighlight">\(\hat{\rho}^{(AB)} =
+\ket{\Psi}\bra{\Psi}\)</span> and gives rise to the reduced density matrix <span class="math notranslate nohighlight">\(\hat{\rho}^{(A)}\)</span>. Some
+notes are in order.</p>
+<ul>
+<li><p>While we made reference to a specific tensor product basis to define this construction,
+the concepts of reduced density operator and partial trace do not depend on the specific
+choice of basis for <span class="math notranslate nohighlight">\(\mathbb{H}^{(A)}\)</span> and <span class="math notranslate nohighlight">\(\mathbb{H}^{(B)}\)</span>. The construction only
+requires a tensor product basis to expose the tensor product structure of <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>.</p></li>
+<li><p>While we have assumed that the total system is described by a pure state
+<span class="math notranslate nohighlight">\(\hat{\rho}^{(AB)} = \ket{\Psi}\bra{\Psi}\)</span>. However, for the construction of the reduced
+density opeator as <span class="math notranslate nohighlight">\(\hat{\rho}^{(A)} = \mathrm{Tr}_B \hat{\rho}^{(AB)}\)</span> this is not
+necessary.</p></li>
+<li><p>With can expand the whole construction with respect to an explicitly chosen basis. If
+<span class="math notranslate nohighlight">\(\ket{\Psi} = \sum_{k=1}^{d^A} \sum_{l=1}^{d^B} \Psi_{k,l} \ket{k}\otimes \ket{l}\)</span>, we
+find</p>
+<div class="math notranslate nohighlight">
+\[\hat{\rho}^{(AB)} = \sum_{k,k'=1}^{d^A} \sum_{l,l'=1}^{d^B} \Psi_{k,l} \Psi_{k',l'}^\ast
+\left(\ket{k}\otimes \ket{l}\right) \left(\bra{k'}\otimes \bra{l'}\right)\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\hat{\rho}^{(A)} = \sum_{k,k'=1}^{d^A} \sum_{l=1}^{d^B} \Psi_{k,l} \Psi_{k',l}^\ast
+\ket{k}\bra{k'}\]</div>
+</li>
+</ul>
+<p>If the reduced density operator <span class="math notranslate nohighlight">\(\hat{\rho}^A\)</span> is pure, this indicates that the state
+<span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> was itself a tensor product. In all other cases, the subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are
+said to be entangled. This entanglement can be quantified by computing the Von Neumann
+entropy <span class="math notranslate nohighlight">\(S(\hat{\rho}^A)\)</span>, which is then called the <strong>entanglement entropy</strong> of the combined
+system <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. Indeed, that this entropy is a property of how both subsystems are
+entangled follows from the fact that <span class="math notranslate nohighlight">\(S(\hat{\rho}^A) = S(\hat{\rho}^B)\)</span>, i.e.\ it doesn’t
+matter whether the Von Neumann entropy of the reduced density operator of subsystem <span class="math notranslate nohighlight">\(A\)</span> or
+of subsystem <span class="math notranslate nohighlight">\(B\)</span> is computed. This is only true if the total system is in a pure state
+<span class="math notranslate nohighlight">\(\ket{\Psi}\)</span>. When also the total system is in a mixed state, because of classical
+randomness, then it is harder to differentiate between true quantum entanglement and
+classical probability.</p>
+<p>To conclude, we analyze the case where the combined system is in a pure state a bit more.
+If we again expand <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> with respect to the tensor product basis as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\Psi} = \sum_{k=1}^{d^A} \sum_{l=1}^{d^B} \Psi_{k,l} \ket{k}\otimes \ket{l}\]</div>
+<p>and interpret its expansion coefficients <span class="math notranslate nohighlight">\(\Psi_{k,l}\)</span> as the entries of a <span class="math notranslate nohighlight">\(d^A \times d^B\)</span>
+matrix <span class="math notranslate nohighlight">\(C\)</span>. The reduced density operators can now be written as</p>
+<div class="math notranslate nohighlight">
+\[\hat{\rho}^A = \sum_{k,k'=1}^{d^A} [C C^\dagger]_{k,k'} \ket{k}\bra{k'}\quad
+\text{and}\quad\hat{\rho}^A = \sum_{k,k'=1}^{d^A} [C^\dagger C]_{l,l'} \ket{l}\bra{l'}\]</div>
+<p>Hence, the reduced density matrices for subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are related by the fact that
+they correspond to the two different ways in which we can multiply the matrix <span class="math notranslate nohighlight">\(C\)</span> with its
+Hermitian conjugate <span class="math notranslate nohighlight">\(C^\dagger\)</span>. It is a well-known result from linear algebra that for two
+matrices <span class="math notranslate nohighlight">\(A \in \mathbb{C}^{d_1 \times d_2}\)</span> and <span class="math notranslate nohighlight">\(B \in \mathbb{C}^{d_2 \times d_1}\)</span>, the
+square matrices <span class="math notranslate nohighlight">\(A B \in \mathbb{C}^{d_1 \times d_1}\)</span> and <span class="math notranslate nohighlight">\(BA \in \mathbb{C}^{d_2 \times
+d_2}\)</span> have the same set of nonzero eigenvalues, counted with degeneracy. If <span class="math notranslate nohighlight">\(d_1 \neq d_2\)</span>,
+the larger of the two matrices will have additional eigenvalues zero. This result already
+proofs the equality <span class="math notranslate nohighlight">\(S(\hat{\rho}^{(A)}) = S(\hat{\rho}^{(B)})\)</span>.</p>
+<p>However, we can even make this more explicit. We can decompose the matrix <span class="math notranslate nohighlight">\(C \in
+\mathbb{C}^{d^A \times d^B}\)</span> as <span class="math notranslate nohighlight">\(C = U S V^\dagger\)</span> with <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> unitary matrices (of
+size <span class="math notranslate nohighlight">\(d^A \times d^A\)</span> and <span class="math notranslate nohighlight">\(d^B \times d^B\)</span> respectively), and <span class="math notranslate nohighlight">\(S\)</span> a <span class="math notranslate nohighlight">\(d^A \times d^B\)</span> matrix
+which only has nonzero entries on the diagonal. Furthermore, the nonzero entries of <span class="math notranslate nohighlight">\(S\)</span> can
+be chosen positive in descending order. This decomposition is known as the <strong>singular value
+decomposition</strong>. For further reference, we denote the diagonal elements of <span class="math notranslate nohighlight">\(S\)</span> as <span class="math notranslate nohighlight">\(s_i =
+S_{i,i}\)</span> for <span class="math notranslate nohighlight">\(i=1,\ldots, \mathrm{min}(d^A,d^B)\)</span>.</p>
+<p>The unitary matrices <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> can be interpreted as basis transforms in the subsystems
+<span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> respectively, i.e. they define a new basis (which is thus specific to the chosen
+state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span>), which we denote as <span class="math notranslate nohighlight">\(\{\ket{\psi^{(A)}_k}, k= 1,\ldots, d^A\}\)</span> and
+<span class="math notranslate nohighlight">\(\{\ket{\psi^{(B)}_l}, l= 1,\ldots, d^B\}\)</span>. We can then write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{\Psi} &amp;= \sum_{i=1}^{\min(d^A,d^B)} s_i \ket{\psi^A_i} \otimes \ket{\psi^B_i}\\
+\hat{\rho}^{(A)} &amp;= \sum_{i=1}^{d^A} (s_i)^2 \ket{\psi^A_i} \bra{\psi^A_i}\\
+\hat{\rho}^{(B)} &amp;= \sum_{i=1}^{d^b} (s_i)^2 \ket{\psi^B_i} \bra{\psi^B_i}\end{split}\]</div>
+<p>Hence, the reduced matrices appear immidiately in diagonalised form. The singular values
+<span class="math notranslate nohighlight">\(s_i\)</span>, or rather their squares <span class="math notranslate nohighlight">\(p_i = (s_i)^2\)</span> are referred to as Schmidt coefficients, and
+together make up the <strong>entanglement spectrum</strong>. The entanglement entropy is then given by</p>
+<div class="math notranslate nohighlight">
+\[S = - \sum_{i} p_i \log(p_i)\]</div>
+<p>In all of this, it is clear that subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> were treated on equal footing, and
+it does in fact not matter which of the two is chosen to probe the entanglement structure of
+the state.</p>
+<p>If the entanglement entropy evaluates to zero, the two subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are said to be
+unentangled, and the state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> actually factorises as a tensor product
+<span class="math notranslate nohighlight">\(\ket{\psi^A} \otimes \ket{\psi^B}\)</span>. As soon as the entanglement entropy is nonzero, the two
+subsystems are entangled. As stated above, the entropy is upper bounded, in this case by the
+logarithm of the smallest of the two Hilbert space dimensions <span class="math notranslate nohighlight">\(d^A\)</span> or <span class="math notranslate nohighlight">\(d^B\)</span>. Thus, if <span class="math notranslate nohighlight">\(d^A
+\leq d^B\)</span>, we find that the entanglement entropy satisfies</p>
+<div class="math notranslate nohighlight">
+\[0 \leq S \leq \log(d^A).\]</div>
+<p>It turns out that states that are randomly selected from the Hilbert space typically have
+an entanglement entropy that is close to maximal.</p>
+</div>
+<div class="section" id="quantum-many-body-physics-at-finite-temperature">
+<h3><span class="section-number">1.4.3. </span>Quantum Many-Body Physics at Finite Temperature<a class="headerlink" href="#quantum-many-body-physics-at-finite-temperature" title="Permalink to this heading">#</a></h3>
+<p>With the concept of mixed states and quantum entanglement at hand, we can now discuss
+physically interesting states. Firstly, when considering a system that is in contact with a
+large environment that acts as a heat bath at temperature <span class="math notranslate nohighlight">\(T\)</span>, it will equilibrate. The
+state of the system at equilibrium is then given by the so-called Gibbs state</p>
+<div class="math notranslate nohighlight">
+\[\hat{\rho} = \frac{1}{Z(\beta)} \mathrm{e}^{-\beta \hat{H}}\]</div>
+<p>where the normalization factor</p>
+<div class="math notranslate nohighlight">
+\[Z(\beta) = \mathrm{Tr}\left[\mathrm{e}^{-\beta \hat{H}}\right]\]</div>
+<p>is typically referred to as the <strong>partition function</strong>. Here, <span class="math notranslate nohighlight">\(\beta = \frac{1}{k_B T}\)</span> with
+<span class="math notranslate nohighlight">\(T\)</span> de temperature and <span class="math notranslate nohighlight">\(k_B\)</span> Boltzmann’s constant. Henceforth, we simply refer to <span class="math notranslate nohighlight">\(\beta\)</span> as
+<em>inverse temperature</em>.</p>
+<p>The Von Neumann entropy of the Gibbs state corresponds to the thermodynamical notion of
+entropy. In a many-body system, the thermal entropy at finite temperature will be extensive
+and thus scale with the volume of the system, just like the energy expectation value, so
+that together the free energy <span class="math notranslate nohighlight">\(E - T S\)</span> is minimised.</p>
+<p>At infinite temperature (<span class="math notranslate nohighlight">\(\beta=0\)</span>), we obtain <span class="math notranslate nohighlight">\(\hat{\rho} \sim \hat{1}\)</span> and the Von Neumann
+entropy reaches its upper bound. At zero temperature (<span class="math notranslate nohighlight">\(\beta \to +\infty\)</span>), we obtain
+<span class="math notranslate nohighlight">\(\hat{\rho} \sim \hat{P}_0\)</span>, with <span class="math notranslate nohighlight">\(\hat{P}_0\)</span> the projector onto the eigenspace of lowest
+energy. Hence, in that case the Von Neumann entropy is given by <span class="math notranslate nohighlight">\(\log(d_0)\)</span>, with <span class="math notranslate nohighlight">\(d_0\)</span> the
+lowest energy eigenvalue, i.e. the dimension of the ground state subspace. Most quantum
+lattice systems have a single or at least a small number of linearly indepenent ground
+states, so that <span class="math notranslate nohighlight">\(d_0\)</span> is a small number independent of the system size. However, there are
+also cases where the number of ground states scales exponentially with the system size, and
+the thermal entropy remains extensive at zero temperature. This then constitutes a violation
+of the infamous third law of thermodynamics.</p>
+<p>While the heat bath or environment with which the system interacts is in practice typically
+much “larger” (in terms of number of degrees of freedom and thus Hilbert space dimension),
+we can use a property that any mixed state can be obtained as the reduced density operator
+from a pure state in a Hilbert space that is the tensor product of two copies of the
+system’s Hilbert space, or thus, where the environment is just exactly as large as the
+system. Writing a mixed state <span class="math notranslate nohighlight">\(\hat{\rho}\)</span> as the reduced density operator of a pure state
+<span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> in a Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H} = \mathbb{H}^S \otimes \mathbb{H}^E\)</span> is known as
+a <em>purification</em>. With respect to the purification, all expectation values can be obtained
+as</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{Tr}\left[\hat{O} \hat{\rho}\right] = \braket{\Psi \vert \hat{O} \otimes \hat{1}_E \vert \Psi}\]</div>
+<p>which can be an advantage if one has an efficient (mathematical, computational, …) formalism
+for working with pure states. We can thus always construct such a purification by just
+taking the environment to be a copy of the system. Note that the environment in this
+construction is merely an auxiliary tool, and has no physical meaning or relation to the
+actual environment. If the Hilbert space of the system is described by a basis <span class="math notranslate nohighlight">\(\{\ket{j},
+j=1,\dots, d\}\)</span>, then we can first build a purification if the infinite temperature state as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\Psi_0} = \sum_{j} \ket{j}_S \otimes \ket{j}_E\]</div>
+<p>In particular, if the system is a many-body system and <span class="math notranslate nohighlight">\(\ket{j}\)</span> is itself already a tensor
+product basis state <span class="math notranslate nohighlight">\(\ket{j_1} \otimes \ket{j_2} \otimes \ldots\)</span>, we can organise the
+environment so that matching tensor product factors between system and environment are taken
+together. This has the advantage that the infinite temperature state can be written as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\Psi_0} = \left(\sum_{j_1} \ket{j_1}_S \otimes \ket{j_1}_E\right) \otimes \left(\sum_{j_2} \ket{j_2}_S \otimes \ket{j_2}_E\right) \otimes \ldots\]</div>
+<p>and still has an overall tensor product structure. A purification of the finite temperature
+state can then be obtained as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{\Psi_\beta} &amp;= \frac{1}{\sqrt{Z(\beta)}} \sum_{j=1}^{d} \left(\mathrm{e}^{-\frac{\beta}{2} \hat{H}} \ket{j}_S \right)\otimes \ket{j}_E \\
+&amp;= \frac{1}{\sqrt{Z(\beta)}} \exp\left(-\frac{\beta}{2} \hat{H} \otimes \hat{1}_E \right) \ket{\Psi_0}\end{split}\]</div>
+<p>This expression now looks remarkibly similar to how to compute a time-evolved state, by
+replacing <span class="math notranslate nohighlight">\(-\mathrm{i} t \mapsto -\beta/2\)</span>. Hence, methods that solve Schrödinger’s equation
+and are sufficiently general to also work with imaginary values of the time coordinate can
+be used to prepare thermal states.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Purifications of thermal states are also referred to as <em>thermofield double states</em>,
+especially in the high energy physics literature, i.e. in the context of quantum field
+theory, holography and quantum gravity.</p>
+</div>
+</div>
+<div class="section" id="quantum-many-body-physics-at-zero-temperature">
+<h3><span class="section-number">1.4.4. </span>Quantum Many-Body Physics at Zero Temperature<a class="headerlink" href="#quantum-many-body-physics-at-zero-temperature" title="Permalink to this heading">#</a></h3>
+<p>As quantum effects are most pronounced at zero temperature, we typically assume to be
+operating in this regime. It then follows that we are mostly interested in the lowest energy
+states of the Hamiltonian, and in particular in the ground state(s).</p>
+<p>A trivial but nonetheless important property of ground states is that they can easily be
+characterised as states that minimise the expectation value <span class="math notranslate nohighlight">\(\braket{\Psi \vert \hat{H} |
+\Psi}\)</span>. Indeed, this forms the basis for the variational principle. If we have a set of
+trial states, in which there are a number of free parameters, than we can construct an
+approximation to the ground state by ‘simply’ minimising the energy expectation value of the
+Hamiltonian with respect to these free parameters. How good this approximation is in
+practice depends on the properties of both the Hamiltonian and the trial states. However,
+one way to quantify the quality of the ground state approximation is by computing the energy
+variance</p>
+<div class="math notranslate nohighlight">
+\[\braket{\Psi \vert (\hat{H} - \braket{\Psi \vert \hat{H} \vert \Psi})^2 \vert \Psi} =
+\braket{\Psi \vert \hat{H}^2 \vert \Psi} - \braket{\Psi \vert \hat{H} \vert \Psi}^2.\]</div>
+<p>The Hamiltonians for quantum lattice systems that we are interested in, will typically
+contain a sum of terms where every individual term acts nontrivially only in a small patch
+of the lattice. For such Hamiltonians, the low-energy states have a special property.
+Hereto, we consider arbitrary bipartitions of the system, where one subsystem corresponds to
+a (connected) region of sites, whereas the complement, i.e.\ the remaining sites in the
+lattice, make up the second subsystem. The ground state will in general not factorize into a
+tensor product, as it contains correlations and entanglement between these two (arbitrarily
+chosen) subsystems. As pointed out above, the maximal value of entanglement entropy is given
+by the logarithm of the smallest of the two Hilbert space dimensions. Assuming that our
+chosen region of sites is smaller than its complement, its Hilbert space will itself scale
+exponentially with the number of sites in that region, i.e.\ with its volume. Hence, the
+entanglement entropy computed for such a bipartition has an upper bound that is proportional
+to the volume of the subsystem. As was also stated above, random states typically satisfy
+this upper bound. However, the special property of low-energy states of locally interacting
+Hamiltonians is exactly that they have much less entanglement. They typically have an
+entanglement entropy that only scales with the common area between the subsystem and its
+complement. This scaling behavior is referred to as the <strong>area law of entanglement entropy</strong>
+and provides the key motivation for approximating such low energy states using a tensor
+network decomposition. It indicates that the most important quantum correlations are short
+range (just like the interactions that generate them), and are thus situated across the
+boundary connecting the subsystem and its complement. However, this does not exclude that
+there is also a small amount of nontrivial long-range correlations in the system.</p>
+<p>Aside from the ground state, one might also be interested in the first excited states, as
+these will be important for understanding how the system at zero temperature reacts to
+external perturbations. In a macroscopically large many-body system, one should not expect
+that the energy spectrum consists of a number of discrete levels with gaps in between. The
+lowest-energy excited states in a quantum lattice system can typically be given a
+particle-like interpretation, as is well known from quantum field theory. They correspond to
+small bumps of energy, i.e. they can be thought of as perturbations of the ground state in a
+small region and thus have an anergy cost that does not scale with the system size. However,
+because of kinetic energy-like terms, actual eigenstates will not correspond to having this
+energy bump in a localized region, but will rather be in a superposition where the
+“particle” is delocalized. In particular, in the case of a translation invariant system, the
+eigenstates will also be momentum eigenstates, and thus describe a particle that is in a
+momentum superposition across the lattice. The energy (surplus) of such a particle like
+excitation will thus be a number <span class="math notranslate nohighlight">\(\epsilon(k)\)</span> that is of order <span class="math notranslate nohighlight">\(1\)</span> independent of the
+system size, and that depends on the specific momentum. If <span class="math notranslate nohighlight">\(\epsilon(k)\)</span> is everywhere lower
+bounded by some value <span class="math notranslate nohighlight">\(\Delta\)</span> (again indepenent of system size), then the system is said to
+be gapped. However, in some systems, <span class="math notranslate nohighlight">\(\epsilon(k)\)</span> can become zero for particular values of
+<span class="math notranslate nohighlight">\(k\)</span>. Such systems are called gapless, and they often correspond to phase transition points,
+where the nature of the ground state radically changes if the parameters in the Hamiltonian
+are varied.</p>
+<p>The energy spectrum of a quantum lattice system will then consist of one or a few ground
+states, the energy of which is an extensive number that is most easily expressed as some
+energy density per site. To study the excited states, it is then convenient to shift the
+energy scale such that the ground state energy is zero. The lowest excited states will then
+correspond to particles which can be created at a certain momentum. In an energy-momentum
+diagram, their dispersion relation <span class="math notranslate nohighlight">\(\epsilon(k)\)</span> will apear as an isolated band. Note that a
+system can have different types of such particle-like excitations, each with their own
+dispersion relation. Higher up in the energy spectrum we start to obtain regions
+corresponding to states with two- or more particles, that are travelling independent from
+each other. For such states, the energy can be obtained simply as the sum of the indivual
+particles in the state, and since the relative momentum of the particles can change while
+keeping the total momentum fixed, the energy in such states can also vary continuously (at
+least in the thermodynamic limit).</p>
+</div>
+<div class="section" id="quantum-dynamics-and-quenches">
+<h3><span class="section-number">1.4.5. </span>Quantum Dynamics and Quenches<a class="headerlink" href="#quantum-dynamics-and-quenches" title="Permalink to this heading">#</a></h3>
+<p>Aside from low-energy eigenstates of the Hamiltonian, we are often also interested in states
+that have a non-trivial time depence. One particular use case is where one starts from the
+ground state <span class="math notranslate nohighlight">\(\ket{\Psi_0}\)</span> of a certain Hamiltonian <span class="math notranslate nohighlight">\(\hat{H}_0\)</span>, and then some parameters
+in the Hamiltonian are suddenly changed, so that the Hamiltonian now corresponds to a new
+operator <span class="math notranslate nohighlight">\(\hat{H}_1\)</span>. This sudden change is reminiscent of quenching a system, and such a
+setup is called a global quench. We then want to compute</p>
+<div class="math notranslate nohighlight">
+\[\ket{\Psi(t)} = \exp(-\mathrm{i} t \hat{H}_1) \ket{\Psi_0}.\]</div>
+<p>With respect to <span class="math notranslate nohighlight">\(\hat{H}_1\)</span>, the state <span class="math notranslate nohighlight">\(\ket{\Psi_0}\)</span> will no longer be a ground state and
+most likely not even be an eigenstate. However, it will have a certain (extensive)
+energy expectation value that is preserved throughout the evolution.</p>
+<p>In terms of entanglement and correlations, even when <span class="math notranslate nohighlight">\(\ket{\Psi_0}\)</span> is a state with an area
+law entanglement scaling (because it is a low-energy state of another local Hamiltonian,
+namely <span class="math notranslate nohighlight">\(\hat{H}_0\)</span>), the entanglement in the state will grow rapidly with time. Indeed, the
+bipartite entanglement entropy for will tend to grow linearly with time. From the
+perspective of a given subsystem, its entropy will grow from an initial value proportional
+to the area of the subsystem, until it saturates at a value that is propertional to the
+volume of the subsystem. This process is known as thermalisation, as it turns out that at
+that point, the subsystem is locally indistinguishable from a Gibbs state with a temperature
+set by the energy density of the initial state. The subsystem has thermalized with respect
+to its complement behaving as an environment or heat bath. The larger the subsystem, the
+longer it will take before thermalisation is complete, and the overall state of the global
+system remains a pure state, albeit a highly entangled one.</p>
+</div>
+<div class="section" id="observables-and-static-and-dynamic-correlation-functions">
+<h3><span class="section-number">1.4.6. </span>Observables and Static and Dynamic Correlation Functions<a class="headerlink" href="#observables-and-static-and-dynamic-correlation-functions" title="Permalink to this heading">#</a></h3>
+<p>TO BE WRITTEN!</p>
+</div>
+</div>
+<div class="section" id="quantum-to-classical-mapping">
+<h2><span class="section-number">1.5. </span>Quantum-to-Classical Mapping<a class="headerlink" href="#quantum-to-classical-mapping" title="Permalink to this heading">#</a></h2>
+<p>In this final section, we introduce a general technique that essentially enables us to map
+any quantum lattice system in <span class="math notranslate nohighlight">\(d\)</span> dimensions to a classical partition function in <span class="math notranslate nohighlight">\(d+1\)</span>
+dimensions, up to some caveats that we will return to at the end of this section.</p>
+<p>TO BE WRITTEN!</p>
+<!-- 
+### Suzuki-Trotter decomposition
+
+Remember that thermal expectation values are given by
+
+$$\braket{\operator{O}} = \tr\left[\operator{O} \mathrm{e}^{-\beta \hat{H}}\right]/Z(\beta)= \tr\left[\mathrm{e}^{-\beta \hat{H}/2} \operator{O} \mathrm{e}^{-\beta \hat{H}/2}\right]/Z(\beta)$$
+
+with the thermal partition function $Z(\beta)$ given by
+
+$$Z(\beta) = \tr \mathrm{e}^{-\beta \hat{H}} = \sum_{s= \pm 1} \braket{s|\mathrm{e}^{-\beta \hat{H}}|s}.$$
+
+The ground state physics is encoded in the limit $\beta \to \infty$. Note that, if the
+system has a unique ground state, we can obtain the ground state $\ket{\Psi}$ of a quantum
+system by starting from essentially a random state $\ket{\Phi}$ and evolving it in imaginary
+time $\tau = -\ic t$ for sufficiently long
+
+$$\ket{\psi_0} \sim \lim_{\tau \to \infty} \mathrm{e}^{-\tau \hat{H}} \ket{\phi}$$
+
+Expanding the initial state $\ket{\phi}$ in the energy eigenbasis of $\hat{H}$, we see that the only condition is that it is not orthogonal to the ground state (subspace). In addition, the ground state will be well approximated if $\tau \Delta E \gg 1$, with $\Delta E=E_1 - E_0$ the energy gap. This imaginary time evolution also forms the basic ingredient of several numerical algorithms for approximating ground states of quantum many body systems, often in combination with the Suzuki-Trotter decomposition which is introduced below.
+
+Using this approach, the following expression for the ground state expectation value of on
+operator $\operator{O}$ is obtained
+
+$$\braket{\hat{O}} = \lim_{\tau\to\infty} \braket{\phi\vert \mathrm{e}^{-\tau \hat{H}} \operator{O} \mathrm{e}^{-\tau \hat{H}}\vert \phi}/\braket{\phi\vert\mathrm{e}^{-2\tau \hat{H}} \vert\phi}$$
+
+This expression can be compared to the thermal expectation value with $\beta = 2\tau$; the
+only difference is in the boundary conditions.
+
+ For a quantum many body system, taking the exponential is as hard as determining the full
+diagonalisation of the hamiltonian, which is impossible due to the exponentially large
+Hilbert space. If the hamiltonian is a sum of local terms, each of these terms can be
+exponentiated easily, but for arbitrary $\tau$ there is no relation ship between $\exp(-\tau
+\sum_{i} \operator{h}_i)$ and the individual $\exp(-\tau \operator{h}_i)$, unless the
+different $\operator{h}_i$ commute. However, for an infinitesimal time step $\epsilon$, we
+can use to Baker-Campbell-Hausdorff formula (or better yet, the Zassenhaus formula) to
+obtain $\exp(-\epsilon \sum_{i} \operator{h}_i) = \prod_i \exp(-\epsilon \operator{h}_i) +
+\mathcal{O}(\epsilon^2)$. This then leads to the \emph{Suzuki-Trotter decomposition}
+\begin{equation} \exp\left(-\tau \sum_{i} \operator{h}_i\right) = \lim_{M\to\infty} \left(
+\mathrm{e}^{-\frac{\tau}{M} \sum_i \operator{h}_i} \right)^M =\lim_{M\to\infty}
+\left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \operator{h}_i} + \order(M^{-1})\right)^M
+\end{equation} Note that splitting the time interval $[0,\tau]$ into small segments
+$\epsilon = \tau/M$ is also the starting point for deriving a path integral representation
+of the quantum partition function. The next step is to insert a resolution of the identity
+in between the $N$ different factors, where the labels of the basis will behave as classical
+degrees of freedom. For obtaining a path integral, the basis should be labeled by a number
+of continuous degrees of freedom, which can then become continuous functions of time in the
+limit $\epsilon\to 0$. Here, instead, we will keep $\epsilon$ small but finite, and use a
+discrete basis. \subsection{From quantum to statistical mechanics} Let's start with a
+quantum system in $d=0$, i.e.\ a small number of spins, or in particular, a single spin,
+described by a hamiltonian \begin{equation} \hat{H} = - h_x \sigma^x - h_z \sigma^z
+\end{equation} While we could in principle exponentiate $\hat{H}$ directly, we will treat it
+using the Suzuki-Trotter decomposition. Throughout the remainder of this section, we will
+use the $\sz$ basis, which we denote as $\ket{1} = \ket{\uparrow}$ and $\ket{-1} =
+\ket{\downarrow}$. Inserting resolutions of the identity, we write \begin{equation} Z(\beta)
+= \tr \mathrm{e}^{-\beta \hat{H}} = \sum_{\{s_k\}=\pm 1} \braket{s_1|\mathrm{e}^{-\epsilon
+\hat{H}}|s_2}\cdots \braket{s_M-1| \mathrm{e}^{-\epsilon \hat{H}}|s_{M}} \cdots \braket{s_M|
+\mathrm{e}^{-\epsilon \hat{H}}|s_{M+1}} \end{equation} with $s_{M+1} = s_1$, $M\epsilon
+=\beta$, and where \begin{align*} \braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}} &=
+\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}} \approx \braket{s_{i}|\mathrm{e}^{\epsilon
+h_z \sz}\mathrm{e}^{\epsilon h_x \sx}|s_{i+1}}\\ &= \mathrm{e}^{\epsilon h_z s_i}
+\braket{s_{i}|\cosh(\epsilon h_x) \one + \sinh(\epsilon h_x) \sx |s_{i+1}}\\ &=
+\mathrm{e}^{K s_{i}s_{i+1} + h s_i + f_0}. \end{align*} \begin{exercise} Prove that the
+equality on the last line is obtained with , $K = -\frac{1}{2}\log \tanh(\epsilon h_x)$, $h
+= \epsilon h_z$ and $f_0 = \frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]$.
+\end{exercise}\\ We thus obtain $Z(\beta) = \sum_{s_k} \mathrm{e}^{\sum_{i=1}^{M}K s_i
+s_{i+1} + h s_i}$, the partition function of the one-dimensional classical Ising model with
+periodic boundary conditions. Indeed, $\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}}$ does
+exactly correspond to the transfer matrix, and diagonalising the transfer matrix is the most
+straightforward approach to solving the one-dimensional classical Ising model.
+
+\subsection{Higher dimensional generalisation}
+
+We now apply the same approach to the transverse field Ising model in $d$ dimensions, on a hypercubic lattice. We separate the hamiltonian in two parts according to
+\begin{equation}
+	\hat{H}_{\text{TFIM}} = \left(-J\sum_{\braket{i,j}} \sz_i \sz_j  - h_z \sum_{i} \sz_i\right) + \left(- h_x \sum_{i} \sx_i\right)= \operator{H}_1 + \operator{H}_2
+\end{equation}
+Note that $\operator{H}_1$ and $\operator{H}_2$ in itself contain commuting terms, but of course don't mutually commute. We follow the same strategy, and will in every (imaginary) time step introduce a resolution of the identity using the tensor product $\sz$ basis. We now denote the basis at time step $k$ as $\ket{\{s_{i,k}\}}$, where $i$ labels a site in the $d$ dimensional lattice hosting the quantum degrees of freedom, and $k$ labels points along the imaginary time axis, which emerges as a new dimension in the problem. We find
+\begin{align*}
+\exp(-\epsilon \operator{H}_1)\ket{\{s_{i,k}\}} = \exp(\epsilon J \sum_{\braket{i,j}} s_{i,k} s_{j,k}+\epsilon h \sum_i s_{i,k}) \ket{\{s_{i,k}\}}
+\end{align*}
+as $\operator{H}_1$ is diagonal in this basis, and 
+\begin{align*}
+\braket{\{s_{i,k}\}|\exp(-\epsilon \operator{H}_2)|\{s_{i,k+1}\}} = \prod_i \braket{s_{i,k}|\mathrm{e}^{-\epsilon h_x \sx_i} | s_{i,k+1}}
+ \sim \exp(K_\perp\sum_{i} s_{i,k} s_{i,k+1})
+\end{align*}
+with $K_\perp = \log \tanh(\epsilon h_x)$ as before. Here, we have now ignored an overall proportionality factor, which is irrelevant when using the partition function to compute expectation values. With this, we find
+\begin{equation}
+	Z(\beta) = \sum_{\{s_i,k\}} \exp\left(\sum_{k=1}^{M}\sum_{i} K_\perp s_{i,k} s_{i,k+1}+\sum_{k=1}^M\sum_{\braket{i,j}} K_\parallel s_{i,k} s_{j,k} + \sum_{k=1}^{M}\sum_{i} h s_{i,k} \right)
+\end{equation}
+with $K_{\parallel} = \epsilon J$ and $h = \epsilon h_z$. We thus find the partition function of the classical Ising model in $d+1$ dimensions with anisotropic interaction strengths, periodic boundary condition in the imaginary time direction and a number of sites in the time direction given by $M = \beta/\epsilon$. Hence, the ground state regime $\beta\to \infty$ corresponds to the thermodynamic limit in this additional time direction of the corresponding classical system, and we will see that there are many similarities (or actually, equivalences) between between quantum phenomena in $d$ dimensions and classical phenomena in $D=d+1$ dimensions. On the other hand, when the quantum system is at finite temperature $\beta$, the additional dimension is finite and never in the thermodynamic limit. In that case, this extra dimension cannot cause new non-analyticities in the partition function and finite temperature quantum systems in $d$ dimensions are very similar to classical systems in $d$ dimensions.
+
+In particular, the ground state of the quantum Ising chain has an extended symmetry broken
+regime $g\in[0,1)$, matching the ferromagnetic phase at low temperatures in the
+two-dimensional classical Ising model. One can show that also the order parameter between
+the quantum chain and the classical model is equivalent. At finite temperature however, the
+quantum Ising chain does not exhibit symmetry breaking, exactly like the one-dimensional
+classical Ising model. It is not surprising that the $d=1$ quantum phase transition itself
+is also completely equivalent to the $D=2$ finite temperature phase transition, which also
+fits within the broader context of universality, which we briefly discuss in the next
+section. The duality mapping in the quantum Ising chain is furthermore equivalent to the
+well-known Kramers-Wannier duality in the classical Ising model.
+
+This quantum to classical mapping can also be inverted.\footnote{This does not imply that
+the mapping is unique. Choosing a different time step $\epsilon$ or a different basis, e.g.\
+the $\sx$ instead of $\sz$ basis will result in a different classical model.} Taking a
+codimension $1$ slice out of a $D$-dimensional classical partition function, one obtains a
+transfer matrix which can be interpreted as the exponential of a quantum hamiltonian acting
+on the Hilbert space of a $d=D-1$ dimensional quantum system. In fact, the modern
+perspective on the exact solution of the two-dimensional classical Ising model by Onsager is
+exactly by this transfer matrix approach, which is subsequently diagonalised using the
+Jordan Wigner and free fermion approach from Section~\ref{s:isingexact}.
+
+It is clear that the quantum to classical mapping is not specific to the quantum Ising model
+and can be applied to any hamiltonian. The path integral representation of the partition
+function fits within the same scheme, and only differs in the fact that the limit
+$\epsilon\to 0$ is taken such that the additional dimension becomes continuous. This is
+particularly natural if also the spatial dimensions of the quantum dimension are continuous,
+i.e.\ if we have a quantum field theory. In this case, a $D=d+1$ dimensional classical
+statistical field theory is obtained. For relativistic quantum field theories, where it is
+common practice to explicitly count the time dimension together with the space dimensions,
+imaginary time evolution leads to an action, which is equivalently a hamiltonian of a
+classical field theory in $D=d+1$ spatial dimensions, with full Euclidean invariance.
+
+One might thus wonder if there is anything new to be learned from studying quantum ground
+states. First of all, there is one important catch which we have overlooked so far. There is
+no guarantee that the above process yields a classical partition function with Boltzmann
+weights which are positive, or even real. While this may seem like a technical detail, it is
+of major importance. The quantum to classical mapping is the basis behind the Quantum Monte
+Carlo method, one the most successful numerical methods for studying quantum many body
+systems. One maps the quantum problem to a classical partition function and then uses one of
+the many flavours of Monte Carlo sampling. However, with non-positive Boltzmann weights, the
+interpretation of a probability distribution is lost and no efficient sampling procedure can
+be designed, as samples might annihilate each other. This is known as the \emph{sign}
+problem.
+
+Secondly, for many non-relativistic quantum systems, the anisotropy between the imaginary
+time direction and the spatial dimensions in the corresponding classical system cannot be
+ignored, even at the critical point. In those cases, critical correlations behave
+differently in the spatial and the time direction, which is characterised by a dynamical
+critical exponent $z$. The case $z=1$ corresponds to the case where the critical point has
+(emergent) rotation/Lorentz invariance between time and space.
+
+A final reason to study quantum systems directly is that certain concepts are more natural
+in that setting. In particular, the last 15 years, ideas from quantum information theory,
+and in particular the concept of entanglement, have made their way into the standard toolbox
+to study and characterize quantum many body systems.
+ -->
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./1-Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   1. Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Software.html">
+   2. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworks.html">
+   4. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Symmetries.html">
+   5. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
+   6. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
+   7. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
+   8. Tensor Network Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
+   9. Matrix Product Operators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
+   10. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   11. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
+   12. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   13. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/1-Introduction/QuantumManyBody.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/QuantumManyBody.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/1-Introduction/QuantumManyBody.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/QuantumManyBody.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "1-Introduction/QuantumManyBody";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/1-Introduction/QuantumManyBody.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>
