@@ -53,7 +53,7 @@ case, although $e^{-i H t}$ is unfeasible to compute, each of the constituent te
 on a much smaller subsystem and therefore $e^{-ih_{ij}t}$ can be computed efficiently.
 However, as these terms generally do not commute, we cannot simply apply them one after the
 other. Instead, we can use the first-order Suzuki-Trotter decomposition to approximate the
-time-evolution operator, which states that for any two Hermitian operators $A4 and $B$, and
+time-evolution operator, which states that for any two Hermitian operators $A$ and $B$, and
 any real number $\Delta t$, we have:
 
 ```{math}
