@@ -2,13 +2,14 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: TensorTutorials
-author: QuantumGhent
+author: Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort
 logo: logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
+  execute_notebooks: cache
+  timeout: 300
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -19,6 +20,7 @@ latex:
 bibtex_bibfiles:
   - assets/references.bib
 
+
 # Information about where the book exists on the web
 repository:
   url: https://github.com/quantumghent/TensorTutorials  # Online location of your book
@@ -28,6 +30,8 @@ repository:
 sphinx:
   extra_extensions: [sphinx_multitoc_numbering, sphinxext.rediraffe, sphinx_tojupyter]
   config:
+    bibtex_reference_style: label
+    bibtex_default_style: alpha
     nb_mime_priority_overrides: [
        # HTML
        ['html', 'application/vnd.jupyter.widget-view+json', 10],
@@ -61,15 +65,18 @@ sphinx:
      ]
     highlight_language: julia
     html_favicon: _static/lectures-favicon.ico
+    html_baseurl: https://quantumghent.github.io/TensorTutorials
     html_theme: quantumghent_book_theme
     html_static_path: ['_static']
     html_theme_options:
       header_organisation_url: https://quantumghent.github.io/
+      header_organisation_github: https://github.com/quantumghent/
       header_organisation: QuantumGroup@UGent
-      repository_url: https://github.com/quantumghent/TensorTutorials
+      repository_url: https://github.com/quantumghent/TensorTutorials/
       repository_branch: main
-      nb_repository_url: https://github.com/quantumghent/TensorTutorials
+      nb_repository_url: https://github.com/quantumghent/TensorTutorials.notebooks/
       nb_branch: main
+      nb_url: https://quantumghent.github.io/TensorTutorials/
       description: This website presents a set of lectures on Tensor Network methods
       keywords: Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics
       analytics:
@@ -81,6 +88,8 @@ sphinx:
         macros:
           "argmax" : "arg\\,max"
           "argmin" : "arg\\,min"
+        packages:
+          '[+]': ['physics']
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     rediraffe_redirects:
       index_toc.md: intro.md
@@ -89,7 +98,7 @@ sphinx:
     tojupyter_static_file_path: ["source/_static", "_static"]
     tojupyter_target_html: true
     tojupyter_urlpath: "https://quantumghent.github.io/TensorTutorials/"
-    tojupyter_image_urlpath: "https://quantumghent.github.io/TensorTutorials/_static"
+    tojupyter_image_urlpath: "https://quantumghent.github.io/TensorTutorials/_static/"
     tojupyter_kernels:
       julia:
         kernelspec:

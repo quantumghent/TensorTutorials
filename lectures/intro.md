@@ -5,5 +5,8 @@ physics as well as statistical mechanics. It illustrates the theory, and aims to
 hands-on practise by providing Julia code examples, as well as showcasing the software
 libraries that have been developed.
 
+The lectures have been designed and written by Jacob Bridgeman, Lander Burgelman, Lukas
+Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort.
+
 ```{tableofcontents}
 ```
