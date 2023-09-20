@@ -898,7 +898,7 @@ Mixed states arise in the quantum world in two scenarios:
 1.	If the system is not isolated, but is rather a subsystem of a larger system and
     interacting with its complement therein. This is discussed in the next section.
 
-2.  Even for an isolated system, it can happen that the state is not exaclty known and one
+2.  Even for an isolated system, it can happen that the state is not exactly known and one
     must deal with classical uncertaintity and probability. Indeed, a mixed state can be
     interpreted as a statistical ensemble. If the system can be prepared into different (not
     necessarily orthogonal) states $\{\ket{\Psi_1}, \ket{\Psi_2}, \ldots\}$ with
@@ -1291,7 +1291,135 @@ system remains a pure state, albeit a highly entangled one.
 
 ### Observables and Static and Dynamic Correlation Functions
 
-TO BE WRITTEN!
+There are a number of typical observables that we want to measure for a given quantum state
+(ground state or thermal state) of a quantum lattice system. The first are operators which
+have the same structure as the Hamiltonian, in being given by a sum of terms where every
+individual term acts nontrivially only on a single site, or a small patch of neighbouring
+sites. Furthermore, these terms all act identically, except that they are translated to the
+different patches that make up the lattice. Typical examples include the energy itself or
+specific contributions to it (kinetic energy, interaction energy, … ) as well as the total
+number of particles, a total magnetisation, and other similar quantities.
+
+Let us use the transverse field Ising model as an example. An interesting quantity in the
+transverse field Ising model is the longitudinal magnetisation, given by 
+$\hat{S}^z=\frac{1}{2} \sum_{n} \sigma^z_n$. The expectation value of such operators is
+extensive, and so we are typically interested in the associated density, which is obtained
+by dividing out the volume factor. With respect to a translation-invariant state, this is
+equivalent to simply measuring the expectation value of a single term, i.e.
+$\frac{1}{2} \sigma^z$ in the case of the longitudinal magnetisation, which is thus a local
+operator. The precise position where it acts does then not really matter.
+
+Such quantities come up for example to measure potential symmetry breaking, where an operator that should
+have zero expectation value given the symmetries of the Hamiltonian, actually acquires a
+nonzero expectation value. Indeed, given that the Ising Hamiltonian has
+the property that $\left[\hat{H},\hat{U}] = 0$, where $\hat{U} = \bigotimes_{n} \sigma^x_n$,
+we also expect the ground state $\ket{\Psi_0}$ to satisfy 
+$\hat{U} \ket{\Psi_0} \sim \ket{\Psi_0}$, where the proportionality factor can only be plus
+or minus one, due to $\hat{U}^2 = \hat{1}$. The magnetisation in the $z$-direction, on the
+other hand, satisfies $\hat{U}^\dagger \hat{S}^z \hat{U} = - \hat{S}^z$, so that we expect
+
+$$\braket{\Psi_0 \vert \hat{S}^z \vert \Psi_0} = 0$$
+
+Indeed, if the ground state is unique, this is precisely what happens. However, it can
+happen that there are multiple linearly independent ground states. In that case, the
+restriction of $\hat{S}^z$ into the ground subspace can be nontrivial, and there exist
+specific ground state choices for which the expectation value is nonzero. For reasons that
+go beyond what can be explained here, it are typically these states which are easiest to
+create or approximate (they have lower entanglement). Such operators that can characterise
+the presence of symmetry breaking are referred to as *order parameters*.
+
+Nonetheless, the use of local operators to probe the ground state properties is somewhat
+limited. A different class of observables that are of typical interest are (static)
+correlation functions, which take the form
+
+$$ C^{A,B}_{i,j} = \braket{\Psi\vert \hat{A}_i^\dagger \hat{B}_j\vert \Psi} $$
+
+where $\hat{A}_i$ is a local operator acting on or in the neighbourhood of site (or unit
+cell) $i$ and $\hat{B}_j$ is a local operator acting on or in the neighbourhood of site $j$.
+Typically, the operators $\hat{A}$ and $\hat{B}$ are chosen such that their local expectation
+value is zero. If this is not the case, we can subtract these local expectation values by
+redefining
+
+$$ C^{A,B}_{i,j} = \braket{\Psi\vert (\hat{A}_i - \braket{\Psi\vert\hat{A}_i\vert \Psi})^\dagger (\hat{B}_j - \braket{\Psi\vert\hat{B}_j\vert \Psi})\vert \Psi} = \braket{\Psi\vert \hat{A}_i \hat{B}_j\vert \Psi} -  \braket{\Psi\vert\hat{A}_i\vert \Psi} \braket{\Psi\vert\hat{B}_j\vert \Psi}.$$
+
+We are then interested in the dependence of this correlation function on the positions $i$
+and $j$. In particular, in a translation invariant system, it is only the relative lattice
+vector from site $i$ to site $j$ on which this quantity depends. It can be proven that if
+$\ket{\Psi}$ is the unique ground state of a gapped local Hamiltonian, then the asymptotic
+behaviour of such correlation functions is that they decay exponentially in the distance
+between the two sites. This exponential thus defines a length scale $\xi$ via $\exp(-d/\xi)$
+with $d$ the relevant distance. The length scale $\xi$ is known as the correlation length of
+the system.
+
+When the system is gapless, static correlation functions still go to zero in the limit of
+infinite separation distance, but rather decay as an algebraic function of the distance,
+i.e. they give rise to power laws. The exponents that appear in these power laws do
+typically have universal values that are set by general properties such as the number of
+spatial dimensions, the global symmetries in the system, etc. In particular for the case of
+one-dimensional system, there is a rich literature and well developed framework for
+analysing such gapless systems using methods from conformal field theory.
+
+Finally, in systems with potential symmetry breaking, the static correlation function of the
+order parameter with itself is an extremely useful diagnostic. In particular, when the system
+has symmetry breaking, the large distance limit of the correlation function does not vanish
+and the system is said to contain *long range order*. Unlike the expectation value of the local
+order parameter, which can have a nonzero expectation value for particularly chosen
+symmetry breaking ground states but is still zero for other choices of ground states, the
+value of the correlation function and its large distance limit is insensitive to the specifically
+chosen ground state out of the ground subspace that it is computed with. For the transverse-field
+Ising model, symmetry breaking will thus be present whenever
+
+$$ C_{i,j} = \braket{\Psi \vert \sigma^z_i \sigma^z_j \vert \Psi} $$
+
+does not decay to zero limit for large distance between sites $i$ and $j$. The limiting
+value of this correlation function can then be considered as $m^2$, i.e. the square of the
+local magnetisation that would be measured in some states of the ground subspace.
+
+Strictly speaking, the ground state static correlation function does not provide information
+about excited states or other dynamical information of the Hamiltonian. In most physical
+system, it however does provide some qualitative information. Since the static correlation
+function, considered as a matrix with rows $i$ and columns $j$, has a particular structure
+resulting from translation invariance, it can be diagonalised by a (multidimensional)
+discrete Fourier transform. The resulting eigenvalues depend on the lattice momentum
+$\kappa$ and are known as the static structure factor $S(\kappa)$. In particular, in the
+case of a gapped system with unique ground state, these values are well defined for all
+$\kappa$. Nonetheless, it can be argued (using different techniques) that maxima for
+$S(\kappa)$ will correspond to momenta where the single particle excitations have minima in
+their dispersion relations. For critical systems, $S(\kappa)$ can also have algebraic
+divergences, whereas in the case of long range order, $S(\kappa)$ will contain a Dirac-delta
+type of divergence, typically at zero momentum, unless there is some spatially repeating
+pattern in the way symmetry is broken (and thus also translation invariance is broken).
+
+More detailed quantitative information about the spectrum of excited states is contained in
+the time-dependent correlation function 
+
+$$ G^{A,B}_{i,j}(t) &= \braket{\Psi_0\vert  \hat{A}_i(t)^\dagger \hat{B}_j(0)\vert \Psi_0}\\
+&=\braket{\Psi_0\vert  \mathrm{e}^{+\mathrm{i} \hat{H} t}  \hat{A}_i^\dagger \mathrm{e}^{-\mathrm{i} \hat{H} t} \hat{B}_j\vert \Psi_0} \\
+&=\braket{\Psi_0\vert  \hat{A}_i \mathrm{e}^{-\mathrm{i} (\hat{H}-E_0) t} \hat{B}_j\vert \Psi_0} 
+$$
+
+On the first line, we have used operator 
+$\hat{A}(t) = \mathrm{e}^{+\mathrm{i} t \hat{H}}\hat{A} \mathrm{e}^{-\mathrm{i} t \hat{H}}$
+in the Heisenberg picture. In going from the second to the third line, we have used that
+$\ket{\Psi_0}$ is the ground state of $\hat{H}$ with ground state energy $E_0$. Again, this
+quantity will depend on the relative lattice vector connecting sites $i$ and $j$ in a
+translation-invariant system. Once again, we can diagonalise the spatial dependence using a
+multidimensional discrete Fourier transform. If we now furthermore also perform a Fourier
+transform of the time-dependence into frequency space, we obtain the *dynamical structure
+factor* given by
+
+$$ S^{A,B}(\kappa, \omega) = \sum_{n} \delta(\omega- (E_n - E_0))\braket{\Psi_0 \vert \hat{A}(\kappa)^\dagger | \Psi_n}\braket{\Psi_n \ \hat{B}(k\kappa) \vert \Psi_0} $$
+
+Here, $\hat{A}(k\kappa)$ and $\hat{B}(\kappa)$ correspond to the discrete Fourier transforms
+of $\hat{A}_i$, which amounts to the momentum superposition. As a consequence,
+$\hat{B}(\kappa) \ket{\Psi_0}$ is a state with definite momentum $k$ (provided the ground
+state is translation invariant), and thus only has overlap with excited states
+$\ket{\Psi_n}$ with momentum $\kappa$. Because of the factor $\delta(\omega - (E_n -E_0))$,
+the dynamical structure factor $S^{A,B}(\kappa, \omega)$ can be nonzero only if there exist
+eigenstates with momentum $\kappa$ and excitation energy $\omega$ in the spectrum of the
+Hamiltonian $\hat{H}$. By studying $S^{A,B}(\kappa, \omega)$ for different choices of
+operators $\hat{A}$ and $\hat{B}$, we can detect all eigenstates and map out the full
+(low-energy) spectrum of $\hat{H}$.
 
 ## Quantum-to-Classical Mapping
 
