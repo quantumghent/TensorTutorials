@@ -1312,7 +1312,7 @@ operator. The precise position where it acts does then not really matter.
 Such quantities come up for example to measure potential symmetry breaking, where an operator that should
 have zero expectation value given the symmetries of the Hamiltonian, actually acquires a
 nonzero expectation value. Indeed, given that the Ising Hamiltonian has
-the property that $\left[\hat{H},\hat{U}] = 0$, where $\hat{U} = \bigotimes_{n} \sigma^x_n$,
+the property that $\left[\hat{H},\hat{U}\right] = 0$, where $\hat{U} = \bigotimes_{n} \sigma^x_n$,
 we also expect the ground state $\ket{\Psi_0}$ to satisfy 
 $\hat{U} \ket{\Psi_0} \sim \ket{\Psi_0}$, where the proportionality factor can only be plus
 or minus one, due to $\hat{U}^2 = \hat{1}$. The magnetisation in the $z$-direction, on the
