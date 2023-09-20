@@ -323,7 +323,7 @@ Vₗ = [1, 0, 0]'
 Vᵣ = [0, 0, 1]
 
 # expand the MPO
-expand(Vₗ * prod(W) * Vᵣ)
+expand(Vₗ * prod(Ws) * Vᵣ)
 ```
 
 ### Expectation Values
