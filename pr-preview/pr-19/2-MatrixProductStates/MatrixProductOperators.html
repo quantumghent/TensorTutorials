@@ -310,31 +310,32 @@ few lines of code, through the use of TensorKit:</p>
 <span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
 <span class="c"># construct vertex tensors</span>
-<span class="n">δ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">zeros</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">δ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">zeros</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
 <span class="n">δ</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
 
 <span class="c"># absorb edge tensors</span>
-<span class="nd">@tensor</span><span class="w"> </span><span class="kt">O</span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kt">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">q</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">O</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>MethodError: no method matching TensorMap(::typeof(zeros), ::Type{ComplexF64}, ::ProductSpace{ComplexSpace, 4})
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap((ℂ^2 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^2)):
+[:, :, 1, 1] =
+   7.321388457312336 + 0.0im  0.49999999999999895 + 0.0im
+ 0.49999999999999895 + 0.0im  0.06766764161830616 + 0.0im
 
-Closest candidates are:
-  TensorMap(::Any, ::Type{T}, ::ProductSpace{S}, ::ProductSpace{S}) where {S&lt;:ElementarySpace, T&lt;:Number}
-   @ TensorKit ~/.julia/packages/TensorKit/MikvC/src/tensors/tensor.jl:169
-  TensorMap(::Any, ::Type{T}, ::TensorSpace{S}, ::TensorSpace{S}) where {T&lt;:Number, S&lt;:ElementarySpace}
-   @ TensorKit ~/.julia/packages/TensorKit/MikvC/src/tensors/tensor.jl:199
-  TensorMap(::Any, ::Type{&lt;:Number}, ::TensorKit.HomSpace{S, ProductSpace{S, N₁}, ProductSpace{S, N₂}} where {N₁, N₂}) where S&lt;:ElementarySpace
-   @ TensorKit ~/.julia/packages/TensorKit/MikvC/src/tensors/tensor.jl:208
-  ...
+[:, :, 2, 1] =
+ 0.49999999999999906 + 0.0im  0.06766764161830614 + 0.0im
+ 0.06766764161830614 + 0.0im  0.49999999999999906 + 0.0im
 
+[:, :, 1, 2] =
+   0.499999999999999 + 0.0im  0.06766764161830616 + 0.0im
+ 0.06766764161830616 + 0.0im  0.49999999999999906 + 0.0im
 
-Stacktrace:
- [1] top-level scope
-   @ In[2]:8
+[:, :, 2, 2] =
+ 0.06766764161830616 + 0.0im  0.499999999999999 + 0.0im
+   0.499999999999999 + 0.0im  7.321388457312336 + 0.0im
 </pre></div>
 </div>
 </div>
@@ -347,7 +348,7 @@ Stacktrace:
 technique that splits the two-dimensional network into rows (or columns) of so-called
 transfer matrices, which are already represented as MPOs. In fact, this method has even led
 to the famous exact solution of the two-dimensional Ising model by Onsager.
-<span id="id2">[<a class="reference internal" href="../References.html#id20" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Physical Review, 65:117–149, 1944. doi:10.1103/PhysRev.65.117.">Ons44</a>]</span>.</p>
+<span id="id2">[<a class="reference internal" href="../References.html#id20" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Physical Review, 65:117–149, 1944. doi:10.1103/PhysRev.65.117.">Onsager, 1944</a>]</span>.</p>
 <!-- Insert image of transfer matrix -->
 <p>In the context of tensor networks, this technique is even useful beyond exactly solvable
 cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
@@ -374,7 +375,7 @@ transfer matrix dominates, and the partition function is given by</p>
 can be computed if it is possible to find the largest eigenvalue of the transfer matrix, for
 which efficient algorithms exist.</p>
 <p>For example, one can resort to many types of <em>boundary MPS techniques</em>
-<span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>, which are a generic class of algorithms to
+<span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">Zauner-Stauber <em>et al.</em>, 2018</a>]</span>, which are a generic class of algorithms to
 numerically solve these kinds of problems. In particular, they all rely on an efficient way
 of finding an (approximate) solution to the following problem:</p>
 <a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
@@ -395,8 +396,28 @@ absorbing the remaining edge tensors:</p>
 explicitly constructed as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="kt">ComplexF64</span><span class="p">[</span><span class="mf">1.0</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
-<span class="nd">@tensor</span><span class="w"> </span><span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">O</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="kt">ComplexF64</span><span class="p">[</span><span class="mf">1.0</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap((ℂ^2 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^2)):
+[:, :, 1, 1] =
+ 7.3210757428908035 + 0.0im       0.4953999296304103 + 0.0im
+ 0.4953999296304103 + 0.0im  -1.0097568878600302e-17 + 0.0im
+
+[:, :, 2, 1] =
+      0.4953999296304104 + 0.0im  -3.8901691517473414e-18 + 0.0im
+ -3.8901691517473414e-18 + 0.0im     -0.49539992963041035 + 0.0im
+
+[:, :, 1, 2] =
+   0.49539992963041035 + 0.0im  3.993515140140208e-18 + 0.0im
+ 3.993515140140208e-18 + 0.0im    -0.4953999296304104 + 0.0im
+
+[:, :, 2, 2] =
+ 3.993515140140208e-18 + 0.0im  -0.4953999296304103 + 0.0im
+   -0.4953999296304103 + 0.0im  -7.3210757428908035 + 0.0im
 </pre></div>
 </div>
 </div>
@@ -504,6 +525,33 @@ total sum of local terms, starting from the Jordan MPO construction:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling Symbolics [0c5d862f-8b57-4792-8d23-62f2024744c7]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling BangBangStaticArraysExt [a9f1882a-14fa-573e-a12d-824431257a23]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling AccessorsStaticArraysExt [91548973-bbcf-5128-ac3c-c8b871e934a5]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling AccessorsIntervalSetsExt [727f68c9-d1d4-5b40-b284-36502e629768]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling LogExpFunctionsInverseFunctionsExt [1e5f9c58-a15c-5ce5-87cf-a68a2eda25d9]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling StatsFunsInverseFunctionsExt [da3fed98-1718-55bb-8128-3e4a2e454b06]
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">UndefVarError</span>: `W` not defined
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span><span class="mi">17</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id4">
@@ -554,7 +602,7 @@ as now only local expectation values are well-defined, and the total energy dive
 the system size.</p>
 <p>This is achieved by considering the same regularization of the environment tensors, such
 that the divergent parts are automatically removed. This construction can be found in more
-detail in <span id="id5">[<a class="reference internal" href="../References.html#id22" title="C. Hubig, I. P. McCulloch, and U. Schollwöck. Generic construction of efficient matrix product operators. Phys. Rev. B, 95:035129, Jan 2017. URL: https://link.aps.org/doi/10.1103/PhysRevB.95.035129, doi:10.1103/PhysRevB.95.035129.">HMSchollwock17</a>]</span>.</p>
+detail in <span id="id5">[<a class="reference internal" href="../References.html#id22" title="C. Hubig, I. P. McCulloch, and U. Schollwöck. Generic construction of efficient matrix product operators. Phys. Rev. B, 95:035129, Jan 2017. URL: https://link.aps.org/doi/10.1103/PhysRevB.95.035129, doi:10.1103/PhysRevB.95.035129.">Hubig <em>et al.</em>, 2017</a>]</span>.</p>
 </div>
 <div class="section" id="quasi-1d-systems">
 <h3><span class="section-number">9.2.5. </span>Quasi-1D Systems<a class="headerlink" href="#quasi-1d-systems" title="Permalink to this heading">#</a></h3>

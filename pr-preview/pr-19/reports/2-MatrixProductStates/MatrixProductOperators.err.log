@@ -15,35 +15,42 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-β = 1.0
+using Symbolics
 
-# construct edge tensors
-t = TensorMap(ComplexF64[exp(β) exp(-β); exp(-β) exp(β)], ℂ^2, ℂ^2)
-q = sqrt(t)
+L = 4
+# generate W matrices
+@variables A[1:L] B[1:L] C[1:L] D[1:L]
+Ws = map(1:L) do l
+    return [1 C[l] D[l]
+            0 A[l] B[l]
+            0 0    1]
+end
 
-# construct vertex tensors
-δ = TensorMap(zeros, ComplexF64, ℂ^2 ⊗ ℂ^2 ⊗ ℂ^2 ⊗ ℂ^2)
-δ[1, 1, 1, 1] = 1.0
-δ[2, 2, 2, 2] = 1.0
+# generate boundary vectors
+Vₗ = [1, 0, 0]'
+Vᵣ = [0, 0, 1]
 
-# absorb edge tensors
-@tensor O{-1 -2; -3 -4] := δ[1 2; 3 4] * q[-1; 1] * q[-2; 2] * q[3; -3] * q[4; -4]
+# expand the MPO
+expand(Vₗ * prod(W) * Vᵣ)
 ------------------
 
+----- stderr -----
+[36m[1m[ [22m[39m[36m[1mInfo: [22m[39mPrecompiling Symbolics [0c5d862f-8b57-4792-8d23-62f2024744c7]
+----- stderr -----
+[36m[1m[ [22m[39m[36m[1mInfo: [22m[39mPrecompiling BangBangStaticArraysExt [a9f1882a-14fa-573e-a12d-824431257a23]
+----- stderr -----
+[36m[1m[ [22m[39m[36m[1mInfo: [22m[39mPrecompiling AccessorsStaticArraysExt [91548973-bbcf-5128-ac3c-c8b871e934a5]
+----- stderr -----
+[36m[1m[ [22m[39m[36m[1mInfo: [22m[39mPrecompiling AccessorsIntervalSetsExt [727f68c9-d1d4-5b40-b284-36502e629768]
+----- stderr -----
+[36m[1m[ [22m[39m[36m[1mInfo: [22m[39mPrecompiling LogExpFunctionsInverseFunctionsExt [1e5f9c58-a15c-5ce5-87cf-a68a2eda25d9]
+----- stderr -----
+[36m[1m[ [22m[39m[36m[1mInfo: [22m[39mPrecompiling StatsFunsInverseFunctionsExt [da3fed98-1718-55bb-8128-3e4a2e454b06]
+------------------
 
-MethodError: no method matching TensorMap(::typeof(zeros), ::Type{ComplexF64}, ::ProductSpace{ComplexSpace, 4})
-
-[0mClosest candidates are:
-[0m  TensorMap(::Any, ::Type{T}, ::ProductSpace{S}, [91m::ProductSpace{S}[39m) where {S<:ElementarySpace, T<:Number}
-[0m[90m   @[39m [35mTensorKit[39m [90m~/.julia/packages/TensorKit/MikvC/src/tensors/[39m[90m[4mtensor.jl:169[24m[39m
-[0m  TensorMap(::Any, ::Type{T}, ::TensorSpace{S}, [91m::TensorSpace{S}[39m) where {T<:Number, S<:ElementarySpace}
-[0m[90m   @[39m [35mTensorKit[39m [90m~/.julia/packages/TensorKit/MikvC/src/tensors/[39m[90m[4mtensor.jl:199[24m[39m
-[0m  TensorMap(::Any, ::Type{<:Number}, [91m::TensorKit.HomSpace{S, ProductSpace{S, N₁}, ProductSpace{S, N₂}} where {N₁, N₂}[39m) where S<:ElementarySpace
-[0m[90m   @[39m [35mTensorKit[39m [90m~/.julia/packages/TensorKit/MikvC/src/tensors/[39m[90m[4mtensor.jl:208[24m[39m
-[0m  ...
-
+UndefVarError: `W` not defined
 
 Stacktrace:
  [1] top-level scope
-   @ In[2]:8
+   @ In[4]:17
 

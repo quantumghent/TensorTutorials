@@ -265,7 +265,7 @@ with a brief overview of the history of tensor networks and their relevance to m
 physics. We will then introduce the graphical notation that is often used to simplify
 expressions, and discuss the relevant operations and decompositions along with their
 computation complexity and their relevance to quantum many-body physics.</p>
-<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">BC17</a>]</span>.</p>
+<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">Bridgeman and Chubb, 2017</a>]</span>.</p>
 <p>This lecture also serves as a brief introduction to
 <a class="reference external" href="https://github.com/Jutho/TensorOperations.jl">TensorOperations.jl</a>, and showcases some more
 features of <a class="reference external" href="https://github.com/Jutho/TensorKit.jl">TensorKit.jl</a> as well. Note that
@@ -499,8 +499,8 @@ legs, which determine their resulting position. For example, the diagram from
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 7.31517  6.13045
- 8.493    7.32728
+ 5.14721  3.95352
+ 3.36647  2.6274
 </pre></div>
 </div>
 </div>
@@ -535,11 +535,11 @@ computational complexity:</p>
 <p>Determining the optimal order however is a problem that is known to be NP-hard, and thus no
 algorithm exists that can efficiently compute optimal orders for larger networks.
 Nevertheless, efficient implementations allows finding optimal orders for networks of up to
-30-40 tensors <span id="id5">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>, but other methods exist that can be used to
+30-40 tensors <span id="id5">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">Pfeifer <em>et al.</em>, 2014</a>]</span>, but other methods exist that can be used to
 determine good (not necessarily optimal) contraction orders.</p>
 <p>TensorOperations comes with some built-in tools for facilitating this process, and in
 particular the <code class="docutils literal notranslate"><span class="pre">opt</span></code> keyword can be used to enable the use of the algorithm from
-<span id="id6">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">PHV14</a>]</span>. Because this uses the Julia macro system, this can be done at
+<span id="id6">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">Pfeifer <em>et al.</em>, 2014</a>]</span>. Because this uses the Julia macro system, this can be done at
 compilation time, and in other words only needs to be computed once.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -551,8 +551,8 @@ compilation time, and in other words only needs to be computed once.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 7.31517  6.13045
- 8.493    7.32728
+ 5.14721  3.95352
+ 3.36647  2.6274
 </pre></div>
 </div>
 </div>

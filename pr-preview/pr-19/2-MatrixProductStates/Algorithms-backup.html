@@ -365,7 +365,7 @@ assigned the appropriate weight.</p>
 <p>Since contraction a general network cannot be done efficiently, evaluating the partition
 function in this way requires approximate contraction techniques. In the case of two
 dimensions, one can for example resort to <em>boundary MPS techniques</em>
-<span id="id1">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">ZaunerStauberVF+18</a>]</span>, where the network contraction is performed by finding
+<span id="id1">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">Zauner-Stauber <em>et al.</em>, 2018</a>]</span>, where the network contraction is performed by finding
 the MPS fixed point of its row-to-row transfer matrix,</p>
 <a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
 <p>which can then be pulled throught the entire system to evaluate the parititon function.
@@ -373,7 +373,7 @@ Alternatively, one can approximate the environments of a local patch in terms of
 tensors,</p>
 <a class="reference internal image-reference" href="../_images/ctmrg.svg" id="ctmrg"><img alt="../_images/ctmrg.svg" class="align-center" height="359" id="ctmrg" src="../_images/ctmrg.svg" width="591" /></a>
 <p>by means of the Corner Transfer Matrix Renormalization Group (CTMRG) technique
-<span id="id2">[<a class="reference internal" href="../References.html#id15" title="T. Nishino and K. Okunishi. Corner Transfer Matrix Renormalization Group Method. Journal of the Physical Society of Japan, 65(4):891–894, 1996. arXiv:cond-mat/9507087, doi:10.1143/JPSJ.65.891.">NO96</a>]</span>.</p>
+<span id="id2">[<a class="reference internal" href="../References.html#id15" title="T. Nishino and K. Okunishi. Corner Transfer Matrix Renormalization Group Method. Journal of the Physical Society of Japan, 65(4):891–894, 1996. arXiv:cond-mat/9507087, doi:10.1143/JPSJ.65.891.">Nishino and Okunishi, 1996</a>]</span>.</p>
 <div class="admonition-todo admonition">
 <p class="admonition-title">TODO</p>
 <p>Anything more to say on this? Does it even make sense to discuss this here in the first
@@ -385,7 +385,7 @@ place?</p>
 <h2>Case Study: TEBD<a class="headerlink" href="#case-study-tebd" title="Permalink to this heading">#</a></h2>
 <p>As a basic illustrative example of a tensor network application we will discuss the Time
 Evolving Block Decimation (TEBD) algorithm for simulating time evolution of one-dimensional
-quantum systems <span id="id3">[<a class="reference internal" href="../References.html#id17" title="Guifre Vidal. Efficient classical simulation of slightly entangled quantum computations. Physical Review Letters, 91(14):147902, 2003. arXiv:quant-ph/0301063, doi:10.1103/PhysRevLett.91.147902.">Vid03</a>]</span>. To this end we first discuss a well known method
+quantum systems <span id="id3">[<a class="reference internal" href="../References.html#id17" title="Guifre Vidal. Efficient classical simulation of slightly entangled quantum computations. Physical Review Letters, 91(14):147902, 2003. arXiv:quant-ph/0301063, doi:10.1103/PhysRevLett.91.147902.">Vidal, 2003</a>]</span>. To this end we first discuss a well known method
 for approximating the time evolution operator based on the Suzuki-Trotter decomposition.</p>
 <div class="section" id="approximating-the-time-evolution-operator">
 <h3>Approximating The Time Evolution Operator<a class="headerlink" href="#approximating-the-time-evolution-operator" title="Permalink to this heading">#</a></h3>
@@ -415,7 +415,7 @@ states that for any two Hermitian operators <span class="math notranslate nohigh
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There actually exis tentire families of such exponential product approximations up to a
-given order <span id="id4">[<a class="reference internal" href="../References.html#id16" title="Naomichi Hatano and Masuo Suzuki. Finding Exponential Product Formulas of Higher Orders. In Quantum Annealing and Other Optimization Methods, volume 679, pages 37–68. 2005. arXiv:math-ph/0506007, doi:10.1007/11526216_2.">HS05</a>]</span>. For our purposes however, it is sufficient to
+given order <span id="id4">[<a class="reference internal" href="../References.html#id16" title="Naomichi Hatano and Masuo Suzuki. Finding Exponential Product Formulas of Higher Orders. In Quantum Annealing and Other Optimization Methods, volume 679, pages 37–68. 2005. arXiv:math-ph/0506007, doi:10.1007/11526216_2.">Hatano and Suzuki, 2005</a>]</span>. For our purposes however, it is sufficient to
 illustrate a simulation procedure using this first-order approximation.</p>
 </div>
 </div>
@@ -486,12 +486,12 @@ general network where want to apply some update to the central site,</p>
 network in general. One instead has to resort to approximation techniques for the
 <em>environments</em> of a given update site, where the quality of the environment approximations
 directly affects the stability of the local update. The simplest way of doing this is to use
-the so-called <em>simple update</em> procedure <span id="id5">[<a class="reference internal" href="../References.html#id18" title="H. C. Jiang, Z. Y. Weng, and T. Xiang. Accurate determination of tensor network state of quantum lattice models in two dimensions. Physical Review Letters, 101(9):090603, 2008. arXiv:0806.3719, doi:10.1103/PhysRevLett.101.090603.">JWX08</a>]</span> where all loops in the
+the so-called <em>simple update</em> procedure <span id="id5">[<a class="reference internal" href="../References.html#id18" title="H. C. Jiang, Z. Y. Weng, and T. Xiang. Accurate determination of tensor network state of quantum lattice models in two dimensions. Physical Review Letters, 101(9):090603, 2008. arXiv:0806.3719, doi:10.1103/PhysRevLett.101.090603.">Jiang <em>et al.</em>, 2008</a>]</span> where all loops in the
 network are simply ignored and the environment is approximated by a product state,</p>
 <a class="reference internal image-reference" href="../_images/simple_update.svg" id="simple-update"><img alt="../_images/simple_update.svg" class="align-center" height="108" id="simple-update" src="../_images/simple_update.svg" width="328" /></a>
 <p>More accurate results can be obtained by taking into account the full quantum state of the
 system in each local update by means of the <em>full update</em> procedure
-<span id="id6">[<a class="reference internal" href="../References.html#id19" title="J. Jordan, R. Orús, G. Vidal, F. Verstraete, and J. I. Cirac. Classical Simulation of Infinite-Size Quantum Lattice Systems in Two Spatial Dimensions. Physical Review Letters, 101(25):250602, 2008. arXiv:cond-mat/0703788, doi:10.1103/PhysRevLett.101.250602.">JOrusV+08</a>]</span>. However, this gain in accuracy comes with a substantial
+<span id="id6">[<a class="reference internal" href="../References.html#id19" title="J. Jordan, R. Orús, G. Vidal, F. Verstraete, and J. I. Cirac. Classical Simulation of Infinite-Size Quantum Lattice Systems in Two Spatial Dimensions. Physical Review Letters, 101(25):250602, 2008. arXiv:cond-mat/0703788, doi:10.1103/PhysRevLett.101.250602.">Jordan <em>et al.</em>, 2008</a>]</span>. However, this gain in accuracy comes with a substantial
 increase in computational cost due to the full environment approximation at each step.</p>
 </div>
 </div>
