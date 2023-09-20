@@ -191,30 +191,30 @@ is drawn as:
 Familiar examples of contraction are vector inner products, matrix-vector multiplication,
 matrix-matrix multiplication, and matrix traces.
 
-| Conventional | Einstein | Tensor Network |
-| ------------:|:--------:|:-------------- |
-| $\langle \vec{x}, \vec{u} \rangle$ | $x_i y_i $ | ```{image} /_static/TensorNetworks/vecvec.svg
-:scale: 12%
-:name: vecvec
-:align: center
-``` |
-| $A \vec{x}$ | $A_{ij} x_j$ | ```{image} /_static/TensorNetworks/matvec.svg
-:scale: 12%
-:name: matvec
-:align: center
-``` |
-| $A B$ | $A_{ij} B_{jk}$ | ```{image} /_static/TensorNetworks/matmat.svg
-:scale: 12%
-:name: matmat
-:align: center
-``` |
-| $\text{Tr}(A)$ | $A_{ii}$ | ```{image} /_static/TensorNetworks/tr.svg
-:scale: 12%
-:name: tr
-:align: center
-``` |
-| --- | --- | --- |
-
+* $\langle \vec{x}, \vec{y} \rangle = x_i y_i$
+  ```{image} /_static/TensorNetworks/vecvec.svg
+  :scale: 12%
+  :name: vecvec
+  :align: center
+  ```
+* $A \vec{x} = A_{ij} x_j$
+  ```{image} /_static/TensorNetworks/matvec.svg
+  :scale: 12%
+  :name: matvec
+  :align: center
+  ```
+* $A B = A_{ij} B_{jk}$
+  ```{image} /_static/TensorNetworks/matmat.svg
+  :scale: 12%
+  :name: matmat
+  :align: center
+  ```
+* $\text{Tr}(A) = A_{ii}$
+  ```{image} /_static/TensorNetworks/tr.svg
+  :scale: 12%
+  :name: tr
+  :align: center
+  ```
 
 ## Network Contractions
 
