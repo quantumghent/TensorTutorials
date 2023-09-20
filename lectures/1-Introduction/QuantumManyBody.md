@@ -1519,7 +1519,7 @@ conditions. Indeed, $\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}}$ does exact
 correspond to the transfer matrix, and diagonalising the transfer matrix is the most
 straightforward approach to solving the one-dimensional classical Ising model.
 
-\subsection{Higher dimensional generalisation}
+### Higher dimensional generalisation
 
 We now apply the same approach to the Ising model with both transverse and longitudinal
 field in $d$ dimensions, on a hypercubic lattice. We separate the hamiltonian in two parts
