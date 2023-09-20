@@ -15,6 +15,7 @@ parts:
 - caption: Matrix Product States
   numbered: true
   chapters:
+  - file: 2-MatrixProductStates/TensorNetworkStates
   - file: 2-MatrixProductStates/MatrixProductStates
   - file: 2-MatrixProductStates/InfiniteMPS
   - file: 2-MatrixProductStates/Algorithms

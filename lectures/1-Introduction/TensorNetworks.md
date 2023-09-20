@@ -10,6 +10,7 @@ kernelspec:
   name: julia-1.9
 ---
 
+(tensor_networks)=
 # Tensor Network Theory
 
 ```{contents} Contents
@@ -270,6 +271,7 @@ F = rand(2, 2)
 end
 ```
 
+(contraction_order)=
 ### Contraction Order and Complexity
 
 While tensor networks are defined in such a way that their values are independent of the
@@ -329,6 +331,7 @@ compilation time, and in other words only needs to be computed once.
 end
 ```
 
+(factorizations)=
 ## Tensor Factorizations
 
 Linear maps admit various kinds of factorizations, which are instrumental in a variety of
