@@ -1,0 +1,1054 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Tensor Network Theory &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/TensorNetworks';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/1-Introduction/TensorNetworks.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Symmetries in Quantum Many-Body Physics" href="Symmetries.html" />
+    <link rel="prev" title="3. (Multi-) Linear Algebra" href="LinearAlgebra.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Tensor Network Theory"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Tensor Network Theory" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/1-Introduction/TensorNetworks.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=1-Introduction/TensorNetworks>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">4.1. Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#history">4.1.1. History</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-notation-and-tensor-operations">4.2. Graphical Notation and Tensor Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">4.2.1. Indexing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-and-splitting-of-indices">4.2.2. Grouping and Splitting of Indices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outer-products">4.2.3. Outer Products</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traces">4.2.4. Traces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contractions">4.2.5. Contractions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-contractions">4.3. Network Contractions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">4.3.1. Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contraction-order-and-complexity">4.3.2. Contraction Order and Complexity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-factorizations">4.4. Tensor Factorizations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eigenvalue-decomposition">4.4.1. Eigenvalue Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">4.4.2. Singular Value Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polar-decomposition">4.4.3. Polar decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qr-decomposition">4.4.4. QR Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nullspaces">4.4.5. Nullspaces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">4.5. Conclusion</a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Tensor Network Theory</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-theory">
+<span id="tensor-networks"></span><h1><a class="toc-backref" href="#id9"><span class="section-number">4. </span>Tensor Network Theory</a><a class="headerlink" href="#tensor-network-theory" title="Permalink to this heading">#</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#tensor-network-theory" id="id9">Tensor Network Theory</a></p>
+<ul>
+<li><p><a class="reference internal" href="#overview" id="id10">Overview</a></p></li>
+<li><p><a class="reference internal" href="#graphical-notation-and-tensor-operations" id="id11">Graphical Notation and Tensor Operations</a></p></li>
+<li><p><a class="reference internal" href="#network-contractions" id="id12">Network Contractions</a></p></li>
+<li><p><a class="reference internal" href="#tensor-factorizations" id="id13">Tensor Factorizations</a></p></li>
+<li><p><a class="reference internal" href="#conclusion" id="id14">Conclusion</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">4.1. </span>Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>In this lecture we will introduce the basic concepts of tensor network theory. We will start
+with a brief overview of the history of tensor networks and their relevance to modern
+physics. We will then introduce the graphical notation that is often used to simplify
+expressions, and discuss the relevant operations and decompositions along with their
+computation complexity and their relevance to quantum many-body physics.</p>
+<p>This discussion is largely based on <span id="id1">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">Bridgeman and Chubb, 2017</a>]</span>.</p>
+<p>This lecture also serves as a brief introduction to
+<a class="reference external" href="https://github.com/Jutho/TensorOperations.jl">TensorOperations.jl</a>, and showcases some more
+features of <a class="reference external" href="https://github.com/Jutho/TensorKit.jl">TensorKit.jl</a> as well. Note that
+TensorKit already re-exports the <code class="docutils literal notranslate"><span class="pre">&#64;tensor</span></code> macro from TensorOperations, so it is not
+necessary to import it separately if TensorKit is already loaded.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">TensorKit</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="c"># for showcase testing</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="history">
+<h3><span class="section-number">4.1.1. </span>History<a class="headerlink" href="#history" title="Permalink to this heading">#</a></h3>
+<p>The history of tensor networks is a fascinating journey through the evolution of profound
+theoretical ideas and evolutions, as well as the development of computational methods and
+tools. These ideas have been developed in a variety of contexts, but have been especially
+relevant to the study of quantum physics and machine learning.</p>
+<ol class="arabic simple">
+<li><p>Early Foundations:</p></li>
+</ol>
+<ul class="simple">
+<li><p>The roots of tensor networks can be traced back to the early development of linear algebra and matrix notation in the 19th century, pioneered by mathematicians like Arthur Cayley and James Sylvester.</p></li>
+<li><p>The concept of tensors as multi-dimensional arrays of numbers began to emerge in the late 19th and early 20th centuries.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Matrix Product States and DMRG:</p></li>
+</ol>
+<ul class="simple">
+<li><p>The birth of modern tensor network theory can be attributed to the introduction of MPS in the 1960s (?).</p></li>
+<li><p>One of the earliest, and still most widely used tensor network algorithm is DMRG. It was developed by Steven White in 1992, and provides one of the most efficient methods for simulating one-dimensional quantum many-body systems.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Quantum Information Theory:</p></li>
+</ol>
+<ul class="simple">
+<li><p>In the 1980s and 1990s, the field of quantum information theory began to emerge, driven by (add names here)</p></li>
+<li><p>Concepts such as quantum entanglement and quantum information became central to the study of quantum many-body systems.</p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p>Higher-Dimensional Tensor Networks:</p></li>
+</ol>
+<ul class="simple">
+<li><p>As the field progressed, tensor network methods were extended to higher-dimensional systems, leading to the emergence of more general tensor network states (TNS)..</p></li>
+<li><p>Two-dimensional tensor networks such as Projected Entangled Pair States (PEPS) and Multi-scale Entanglement Renormalization Ansatz (MERA) were introduced in the early 2000s.</p></li>
+</ul>
+<ol class="arabic simple" start="5">
+<li><p>Tensor Networks in other disciplines:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Many of the concepts and methods developed in the context of tensor networks have been applied to other disciplines, one of the most prominent being machine learning.</p></li>
+<li><p>Unsuprisingly, they also play a central role in quantum computing, where tensor network algorithms provide a natural language to explore quantum circuit simulations.</p></li>
+</ul>
+<ol class="arabic simple" start="6">
+<li><p>Ongoing Research and Applications</p></li>
+</ol>
+<ul class="simple">
+<li><p>Tensor network theory continues to be a vibrant and evolving field with ongoing research in various directions, such as the development of efficient tensor contraction algorithms, the application of tensor networks for understanding quantum phases of matter, the development of tensor network algorithms for quantum computing, and the application of tensor networks to machine learning.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="graphical-notation-and-tensor-operations">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">4.2. </span>Graphical Notation and Tensor Operations</a><a class="headerlink" href="#graphical-notation-and-tensor-operations" title="Permalink to this heading">#</a></h2>
+<p>One of the main advantages of tensor networks is that they admit a very intuitive graphical
+notation, which greatly simplifies the expressions involving numerous indices. This notation
+is based on the idea of representing a single tensor as a node in a graph, where the indices
+of the tensor are depicted by legs sticking out of it, one for each vector space. As an
+example, a rank-four tensor <span class="math notranslate nohighlight">\(R\)</span> can be represented as:</p>
+<a class="reference internal image-reference" href="../_images/R-tensor.svg" id="r-tensor"><img alt="../_images/R-tensor.svg" class="align-center" height="67" id="r-tensor" src="../_images/R-tensor.svg" width="274" /></a>
+<div class="section" id="indexing">
+<h3><span class="section-number">4.2.1. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h3>
+<p>In this notation, the individual components of the tensor can be recoverd by fixing the open
+legs of a diagram to some value, and the resulting diagram is then a scalar. For example,
+the component <span class="math notranslate nohighlight">\(R_{i_1,i_2,i_3,i_4}\)</span> is given by:</p>
+<a class="reference internal image-reference" href="../_images/indexing.svg" id="id2"><img alt="../_images/indexing.svg" class="align-center" height="115" id="id2" src="../_images/indexing.svg" width="176" /></a>
+</div>
+<div class="section" id="grouping-and-splitting-of-indices">
+<h3><span class="section-number">4.2.2. </span>Grouping and Splitting of Indices<a class="headerlink" href="#grouping-and-splitting-of-indices" title="Permalink to this heading">#</a></h3>
+<p>Because of the isomorphism <a class="reference internal" href="LinearAlgebra.html#equation-eq-tensor-isomorphism">(3.5)</a>, the legs of the tensor can be freely
+moved around, as long as their order is preserved. In some contexts the shape of
+the node and the direction of the tensor can imply certain properties, such as making an
+explicit distinction between the isomorphic representations, but in what follows we will not
+make this distinction.</p>
+<p>Furthermore, this naturally gives a notion of grouping and splitting of indices, which is
+just a reinterpretation of a set of neighbouring vector spaces as a single vector space, and
+the inverse operation. For example, the following diagrams are equivalent:</p>
+<a class="reference internal image-reference" href="../_images/grouping.svg" id="grouping"><img alt="../_images/grouping.svg" class="align-center" height="51" id="grouping" src="../_images/grouping.svg" width="512" /></a>
+<p>Owing to the freedom in choice of basis, the precise details of grouping and splitting are
+not unique. One specific choice of convention is the tensor product basis, which is
+precisely the one we have used in the discussion of multi-linear algebra. More concretely,
+one choice that is often used is the <em>Kronecker product</em>, which in the setting of
+column-major ordering is given explicitly by grouping indices as follows:</p>
+<div class="math notranslate nohighlight" id="equation-eq-kronecker-product">
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-eq-kronecker-product" title="Permalink to this equation">#</a></span>\[I := i_1 + d_1 * (i_2 - 1) + d_1 * d_2 * (i_3 - 1) + d_1 * d_2 * d_3 * (i_4 - 1) + \cdots\]</div>
+<p>Here <span class="math notranslate nohighlight">\(d_i\)</span> is the dimension of the corresponding vector space, and <span class="math notranslate nohighlight">\(I\)</span> is the resulting
+linear index. Note again that so long as the chosen convention is consistent, the precise
+method of grouping and splitting is immaterial.</p>
+<p>This can be conveniently illustrated by the <code class="docutils literal notranslate"><span class="pre">reshape</span></code> function in Julia, which performs
+exactly this operation. For simple arrays, this operation does nothing but change the size
+property of the data structure, as the underlying data necessarily needs to be stored in a
+linear order in memory, as computer adresses are linear. Because of this, in tensor
+networks, these operations are typically left implicit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="c"># ...</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×4×2 reshape(::UnitRange{Int64}, 2, 4, 2) with eltype Int64:
+[:, :, 1] =
+ 1  3  5  7
+ 2  4  6  8
+
+[:, :, 2] =
+  9  11  13  15
+ 10  12  14  16
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="outer-products">
+<h3><span class="section-number">4.2.3. </span>Outer Products<a class="headerlink" href="#outer-products" title="Permalink to this heading">#</a></h3>
+<p>Of course, in order to really consider a tensor <em>network</em>, it is necessary to consider
+diagrams that consist of multiple tensors, or in other words of multiple nodes. The simplest
+such diagram represents the <em>outer product</em> of two tensors. This is represented by two
+tensors being placed next to each other. The value of the resulting network is simply the
+product of the constituents. For example, the outer product of a rank three tensor <span class="math notranslate nohighlight">\(A\)</span> and a
+rank two tensor <span class="math notranslate nohighlight">\(B\)</span> is given by:</p>
+<a class="reference internal image-reference" href="../_images/outer-product.svg" id="outer-product"><img alt="../_images/outer-product.svg" class="align-center" height="132" id="outer-product" src="../_images/outer-product.svg" width="336" /></a>
+</div>
+<div class="section" id="traces">
+<h3><span class="section-number">4.2.4. </span>Traces<a class="headerlink" href="#traces" title="Permalink to this heading">#</a></h3>
+<p>More complicated diagrams can be constructed by joining some of the legs of the constituent
+tensors. In a matter similar to the conventional Einstein notation, this implies a summation
+over the corresponding indices.</p>
+<p>If two legs from a single tensor are joined, this signifies a (partial) <em>trace</em> of a tensor
+over these indices. For example, the trace of a rank three tensor <span class="math notranslate nohighlight">\(A\)</span> over two of its
+indices is given by:</p>
+<a class="reference internal image-reference" href="../_images/trace.svg" id="trace"><img alt="../_images/trace.svg" class="align-center" height="57" id="trace" src="../_images/trace.svg" width="399" /></a>
+<p>In this notation, the cyclic property of the trace follows by sliding one of the matrices
+around the loop of the diagram. As this only changes the placement of the tensors in the
+network, and not the value, the graphic proof of <span class="math notranslate nohighlight">\(\text{Tr}(AB) = \text{Tr}(BA)\)</span> is found.</p>
+<a class="reference internal image-reference" href="../_images/trace-cyclic.svg" id="trace-cyclic"><img alt="../_images/trace-cyclic.svg" class="align-center" height="74" id="trace-cyclic" src="../_images/trace-cyclic.svg" width="720" /></a>
+</div>
+<div class="section" id="contractions">
+<h3><span class="section-number">4.2.5. </span>Contractions<a class="headerlink" href="#contractions" title="Permalink to this heading">#</a></h3>
+<p>The most common tensor operation used is <em>contraction</em>, which is the joining of legs from
+different tensors. This can equivalently be thought of as a tensor product followed by a
+trace. For example, the contraction between two pairs of indices of two rank-three tensors
+is drawn as:</p>
+<a class="reference internal image-reference" href="../_images/contraction.svg" id="contraction"><img alt="../_images/contraction.svg" class="align-center" height="69" id="contraction" src="../_images/contraction.svg" width="366" /></a>
+<p>Familiar examples of contraction are vector inner products, matrix-vector multiplication,
+matrix-matrix multiplication, and matrix traces.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\langle \vec{x}, \vec{y} \rangle = x_i y_i\)</span></p>
+<a class="reference internal image-reference" href="../_images/vecvec.svg" id="vecvec"><img alt="../_images/vecvec.svg" class="align-center" height="28" id="vecvec" src="../_images/vecvec.svg" width="84" /></a>
+</li>
+<li><p><span class="math notranslate nohighlight">\(A \vec{x} = A_{ij} x_j\)</span></p>
+<a class="reference internal image-reference" href="../_images/matvec.svg" id="matvec"><img alt="../_images/matvec.svg" class="align-center" height="30" id="matvec" src="../_images/matvec.svg" width="109" /></a>
+</li>
+<li><p><span class="math notranslate nohighlight">\(A B = A_{ij} B_{jk}\)</span></p>
+<a class="reference internal image-reference" href="../_images/matmat.svg" id="matmat"><img alt="../_images/matmat.svg" class="align-center" height="28" id="matmat" src="../_images/matmat.svg" width="136" /></a>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\text{Tr}(A) = A_{ii}\)</span></p>
+<a class="reference internal image-reference" href="../_images/tr.svg" id="tr"><img alt="../_images/tr.svg" class="align-center" height="36" id="tr" src="../_images/tr.svg" width="44" /></a>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="network-contractions">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">4.3. </span>Network Contractions</a><a class="headerlink" href="#network-contractions" title="Permalink to this heading">#</a></h2>
+<p>Combining the operations defined above, it is possible to construct arbitrarily complicated
+<em>tensor networks</em>, which can then be evaluated by a sequence of pair-wise operations. The
+result then reduces to a tensor which has a rank equal to the number of open legs in the
+network. For example, the following diagram represents a generic tensor network:</p>
+<a class="reference internal image-reference" href="../_images/network.svg" id="network"><img alt="../_images/network.svg" class="align-center" height="155" id="network" src="../_images/network.svg" width="766" /></a>
+<div class="section" id="notation">
+<h3><span class="section-number">4.3.1. </span>Notation<a class="headerlink" href="#notation" title="Permalink to this heading">#</a></h3>
+<p>In order to evaluate such networks, it is necessary to define a notational convention for
+specifying a network with text. One of the most common conventions is that of
+<a class="reference external" href="https://en.wikipedia.org/wiki/Einstein_notation">Einstein notation</a>, where each index of a
+tensor is assigned a label, and repeated labels are implicitly summed over. For example, the outer product, trace, and inner product can respectively be obtained as:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">]</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">]</span>
+<span class="n">size</span><span class="p">(</span><span class="n">C</span><span class="p">),</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">D</span><span class="p">),</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((2, 2, 2, 2, 2), (2,), (2, 2, 2))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;tensor</span></code> macro can be used to either create new tensors, using the <code class="docutils literal notranslate"><span class="pre">:=</span></code> assignment, or
+to copy data into existing tensors using <code class="docutils literal notranslate"><span class="pre">=</span></code>. In the latter case, the tensor must already
+exist and have the right dimensions, but less additional memory is allocated.</p>
+</div>
+<p>This notation is very useful indeed, but quickly becomes unwieldy when one wishes to specify
+in what order the pairwise operations should be carried out. Thus, in the same spirit but
+with a minor modification, the <a class="reference external" href="https://arxiv.org/abs/1402.0939">NCON</a> notation was
+introduced. In this notation, the indices of a tensor are assigned integers, and pairwise
+operations happen in increasing order. Similarly, negative integers are assigned to open
+legs, which determine their resulting position. For example, the diagram from
+<a href="#id3"><span class="problematic" id="id4">network</span></a> can be written as:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="n">E</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="n">F</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">]</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
+ 2.76152  3.30388
+ 3.54014  4.2257
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="contraction-order-and-complexity">
+<span id="contraction-order"></span><h3><span class="section-number">4.3.2. </span>Contraction Order and Complexity<a class="headerlink" href="#contraction-order-and-complexity" title="Permalink to this heading">#</a></h3>
+<p>While tensor networks are defined in such a way that their values are independent of the
+order of pairwise operations, the computational complexity of evaluating a network can vary
+wildly based on the chosen order. Even for simple matrix-matrix-vector multiplication, the
+problem can easily be illustrated by considering the following two equivalent operations:</p>
+<div class="math notranslate nohighlight">
+\[w = A * (B * v) = (A * B) * v\]</div>
+<p>If both <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are square matrices of size <span class="math notranslate nohighlight">\(N \times N\)</span>, and <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(w\)</span> are vectors of
+length <span class="math notranslate nohighlight">\(N\)</span>, the first operation requires <span class="math notranslate nohighlight">\(2N^2\)</span> floating point operations (flops), while the
+second requires <span class="math notranslate nohighlight">\(N^3 + N^2\)</span> flops. This is a substantial difference, and it is clear that
+the first operation is to be preferred.</p>
+<p>More generally, the amount of flops required for contracting a pair of tensors can be
+determined by considering the fact that the amount of elements to compute is equal to the
+product of the dimensions of the open indices, and the amount of flops required to compute
+each element is equal to the product of the dimensions of the contracted indices. Due to
+this fact, it is typically the most efficient to <em>minimize the surface area of contraction</em>,
+which boils down to the heuristic of minimizing the amount of legs that are cut, also known
+as <em>bubbling</em>.</p>
+<p>Many networks admit both efficient and inefficient contraction orders, and often it is
+infeasible to compute the optimal order. Take for example a ladder-shaped network, which is
+of particular relevance in the context of Matrix Product States, we can highlight a few
+possible contraction orders, for which we leave it as an exercise to determine the
+computational complexity:</p>
+<a class="reference internal image-reference" href="../_images/ladder1.svg" id="ladder1"><img alt="../_images/ladder1.svg" class="align-center" height="117" id="ladder1" src="../_images/ladder1.svg" width="842" /></a>
+<a class="reference internal image-reference" href="../_images/ladder2.svg" id="ladder2"><img alt="../_images/ladder2.svg" class="align-center" height="117" id="ladder2" src="../_images/ladder2.svg" width="839" /></a>
+<p>Determining the optimal order however is a problem that is known to be NP-hard, and thus no
+algorithm exists that can efficiently compute optimal orders for larger networks.
+Nevertheless, efficient implementations allows finding optimal orders for networks of up to
+30-40 tensors <span id="id5">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">Pfeifer <em>et al.</em>, 2014</a>]</span>, but other methods exist that can be used to
+determine good (not necessarily optimal) contraction orders.</p>
+<p>TensorOperations comes with some built-in tools for facilitating this process, and in
+particular the <code class="docutils literal notranslate"><span class="pre">opt</span></code> keyword can be used to enable the use of the algorithm from
+<span id="id6">[<a class="reference internal" href="../References.html#id3" title="Robert N. C. Pfeifer, Jutho Haegeman, and Frank Verstraete. Faster identification of optimal contraction sequences for tensor networks. Physical Review E, 90:033315, 2014. arXiv:1304.6112, doi:10.1103/PhysRevE.90.033315.">Pfeifer <em>et al.</em>, 2014</a>]</span>. Because this uses the Julia macro system, this can be done at
+compilation time, and in other words only needs to be computed once.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@tensor</span><span class="w"> </span><span class="n">opt</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">α</span><span class="p">,</span><span class="w"> </span><span class="n">β</span><span class="p">,</span><span class="w"> </span><span class="n">γ</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">γ</span><span class="p">,</span><span class="w"> </span><span class="n">ϵ</span><span class="p">,</span><span class="w"> </span><span class="n">ζ</span><span class="p">,</span><span class="w"> </span><span class="n">η</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">β</span><span class="p">,</span><span class="w"> </span><span class="n">δ</span><span class="p">,</span><span class="w"> </span><span class="n">ϵ</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="n">α</span><span class="p">,</span><span class="w"> </span><span class="n">δ</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">ζ</span><span class="p">,</span><span class="w"> </span><span class="n">η</span><span class="p">]</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
+ 2.76152  3.30388
+ 3.54014  4.2257
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tensor-factorizations">
+<span id="factorizations"></span><h2><a class="toc-backref" href="#id13"><span class="section-number">4.4. </span>Tensor Factorizations</a><a class="headerlink" href="#tensor-factorizations" title="Permalink to this heading">#</a></h2>
+<p>Linear maps admit various kinds of factorizations, which are instrumental in a variety of
+applications. They can be used to generate orthogonal bases, to find low-rank
+approximations, or to find eigenvalues and vectors. In the context of tensors, the
+established theory for factorizations of matrices can be generalized by interpreting tensors
+as linear maps, and then applying the same factorization to the corresponding matrix
+partition of the constituent vector spaces in a codomain and domain, after which everything
+carries over. Thus, the only additional information that is required is the specification of
+this partition. In this section we will discuss the most common factorizations of tensors,
+but the reasoning can be generalized to any factorization of linear maps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">S1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span>
+<span class="n">S2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(ℂ^2 ⊗ ℂ^3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="eigenvalue-decomposition">
+<h3><span class="section-number">4.4.1. </span>Eigenvalue Decomposition<a class="headerlink" href="#eigenvalue-decomposition" title="Permalink to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix">Eigen decomposition of a matrix</a>
+<span class="math notranslate nohighlight">\(A\)</span> is a factorization of the form:</p>
+<div class="math notranslate nohighlight">
+\[A = V \Lambda V^{-1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(V\)</span> is a matrix of eigenvectors, and <span class="math notranslate nohighlight">\(\Lambda\)</span> is a diagonal matrix of eigenvalues. In
+particular, the set of eigenvectors form a basis for all possible products <span class="math notranslate nohighlight">\(Ax\)</span>, which is
+the same as the image of the corresponding matrix transformation. For normal matrices, these
+eigenvectors can be made orthogonal and the resulting decomposition is also called the
+<em>spectral decomposition</em>.</p>
+<p>The eigenvalue decomposition mostly finds it use in the context of linear equations of the
+form:</p>
+<div class="math notranslate nohighlight">
+\[Av = \lambda v\]</div>
+<p>where <span class="math notranslate nohighlight">\(v\)</span> is an eigenvector of <span class="math notranslate nohighlight">\(A\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<p>For tensors, the eigenvalue decomposition is defined similarly, and the equivalent equation
+is diagrammatically represented as:</p>
+<a class="reference internal image-reference" href="../_images/eig.svg" id="eig"><img alt="../_images/eig.svg" class="align-center" height="99" id="eig" src="../_images/eig.svg" width="351" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">)</span><span class="w"> </span><span class="c"># codomain and domain equal for eigendecomposition</span>
+<span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Test Passed</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="singular-value-decomposition">
+<h3><span class="section-number">4.4.2. </span>Singular Value Decomposition<a class="headerlink" href="#singular-value-decomposition" title="Permalink to this heading">#</a></h3>
+<p>The
+<a class="reference external" href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Value Decomposition</a>
+(SVD) can be seen as a generalization of the eigendecomposition of a square normal matrix to
+any rectangular matrix <span class="math notranslate nohighlight">\(A\)</span>. Specifically, it is a factorization of the form
+<span class="math notranslate nohighlight">\(A = U \Sigma V^\dagger\)</span> where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> are isometric matrices
+(<span class="math notranslate nohighlight">\(U^\dagger U = V^\dagger V = \mathbb{1}\)</span>), and <span class="math notranslate nohighlight">\(\Sigma\)</span> is a diagonal matrix of singular
+values. The SVD is typically used to find low-rank approximations for matrices, and it was
+shown <span id="id7">[]</span> that the best rank-<span class="math notranslate nohighlight">\(k\)</span> approximation is given by the
+SVD, where <span class="math notranslate nohighlight">\(\Sigma\)</span> is truncated to the first (largest) <span class="math notranslate nohighlight">\(k\)</span> singular values.</p>
+<p>Again, a tensorial version is defined by first grouping indices to form a matrix, and then
+applying the SVD to that matrix.</p>
+<a class="reference internal image-reference" href="../_images/svd.svg" id="svd"><img alt="../_images/svd.svg" class="align-center" height="99" id="svd" src="../_images/svd.svg" width="351" /></a>
+<a class="reference internal image-reference" href="../_images/unitary.svg" id="unitary"><img alt="../_images/unitary.svg" class="align-center" height="101" id="unitary" src="../_images/unitary.svg" width="426" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
+<span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
+<span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tsvd</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">)</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">U</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">U</span><span class="p">))</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span><span class="o">&#39;</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">codomain</span><span class="p">(</span><span class="n">V</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Test Passed</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="polar-decomposition">
+<h3><span class="section-number">4.4.3. </span>Polar decomposition<a class="headerlink" href="#polar-decomposition" title="Permalink to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Polar_decomposition">polar decomposition</a> of a square
+matrix <span class="math notranslate nohighlight">\(A\)</span> is a factorization of the form <span class="math notranslate nohighlight">\(A = UP\)</span>, where <span class="math notranslate nohighlight">\(U\)</span> is a unitary matrix and <span class="math notranslate nohighlight">\(P\)</span> is
+a positive semi-definite Hermitian matrix. It can be interpreted as decomposing a linear
+transformation into a rotation/reflection <span class="math notranslate nohighlight">\(U\)</span>, combined with a scaling <span class="math notranslate nohighlight">\(P\)</span>. The polar
+decomposition is unique for all matrices that are full rank.</p>
+<a class="reference internal image-reference" href="../_images/polar.svg" id="id8"><img alt="../_images/polar.svg" class="align-center" height="99" id="id8" src="../_images/polar.svg" width="318" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
+<span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
+<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">....</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">Polar</span><span class="p">())</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">Q</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">syntax</span>: missing comma or ) in argument list
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="qr-decomposition">
+<h3><span class="section-number">4.4.4. </span>QR Decomposition<a class="headerlink" href="#qr-decomposition" title="Permalink to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> is a factorization of
+the form <span class="math notranslate nohighlight">\(A = QR\)</span>, where <span class="math notranslate nohighlight">\(Q\)</span> is an orthogonal matrix and <span class="math notranslate nohighlight">\(R\)</span> is an upper triangular matrix.
+It is typically used to solve linear equations of the form <span class="math notranslate nohighlight">\(Ax = b\)</span>, which admits a solution
+of the form <span class="math notranslate nohighlight">\(x = R^{-1} Q^\dagger b\)</span>. Here <span class="math notranslate nohighlight">\(R^{-1}\)</span> is particularly easy to compute because
+of the triangular structure (for example by Gaussian elimination). Additionally, for
+overdetermined linear systems, the QR decomposition can be used to find the least-squares
+solution.</p>
+<a class="reference internal image-reference" href="../_images/qr.svg" id="qr"><img alt="../_images/qr.svg" class="align-center" height="99" id="qr" src="../_images/qr.svg" width="318" /></a>
+<a class="reference internal image-reference" href="../_images/leftOrth.svg" id="leftorth"><img alt="../_images/leftOrth.svg" class="align-center" height="101" id="leftorth" src="../_images/leftOrth.svg" width="136" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
+<span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
+<span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftorth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">;</span><span class="w"> </span><span class="n">alg</span><span class="o">=</span><span class="n">QR</span><span class="p">())</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">R</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">Q</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">domain</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The QR decomposition is unique up to a diagonal matrix of phases, and can thus be made
+unique by requiring that the diagonal elements of <span class="math notranslate nohighlight">\(R\)</span> are positive. This variant is often
+called QRpos. Additional variants exist that are flipped and/or transposed, such as the RQ,
+QL, and LQ decompositions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Often it is useful to make a distinction between factorizations that are <em>rank revealing</em>,
+and factorizations that are not. A factorization is rank revealing if the rank of the matrix
+can be determined from the factorization. For example, the SVD is rank revealing, while the
+QR decomposition is not. However, the trade-off being that the SVD decomposition is
+substantially more expensive, the QR decomposition is often preferred in practice.</p>
+</div>
+</div>
+<div class="section" id="nullspaces">
+<h3><span class="section-number">4.4.5. </span>Nullspaces<a class="headerlink" href="#nullspaces" title="Permalink to this heading">#</a></h3>
+<p>Finally, the nullspace of a matrix <span class="math notranslate nohighlight">\(A\)</span> is the set of vectors <span class="math notranslate nohighlight">\(x\)</span> such that <span class="math notranslate nohighlight">\(Ax = 0\)</span>. This is
+typically determined via the SVD, where the nullspace is given by the right singular vectors
+corresponding to zero singular values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">randn</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span>
+<span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
+<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftnull</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="o">...</span><span class="p">)</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">N</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">))</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="mi">0</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">N</span><span class="o">&#39;</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">codomain</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">4.5. </span>Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>In this lecture we have introduced the basic concepts of tensor network theory. We have
+defined tensors and the operations that are commonly performed, as well as the graphical
+notation that is used to represent them. We have also discussed the computational complexity
+of tensor networks, and the importance of finding efficient contraction orders. Finally, we
+have discussed the most common tensor factorizations, and how they can be used.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./1-Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="QuantumManyBody.html">
+   1. Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Software.html">
+   2. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   4. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Symmetries.html">
+   5. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
+   7. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
+   8. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
+   9. A Simple Tensor Network Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
+   10. Matrix Product Operators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
+   11. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   12. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
+   13. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   14. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/1-Introduction/TensorNetworks.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/TensorNetworks.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/1-Introduction/TensorNetworks.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/TensorNetworks.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "1-Introduction/TensorNetworks";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/1-Introduction/TensorNetworks.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>
