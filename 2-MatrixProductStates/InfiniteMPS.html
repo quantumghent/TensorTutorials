@@ -307,7 +307,7 @@ magnitude eigenvalue <span class="math notranslate nohighlight">\(\lambda_0\)</s
 <p>and the <span class="math notranslate nohighlight">\(\lambda_i\)</span> represent the remaining eigenvalues of smaller mangitude, where writing the spectral decomposition we have implicitly assumed that the fixed points are properly normalized as</p>
 <a class="reference internal image-reference" href="../_images/traceNorm.svg" id="trace-norm"><img alt="../_images/traceNorm.svg" class="align-center" height="63" id="trace-norm" src="../_images/traceNorm.svg" width="105" /></a>
 <p>Taking the
-limit of this spectral dexomposition, it follows that the infinite product of transfer matrices reduces
+limit of this spectral decomposition, it follows that the infinite product of transfer matrices reduces
 to a projector onto the fixed points corresponding to the leading eigenvalue <span class="math notranslate nohighlight">\(\lambda_0\)</span>,</p>
 <a class="reference internal image-reference" href="../_images/tmLimit.svg" id="tm-power"><img alt="../_images/tmLimit.svg" class="align-center" height="63" id="tm-power" src="../_images/tmLimit.svg" width="234" /></a>
 <p>To ensure a properly normalized state we should therefore rescale the leading eigenvalue
@@ -319,7 +319,7 @@ normalized as <span class="math notranslate nohighlight">\( \left \langle \psi(\
 </div>
 <div class="section" id="expectation-values">
 <h3><a class="toc-backref" href="#id8"><span class="section-number">8.1.3. </span>Expectation Values</a><a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
-<p>The fixed points of the transfer matrix can for example be to compute expectation values of
+<p>The fixed points of the transfer matrix can for example be used to compute expectation values of
 operators. Suppose we wish to evaluate expectation values of an extensive operator,</p>
 <div class="math notranslate nohighlight">
 \[O = \frac{1}{\mathbb{Z}} \sum_{n \in \mathbb{Z}} O_n.\]</div>
@@ -344,7 +344,7 @@ and <span class="math notranslate nohighlight">\(r\)</span>, so that</p>
 <a class="reference internal image-reference" href="../_images/corrFunc.svg" id="corr-func"><img alt="../_images/corrFunc.svg" class="align-center" height="122" id="corr-func" src="../_images/corrFunc.svg" width="422" /></a>
 <p>From this expression, we learn that it is the transfer matrix that determines the
 correlations in the ground state. Indeed, if we again use the spectral decomposition of the
-transfer matrix, recalling that now <span class="math notranslate nohighlight">\(\lambda_0 = 0\)</span>, we can see that the correlation
+transfer matrix, recalling that now <span class="math notranslate nohighlight">\(\lambda_0 = 1\)</span>, we can see that the correlation
 function reduces to</p>
 <a class="reference internal image-reference" href="../_images/corrFunc2.svg" id="corr-func2"><img alt="../_images/corrFunc2.svg" class="align-center" height="122" id="corr-func2" src="../_images/corrFunc2.svg" width="743" /></a>
 <p>The first part is just the product of the expectation values of <span class="math notranslate nohighlight">\(O^\alpha\)</span> and <span class="math notranslate nohighlight">\(O^\beta\)</span>,
@@ -510,7 +510,7 @@ tensors <span class="math notranslate nohighlight">\(A_C\)</span> and <span clas
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0000000000000002
 norm(mps.AC[1]) = 1.0000000000000002
-norm(mps.CR[1]) = 1.0
+norm(mps.CR[1]) = 0.9999999999999999
 </pre></div>
 </div>
 </div>
@@ -546,7 +546,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- 0.49616386432021475 - 0.14749272502558755im
+ -0.8150939907362887 + 0.07533121969166184im
 </pre></div>
 </div>
 </div>
@@ -559,7 +559,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.44204985368427074
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.543119449670003
 </pre></div>
 </div>
 </div>

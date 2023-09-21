@@ -786,10 +786,8 @@ the (anti)symmetrized states satisfy</p>
 \ket{\Omega}\]</div>
 <p>which can be summarized using</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align}
-\hat{a}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &amp;= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j} \ket{n_1, n_2, \ldots, n_j - 1, \ldots, n_L},\\
-\hat{a}_j^\dagger \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &amp;= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j+1} \ket{n_1, n_2, \ldots, n_j + 1, \ldots, n_L}.
-\end{align}\end{split}\]</div>
+\[\begin{split}\hat{a}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &amp;= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j} \ket{n_1, n_2, \ldots, n_j - 1, \ldots, n_L},\\
+\hat{a}_j^\dagger \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &amp;= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j+1} \ket{n_1, n_2, \ldots, n_j + 1, \ldots, n_L}.\end{split}\]</div>
 <p>It then follows easily that the operator <span class="math notranslate nohighlight">\(\hat{n}_j = \hat{a}_j^\dagger \hat{a}_j\)</span> satisfies</p>
 <div class="math notranslate nohighlight">
 \[\hat{n}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} = n_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L}\]</div>
@@ -1091,8 +1089,9 @@ state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span>), which w
 \[\begin{split}\ket{\Psi} &amp;= \sum_{i=1}^{\min(d^A,d^B)} s_i \ket{\psi^A_i} \otimes \ket{\psi^B_i}\\
 \hat{\rho}^{(A)} &amp;= \sum_{i=1}^{d^A} (s_i)^2 \ket{\psi^A_i} \bra{\psi^A_i}\\
 \hat{\rho}^{(B)} &amp;= \sum_{i=1}^{d^b} (s_i)^2 \ket{\psi^B_i} \bra{\psi^B_i}\end{split}\]</div>
-<p>Hence, the reduced matrices appear immidiately in diagonalised form. The singular values
-<span class="math notranslate nohighlight">\(s_i\)</span>, or rather their squares <span class="math notranslate nohighlight">\(p_i = (s_i)^2\)</span> are referred to as Schmidt coefficients, and
+<p>This particular way of writing the bipartite state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span> is known as the Schmidt decomposition.
+As a result, the reduced matrices appear immidiately in diagonalised form. The singular values
+<span class="math notranslate nohighlight">\(s_i\)</span>, or rather their squares <span class="math notranslate nohighlight">\(p_i = (s_i)^2\)</span> are referred to as <strong>Schmidt coefficients</strong>, and
 together make up the <strong>entanglement spectrum</strong>. The entanglement entropy is then given by</p>
 <div class="math notranslate nohighlight" id="equation-entanglement-entropy">
 <span class="eqno">(1.1)<a class="headerlink" href="#equation-entanglement-entropy" title="Permalink to this equation">#</a></span>\[S = - \sum_{i} p_i \log(p_i)\]</div>
@@ -1371,10 +1370,9 @@ pattern in the way symmetry is broken (and thus also translation invariance is b
 <p>More detailed quantitative information about the spectrum of excited states is contained in
 the time-dependent correlation function</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} G^{A,B}_{i,j}(t) &amp;= \braket{\Psi_0\vert  \hat{A}_i(t)^\dagger \hat{B}_j(0)\vert \Psi_0}\\
+\[\begin{split}G^{A,B}_{i,j}(t) &amp;= \braket{\Psi_0\vert  \hat{A}_i(t)^\dagger \hat{B}_j(0)\vert \Psi_0}\\
 &amp;=\braket{\Psi_0\vert  \mathrm{e}^{+\mathrm{i} \hat{H} t}  \hat{A}_i^\dagger \mathrm{e}^{-\mathrm{i} \hat{H} t} \hat{B}_j\vert \Psi_0} \\
-&amp;=\braket{\Psi_0\vert  \hat{A}_i \mathrm{e}^{-\mathrm{i} (\hat{H}-E_0) t} \hat{B}_j\vert \Psi_0} 
-\end{split}\]</div>
+&amp;=\braket{\Psi_0\vert  \hat{A}_i \mathrm{e}^{-\mathrm{i} (\hat{H}-E_0) t} \hat{B}_j\vert \Psi_0} \end{split}\]</div>
 <p>On the first line, we have used operator
 <span class="math notranslate nohighlight">\(\hat{A}(t) = \mathrm{e}^{+\mathrm{i} t \hat{H}}\hat{A} \mathrm{e}^{-\mathrm{i} t \hat{H}}\)</span>
 in the Heisenberg picture. In going from the second to the third line, we have used that
@@ -1442,8 +1440,12 @@ use to Baker-Campbell-Hausdorff formula (or better yet, the Zassenhaus formula) 
 \mathcal{O}(\epsilon^2).\]</div>
 <p>This then leads to the <strong>Suzuki-Trotter decomposition</strong></p>
 <div class="math notranslate nohighlight">
-\[\exp\left(-\tau \sum_{i} \hat{h}_i\right) = \lim_{M\to\infty} \left( \mathrm{e}^{-\frac{\tau}{M} \sum_i \hat{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i} + \mathcal{O}(M^{-1})\right)^M\]</div>
-<p>Note that splitting the time interval <span class="math notranslate nohighlight">\([0,\tau]\)</span> into small segments <span class="math notranslate nohighlight">\(\epsilon = \tau/M\)</span> is
+\[\exp\left(-\tau \sum_{i} \hat{h}_i\right) = \lim_{M\to\infty} \left( \mathrm{e}^{-\frac{\tau}{M} \sum_i \hat{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i} + \mathcal{O}(\tau^2/M^2)\right)^M = \lim_{M\to\infty} \left( \left[\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i}\right]^M + \mathcal{O}(\tau^2/M)\right)\]</div>
+<p>The product in the final expressions requires chosing a specific order, exactly because the terms <span class="math notranslate nohighlight">\(\hat{h}_i\)</span>
+and thus also the factors <span class="math notranslate nohighlight">\(\mathrm{e}^{-\frac{\tau}{M} \hat{h}_i}\)</span> do not commute. The approximation
+and error term are valid for arbitrary choices of ordering, but different orderings are not
+equivalent. Particular choices can be more suitable for particular purposes. Furthermore,
+note that splitting the time interval <span class="math notranslate nohighlight">\([0,\tau]\)</span> into small segments <span class="math notranslate nohighlight">\(\epsilon = \tau/M\)</span> is
 also the starting point for deriving a path integral representation of the quantum partition
 function. The next step is to insert a resolution of the identity in between the <span class="math notranslate nohighlight">\(N\)</span>
 different factors, where the labels of the basis will behave as classical degrees of
@@ -1470,8 +1472,7 @@ section, we will use the <span class="math notranslate nohighlight">\(\sigma^z\)
 <div class="math notranslate nohighlight">
 \[\begin{split}\braket{s_{i}|\mathrm{e}^{-\epsilon \hat{H}}|s_{i+1}} &amp;= \braket{s_{i} \vert \mathrm{e}^{-\epsilon H} \vert s_{i+1}} \approx \braket{s_{i} \vert \mathrm{e}^{\epsilon h_z \sigma^z}\mathrm{e}^{\epsilon h_x \sigma^x} \vert s_{i+1}}\\ 
 &amp;= \mathrm{e}^{\epsilon h_z s_i} \braket{s_{i} \vert \cosh(\epsilon h_x) \mathbb{1} + \sinh(\epsilon h_x) \sigma^x \vert s_{i+1}}\\
- &amp;= \mathrm{e}^{K s_{i}s_{i+1} + h s_i + f_0}
-\end{split}\]</div>
+ &amp;= \mathrm{e}^{K s_{i}s_{i+1} + h s_i + f_0}\end{split}\]</div>
 <p>where the parameters in the last line are given by
 <span class="math notranslate nohighlight">\(K= -\frac{1}{2}\log \tanh(\epsilon h_x)\)</span>, <span class="math notranslate nohighlight">\(h = \epsilon h_z\)</span> and
 <span class="math notranslate nohighlight">\(f_0 =\frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]\)</span>.</p>
