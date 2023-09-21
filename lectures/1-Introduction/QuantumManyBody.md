@@ -1067,8 +1067,9 @@ $\{\ket{\psi^{(B)}_l}, l= 1,\ldots, d^B\}$. We can then write
 \hat{\rho}^{(B)} &= \sum_{i=1}^{d^b} (s_i)^2 \ket{\psi^B_i} \bra{\psi^B_i}
 ```
 
-Hence, the reduced matrices appear immidiately in diagonalised form. The singular values
-$s_i$, or rather their squares $p_i = (s_i)^2$ are referred to as Schmidt coefficients, and
+This particular way of writing the bipartite state $\ket{\Psi}$ is known as the Schmidt decomposition.
+As a result, the reduced matrices appear immidiately in diagonalised form. The singular values
+$s_i$, or rather their squares $p_i = (s_i)^2$ are referred to as **Schmidt coefficients**, and
 together make up the **entanglement spectrum**. The entanglement entropy is then given by
 
 ```{math}
@@ -1478,7 +1479,7 @@ $$\exp(-\epsilon \sum_{i} \hat{h}_i) = \prod_i \exp(-\epsilon \hat{h}_i) +
 
 This then leads to the **Suzuki-Trotter decomposition**
  
-$$\exp\left(-\tau \sum_{i} \hat{h}_i\right) = \lim_{M\to\infty} \left( \mathrm{e}^{-\frac{\tau}{M} \sum_i \hat{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i} + \mathcal{O}(M^{-1})\right)^M$$
+$$\exp\left(-\tau \sum_{i} \hat{h}_i\right) = \lim_{M\to\infty} \left( \mathrm{e}^{-\frac{\tau}{M} \sum_i \hat{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i} + \mathcal{O}(\tau^2/M^2)\right)^M = \lim_{M\to\infty} \left( \left[\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i}\right]^M + \mathcal{O}(\tau^2/M)\right)$$
 
 Note that splitting the time interval $[0,\tau]$ into small segments $\epsilon = \tau/M$ is
 also the starting point for deriving a path integral representation of the quantum partition
