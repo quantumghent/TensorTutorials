@@ -185,6 +185,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.3. Expectation Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-mpos-in-the-thermodynamic-limit">9.2.4. Jordan MPOs in the Thermodynamic Limit</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-1d-systems">9.2.5. Quasi-1D Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpskitmodels-and-the-mpoham-macro">9.2.6. MPSKitModels and the <code class="docutils literal notranslate"><span class="pre">@mpoham</span></code> Macro</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">9.3. Conclusion</a></li>
@@ -241,6 +242,26 @@ of such operators, that can capture most (if not all) relevant operators. Additi
 also form a natural way of representing the transfer matrix of a 2D statistical mechanical
 system, and can even be used to study higher dimensional systems by mapping them to quasi-1D
 systems.</p>
+<p>In this lecture, we will discuss the construction of MPOs, as well as showcase their use
+through <a class="reference external" href="https://github.com/maartenvd/MPSKit.jl">MPSKit.jl</a> and
+<a class="reference external" href="https://github.com/maartenvd/MPSKitModels.jl">MPSKitModels.jl</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">TensorKit</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MPSKit</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MPSKitModels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKit [bb1c41ca-d63c-52ed-829e-0820dda26502]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKitModels [ca635005-6f8c-4cd1-b51d-8491250ef2ab]
+</pre></div>
+</div>
+</div>
+</div>
 <p>In general, an MPO is a chain of tensors, where each tensor has two physical indices and two
 virtual indices:</p>
 <!-- Insert image MPO -->
@@ -261,7 +282,7 @@ energy, as determined by the Hamiltonian:</p>
 <h3><span class="section-number">9.1.1. </span>Partition Functions as Tensor Networks<a class="headerlink" href="#partition-functions-as-tensor-networks" title="Permalink to this heading">#</a></h3>
 <p>As the expression for the partition function is an exponential of a sum, we can also write
 it as a product of exponentials, which can be reduced to the following network:</p>
-<a class="reference internal image-reference" href="_static/figures/mpo/partition_function_1.svg" id="partfunc"><img alt="_static/figures/mpo/partition_function_1.svg" class="align-center" id="partfunc" src="_static/figures/mpo/partition_function_1.svg" /></a>
+<a class="reference internal image-reference" href="../_images/partition_function_1.svg" id="partfunc"><img alt="../_images/partition_function_1.svg" class="align-center" height="286" id="partfunc" src="../_images/partition_function_1.svg" width="343" /></a>
 <p>Here, the black dots at the vertices represent Kronecker <span class="math notranslate nohighlight">\(\delta\)</span>-tensors,</p>
 <a class="reference internal image-reference" href="../_images/kronecker.svg" id="kronecker"><img alt="../_images/kronecker.svg" class="align-center" height="97" id="kronecker" src="../_images/kronecker.svg" width="316" /></a>
 <p>and the matrices <span class="math notranslate nohighlight">\(t\)</span> encode the Boltzmann weights associated to each nearest-neighbor interaction,</p>
@@ -281,6 +302,47 @@ matrices is taken, such that each vertex tensor absorbs such a factor from each 
 edges, resulting in a rotation-invariant form.</p>
 <a class="reference internal image-reference" href="../_images/boltzmann_mpo.svg" id="boltzmann-mpo"><img alt="../_images/boltzmann_mpo.svg" class="align-center" height="109" id="boltzmann-mpo" src="../_images/boltzmann_mpo.svg" width="220" /></a>
 </div>
+<p>In particular, the construction of the operator that makes up the MPO can be achieved in a
+few lines of code, through the use of TensorKit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">β</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+
+<span class="c"># construct edge tensors</span>
+<span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="kt">ComplexF64</span><span class="p">[</span><span class="n">exp</span><span class="p">(</span><span class="n">β</span><span class="p">)</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">β</span><span class="p">);</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">β</span><span class="p">)</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="n">β</span><span class="p">)],</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="c"># construct vertex tensors</span>
+<span class="n">δ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">zeros</span><span class="p">,</span><span class="w"> </span><span class="kt">ComplexF64</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="n">δ</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+
+<span class="c"># absorb edge tensors</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">O</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap((ℂ^2 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^2)):
+[:, :, 1, 1] =
+   7.321388457312336 + 0.0im  0.49999999999999895 + 0.0im
+ 0.49999999999999895 + 0.0im  0.06766764161830616 + 0.0im
+
+[:, :, 2, 1] =
+ 0.49999999999999906 + 0.0im  0.06766764161830614 + 0.0im
+ 0.06766764161830614 + 0.0im  0.49999999999999906 + 0.0im
+
+[:, :, 1, 2] =
+   0.499999999999999 + 0.0im  0.06766764161830616 + 0.0im
+ 0.06766764161830616 + 0.0im  0.49999999999999906 + 0.0im
+
+[:, :, 2, 2] =
+ 0.06766764161830616 + 0.0im  0.499999999999999 + 0.0im
+   0.499999999999999 + 0.0im  7.321388457312336 + 0.0im
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="transfer-matrices">
 <h3><span class="section-number">9.1.2. </span>Transfer Matrices<a class="headerlink" href="#transfer-matrices" title="Permalink to this heading">#</a></h3>
@@ -290,13 +352,12 @@ technique that splits the two-dimensional network into rows (or columns) of so-c
 transfer matrices, which are already represented as MPOs. In fact, this method has even led
 to the famous exact solution of the two-dimensional Ising model by Onsager.
 <span id="id2">[<a class="reference internal" href="../References.html#id20" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Physical Review, 65:117–149, 1944. doi:10.1103/PhysRev.65.117.">Onsager, 1944</a>]</span>.</p>
+<!-- Insert image of transfer matrix -->
 <p>In the context of tensor networks, this technique is even useful beyond exactly solvable
 cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
 approximate manner. This allows us to efficiently split the computation of the partition
 function in a sequence of one-dimensional contractions, thus reducing the complexity of the
-problem by solving it layer by layer. For example, one can resort to <em>boundary MPS
-techniques</em> <span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">Zauner-Stauber <em>et al.</em>, 2018</a>]</span>.</p>
-<a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
+problem by solving it layer by layer.</p>
 </div>
 <div class="section" id="thermodynamic-limit">
 <h3><span class="section-number">9.1.3. </span>Thermodynamic Limit<a class="headerlink" href="#thermodynamic-limit" title="Permalink to this heading">#</a></h3>
@@ -311,10 +372,16 @@ the network. If we then consider the spectral decomposition of the transfer matr
 easily show that as the number of rows goes to infinity, the largest eigenvalue of the
 transfer matrix dominates, and the partition function is given by</p>
 <div class="math notranslate nohighlight">
-\[\mathcal Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N\]</div>
-<p>where <span class="math notranslate nohighlight">\(\lambda_{\mathrm{max}}\)</span> is the largest eigenvalue of the transfer matrix. In other
-words, the partition function can be computed if it is possible to find the largest
-eigenvalue of the transfer matrix, for which efficient algorithms exist.</p>
+\[\mathcal Z = \lim_{N \to \infty} \lambda_{\mathrm{max}}^N \braket{\psi}{\psi}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_{\mathrm{max}}\)</span> is the largest eigenvalue of the transfer matrix, and
+<span class="math notranslate nohighlight">\(\ket{\psi}\)</span> is the corresponding (MPS) eigenvector. In other words, the partition function
+can be computed if it is possible to find the largest eigenvalue of the transfer matrix, for
+which efficient algorithms exist.</p>
+<p>For example, one can resort to many types of <em>boundary MPS techniques</em>
+<span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">Zauner-Stauber <em>et al.</em>, 2018</a>]</span>, which are a generic class of algorithms to
+numerically solve these kinds of problems. In particular, they all rely on an efficient way
+of finding an (approximate) solution to the following problem:</p>
+<a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
 </div>
 <div class="section" id="expectation-values">
 <h3><span class="section-number">9.1.4. </span>Expectation Values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
@@ -325,9 +392,39 @@ microstate, with the probability of that microstate:</p>
 \[\langle O \rangle = \frac{1}{\mathcal Z} \sum_{\{s_i\}} O(\{s_i\})\text{e}^{-\beta
 H(\{s_i\})}\]</div>
 <p>For a local operator <span class="math notranslate nohighlight">\(O_i\)</span>, this can again be written as a tensor network, where a single
-vertex tensor is exchanged for <span class="math notranslate nohighlight">\(M\prime_{ijkl} = O_i \delta_{ijkl}\)</span>, and then absorbing the
-remaining edge tensors:</p>
+Kronecker tensor at a vertex is replaced with a tensor measuring the operator, and then
+absorbing the remaining edge tensors:</p>
 <!-- Insert image of expectation value -->
+<p>For example, in the case of the magnetisation <span class="math notranslate nohighlight">\(O = \sigma_z\)</span>, the tensor <span class="math notranslate nohighlight">\(M\)</span> can be
+explicitly constructed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="kt">ComplexF64</span><span class="p">[</span><span class="mf">1.0</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@tensor</span><span class="w"> </span><span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">δ</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="p">[</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap((ℂ^2 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^2)):
+[:, :, 1, 1] =
+ 7.3210757428908035 + 0.0im       0.4953999296304103 + 0.0im
+ 0.4953999296304103 + 0.0im  -1.0097568878600302e-17 + 0.0im
+
+[:, :, 2, 1] =
+      0.4953999296304104 + 0.0im  -3.8901691517473414e-18 + 0.0im
+ -3.8901691517473414e-18 + 0.0im     -0.49539992963041035 + 0.0im
+
+[:, :, 1, 2] =
+   0.49539992963041035 + 0.0im  3.993515140140208e-18 + 0.0im
+ 3.993515140140208e-18 + 0.0im    -0.4953999296304104 + 0.0im
+
+[:, :, 2, 2] =
+ 3.993515140140208e-18 + 0.0im  -0.4953999296304103 + 0.0im
+   -0.4953999296304103 + 0.0im  -7.3210757428908035 + 0.0im
+</pre></div>
+</div>
+</div>
+</div>
 <p>Using this network, the expectation value can be computed by first contracting the top and
 bottom part, replacing them by their fixed-point MPS representations, and then contracting
 the remaining MPS-MPO-MPS sandwich. This is achieved by similarly contracting the left and
@@ -407,6 +504,56 @@ representation of the sum of all local operators, and by carefully extending the
 of the blocks <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, and <span class="math notranslate nohighlight">\(D\)</span>, it is possible to construct MPOs that represent sums
 of generic local terms, and even approximate long-range interactions by a sum of
 exponentials.</p>
+<p>To gain a bit more understanding of this, we can use the following code to reconstruct the
+total sum of local terms, starting from the Jordan MPO construction:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Symbolics</span>
+
+<span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
+<span class="c"># generate W matrices</span>
+<span class="nd">@variables</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">]</span>
+<span class="n">Ws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">l</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+<span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+<span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w">    </span><span class="mi">1</span><span class="p">]</span>
+<span class="k">end</span>
+
+<span class="c"># generate boundary vectors</span>
+<span class="n">Vₗ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="o">&#39;</span>
+<span class="n">Vᵣ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c"># expand the MPO</span>
+<span class="n">expand</span><span class="p">(</span><span class="n">Vₗ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">prod</span><span class="p">(</span><span class="n">Ws</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vᵣ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling Symbolics [0c5d862f-8b57-4792-8d23-62f2024744c7]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling BangBangStaticArraysExt [a9f1882a-14fa-573e-a12d-824431257a23]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling AccessorsStaticArraysExt [91548973-bbcf-5128-ac3c-c8b871e934a5]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling AccessorsIntervalSetsExt [727f68c9-d1d4-5b40-b284-36502e629768]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling LogExpFunctionsInverseFunctionsExt [1e5f9c58-a15c-5ce5-87cf-a68a2eda25d9]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling StatsFunsInverseFunctionsExt [da3fed98-1718-55bb-8128-3e4a2e454b06]
+</pre></div>
+</div>
+<div class="output text_latex math notranslate nohighlight">
+\[ \begin{equation}
+B_2 C_1 + B_3 C_2 + B_4 C_3 + A_2 B_3 C_1 + A_3 B_4 C_2 + A_2 A_3 B_4 C_1 + D_1 + D_2 + D_3 + D_4
+\end{equation}
+ \]</div>
+</div>
+</div>
 </div>
 <div class="section" id="id4">
 <h3><span class="section-number">9.2.3. </span>Expectation Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
@@ -414,25 +561,53 @@ exponentials.</p>
 before, and sandwich the MPO between two MPSs.</p>
 <!-- Insert image of expectation value -->
 <p>However, care must be taken when the goal is to determine a local expectation value density,
-as this is not necessarily well-defined. In fact, the MPO-MPS sandwich will always lead to
-the total energy, and in order to consistently define local contributions, a choice must be
-made how to <em>distribute</em> this among the sites. For example, even in the case of two-site
-local operators, it is unclear if this local expectation value should be accredited to the
-left, right, or both sites. In the implementation of MPSKit, the chosen convention is to
-distribute the expectation value evenly among its starting and ending point, in order to not
-overcount contributions of long-range interactions.</p>
-<p>Thus, the computation of local expectation values is done by first contracting the left and
-right ends of the network, and denoting the resulting tensors as <span class="math notranslate nohighlight">\(G_L\)</span> and <span class="math notranslate nohighlight">\(G_R\)</span>,
-respectively. These tensors are typically referred to as the <em>environments</em> of the network,
-as they depict the part of the network that is not under consideration, and that is thus
-considered as constant.</p>
-<!-- Insert image of environments -->
-<p>Then, the local expectation value is given by the mean of the contraction with the first row
-of <span class="math notranslate nohighlight">\(M\)</span>, which is equivalent to all terms starting at that site, and the last column of <span class="math notranslate nohighlight">\(M\)</span>,
-which is equivalent to all terms ending at that site.</p>
-<!-- Insert image of local expectation value -->
-<p>Again, it is instructive to write this out explicitly for some small examples to gain some
-intuition.</p>
+as this is not necessarily well-defined. In fact, the MPO represents the sum of all local
+terms, and sandwiching it will always lead to the total energy. In order to consistently
+define local contributions, a choice must be made how to <em>distribute</em> this among the sites.
+For example, even in the case of two-site local operators, it is unclear if this local
+expectation value should be accredited to the left, or right site, or even split between
+both sites. In the implementation of MPSKit, the chosen convention is to distribute the
+expectation value evenly among its starting and ending point, in order to not overcount
+contributions of long-range interactions.</p>
+<p>Typically this is achieved by renormalizing the environment tensors in a particular way,
+such that then local expectation values can be obtained by either contracting the first row
+of <span class="math notranslate nohighlight">\(W\)</span> with the right regularized environment, or the last column of <span class="math notranslate nohighlight">\(W\)</span> with the left
+regularized environment. This respectively yields the expectation value of all terms
+starting at that site, or all terms ending at that site.</p>
+<p>Again, it can prove instructive to write this out explicitly for some small examples to gain
+some intuition. Doing this programatically, we get all terms starting at some site as
+follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Ws_reg_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ws</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="kt">Ref</span><span class="p">([</span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">])</span>
+<span class="n">expand</span><span class="p">(</span><span class="n">Vₗ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_right</span><span class="p">[</span><span class="k">end</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_right</span><span class="p">[</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_right</span><span class="p">[</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vᵣ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[ \begin{equation}
+B_3 C_2 + A_3 B_4 C_2 + D_2
+\end{equation}
+ \]</div>
+</div>
+</div>
+<p>and similarly all terms ending at some site as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Ws_reg_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ws</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="kt">Ref</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span>
+<span class="n">expand</span><span class="p">(</span><span class="n">Vₗ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_left</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_left</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ws_reg_left</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vᵣ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[ \begin{equation}
+B_3 C_2 + A_2 B_3 C_1 + D_3
+\end{equation}
+ \]</div>
+</div>
+</div>
 </div>
 <div class="section" id="jordan-mpos-in-the-thermodynamic-limit">
 <h3><span class="section-number">9.2.4. </span>Jordan MPOs in the Thermodynamic Limit<a class="headerlink" href="#jordan-mpos-in-the-thermodynamic-limit" title="Permalink to this heading">#</a></h3>
@@ -440,9 +615,9 @@ intuition.</p>
 sum of local terms. However, special care must be taken when considering expectation values,
 as now only local expectation values are well-defined, and the total energy diverges with
 the system size.</p>
-<p>This is achieved by considering a regularization of the environment tensors, such that the
-divergent parts are already removed. This construction can be found in more detail in
-<span id="id5">[]</span>.</p>
+<p>This is achieved by considering the same regularization of the environment tensors, such
+that the divergent parts are automatically removed. This construction can be found in more
+detail in <span id="id5">[<a class="reference internal" href="../References.html#id22" title="C. Hubig, I. P. McCulloch, and U. Schollwöck. Generic construction of efficient matrix product operators. Phys. Rev. B, 95:035129, Jan 2017. URL: https://link.aps.org/doi/10.1103/PhysRevB.95.035129, doi:10.1103/PhysRevB.95.035129.">Hubig <em>et al.</em>, 2017</a>]</span>.</p>
 </div>
 <div class="section" id="quasi-1d-systems">
 <h3><span class="section-number">9.2.5. </span>Quasi-1D Systems<a class="headerlink" href="#quasi-1d-systems" title="Permalink to this heading">#</a></h3>
@@ -456,6 +631,2243 @@ techniques. However, the
 well, and the resulting model will typically require a bond dimension that grows
 exponentially with the periodic system size, in order to achieve the area law of
 entanglement in two-dimensional systems.</p>
+</div>
+<div class="section" id="mpskitmodels-and-the-mpoham-macro">
+<h3><span class="section-number">9.2.6. </span>MPSKitModels and the <code class="docutils literal notranslate"><span class="pre">&#64;mpoham</span></code> Macro<a class="headerlink" href="#mpskitmodels-and-the-mpoham-macro" title="Permalink to this heading">#</a></h3>
+<p>While the above construction of MPOs is quite general, it is also quite cumbersome to
+manually construct, especially when dealing with complicated lattices or non-trivial unit
+cells. To this end, the package
+<a class="reference external" href="https://github.com/maartenvd/MPSKitModels.jl">MPSKitModels.jl</a> offers a convenient way of
+constructing these MPOs automatically, by virtue of the <code class="docutils literal notranslate"><span class="pre">&#64;mpoham</span></code> macro. This macro allows
+for the construction of MPOs by specifying the local operators that are present in the
+Hamiltonian, and the lattice on which they act. For example, we can construct the MPO for
+the Heisenberg models with nearest- or next-nearest-neighbor interactions as follows:</p>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">J₁</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.2</span>
+<span class="n">SS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S_exchange</span><span class="p">()</span><span class="w"> </span><span class="c"># predefined operator in MPSKitModels</span>
+
+<span class="n">lattice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteChain</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">H₁</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@mpoham</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₁</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MPOHamiltonian{ComplexSpace, TensorMap{ComplexSpace, 2, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ComplexF64}(MPSKit.SparseMPOSlice{ComplexSpace, TensorMap{ComplexSpace, 2, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ComplexF64}[[TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.6 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.6 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ -0.42426406871192845 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.42426406871192845 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+                 0.0 + 0.0im  1.0 + 0.0im
+                 0.0 + 0.0im  0.0 + 0.0im
+ -0.7071067811865476 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im                 0.0 + 0.0im
+ 1.0 + 0.0im                 0.0 + 0.0im
+ 0.0 + 0.0im  0.7071067811865476 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+]])
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">lattice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteCylinder</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">H₂</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@mpoham</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₁</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MPOHamiltonian{ComplexSpace, TensorMap{ComplexSpace, 2, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ComplexF64}(MPSKit.SparseMPOSlice{ComplexSpace, TensorMap{ComplexSpace, 2, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ComplexF64}[[TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.6 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.6 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ -0.42426406871192845 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.42426406871192845 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+                 0.0 + 0.0im  1.0 + 0.0im
+                 0.0 + 0.0im  0.0 + 0.0im
+ -0.7071067811865476 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im                 0.0 + 0.0im
+ 1.0 + 0.0im                 0.0 + 0.0im
+ 0.0 + 0.0im  0.7071067811865476 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+                 0.0 + 0.0im  1.0 + 0.0im
+                 0.0 + 0.0im  0.0 + 0.0im
+ -0.7071067811865476 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im                 0.0 + 0.0im
+ 1.0 + 0.0im                 0.0 + 0.0im
+ 0.0 + 0.0im  0.7071067811865476 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+], [TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+], [TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+], [TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.6 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.6 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ -0.42426406871192845 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.42426406871192845 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+                 0.0 + 0.0im  1.0 + 0.0im
+                 0.0 + 0.0im  0.0 + 0.0im
+ -0.7071067811865476 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im                 0.0 + 0.0im
+ 1.0 + 0.0im                 0.0 + 0.0im
+ 0.0 + 0.0im  0.7071067811865476 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+]])
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">J₂</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span>
+<span class="n">lattice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InfiniteCylinder</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">H₃</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@mpoham</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₁</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="n">sum</span><span class="p">(</span><span class="n">J₂</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">SS</span><span class="p">{</span><span class="kt">i</span><span class="p">,</span><span class="w"> </span><span class="kt">j</span><span class="p">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">next_nearest_neighbours</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MPOHamiltonian{ComplexSpace, TensorMap{ComplexSpace, 2, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ComplexF64}(MPSKit.SparseMPOSlice{ComplexSpace, TensorMap{ComplexSpace, 2, 2, Trivial, Matrix{ComplexF64}, Nothing, Nothing}, ComplexF64}[[TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.6 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.6 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ -0.42426406871192845 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.42426406871192845 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+                 0.0 + 0.0im  1.0 + 0.0im
+                 0.0 + 0.0im  0.0 + 0.0im
+ -0.7071067811865476 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im                 0.0 + 0.0im
+ 1.0 + 0.0im                 0.0 + 0.0im
+ 0.0 + 0.0im  0.7071067811865476 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+], [TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+                 0.0 + 0.0im   0.0 + 0.0im
+                 0.0 + 0.0im  -1.0 + 0.0im
+ -0.7071067811865476 + 0.0im   0.0 + 0.0im
+
+[:, :, 2, 1] =
+ -1.0 + 0.0im                 0.0 + 0.0im
+  0.0 + 0.0im                 0.0 + 0.0im
+  0.0 + 0.0im  0.7071067811865474 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+], [TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  -0.4 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ -0.4 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ -0.2828427124746189 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.2828427124746189 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+                 0.0 + 0.0im   0.0 + 0.0im
+                 0.0 + 0.0im  -1.0 + 0.0im
+ -0.7071067811865476 + 0.0im   0.0 + 0.0im
+
+[:, :, 2, 1] =
+ -1.0 + 0.0im                 0.0 + 0.0im
+  0.0 + 0.0im                 0.0 + 0.0im
+  0.0 + 0.0im  0.7071067811865474 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+], [TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; … ; TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  1.0 + 0.0im
+ TensorMap((ℂ^3 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+ 0.0 + 0.0im  0.0 + 0.0im
+; TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ … TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^3)):
+[:, :, 1, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 2] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 1, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 3] =
+ 0.0 + 0.0im  0.0 + 0.0im
+ TensorMap((ℂ^1 ⊗ ℂ^2) ← (ℂ^2 ⊗ ℂ^1)):
+[:, :, 1, 1] =
+ 1.0 + 0.0im  0.0 + 0.0im
+
+[:, :, 2, 1] =
+ 0.0 + 0.0im  1.0 + 0.0im
+]])
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 </div>
 </div>
 <div class="section" id="conclusion">
