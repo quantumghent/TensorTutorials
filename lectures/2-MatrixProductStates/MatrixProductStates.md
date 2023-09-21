@@ -76,7 +76,7 @@ can write a corresponding MPS
 as
 
 ```{math}
-\ket{\psi} = \sum_{s_1,s_2,...,s_N} {\rm Tr} \left[A^{(1)}A^{(2)}...A^{(N)}\right] \ket{s_1,s_2,...,s_N}.
+\ket{\psi} = \sum_{s_1,s_2,...,s_N} {\rm Tr} \left[A^{(1)}_{s_1}A^{(2)}_{s_2}...A^{(N)}_{s_N}\right] \ket{s_1,s_2,...,s_N}.
 ```
 
 This class of states can be used as a variational anzatz to for example perform
@@ -89,7 +89,7 @@ Alternatively, one could introduce MPS as a so-called *projected entangled-pair 
 (PEPS) in the following way. Consider again our chain of length $N$, where we now place two
 ancillary spins of dimension $D$ on every site. We then maximally entangle each of these
 ancillary spins with the corresponding spin on the neighboring site, resulting in a chain of
-entangled pairs of the form $\ket{\phi}=\sum_{j=0}^{d-1}\ket{dd}$. Finally, we project the
+entangled pairs of the form $\ket{\phi}=\sum_{j=0}^{d-1}\ket{j,j}$. Finally, we project the
 two spins at each site onto the local physical Hilbert space of dimension $d$, resulting in
 a state
 
@@ -107,8 +107,10 @@ If we write the projectors $\mathcal P^{(i)}: \mathbb {C}^D \otimes \mathbb{C}^D
 ```
 
 you should be able to see that the resulting state is precisely an MPS with tensors
-$A^{(i)}$. While it may seem a bit involved, this construction has a very natural
-generalization to two and more spatial dimensions, where it has been put to extensive use.
+$A^{(i)}$. This construction originates from ideas in quantum information theory
+regarding entanglement and teleportation. While it may seem a bit involved, this
+construction has a very natural generalization to two and more spatial dimensions,
+where it has been put to extensive use.
 ````
 
 ## Entanglement in MPS
@@ -124,7 +126,7 @@ the MPS. The entanglement spectrum of a given low-energy state encodes many inte
 properties of the corresponding system, and can for example be used to recognize symmetries
 and detect phase transitions.
 
-The same Schmidt coefficients can be used to compute the bipartitie entanglement entropy
+The same Schmidt coefficients can be used to compute the bipartite entanglement entropy
 across the cut as
 
 ```{math}
@@ -132,7 +134,7 @@ S = -\sum_i s_i^2 \log(s_i^2).
 ```
 
 For one-dimensional states which obey an area law, the maximum entropy across a cut is
-bounded by a constant. Again we see that by increasing the bond dimension sufficiently we
+bounded by a constant. Again we see that by increasing the bond dimension sufficiently, we
 will always be able to saturate this value of $S$, confirming our previous statement that
 MPS faithfully capture these states. Furthermore, even for states that do not satisfy an
 area law, such as critical states, carefully relating entanglement properties such as the
@@ -169,7 +171,7 @@ a physical state by an MPS.
 From a more practical point of view, this gauge freedom is exploited in various algorithms
 by making use of so-called *canonical forms*. One common canonical form for example is the
 *left-canonical form*, where we gauge transform a given MPS tensor $A$ to a different tenor
-$A_L$ which satisfies the condition $\sum_{s_i=0}^{d-1}A^\dagger_{s_i}U_{s_i} = \mathbb
+$A_L$ which satisfies the condition $\sum_{s_i=0}^{d-1}(A_L)^\dagger_{s_i}(A_L)_{s_i} = \mathbb
 1_{D\times D}$, or in pictures,
 
 ```{image} /_static/FiniteMPS/leftOrth.svg
