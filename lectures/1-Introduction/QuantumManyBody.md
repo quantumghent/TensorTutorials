@@ -683,10 +683,8 @@ With respect to the normalized basis vectors, using the occupation representatio
 which can be summarized using
 
 ```{math}
-\begin{align}
 \hat{a}_j \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j} \ket{n_1, n_2, \ldots, n_j - 1, \ldots, n_L},\\
 \hat{a}_j^\dagger \ket{n_1, n_2, \ldots, n_j, \ldots, n_L} &= (\pm 1)^{n_1 + n_2 + \ldots + n_{j-1}} \sqrt{n_j+1} \ket{n_1, n_2, \ldots, n_j + 1, \ldots, n_L}.
-\end{align}
 ```
 
 It then follows easily that the operator $\hat{n}_j = \hat{a}_j^\dagger \hat{a}_j$ satisfies
@@ -1399,10 +1397,11 @@ pattern in the way symmetry is broken (and thus also translation invariance is b
 More detailed quantitative information about the spectrum of excited states is contained in
 the time-dependent correlation function 
 
-$$ G^{A,B}_{i,j}(t) &= \braket{\Psi_0\vert  \hat{A}_i(t)^\dagger \hat{B}_j(0)\vert \Psi_0}\\
+```{math}
+G^{A,B}_{i,j}(t) &= \braket{\Psi_0\vert  \hat{A}_i(t)^\dagger \hat{B}_j(0)\vert \Psi_0}\\
 &=\braket{\Psi_0\vert  \mathrm{e}^{+\mathrm{i} \hat{H} t}  \hat{A}_i^\dagger \mathrm{e}^{-\mathrm{i} \hat{H} t} \hat{B}_j\vert \Psi_0} \\
 &=\braket{\Psi_0\vert  \hat{A}_i \mathrm{e}^{-\mathrm{i} (\hat{H}-E_0) t} \hat{B}_j\vert \Psi_0} 
-$$
+```
 
 On the first line, we have used operator 
 $\hat{A}(t) = \mathrm{e}^{+\mathrm{i} t \hat{H}}\hat{A} \mathrm{e}^{-\mathrm{i} t \hat{H}}$
@@ -1508,10 +1507,12 @@ $$Z(\beta) = \mathrm{Tr} \mathrm{e}^{-\beta \hat{H}} = \sum_{\{s_k\}=\pm 1}
 
 with $s_{M+1} = s_1$, $M\epsilon =\beta$, and where
 
-$$\braket{s_{i}|\mathrm{e}^{-\epsilon \hat{H}}|s_{i+1}} &= \braket{s_{i} \vert \mathrm{e}^{-\epsilon H} \vert s_{i+1}} \approx \braket{s_{i} \vert \mathrm{e}^{\epsilon h_z \sigma^z}\mathrm{e}^{\epsilon h_x \sigma^x} \vert s_{i+1}}\\ 
+```{math}
+\braket{s_{i}|\mathrm{e}^{-\epsilon \hat{H}}|s_{i+1}} &= \braket{s_{i} \vert \mathrm{e}^{-\epsilon H} \vert s_{i+1}} \approx \braket{s_{i} \vert \mathrm{e}^{\epsilon h_z \sigma^z}\mathrm{e}^{\epsilon h_x \sigma^x} \vert s_{i+1}}\\ 
 &= \mathrm{e}^{\epsilon h_z s_i} \braket{s_{i} \vert \cosh(\epsilon h_x) \mathbb{1} + \sinh(\epsilon h_x) \sigma^x \vert s_{i+1}}\\
  &= \mathrm{e}^{K s_{i}s_{i+1} + h s_i + f_0}
-$$
+```
+
 where the parameters in the last line are given by
 $K= -\frac{1}{2}\log \tanh(\epsilon h_x)$, $h = \epsilon h_z$ and
 $f_0 =\frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]$. 
