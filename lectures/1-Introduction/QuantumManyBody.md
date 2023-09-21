@@ -1,13 +1,13 @@
 ---
 jupytext:
-  	formats: md:myst
-	text_representation:
-		extension: .md
-		format_name: myst
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
 kernelspec:
-	display_name: Julia
-	language: julia
-	name: julia-1.9
+  display_name: Julia
+  language: julia
+  name: julia-1.9
 ---
 
  # Quantum Many-Body Physics
@@ -526,11 +526,11 @@ which the $j_k$'s are related by a permutation, are equal (up to a sign in the c
 $\hat{S}^-$). We can thus select a single state by ordering the $j_k$ arguments.
 Furthermore, in the case of $\hat{S}^{-}$, the state is mapped to zero as soon as two $j_k$
 values coincide, so we can eliminate such states. If we thus restrict the set to states
-$\ket{j_1,j_2,\ldots ,j_N}$ which are such that the modes are ordered as
-$j_1<j_2<\ldots<j_N$ (for fermions) or $j_1 \leq j_2 \leq \ldots \leq j_N$ (for bosons),
-then we have a linearly independent set of states. For fermions, this implies in particular
-that we need to have $N \leq L$, there cannot be more fermions in the system then there are
-linearly independent modes (single particle states).
+$\ket{j_1,j_2,\ldots ,j_N}$ which are such that the modes are ordered as $j_1 < j_2 < \ldots
+< j_N$ (for fermions) or $j_1 \leq j_2 \leq \ldots \leq j_N$ (for bosons), then we have a
+linearly independent set of states. For fermions, this implies in particular that we need to
+have $N \leq L$, there cannot be more fermions in the system then there are linearly
+independent modes (single particle states).
 
 Finally, one can wonder about the normalisation of these states. For fermions, the
 superposition created by $\hat{S}^-$ contains $N!$ terms, which are mutually orthogonal, so
