@@ -1480,7 +1480,11 @@ This then leads to the **Suzuki-Trotter decomposition**
  
 $$\exp\left(-\tau \sum_{i} \hat{h}_i\right) = \lim_{M\to\infty} \left( \mathrm{e}^{-\frac{\tau}{M} \sum_i \hat{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i} + \mathcal{O}(\tau^2/M^2)\right)^M = \lim_{M\to\infty} \left( \left[\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i}\right]^M + \mathcal{O}(\tau^2/M)\right)$$
 
-Note that splitting the time interval $[0,\tau]$ into small segments $\epsilon = \tau/M$ is
+The product in the final expressions requires chosing a specific order, exactly because the terms $\hat{h}_i$
+and thus also the factors $\mathrm{e}^{-\frac{\tau}{M} \hat{h}_i}$ do not commute. The approximation
+and error term are valid for arbitrary choices of ordering, but different orderings are not
+equivalent. Particular choices can be more suitable for particular purposes. Furthermore,
+note that splitting the time interval $[0,\tau]$ into small segments $\epsilon = \tau/M$ is
 also the starting point for deriving a path integral representation of the quantum partition
 function. The next step is to insert a resolution of the identity in between the $N$
 different factors, where the labels of the basis will behave as classical degrees of
