@@ -10,6 +10,7 @@ kernelspec:
   name: julia-1.9
 ---
 
+(fixed_point_algorithms)=
 # Fixed-Point algorithms
 
 In this section we introduce two algorithms for approximating the ground state of local gapped Hamiltonians using matrix product state techniques. Approximating ground states in a variational manner boils down to minimizing

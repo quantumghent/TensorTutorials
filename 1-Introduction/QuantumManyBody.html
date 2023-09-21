@@ -245,7 +245,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div>
                         
   <div class="tex2jax_ignore mathjax_ignore section" id="quantum-many-body-physics">
-<h1><span class="section-number">1. </span>Quantum Many-Body Physics<a class="headerlink" href="#quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
+<span id="many-body-intro"></span><h1><span class="section-number">1. </span>Quantum Many-Body Physics<a class="headerlink" href="#quantum-many-body-physics" title="Permalink to this heading">#</a></h1>
 <div class="section" id="quantum-mechanics-and-its-postulates">
 <h2><span class="section-number">1.1. </span>Quantum Mechanics and its Postulates<a class="headerlink" href="#quantum-mechanics-and-its-postulates" title="Permalink to this heading">#</a></h2>
 <p>While the energy levels of the hydrogen atom played an important role in the historical
@@ -436,7 +436,7 @@ effective model valid up to some energy scale).</p>
 </div>
 </div>
 <div class="section" id="the-hilbert-space-of-many-body-physics">
-<h2><span class="section-number">1.2. </span>The Hilbert Space of Many-Body Physics<a class="headerlink" href="#the-hilbert-space-of-many-body-physics" title="Permalink to this heading">#</a></h2>
+<span id="many-body"></span><h2><span class="section-number">1.2. </span>The Hilbert Space of Many-Body Physics<a class="headerlink" href="#the-hilbert-space-of-many-body-physics" title="Permalink to this heading">#</a></h2>
 <p>All of the previous axioms remain valid for a composite system consisting of several quantum
 degrees of freedom. However, we need to know how to describe the state of the system, and
 thus more specifically, how to define the Hilbert space associated to such a system. It
@@ -988,7 +988,7 @@ thus proportional to the volume of the system.</p>
 differ, as we discuss below.</p>
 </div>
 <div class="section" id="from-tensor-products-to-mixed-states-and-entanglement">
-<h3><span class="section-number">1.4.2. </span>From Tensor Products to Mixed States and Entanglement<a class="headerlink" href="#from-tensor-products-to-mixed-states-and-entanglement" title="Permalink to this heading">#</a></h3>
+<span id="entanglement"></span><h3><span class="section-number">1.4.2. </span>From Tensor Products to Mixed States and Entanglement<a class="headerlink" href="#from-tensor-products-to-mixed-states-and-entanglement" title="Permalink to this heading">#</a></h3>
 <p>Consider a bipartite system composed of two subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, with thus <span class="math notranslate nohighlight">\(\mathbb{H} =
 \mathbb{H}^{(A)} \otimes \mathbb{H}^{(B)}\)</span>. Now suppose that we are only interested in
 measuring observables that act non-trivially on subsystem <span class="math notranslate nohighlight">\(A\)</span>. This might be the case if
@@ -1094,8 +1094,8 @@ state <span class="math notranslate nohighlight">\(\ket{\Psi}\)</span>), which w
 <p>Hence, the reduced matrices appear immidiately in diagonalised form. The singular values
 <span class="math notranslate nohighlight">\(s_i\)</span>, or rather their squares <span class="math notranslate nohighlight">\(p_i = (s_i)^2\)</span> are referred to as Schmidt coefficients, and
 together make up the <strong>entanglement spectrum</strong>. The entanglement entropy is then given by</p>
-<div class="math notranslate nohighlight">
-\[S = - \sum_{i} p_i \log(p_i)\]</div>
+<div class="math notranslate nohighlight" id="equation-entanglement-entropy">
+<span class="eqno">(1.1)<a class="headerlink" href="#equation-entanglement-entropy" title="Permalink to this equation">#</a></span>\[S = - \sum_{i} p_i \log(p_i)\]</div>
 <p>In all of this, it is clear that subsystems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> were treated on equal footing, and
 it does in fact not matter which of the two is chosen to probe the entanglement structure of
 the state.</p>
@@ -1180,7 +1180,7 @@ theory, holography and quantum gravity.</p>
 </div>
 </div>
 <div class="section" id="quantum-many-body-physics-at-zero-temperature">
-<h3><span class="section-number">1.4.4. </span>Quantum Many-Body Physics at Zero Temperature<a class="headerlink" href="#quantum-many-body-physics-at-zero-temperature" title="Permalink to this heading">#</a></h3>
+<span id="zero-temp"></span><h3><span class="section-number">1.4.4. </span>Quantum Many-Body Physics at Zero Temperature<a class="headerlink" href="#quantum-many-body-physics-at-zero-temperature" title="Permalink to this heading">#</a></h3>
 <p>As quantum effects are most pronounced at zero temperature, we typically assume to be
 operating in this regime. It then follows that we are mostly interested in the lowest energy
 states of the Hamiltonian, and in particular in the ground state(s).</p>
@@ -1646,28 +1646,33 @@ to study and characterize quantum many body systems.</p>
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
+  <a class="reference internal" href="../2-MatrixProductStates/TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductStates.html">
-   6. Matrix Product States
+   7. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/InfiniteMPS.html">
-   7. Infinite Matrix Product States
+   8. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Algorithms.html">
-   8. Tensor Network Algorithms
+   9. A Simple Tensor Network Algorithm
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/MatrixProductOperators.html">
-   9. Matrix Product Operators
+   10. Matrix Product Operators
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2-MatrixProductStates/Applications.html">
-   10. Applications
+   11. Applications
   </a>
  </li>
 </ul>
@@ -1679,12 +1684,12 @@ to study and characterize quantum many body systems.</p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
-   11. Fixed-Point algorithms
+   12. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
-   12. Time Evolution
+   13. Time Evolution
   </a>
  </li>
 </ul>
@@ -1696,7 +1701,7 @@ to study and characterize quantum many body systems.</p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   13. References
+   14. References
   </a>
  </li>
 </ul>
