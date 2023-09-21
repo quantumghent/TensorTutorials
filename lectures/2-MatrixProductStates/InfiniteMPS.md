@@ -31,38 +31,11 @@ which is again based on {cite}`vanderstraeten2019tangentspace`.
 ### Representation
 
 The finite MPS representation introduced in the previous previous section can be readily
-extended to the thermodynamic limit. Consider an infinite one-dimensional chain with a local
-physical Hilbert space $\mathbb{C}^d$ of dimension $d$ at every site in the chain. An
-infinite matrix product state representing the quantum state of such a system has the form
+extended to the thermodynamic limit by constructing a quantum state of an infinite spin system as a product of an infinite chain of tensors. For infinite systems which are invariant under translations, it is natural to also impose transation-invariance on the corresponding MPS. This leads to a *uniform* MPS which has the same tensor $A^{(i)} := A$ at every site, where $A$ again has a physical dimension $d$ and bond dimension $D$. In diagramatic notation, a uniform MPS can be represented as
 
-```{math}
-:label: inf_mps_formula
-
-\left | \Psi({A}) \right \rangle = \sum_{\{s\}} \boldsymbol{v}_L^\dagger \left[ \prod_{m\in\mathbb{Z}} A[m]^{s_m} \right] \boldsymbol{v}_R \left | \{s\} \right \rangle.
-```
-
-<!-- TODO: uniformize notation, conventions and discussion with finite MPS section -->
-
-Here, each $A[m]^s$ is a $D \times D$ matrix for every value of the physical index $s$. As
-before, we can alternatively view $A[m]$ as a tensor with three indices of dimensions $D
-\times d \times D$, where $D$ is the the so-called *bond dimension*, which we assume to be
-same at every site. As in the case of finite systems, this bond dimension controls the
-entanglement of the corresponding state, where in the limit $D\to\infty$ the MPS
-{eq}`inf_mps_formula` can represent any quantum state up to arbitrary accuracy. For certain
-classes of quantum states such low-energy states of gapped systems however we expect that we
-can accurately approximate these states using a much smaller bond dimension. Note that while
-in Eq. {eq}`inf_mps_formula` we have also introduced two boundary vectors $\boldsymbol{v}_L$
-and $\boldsymbol{v}_R$, but, as we work on an infinite system, the boundary conditions will
-never have any physical meaning. These can therefore safely be ignored in the following, and
-all bulk properties of the states are faithfully captured by the MPS tensors $A[m]$.
-
-For infinite systems which are invariant under translations, it is natural to also impose
-transation-invariance on the MPS {eq}`inf_mps_formula`. This leads to a *uniform* MPS which
-has the same tensor $A[m] := A$ at every site. In the diagramatic notation introduced in the
-[first section](tensor_networks), a uniform MPS can be represented as
-
-```{image} /_static/figures/imps/umps.svg
-:name: mps_state
+```{image} /_static/InfiniteMPS/umps.svg
+:scale: 12%
+:name: umps
 :align: center
 ```
 
@@ -71,8 +44,9 @@ In some cases, instead of assuming an MPS has the same tensor at each site it is
 natural to use a state with a non-trivial repeating unit cell. A uniform MPS with a unit
 cell of size three would for example correspond to the state
 
-```{image} /_static/figures/imps/umps3.svg
-:name: mps_state3
+```{image} /_static/InfiniteMPS/umps3.svg
+:scale: 12%
+:name: umps3
 :align: center
 ```
 
@@ -80,10 +54,11 @@ While we will restrict our discussion to MPS with a single-site unit cell, most 
 techniques apply just as well to the multi-site unit cell case.
 ````
 
-One of the central objects in any unform MPS calculation is the transfer operator or
+One of the central objects when working with MPS in the thermodynamic limit is the transfer operator or
 *transfer matrix*, defined in our case as
 
-```{image} /_static/figures/imps/tm.svg
+```{image} /_static/InfiniteMPS/tm.svg
+:scale: 12%
 :name: transfer_matrix
 :align: center
 ```
@@ -100,7 +75,8 @@ eigenvectors can be used to evaluate expectation values of local observables.
 
 The norm of a uniform MPS corresponds to a contraction of the form
 
-```{image} /_static/figures/imps/mpsNorm.svg
+```{image} /_static/InfiniteMPS/mpsNorm.svg
+:scale: 12%
 :name: mps_norm
 :align: center
 ```
@@ -108,7 +84,8 @@ The norm of a uniform MPS corresponds to a contraction of the form
 Clearly, this norm is nothing more than an infinite product of MPS transfer matrices defined
 above. Consider the spectral decomposition of the $n$th power $\mathbb E^n$,
 
-```{image} /_static/figures/imps/tmDecomp.svg
+```{image} /_static/InfiniteMPS/tmPower.svg
+:scale: 12%
 :name: tm_decomp
 :align: center
 ```
@@ -116,33 +93,37 @@ above. Consider the spectral decomposition of the $n$th power $\mathbb E^n$,
 where $l$ and $r$ are the left and right fixed points which correspond to the largest
 magnitude eigenvalue $\lambda_0$ of $\mathbb E$,
 
-```{image} /_static/figures/imps/fixedPoints.svg
+```{image} /_static/InfiniteMPS/fixedPoints.svg
+:scale: 12%
 :name: fixed_points
 :align: center
 ```
 
-and the $\lambda_i$ represent the remaining eigenvalues of smaller mangitude. Taking the
-limit of this expression, it follows that the infinite product of transfer matrices reduces
+and the $\lambda_i$ represent the remaining eigenvalues of smaller mangitude, where writing the spectral decomposition we have implicitly assumed that the fixed points are properly normalized as
+
+```{image} /_static/InfiniteMPS/traceNorm.svg
+:scale: 12%
+:name: trace_norm
+:align: center
+```
+
+Taking the
+limit of this spectral dexomposition, it follows that the infinite product of transfer matrices reduces
 to a projector onto the fixed points corresponding to the leading eigenvalue $\lambda_0$,
 
-```{image} /_static/figures/imps/tmPower.svg
+```{image} /_static/InfiniteMPS/tmLimit.svg
+:scale: 12%
 :name: tm_power
 :align: center
 ```
 
 To ensure a properly normalized state we should therefore rescale the leading eigenvalue
-$\lambda_0$ to one by rescaling the MPS tensor as $A \leftarrow A / \sqrt{\lambda_0}$, as
-well as normalize the fixed points $l$ and $r$ by requiring their trace to be equal to one:
-
-```{image} /_static/figures/imps/traceNorm.svg
-:name: trace_norm
-:align: center
-```
+$\lambda_0$ to one by rescaling the MPS tensor as $A \leftarrow A / \sqrt{\lambda_0}$.
 
 With these properties in place, the norm of an MPS reduces to the overlap between the
 boundary vectors and the fixed points. Since there is no effect of the boundary vectors on
 the bulk properties of the MPS, we can always choose these such that MPS is properly
-normalized as $ \left \langle \Psi(\bar{A})\middle | \Psi(A) \right \rangle = 1$.
+normalized as $ \left \langle \psi(\bar{A})\middle | \psi(A) \right \rangle = 1$.
 
 
 ### Expectation Values
@@ -158,7 +139,8 @@ If we assume that each $O_n$ acts on a single site and we are working with a pro
 normalized MPS, translation invariance dictates that the expectation value of $O$ is given
 by the contraction
 
-```{image} /_static/figures/imps/expVal.svg
+```{image} /_static/InfiniteMPS/expVal.svg
+:scale: 12%
 :name: exp_val
 :align: center
 ```
@@ -167,17 +149,19 @@ In the uniform gauge, we can use the fixed points of the transfer matrix to cont
 everything to the left and to the right of the operator, such that we are left with the
 contraction
 
-```{image} /_static/figures/imps/expVal2.svg
+```{image} /_static/InfiniteMPS/expVal2.svg
+:scale: 12%
 :name: exp_val2
 :align: center
 ```
 
+(imps_corr)=
 ### Correlation Functions
 
 Correlation functions are computed similarly. Let us look at
 
 ```{math}
-c^{\alpha\beta}(m,n) = \bra{\Psi(\bar A)} (O^\beta_m)^\dagger O^\alpha_n \ket{\Psi(A)},
+c^{\alpha\beta}(m,n) = \bra{\psi(\bar A)} (O^\beta_m)^\dagger O^\alpha_n \ket{\psi(A)},
 ```
 
 where $m$ and $n$ are abritrary locations in the chain, and, because of translation
@@ -185,7 +169,8 @@ invariance, the correlation function only depends on the difference $m-n$. Again
 contract everything to the left and right of the operators by inserting the fixed points $l$
 and $r$, so that
 
-```{image} /_static/figures/imps/corrFunc.svg
+```{image} /_static/InfiniteMPS/corrFunc.svg
+:scale: 12%
 :name: corr_func
 :align: center
 ```
@@ -195,7 +180,8 @@ correlations in the ground state. Indeed, if we again use the spectral decomposi
 transfer matrix, recalling that now $\lambda_0 = 0$, we can see that the correlation
 function reduces to
 
-```{image} /_static/figures/imps/corrFunc2.svg
+```{image} /_static/InfiniteMPS/corrFunc2.svg
+:scale: 12%
 :name: corr_func2
 :align: center
 ```
@@ -228,11 +214,12 @@ using MPS, despite the ansatz inherently having exponentially decaying correlati
 
 <!-- TODO: uniformize with finite MPS section -->
 
-While a given MPS tensor $A$ corresponds to a unique state $\left | \Psi(A) \right \rangle$,
+While a given MPS tensor $A$ corresponds to a unique state $\left | \psi(A) \right \rangle$,
 the converse is not true, as different tensors may give rise to the same state. This is
 easily seen by noting that the gauge transform
 
-```{image} /_static/figures/imps/gaugeTransform.svg
+```{image} /_static/InfiniteMPS/gaugeTransform.svg
+:scale: 12%
 :name: gauge_transform
 :align: center
 ```
@@ -243,14 +230,16 @@ canonical forms on the MPS tensor $A$.
 We start by considering the *left-orthonormal form* of an MPS, which is defined in terms of
 a tensor $A_L$ that satisfies the condition
 
-```{image} /_static/figures/imps/leftOrth.svg
+```{image} /_static/InfiniteMPS/leftOrth.svg
+:scale: 12%
 :name: left_orthonormal
 :align: center
 ```
 
 We can find the gauge transform $L$ that brings $A$ into this form
 
-```{image} /_static/figures/imps/leftGauge.svg
+```{image} /_static/InfiniteMPS/leftGauge.svg
+:scale: 12%
 :name: left_gauge
 :align: center
 ```
@@ -258,7 +247,8 @@ We can find the gauge transform $L$ that brings $A$ into this form
 using an iterative procedure based on the QR docomposition, where starting from some initial
 guess $L^0$ we repeatedly perform the QR-based update
 
-```{image} /_static/figures/imps/qrStep.svg
+```{image} /_static/InfiniteMPS/qrStep.svg
+:scale: 12%
 :name: qr_step
 :align: center
 ```
@@ -266,14 +256,16 @@ guess $L^0$ we repeatedly perform the QR-based update
 This iterative procedure is bound to converge to a fixed point for which
 $L^{(i+1)}=L^{(i)}=L$ and $A_L$ is left orthonormal by construction:
 
-```{image} /_static/figures/imps/qrConv.svg
+```{image} /_static/InfiniteMPS/qrConv.svg
+:scale: 12%
 :name: qr_convergence
 :align: center
 ```
 
 Note that this left gauge choice still leaves room for unitary gauge transformations
 
-```{image} /_static/figures/imps/unitaryGauge.svg
+```{image} /_static/InfiniteMPS/unitaryGauge.svg
+:scale: 12%
 :name: unitary_gauge
 :align: center
 ```
@@ -281,14 +273,16 @@ Note that this left gauge choice still leaves room for unitary gauge transformat
 which can be used to bring the right fixed point $r$ into diagonal form. Similarly, we can
 find the gauge transform that brings $A$ into *right-orthonormal form*
 
-```{image} /_static/figures/imps/rightGauge.svg
+```{image} /_static/InfiniteMPS/rightGauge.svg
+:scale: 12%
 :name: right_gauge
 :align: center
 ```
 
 such that
 
-```{image} /_static/figures/imps/rightOrth.svg
+```{image} /_static/InfiniteMPS/rightOrth.svg
+:scale: 12%
 :name: right_orthonormal
 :align: center
 ```
@@ -301,7 +295,8 @@ site', and bringing all tensors to the left of it in the left-orthonormal form a
 tensors to the right of it in the right-orthonormal form. Defining a new tensor $A_C$ on the
 center site, we obtain the form
 
-```{image} /_static/figures/imps/mixedGauge.svg
+```{image} /_static/InfiniteMPS/mixedGauge.svg
+:scale: 12%
 :name: mixed_gauge
 :align: center
 ```
@@ -312,7 +307,8 @@ Defining $C = LR$, this tensor then implements the gauge transform that maps the
 left-orthonormal tensor to the right-orthonormal one, thereby defining the center-site
 tensor $A_C$:
 
-```{image} /_static/figures/imps/mixedGauge2.svg
+```{image} /_static/InfiniteMPS/mixedGauge2.svg
+:scale: 12%
 :name: mixed_gauge2
 :align: center
 ```
@@ -324,7 +320,8 @@ Finally we may bring $C$ into diagonal form by performing a singular value decom
 = USV^\dagger$ and absorbing $U$ and $V^\dagger$ into the definition of $A_L$ and $A_R$
 using the residual unitary gauge freedom
 
-```{image} /_static/figures/imps/diagC.svg
+```{image} /_static/InfiniteMPS/diagC.svg
+:scale: 12%
 :name: mixed_gauge3
 :align: center
 ```
@@ -333,7 +330,8 @@ using the residual unitary gauge freedom
 When working in the mixed gauge, the normalization of the MPS is entirely determined by that
 of the center tensors $A_C$ and $C$. Indeed, it is easily seen that requiring that an MPS is
 normalized now reduces to
-```{image} /_static/figures/imps/normAC.svg
+```{image} /_static/InfiniteMPS/normAC.svg
+:scale: 12%
 :name: norm_mixed
 :align: center
 ```
@@ -346,7 +344,8 @@ In the mixed gauge, we can locate the center site where the operator is acting, 
 contract everything to the left and right to the identity to arrive at the particularly
 simple expression for the expectation value
 
-```{image} /_static/figures/imps/expVal3.svg
+```{image} /_static/InfiniteMPS/expVal3.svg
+:scale: 12%
 :name: exp_val3
 :align: center
 ```
@@ -357,12 +356,12 @@ The mixed canonical form with a diagonal $C$ now allows to straightforwardly wri
 Schmidt decomposition of the state across an arbitrary bond in the chain
 
 ```{math}
-\left | \Psi(A) \right \rangle = \sum_{i=1}^{D} C_i \left | \Psi^i_L(A_L) \right \rangle \otimes \left | \Psi^i_R(A_R) \right \rangle,
+\left | \psi(A) \right \rangle = \sum_{i=1}^{D} C_i \left | \psi^i_L(A_L) \right \rangle \otimes \left | \psi^i_R(A_R) \right \rangle,
 ```
 
-where the states $\left | \Psi^i_L(A_L) \right \rangle$ and $\left | \Psi^i_R(A_R) \right
+where the states $\left | \psi^i_L(A_L) \right \rangle$ and $\left | \psi^i_R(A_R) \right
 \rangle$ are orthogonal states on half the lattice. The diagonal elements $C_i$ are exactly
-the Schmidt numbers of any bipartition of the MPS, and as such determine its bipartite
+the Schmidt coefficient of any bipartition of the MPS, and as such determine its bipartite
 entanglement entropy
 
 ```{math}
@@ -379,7 +378,8 @@ MPS, we can truncate the columns of the absorbed isometries $U$ and $V^\dagger$
 correspondingly, thereby transforming *every* tensor $A_L$ or $A_R$. The truncated MPS in
 the mixed gauge is then given by
 
-```{image} /_static/figures/imps/truncMPS.svg
+```{image} /_static/InfiniteMPS/truncMPS.svg
+:scale: 12%
 :name: truncate_mps
 :align: center
 ```
@@ -389,7 +389,7 @@ correspond to the MPS with a lower bond dimension that is globally optimal. This
 require a variational optimization of the cost function.
 
 ```{math}
-\left | \left | ~\left | \Psi(A) \right \rangle - \left | \Psi(\tilde{A}) \right \rangle ~\right | \right |^2.
+\left | \left | ~\left | \psi(A) \right \rangle - \left | \psi(\tilde{A}) \right \rangle ~\right | \right |^2.
 ```
 
 

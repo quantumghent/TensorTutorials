@@ -10,7 +10,7 @@ kernelspec:
   name: julia-1.9
 ---
 
-# Tensor Network Algorithms
+# A Simple Tensor Network Algorithm
 
 Having introduced tensor networks in general, with a focus on the case of MPS, we now turn
 to the question of how to use them to solve specific problems. While a large number of
@@ -38,6 +38,7 @@ exponentially with the number of particles. However, for physically relevant sys
 Hamiltonian does not consist of a random matrix, but rather exhibits additional structure
 that can be used to simplify the problem.
 
+(tebd)=
 ## Time-Evolving Block Decimation (TEBD)
 
 A particularly powerful example can be found for systems with local interactions, where the
@@ -52,7 +53,7 @@ case, although $e^{-i H t}$ is unfeasible to compute, each of the constituent te
 on a much smaller subsystem and therefore $e^{-ih_{ij}t}$ can be computed efficiently.
 However, as these terms generally do not commute, we cannot simply apply them one after the
 other. Instead, we can use the first-order Suzuki-Trotter decomposition to approximate the
-time-evolution operator, which states that for any two Hermitian operators $A4 and $B$, and
+time-evolution operator, which states that for any two Hermitian operators $A$ and $B$, and
 any real number $\Delta t$, we have:
 
 ```{math}
