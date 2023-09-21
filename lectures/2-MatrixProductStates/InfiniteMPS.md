@@ -108,7 +108,7 @@ and the $\lambda_i$ represent the remaining eigenvalues of smaller mangitude, wh
 ```
 
 Taking the
-limit of this spectral dexomposition, it follows that the infinite product of transfer matrices reduces
+limit of this spectral decomposition, it follows that the infinite product of transfer matrices reduces
 to a projector onto the fixed points corresponding to the leading eigenvalue $\lambda_0$,
 
 ```{image} /_static/InfiniteMPS/tmLimit.svg
@@ -128,7 +128,7 @@ normalized as $ \left \langle \psi(\bar{A})\middle | \psi(A) \right \rangle = 1$
 
 ### Expectation Values
 
-The fixed points of the transfer matrix can for example be to compute expectation values of
+The fixed points of the transfer matrix can for example be used to compute expectation values of
 operators. Suppose we wish to evaluate expectation values of an extensive operator,
 
 ```{math}
@@ -177,7 +177,7 @@ and $r$, so that
 
 From this expression, we learn that it is the transfer matrix that determines the
 correlations in the ground state. Indeed, if we again use the spectral decomposition of the
-transfer matrix, recalling that now $\lambda_0 = 0$, we can see that the correlation
+transfer matrix, recalling that now $\lambda_0 = 1$, we can see that the correlation
 function reduces to
 
 ```{image} /_static/InfiniteMPS/corrFunc2.svg
