@@ -325,11 +325,11 @@ the normalization appropriately, we can see that applying the evolution operator
 eigenstates will be damped out exponentially. In other words, we can find the groundstate of
 a Hamiltonian by simulating its dynamics for a sufficiently long imaginary time.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align}
-\lim_{\tau \to \infty} e^{-i H \tau} \ket{\psi_0} &amp;= \lim_{\tau \to \infty} \sum_i e^{- E_i \tau} \ket{\psi_i} \bra{\psi_i} \psi_0 \\ 
-&amp;= \lim_{\tau \to \infty} e^{- E_0 \tau} \left(\ket{\psi_0} \bra{\psi_0} + \sum_{i&gt;0}e^{(-E_i + E_0) \tau}\ket{\psi_i}\bra{\psi_i} \right) \\ 
-&amp;\approx e^{- E_0 \tau} \ket{\psi_0} \bra{\psi_0}
-\end{align}\end{split}\]</div>
+\[\begin{split}\lim_{\tau \to \infty} e^{-i H \tau} &amp;= \lim_{\tau \to \infty} \sum_{i=0}^\infty e^{-E_i
+  \tau} \ket{\psi_i} \bra{\psi_i} \\ 
+&amp;= \lim_{\tau \to \infty} e^{- E_0 \tau} \left(\ket{\psi_0} \bra{\psi_0} + 
+  \sum_{i&gt;0}^\infty e^{(-E_i + E_0) \tau}\ket{\psi_i}\bra{\psi_i} \right) \\
+&amp;\approx e^{-E_0 \tau} \ket{\psi_0} \bra{\psi_0}\end{split}\]</div>
 <p>where we have made use of the fact that all but the first term in the sum are damped out. In
 this regard, the groundstate search problem can also be tackled with the TEBD algorithm
 discussed above, by simply replacing the real time <span class="math notranslate nohighlight">\(t\)</span> by an imaginary time <span class="math notranslate nohighlight">\(\tau\)</span> and
