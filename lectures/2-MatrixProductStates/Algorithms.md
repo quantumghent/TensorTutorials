@@ -142,11 +142,11 @@ eigenstates will be damped out exponentially. In other words, we can find the gr
 a Hamiltonian by simulating its dynamics for a sufficiently long imaginary time.
 
 ```{math}
-\begin{align}
-\lim_{\tau \to \infty} e^{-i H \tau} \ket{\psi_0} &= \lim_{\tau \to \infty} \sum_i e^{- E_i \tau} \ket{\psi_i} \bra{\psi_i} \psi_0 \\ 
-&= \lim_{\tau \to \infty} e^{- E_0 \tau} \left(\ket{\psi_0} \bra{\psi_0} + \sum_{i>0}e^{(-E_i + E_0) \tau}\ket{\psi_i}\bra{\psi_i} \right) \\ 
-&\approx e^{- E_0 \tau} \ket{\psi_0} \bra{\psi_0}
-\end{align}
+\lim_{\tau \to \infty} e^{-i H \tau} &= \lim_{\tau \to \infty} \sum_{i=0}^\infty e^{-E_i
+  \tau} \ket{\psi_i} \bra{\psi_i} \\ 
+&= \lim_{\tau \to \infty} e^{- E_0 \tau} \left(\ket{\psi_0} \bra{\psi_0} + 
+  \sum_{i>0}^\infty e^{(-E_i + E_0) \tau}\ket{\psi_i}\bra{\psi_i} \right) \\
+&\approx e^{-E_0 \tau} \ket{\psi_0} \bra{\psi_0}
 ```
 
 where we have made use of the fact that all but the first term in the sum are damped out. In
