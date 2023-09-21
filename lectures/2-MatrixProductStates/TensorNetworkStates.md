@@ -130,7 +130,7 @@ S(\mathcal A) \sim \log(D) \; \partial \mathcal A,
 ```
 
 where $ \partial \mathcal A $ is the size of the boundary of $\mathcal A$ (which in this
-two-dimensional case is its circumference).
+two-dimensional case is its perimeter).
 
 Clearly, this tensor network state then naturally obeys an area law for its entanglement
 entropy. In our discussion of the
