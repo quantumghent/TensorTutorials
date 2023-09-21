@@ -898,7 +898,7 @@ Mixed states arise in the quantum world in two scenarios:
 1.	If the system is not isolated, but is rather a subsystem of a larger system and
     interacting with its complement therein. This is discussed in the next section.
 
-2.  Even for an isolated system, it can happen that the state is not exaclty known and one
+2.  Even for an isolated system, it can happen that the state is not exactly known and one
     must deal with classical uncertaintity and probability. Indeed, a mixed state can be
     interpreted as a statistical ensemble. If the system can be prepared into different (not
     necessarily orthogonal) states $\{\ket{\Psi_1}, \ket{\Psi_2}, \ldots\}$ with
@@ -1291,7 +1291,135 @@ system remains a pure state, albeit a highly entangled one.
 
 ### Observables and Static and Dynamic Correlation Functions
 
-TO BE WRITTEN!
+There are a number of typical observables that we want to measure for a given quantum state
+(ground state or thermal state) of a quantum lattice system. The first are operators which
+have the same structure as the Hamiltonian, in being given by a sum of terms where every
+individual term acts nontrivially only on a single site, or a small patch of neighbouring
+sites. Furthermore, these terms all act identically, except that they are translated to the
+different patches that make up the lattice. Typical examples include the energy itself or
+specific contributions to it (kinetic energy, interaction energy, … ) as well as the total
+number of particles, a total magnetisation, and other similar quantities.
+
+Let us use the transverse field Ising model as an example. An interesting quantity in the
+transverse field Ising model is the longitudinal magnetisation, given by 
+$\hat{S}^z=\frac{1}{2} \sum_{n} \sigma^z_n$. The expectation value of such operators is
+extensive, and so we are typically interested in the associated density, which is obtained
+by dividing out the volume factor. With respect to a translation-invariant state, this is
+equivalent to simply measuring the expectation value of a single term, i.e.
+$\frac{1}{2} \sigma^z$ in the case of the longitudinal magnetisation, which is thus a local
+operator. The precise position where it acts does then not really matter.
+
+Such quantities come up for example to measure potential symmetry breaking, where an operator that should
+have zero expectation value given the symmetries of the Hamiltonian, actually acquires a
+nonzero expectation value. Indeed, given that the Ising Hamiltonian has
+the property that $\left[\hat{H},\hat{U}\right] = 0$, where $\hat{U} = \bigotimes_{n} \sigma^x_n$,
+we also expect the ground state $\ket{\Psi_0}$ to satisfy 
+$\hat{U} \ket{\Psi_0} \sim \ket{\Psi_0}$, where the proportionality factor can only be plus
+or minus one, due to $\hat{U}^2 = \hat{1}$. The magnetisation in the $z$-direction, on the
+other hand, satisfies $\hat{U}^\dagger \hat{S}^z \hat{U} = - \hat{S}^z$, so that we expect
+
+$$\braket{\Psi_0 \vert \hat{S}^z \vert \Psi_0} = 0$$
+
+Indeed, if the ground state is unique, this is precisely what happens. However, it can
+happen that there are multiple linearly independent ground states. In that case, the
+restriction of $\hat{S}^z$ into the ground subspace can be nontrivial, and there exist
+specific ground state choices for which the expectation value is nonzero. For reasons that
+go beyond what can be explained here, it are typically these states which are easiest to
+create or approximate (they have lower entanglement). Such operators that can characterise
+the presence of symmetry breaking are referred to as *order parameters*.
+
+Nonetheless, the use of local operators to probe the ground state properties is somewhat
+limited. A different class of observables that are of typical interest are (static)
+correlation functions, which take the form
+
+$$ C^{A,B}_{i,j} = \braket{\Psi\vert \hat{A}_i^\dagger \hat{B}_j\vert \Psi} $$
+
+where $\hat{A}_i$ is a local operator acting on or in the neighbourhood of site (or unit
+cell) $i$ and $\hat{B}_j$ is a local operator acting on or in the neighbourhood of site $j$.
+Typically, the operators $\hat{A}$ and $\hat{B}$ are chosen such that their local expectation
+value is zero. If this is not the case, we can subtract these local expectation values by
+redefining
+
+$$ C^{A,B}_{i,j} = \braket{\Psi\vert (\hat{A}_i - \braket{\Psi\vert\hat{A}_i\vert \Psi})^\dagger (\hat{B}_j - \braket{\Psi\vert\hat{B}_j\vert \Psi})\vert \Psi} = \braket{\Psi\vert \hat{A}_i \hat{B}_j\vert \Psi} -  \braket{\Psi\vert\hat{A}_i\vert \Psi} \braket{\Psi\vert\hat{B}_j\vert \Psi}.$$
+
+We are then interested in the dependence of this correlation function on the positions $i$
+and $j$. In particular, in a translation invariant system, it is only the relative lattice
+vector from site $i$ to site $j$ on which this quantity depends. It can be proven that if
+$\ket{\Psi}$ is the unique ground state of a gapped local Hamiltonian, then the asymptotic
+behaviour of such correlation functions is that they decay exponentially in the distance
+between the two sites. This exponential thus defines a length scale $\xi$ via $\exp(-d/\xi)$
+with $d$ the relevant distance. The length scale $\xi$ is known as the correlation length of
+the system.
+
+When the system is gapless, static correlation functions still go to zero in the limit of
+infinite separation distance, but rather decay as an algebraic function of the distance,
+i.e. they give rise to power laws. The exponents that appear in these power laws do
+typically have universal values that are set by general properties such as the number of
+spatial dimensions, the global symmetries in the system, etc. In particular for the case of
+one-dimensional system, there is a rich literature and well developed framework for
+analysing such gapless systems using methods from conformal field theory.
+
+Finally, in systems with potential symmetry breaking, the static correlation function of the
+order parameter with itself is an extremely useful diagnostic. In particular, when the system
+has symmetry breaking, the large distance limit of the correlation function does not vanish
+and the system is said to contain *long range order*. Unlike the expectation value of the local
+order parameter, which can have a nonzero expectation value for particularly chosen
+symmetry breaking ground states but is still zero for other choices of ground states, the
+value of the correlation function and its large distance limit is insensitive to the specifically
+chosen ground state out of the ground subspace that it is computed with. For the transverse-field
+Ising model, symmetry breaking will thus be present whenever
+
+$$ C_{i,j} = \braket{\Psi \vert \sigma^z_i \sigma^z_j \vert \Psi} $$
+
+does not decay to zero limit for large distance between sites $i$ and $j$. The limiting
+value of this correlation function can then be considered as $m^2$, i.e. the square of the
+local magnetisation that would be measured in some states of the ground subspace.
+
+Strictly speaking, the ground state static correlation function does not provide information
+about excited states or other dynamical information of the Hamiltonian. In most physical
+system, it however does provide some qualitative information. Since the static correlation
+function, considered as a matrix with rows $i$ and columns $j$, has a particular structure
+resulting from translation invariance, it can be diagonalised by a (multidimensional)
+discrete Fourier transform. The resulting eigenvalues depend on the lattice momentum
+$\kappa$ and are known as the static structure factor $S(\kappa)$. In particular, in the
+case of a gapped system with unique ground state, these values are well defined for all
+$\kappa$. Nonetheless, it can be argued (using different techniques) that maxima for
+$S(\kappa)$ will correspond to momenta where the single particle excitations have minima in
+their dispersion relations. For critical systems, $S(\kappa)$ can also have algebraic
+divergences, whereas in the case of long range order, $S(\kappa)$ will contain a Dirac-delta
+type of divergence, typically at zero momentum, unless there is some spatially repeating
+pattern in the way symmetry is broken (and thus also translation invariance is broken).
+
+More detailed quantitative information about the spectrum of excited states is contained in
+the time-dependent correlation function 
+
+$$ G^{A,B}_{i,j}(t) &= \braket{\Psi_0\vert  \hat{A}_i(t)^\dagger \hat{B}_j(0)\vert \Psi_0}\\
+&=\braket{\Psi_0\vert  \mathrm{e}^{+\mathrm{i} \hat{H} t}  \hat{A}_i^\dagger \mathrm{e}^{-\mathrm{i} \hat{H} t} \hat{B}_j\vert \Psi_0} \\
+&=\braket{\Psi_0\vert  \hat{A}_i \mathrm{e}^{-\mathrm{i} (\hat{H}-E_0) t} \hat{B}_j\vert \Psi_0} 
+$$
+
+On the first line, we have used operator 
+$\hat{A}(t) = \mathrm{e}^{+\mathrm{i} t \hat{H}}\hat{A} \mathrm{e}^{-\mathrm{i} t \hat{H}}$
+in the Heisenberg picture. In going from the second to the third line, we have used that
+$\ket{\Psi_0}$ is the ground state of $\hat{H}$ with ground state energy $E_0$. Again, this
+quantity will depend on the relative lattice vector connecting sites $i$ and $j$ in a
+translation-invariant system. Once again, we can diagonalise the spatial dependence using a
+multidimensional discrete Fourier transform. If we now furthermore also perform a Fourier
+transform of the time-dependence into frequency space, we obtain the *dynamical structure
+factor* given by
+
+$$ S^{A,B}(\kappa, \omega) = \sum_{n} \delta(\omega- (E_n - E_0))\braket{\Psi_0 \vert \hat{A}(\kappa)^\dagger | \Psi_n}\braket{\Psi_n \ \hat{B}(k\kappa) \vert \Psi_0} $$
+
+Here, $\hat{A}(k\kappa)$ and $\hat{B}(\kappa)$ correspond to the discrete Fourier transforms
+of $\hat{A}_i$, which amounts to the momentum superposition. As a consequence,
+$\hat{B}(\kappa) \ket{\Psi_0}$ is a state with definite momentum $k$ (provided the ground
+state is translation invariant), and thus only has overlap with excited states
+$\ket{\Psi_n}$ with momentum $\kappa$. Because of the factor $\delta(\omega - (E_n -E_0))$,
+the dynamical structure factor $S^{A,B}(\kappa, \omega)$ can be nonzero only if there exist
+eigenstates with momentum $\kappa$ and excitation energy $\omega$ in the spectrum of the
+Hamiltonian $\hat{H}$. By studying $S^{A,B}(\kappa, \omega)$ for different choices of
+operators $\hat{A}$ and $\hat{B}$, we can detect all eigenstates and map out the full
+(low-energy) spectrum of $\hat{H}$.
 
 ## Quantum-to-Classical Mapping
 
@@ -1299,126 +1427,151 @@ In this final section, we introduce a general technique that essentially enables
 any quantum lattice system in $d$ dimensions to a classical partition function in $d+1$
 dimensions, up to some caveats that we will return to at the end of this section.
 
-TO BE WRITTEN!
-
-<!-- 
 ### Suzuki-Trotter decomposition
 
 Remember that thermal expectation values are given by
 
-$$\braket{\operator{O}} = \tr\left[\operator{O} \mathrm{e}^{-\beta \hat{H}}\right]/Z(\beta)= \tr\left[\mathrm{e}^{-\beta \hat{H}/2} \operator{O} \mathrm{e}^{-\beta \hat{H}/2}\right]/Z(\beta)$$
+$$\braket{\hat{O}} = \mathrm{Tr}\left[\hat{O} \mathrm{e}^{-\beta \hat{H}}\right]/Z(\beta)= \mathrm{Tr}\left[\mathrm{e}^{-\beta \hat{H}/2} \hat{O} \mathrm{e}^{-\beta \hat{H}/2}\right]/Z(\beta)$$
 
 with the thermal partition function $Z(\beta)$ given by
 
-$$Z(\beta) = \tr \mathrm{e}^{-\beta \hat{H}} = \sum_{s= \pm 1} \braket{s|\mathrm{e}^{-\beta \hat{H}}|s}.$$
+$$Z(\beta) = \mathrm{Tr} \mathrm{e}^{-\beta \hat{H}}.$$
 
 The ground state physics is encoded in the limit $\beta \to \infty$. Note that, if the
-system has a unique ground state, we can obtain the ground state $\ket{\Psi}$ of a quantum
+system has a unique ground state, we can obtain the ground state $\ket{\Psi_0}$ of a quantum
 system by starting from essentially a random state $\ket{\Phi}$ and evolving it in imaginary
-time $\tau = -\ic t$ for sufficiently long
+time $\tau = -\mathrm{i} t$ for sufficiently long
 
-$$\ket{\psi_0} \sim \lim_{\tau \to \infty} \mathrm{e}^{-\tau \hat{H}} \ket{\phi}$$
+$$\ket{\Psi_0} \sim \lim_{\tau \to \infty} \mathrm{e}^{-\tau \hat{H}} \ket{\Phi}$$
 
-Expanding the initial state $\ket{\phi}$ in the energy eigenbasis of $\hat{H}$, we see that the only condition is that it is not orthogonal to the ground state (subspace). In addition, the ground state will be well approximated if $\tau \Delta E \gg 1$, with $\Delta E=E_1 - E_0$ the energy gap. This imaginary time evolution also forms the basic ingredient of several numerical algorithms for approximating ground states of quantum many body systems, often in combination with the Suzuki-Trotter decomposition which is introduced below.
+Expanding the initial state $\ket{\phi}$ in the energy eigenbasis of $\hat{H}$, we see that
+the only condition is that it is not orthogonal to the ground state (subspace). In addition,
+the ground state will be well approximated if $\tau \Delta E \gg 1$, with 
+$\Delta E=E_1 - E_0$ the energy gap. This imaginary time evolution also forms the basic
+ingredient of several numerical algorithms for approximating ground states of quantum many
+body systems, often in combination with the Suzuki-Trotter decomposition which is introduced
+below.
 
 Using this approach, the following expression for the ground state expectation value of on
-operator $\operator{O}$ is obtained
+operator $\hat{O}$ is obtained
 
-$$\braket{\hat{O}} = \lim_{\tau\to\infty} \braket{\phi\vert \mathrm{e}^{-\tau \hat{H}} \operator{O} \mathrm{e}^{-\tau \hat{H}}\vert \phi}/\braket{\phi\vert\mathrm{e}^{-2\tau \hat{H}} \vert\phi}$$
+$$\braket{\hat{O}} = \lim_{\tau\to\infty} \braket{\phi\vert \mathrm{e}^{-\tau \hat{H}} \hat{O} \mathrm{e}^{-\tau \hat{H}}\vert \phi}/\braket{\phi\vert\mathrm{e}^{-2\tau \hat{H}} \vert\phi}$$
 
 This expression can be compared to the thermal expectation value with $\beta = 2\tau$; the
 only difference is in the boundary conditions.
 
- For a quantum many body system, taking the exponential is as hard as determining the full
+For a quantum many body system, taking the exponential is as hard as determining the full
 diagonalisation of the hamiltonian, which is impossible due to the exponentially large
 Hilbert space. If the hamiltonian is a sum of local terms, each of these terms can be
-exponentiated easily, but for arbitrary $\tau$ there is no relation ship between $\exp(-\tau
-\sum_{i} \operator{h}_i)$ and the individual $\exp(-\tau \operator{h}_i)$, unless the
-different $\operator{h}_i$ commute. However, for an infinitesimal time step $\epsilon$, we
-can use to Baker-Campbell-Hausdorff formula (or better yet, the Zassenhaus formula) to
-obtain $\exp(-\epsilon \sum_{i} \operator{h}_i) = \prod_i \exp(-\epsilon \operator{h}_i) +
-\mathcal{O}(\epsilon^2)$. This then leads to the \emph{Suzuki-Trotter decomposition}
-\begin{equation} \exp\left(-\tau \sum_{i} \operator{h}_i\right) = \lim_{M\to\infty} \left(
-\mathrm{e}^{-\frac{\tau}{M} \sum_i \operator{h}_i} \right)^M =\lim_{M\to\infty}
-\left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \operator{h}_i} + \order(M^{-1})\right)^M
-\end{equation} Note that splitting the time interval $[0,\tau]$ into small segments
-$\epsilon = \tau/M$ is also the starting point for deriving a path integral representation
-of the quantum partition function. The next step is to insert a resolution of the identity
-in between the $N$ different factors, where the labels of the basis will behave as classical
-degrees of freedom. For obtaining a path integral, the basis should be labeled by a number
-of continuous degrees of freedom, which can then become continuous functions of time in the
+exponentiated easily, but for arbitrary $\tau$ there is no relation ship between
+$\exp(-\tau \sum_{i} \hat{h}_i)$ and the individual $\exp(-\tau \hat{h}_i)$, unless the
+different $\hat{h}_i$ commute. However, for an infinitesimal time step $\epsilon$, we can
+use to Baker-Campbell-Hausdorff formula (or better yet, the Zassenhaus formula) to obtain
+
+$$\exp(-\epsilon \sum_{i} \hat{h}_i) = \prod_i \exp(-\epsilon \hat{h}_i) +
+\mathcal{O}(\epsilon^2).$$
+
+This then leads to the **Suzuki-Trotter decomposition**
+ 
+$$\exp\left(-\tau \sum_{i} \hat{h}_i\right) = \lim_{M\to\infty} \left( \mathrm{e}^{-\frac{\tau}{M} \sum_i \hat{h}_i} \right)^M =\lim_{M\to\infty} \left(\prod_i \mathrm{e}^{-\frac{\tau}{M} \hat{h}_i} + \mathcal{O}(M^{-1})\right)^M$$
+
+Note that splitting the time interval $[0,\tau]$ into small segments $\epsilon = \tau/M$ is
+also the starting point for deriving a path integral representation of the quantum partition
+function. The next step is to insert a resolution of the identity in between the $N$
+different factors, where the labels of the basis will behave as classical degrees of
+freedom. For obtaining a path integral, the basis should be labeled by a number of
+continuous degrees of freedom, which can then become continuous functions of time in the
 limit $\epsilon\to 0$. Here, instead, we will keep $\epsilon$ small but finite, and use a
-discrete basis. \subsection{From quantum to statistical mechanics} Let's start with a
-quantum system in $d=0$, i.e.\ a small number of spins, or in particular, a single spin,
-described by a hamiltonian \begin{equation} \hat{H} = - h_x \sigma^x - h_z \sigma^z
-\end{equation} While we could in principle exponentiate $\hat{H}$ directly, we will treat it
-using the Suzuki-Trotter decomposition. Throughout the remainder of this section, we will
-use the $\sz$ basis, which we denote as $\ket{1} = \ket{\uparrow}$ and $\ket{-1} =
-\ket{\downarrow}$. Inserting resolutions of the identity, we write \begin{equation} Z(\beta)
-= \tr \mathrm{e}^{-\beta \hat{H}} = \sum_{\{s_k\}=\pm 1} \braket{s_1|\mathrm{e}^{-\epsilon
-\hat{H}}|s_2}\cdots \braket{s_M-1| \mathrm{e}^{-\epsilon \hat{H}}|s_{M}} \cdots \braket{s_M|
-\mathrm{e}^{-\epsilon \hat{H}}|s_{M+1}} \end{equation} with $s_{M+1} = s_1$, $M\epsilon
-=\beta$, and where \begin{align*} \braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}} &=
-\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}} \approx \braket{s_{i}|\mathrm{e}^{\epsilon
-h_z \sz}\mathrm{e}^{\epsilon h_x \sx}|s_{i+1}}\\ &= \mathrm{e}^{\epsilon h_z s_i}
-\braket{s_{i}|\cosh(\epsilon h_x) \one + \sinh(\epsilon h_x) \sx |s_{i+1}}\\ &=
-\mathrm{e}^{K s_{i}s_{i+1} + h s_i + f_0}. \end{align*} \begin{exercise} Prove that the
-equality on the last line is obtained with , $K = -\frac{1}{2}\log \tanh(\epsilon h_x)$, $h
-= \epsilon h_z$ and $f_0 = \frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]$.
-\end{exercise}\\ We thus obtain $Z(\beta) = \sum_{s_k} \mathrm{e}^{\sum_{i=1}^{M}K s_i
-s_{i+1} + h s_i}$, the partition function of the one-dimensional classical Ising model with
-periodic boundary conditions. Indeed, $\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}}$ does
-exactly correspond to the transfer matrix, and diagonalising the transfer matrix is the most
+discrete basis. 
+
+### From quantum to statistical mechanics
+
+Let's start with a quantum system in $d=0$, i.e. a small number of spins, or in particular, a single spin,
+described by a hamiltonian
+
+$$\hat{H} = - h_x \sigma^x - h_z \sigma^z$$
+
+While we could in principle exponentiate $\hat{H}$ directly as it is a $2 \times 2$ matrix,
+we will treat it using the Suzuki-Trotter decomposition. Throughout the remainder of this
+section, we will use the $\sigma^z$ basis, which we denote as $\ket{1} = \ket{\uparrow}$ and
+$\ket{-1} = \ket{\downarrow}$. Inserting resolutions of the identity, we write
+
+$$Z(\beta) = \mathrm{Tr} \mathrm{e}^{-\beta \hat{H}} = \sum_{\{s_k\}=\pm 1}
+\braket{s_1|\mathrm{e}^{-\epsilon \hat{H}}|s_2}\cdots \braket{s_M-1| \mathrm{e}^{-\epsilon
+\hat{H}}|s_{M}} \cdots \braket{s_M| \mathrm{e}^{-\epsilon \hat{H}}|s_{M+1}}$$
+
+with $s_{M+1} = s_1$, $M\epsilon =\beta$, and where
+
+$$\braket{s_{i}|\mathrm{e}^{-\epsilon \hat{H}}|s_{i+1}} &= \braket{s_{i} \vert \mathrm{e}^{-\epsilon H} \vert s_{i+1}} \approx \braket{s_{i} \vert \mathrm{e}^{\epsilon h_z \sigma^z}\mathrm{e}^{\epsilon h_x \sigma^x} \vert s_{i+1}}\\ 
+&= \mathrm{e}^{\epsilon h_z s_i} \braket{s_{i} \vert \cosh(\epsilon h_x) \mathbb{1} + \sinh(\epsilon h_x) \sigma^x \vert s_{i+1}}\\
+ &= \mathrm{e}^{K s_{i}s_{i+1} + h s_i + f_0}
+$$
+where the parameters in the last line are given by
+$K= -\frac{1}{2}\log \tanh(\epsilon h_x)$, $h = \epsilon h_z$ and
+$f_0 =\frac{1}{2}\log[\cosh(\epsilon h_x)\sinh(\epsilon h_x)]$. 
+
+We thus obtain
+
+$$Z(\beta) = \sum_{s_k} \mathrm{e}^{\sum_{i=1}^{M}K s_i s_{i+1} + h s_i},$$
+
+the partition function of the one-dimensional classical Ising model with periodic boundary
+conditions. Indeed, $\braket{s_{i}|\mathrm{e}^{-\epsilon H}|s_{i+1}}$ does exactly
+correspond to the transfer matrix, and diagonalising the transfer matrix is the most
 straightforward approach to solving the one-dimensional classical Ising model.
 
-\subsection{Higher dimensional generalisation}
+### Higher dimensional generalisation
 
-We now apply the same approach to the transverse field Ising model in $d$ dimensions, on a hypercubic lattice. We separate the hamiltonian in two parts according to
-\begin{equation}
-	\hat{H}_{\text{TFIM}} = \left(-J\sum_{\braket{i,j}} \sz_i \sz_j  - h_z \sum_{i} \sz_i\right) + \left(- h_x \sum_{i} \sx_i\right)= \operator{H}_1 + \operator{H}_2
-\end{equation}
-Note that $\operator{H}_1$ and $\operator{H}_2$ in itself contain commuting terms, but of course don't mutually commute. We follow the same strategy, and will in every (imaginary) time step introduce a resolution of the identity using the tensor product $\sz$ basis. We now denote the basis at time step $k$ as $\ket{\{s_{i,k}\}}$, where $i$ labels a site in the $d$ dimensional lattice hosting the quantum degrees of freedom, and $k$ labels points along the imaginary time axis, which emerges as a new dimension in the problem. We find
-\begin{align*}
-\exp(-\epsilon \operator{H}_1)\ket{\{s_{i,k}\}} = \exp(\epsilon J \sum_{\braket{i,j}} s_{i,k} s_{j,k}+\epsilon h \sum_i s_{i,k}) \ket{\{s_{i,k}\}}
-\end{align*}
-as $\operator{H}_1$ is diagonal in this basis, and 
-\begin{align*}
-\braket{\{s_{i,k}\}|\exp(-\epsilon \operator{H}_2)|\{s_{i,k+1}\}} = \prod_i \braket{s_{i,k}|\mathrm{e}^{-\epsilon h_x \sx_i} | s_{i,k+1}}
- \sim \exp(K_\perp\sum_{i} s_{i,k} s_{i,k+1})
-\end{align*}
-with $K_\perp = \log \tanh(\epsilon h_x)$ as before. Here, we have now ignored an overall proportionality factor, which is irrelevant when using the partition function to compute expectation values. With this, we find
-\begin{equation}
-	Z(\beta) = \sum_{\{s_i,k\}} \exp\left(\sum_{k=1}^{M}\sum_{i} K_\perp s_{i,k} s_{i,k+1}+\sum_{k=1}^M\sum_{\braket{i,j}} K_\parallel s_{i,k} s_{j,k} + \sum_{k=1}^{M}\sum_{i} h s_{i,k} \right)
-\end{equation}
-with $K_{\parallel} = \epsilon J$ and $h = \epsilon h_z$. We thus find the partition function of the classical Ising model in $d+1$ dimensions with anisotropic interaction strengths, periodic boundary condition in the imaginary time direction and a number of sites in the time direction given by $M = \beta/\epsilon$. Hence, the ground state regime $\beta\to \infty$ corresponds to the thermodynamic limit in this additional time direction of the corresponding classical system, and we will see that there are many similarities (or actually, equivalences) between between quantum phenomena in $d$ dimensions and classical phenomena in $D=d+1$ dimensions. On the other hand, when the quantum system is at finite temperature $\beta$, the additional dimension is finite and never in the thermodynamic limit. In that case, this extra dimension cannot cause new non-analyticities in the partition function and finite temperature quantum systems in $d$ dimensions are very similar to classical systems in $d$ dimensions.
+We now apply the same approach to the Ising model with both transverse and longitudinal
+field in $d$ dimensions, on a hypercubic lattice. We separate the hamiltonian in two parts
+according to
 
-In particular, the ground state of the quantum Ising chain has an extended symmetry broken
-regime $g\in[0,1)$, matching the ferromagnetic phase at low temperatures in the
-two-dimensional classical Ising model. One can show that also the order parameter between
-the quantum chain and the classical model is equivalent. At finite temperature however, the
-quantum Ising chain does not exhibit symmetry breaking, exactly like the one-dimensional
-classical Ising model. It is not surprising that the $d=1$ quantum phase transition itself
-is also completely equivalent to the $D=2$ finite temperature phase transition, which also
-fits within the broader context of universality, which we briefly discuss in the next
-section. The duality mapping in the quantum Ising chain is furthermore equivalent to the
-well-known Kramers-Wannier duality in the classical Ising model.
+$$\hat{H} = \left(-J\sum_{\braket{i,j}} \sigma^z_i \sigma^z_j  - h_z \sum_{i} \sigma^z_i\right) + \left(- h_x \sum_{i} \sigma^x_i\right)= \hat{H}_1 + \hat{H}_2$$
 
-This quantum to classical mapping can also be inverted.\footnote{This does not imply that
-the mapping is unique. Choosing a different time step $\epsilon$ or a different basis, e.g.\
-the $\sx$ instead of $\sz$ basis will result in a different classical model.} Taking a
-codimension $1$ slice out of a $D$-dimensional classical partition function, one obtains a
-transfer matrix which can be interpreted as the exponential of a quantum hamiltonian acting
-on the Hilbert space of a $d=D-1$ dimensional quantum system. In fact, the modern
-perspective on the exact solution of the two-dimensional classical Ising model by Onsager is
-exactly by this transfer matrix approach, which is subsequently diagonalised using the
-Jordan Wigner and free fermion approach from Section~\ref{s:isingexact}.
+Note that $\hat{H}_1$ and $\hat{H}_2$ in itself contain commuting terms, but of course don't
+mutually commute. We follow the same strategy, and will in every (imaginary) time step
+introduce a resolution of the identity using the tensor product $\sigma^z$ basis. We now denote
+the basis at time step $k$ as $\ket{\{s_{i,k}\}}$, where $i$ labels a site in the $d$
+dimensional lattice hosting the quantum degrees of freedom, and $k$ labels points along the
+imaginary time axis, which emerges as a new dimension in the problem. We find
+
+$$\exp(-\epsilon \hat{H}_1)\ket{\{s_{i,k}\}} = \exp(\epsilon J \sum_{\braket{i,j}} s_{i,k} s_{j,k}+\epsilon h \sum_i s_{i,k}) \ket{\{s_{i,k}\}}$$
+
+as $\hat{H}_1$ is diagonal in this basis, and 
+
+$$\braket{\{s_{i,k}\}|\exp(-\epsilon \hat{H}_2)|\{s_{i,k+1}\}} = \prod_i \braket{s_{i,k}|\mathrm{e}^{-\epsilon h_x \sigma^x_i} | s_{i,k+1}} \sim \exp(K_\perp\sum_{i} s_{i,k} s_{i,k+1})$$
+ 
+with $K_\perp = \log \tanh(\epsilon h_x)$ as before. Here, we have now ignored an overall
+proportionality factor, which is irrelevant when using the partition function to compute
+expectation values. With this, we find
+
+$$ Z(\beta) = \sum_{\{s_i,k\}} \exp\left(\sum_{k=1}^{M}\sum_{i} K_\perp s_{i,k} s_{i,k+1}+\sum_{k=1}^M\sum_{\braket{i,j}} K_\parallel s_{i,k} s_{j,k} + \sum_{k=1}^{M}\sum_{i} h s_{i,k} \right)$$
+
+with $K_{\parallel} = \epsilon J$ and $h = \epsilon h_z$. We thus find the partition
+function of the classical Ising model in $d+1$ dimensions with anisotropic interaction
+strengths, periodic boundary condition in the imaginary time direction and a number of sites
+in the time direction given by $M = \beta/\epsilon$. Hence, the ground state regime
+$\beta\to \infty$ corresponds to the thermodynamic limit in this additional time direction
+of the corresponding classical system, so that there are many similarities (or actually,
+equivalences) between between quantum phenomena in $d$ dimensions and classical phenomena in
+$D=d+1$ dimensions. On the other hand, when the quantum system is at finite temperature
+$\beta$, the additional dimension is finite and never in the thermodynamic limit. In that
+case, this extra dimension cannot cause new non-analyticities in the partition function and
+finite temperature quantum systems in $d$ dimensions are very similar to classical systems
+in $d$ dimensions.
+
+This quantum to classical mapping can also be inverted. Taking a codimension $1$ slice out
+of a $D$-dimensional classical partition function, one obtains a transfer matrix which can
+be interpreted as the exponential of a quantum hamiltonian acting on the Hilbert space of a
+$d=D-1$ dimensional quantum system. Hence, methods for targetting quantum ground states in
+$d$ dimensions can also be used to study problems in $(d+1)$-dimensional classical
+statistical mechanics.
 
 It is clear that the quantum to classical mapping is not specific to the quantum Ising model
 and can be applied to any hamiltonian. The path integral representation of the partition
 function fits within the same scheme, and only differs in the fact that the limit
 $\epsilon\to 0$ is taken such that the additional dimension becomes continuous. This is
 particularly natural if also the spatial dimensions of the quantum dimension are continuous,
-i.e.\ if we have a quantum field theory. In this case, a $D=d+1$ dimensional classical
+i.e. if we have a quantum field theory. In this case, a $D=d+1$ dimensional classical
 statistical field theory is obtained. For relativistic quantum field theories, where it is
 common practice to explicitly count the time dimension together with the space dimensions,
 imaginary time evolution leads to an action, which is equivalently a hamiltonian of a
@@ -1433,8 +1586,7 @@ Carlo method, one the most successful numerical methods for studying quantum man
 systems. One maps the quantum problem to a classical partition function and then uses one of
 the many flavours of Monte Carlo sampling. However, with non-positive Boltzmann weights, the
 interpretation of a probability distribution is lost and no efficient sampling procedure can
-be designed, as samples might annihilate each other. This is known as the \emph{sign}
-problem.
+be designed, as samples might annihilate each other. This is known as the **sign problem**.
 
 Secondly, for many non-relativistic quantum systems, the anisotropy between the imaginary
 time direction and the spatial dimensions in the corresponding classical system cannot be
@@ -1447,4 +1599,3 @@ A final reason to study quantum systems directly is that certain concepts are mo
 in that setting. In particular, the last 15 years, ideas from quantum information theory,
 and in particular the concept of entanglement, have made their way into the standard toolbox
 to study and characterize quantum many body systems.
- -->
