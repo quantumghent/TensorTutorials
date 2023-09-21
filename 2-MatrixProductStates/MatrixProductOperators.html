@@ -182,7 +182,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics-in-1-1d">10.2. Quantum Mechanics in 1+1D</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-block-mpos">10.2.1. Jordan Block MPOs</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-state-machines">10.2.2. Finite-State Machines</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.2.3. Expectation Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.2.3. Expectation Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-mpos-in-the-thermodynamic-limit">10.2.4. Jordan MPOs in the Thermodynamic Limit</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-1d-systems">10.2.5. Quasi-1D Systems</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpskitmodels-and-the-mpoham-macro">10.2.6. MPSKitModels and the <code class="docutils literal notranslate"><span class="pre">@mpoham</span></code> Macro</a></li>
@@ -254,9 +254,6 @@ through <a class="reference external" href="https://github.com/maartenvd/MPSKit.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKit [bb1c41ca-d63c-52ed-829e-0820dda26502]
-</pre></div>
-</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKitModels [ca635005-6f8c-4cd1-b51d-8491250ef2ab]
 </pre></div>
 </div>
@@ -264,7 +261,7 @@ through <a class="reference external" href="https://github.com/maartenvd/MPSKit.
 </div>
 <p>In general, an MPO is a chain of tensors, where each tensor has two physical indices and two
 virtual indices:</p>
-<!-- Insert image MPO -->
+<a class="reference internal image-reference" href="../_images/mpo.svg" id="mpo"><img alt="../_images/mpo.svg" class="align-center" height="61" id="mpo" src="../_images/mpo.svg" width="330" /></a>
 <div class="section" id="statistical-mechanics-in-2d">
 <span id="statmech-mpo"></span><h2><span class="section-number">10.1. </span>Statistical Mechanics in 2D<a class="headerlink" href="#statistical-mechanics-in-2d" title="Permalink to this heading">#</a></h2>
 <p>Before discussing one-dimensional transfer matrices, let us first consider how partition
@@ -292,7 +289,7 @@ rise to the partition function, where the sum over all configurations is convert
 summations in the contractions of the network. Finally, it is more common to absorb the edge
 tensors into the vertex tensors by explicitly contracting them, such that the remaining
 network consists of tensors at the vertices only:</p>
-<a class="reference internal image-reference" href="../_images/partition_function.svg" id="id1"><img alt="../_images/partition_function.svg" class="align-center" height="241" id="id1" src="../_images/partition_function.svg" width="297" /></a>
+<a class="reference internal image-reference" href="../_images/partition_function.svg" id="id1"><img alt="../_images/partition_function.svg" class="align-center" height="211" id="id1" src="../_images/partition_function.svg" width="253" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Because there are two edges per vertex, an intuitive way of absorbing the edge tensors is to
@@ -352,7 +349,7 @@ technique that splits the two-dimensional network into rows (or columns) of so-c
 transfer matrices, which are already represented as MPOs. In fact, this method has even led
 to the famous exact solution of the two-dimensional Ising model by Onsager.
 <span id="id2">[<a class="reference internal" href="../References.html#id20" title="Lars Onsager. Crystal statistics. i. a two-dimensional model with an order-disorder transition. Physical Review, 65:117–149, 1944. doi:10.1103/PhysRev.65.117.">Onsager, 1944</a>]</span>.</p>
-<!-- Insert image of transfer matrix -->
+<a class="reference internal image-reference" href="../_images/transfer1.svg" id="transfer"><img alt="../_images/transfer1.svg" class="align-center" height="61" id="transfer" src="../_images/transfer1.svg" width="407" /></a>
 <p>In the context of tensor networks, this technique is even useful beyond exactly solvable
 cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
 approximate manner. This allows us to efficiently split the computation of the partition
@@ -381,7 +378,7 @@ which efficient algorithms exist.</p>
 <span id="id3">[<a class="reference internal" href="../References.html#id14" title="V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, and J. Haegeman. Variational optimization algorithms for uniform matrix product states. Physical Review B, 97(4):045145, 2018. arXiv:1701.07035, doi:10.1103/PhysRevB.97.045145.">Zauner-Stauber <em>et al.</em>, 2018</a>]</span>, which are a generic class of algorithms to
 numerically solve these kinds of problems. In particular, they all rely on an efficient way
 of finding an (approximate) solution to the following problem:</p>
-<a class="reference internal image-reference" href="../_images/boundary_mps.svg" id="boundary-mps"><img alt="../_images/boundary_mps.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps.svg" width="616" /></a>
+<a class="reference internal image-reference" href="../_images/boundary_mps1.svg" id="boundary-mps"><img alt="../_images/boundary_mps1.svg" class="align-center" height="161" id="boundary-mps" src="../_images/boundary_mps1.svg" width="443" /></a>
 </div>
 <div class="section" id="expectation-values">
 <h3><span class="section-number">10.1.4. </span>Expectation Values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h3>
@@ -394,7 +391,7 @@ H(\{s_i\})}\]</div>
 <p>For a local operator <span class="math notranslate nohighlight">\(O_i\)</span>, this can again be written as a tensor network, where a single
 Kronecker tensor at a vertex is replaced with a tensor measuring the operator, and then
 absorbing the remaining edge tensors:</p>
-<!-- Insert image of expectation value -->
+<a class="reference internal image-reference" href="../_images/expectation_value.svg" id="expectation-value"><img alt="../_images/expectation_value.svg" class="align-center" height="211" id="expectation-value" src="../_images/expectation_value.svg" width="266" /></a>
 <p>For example, in the case of the magnetisation <span class="math notranslate nohighlight">\(O = \sigma_z\)</span>, the tensor <span class="math notranslate nohighlight">\(M\)</span> can be
 explicitly constructed as follows:</p>
 <div class="cell docutils container">
@@ -431,7 +428,7 @@ the remaining MPS-MPO-MPS sandwich. This is achieved by similarly contracting th
 right part, replacing them by their fixed-point tensors, which are commonly called the
 <em>environments</em> <span class="math notranslate nohighlight">\(G_L\)</span> and <span class="math notranslate nohighlight">\(G_R\)</span>, respectively. The final resulting network is then just a
 local network, which can be contracted efficiently.</p>
-<!-- Insert image of expectation value with environments -->
+<a class="reference internal image-reference" href="../_images/expectation_value2.svg" id="id4"><img alt="../_images/expectation_value2.svg" class="align-center" height="151" id="id4" src="../_images/expectation_value2.svg" width="151" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This process of sequentally reducing the dimensionality of the network can even be further
@@ -555,8 +552,8 @@ B_2 C_1 + B_3 C_2 + B_4 C_3 + A_2 B_3 C_1 + A_3 B_4 C_2 + A_2 A_3 B_4 C_1 + D_1 
 </div>
 </div>
 </div>
-<div class="section" id="id4">
-<h3><span class="section-number">10.2.3. </span>Expectation Values<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<div class="section" id="id5">
+<h3><span class="section-number">10.2.3. </span>Expectation Values<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>In order to compute expectation values of such MPOs, we can use the same technique as
 before, and sandwich the MPO between two MPSs.</p>
 <!-- Insert image of expectation value -->
@@ -617,7 +614,7 @@ as now only local expectation values are well-defined, and the total energy dive
 the system size.</p>
 <p>This is achieved by considering the same regularization of the environment tensors, such
 that the divergent parts are automatically removed. This construction can be found in more
-detail in <span id="id5">[<a class="reference internal" href="../References.html#id22" title="C. Hubig, I. P. McCulloch, and U. Schollwöck. Generic construction of efficient matrix product operators. Phys. Rev. B, 95:035129, Jan 2017. URL: https://link.aps.org/doi/10.1103/PhysRevB.95.035129, doi:10.1103/PhysRevB.95.035129.">Hubig <em>et al.</em>, 2017</a>]</span>.</p>
+detail in <span id="id6">[<a class="reference internal" href="../References.html#id22" title="C. Hubig, I. P. McCulloch, and U. Schollwöck. Generic construction of efficient matrix product operators. Phys. Rev. B, 95:035129, Jan 2017. URL: https://link.aps.org/doi/10.1103/PhysRevB.95.035129, doi:10.1103/PhysRevB.95.035129.">Hubig <em>et al.</em>, 2017</a>]</span>.</p>
 </div>
 <div class="section" id="quasi-1d-systems">
 <h3><span class="section-number">10.2.5. </span>Quasi-1D Systems<a class="headerlink" href="#quasi-1d-systems" title="Permalink to this heading">#</a></h3>

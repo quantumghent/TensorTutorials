@@ -33,7 +33,11 @@ using MPSKitModels
 In general, an MPO is a chain of tensors, where each tensor has two physical indices and two
 virtual indices:
 
-<!-- Insert image MPO -->
+```{image} /_static/MPO/mpo.svg
+:scale: 12%
+:name: mpo
+:align: center
+```
 
 (statmech_mpo)=
 ## Statistical Mechanics in 2D
@@ -61,7 +65,7 @@ where the first sum is over nearest neighbors.
 As the expression for the partition function is an exponential of a sum, we can also write
 it as a product of exponentials, which can be reduced to the following network:
 
-```{image} /_static/figures/mpo/partition_function_1.svg
+```{image} /_static/MPO/partition_function_1.svg
 :scale: 12%
 :name: partfunc
 :align: center
@@ -69,7 +73,7 @@ it as a product of exponentials, which can be reduced to the following network:
 
 Here, the black dots at the vertices represent Kronecker $\delta$-tensors,
 
-```{image} /_static/figures/mpo/kronecker.svg
+```{image} /_static/MPO/kronecker.svg
 :scale: 12%
 :name: kronecker
 :align: center
@@ -77,7 +81,7 @@ Here, the black dots at the vertices represent Kronecker $\delta$-tensors,
 
 and the matrices $t$ encode the Boltzmann weights associated to each nearest-neighbor interaction,
 
-```{image} /_static/figures/mpo/boltzmann.svg
+```{image} /_static/MPO/boltzmann.svg
 :scale: 12%
 :name: boltzmann
 :align: center
@@ -89,7 +93,7 @@ summations in the contractions of the network. Finally, it is more common to abs
 tensors into the vertex tensors by explicitly contracting them, such that the remaining
 network consists of tensors at the vertices only:
 
-```{image} /_static/figures/mpo/partition_function.svg
+```{image} /_static/MPO/partition_function.svg
 :scale: 12%
 :name: partfunc
 :align: center
@@ -102,7 +106,7 @@ leads to a slightly asymmetric form, and more commonly the square root $q$ of th
 matrices is taken, such that each vertex tensor absorbs such a factor from each of the
 edges, resulting in a rotation-invariant form.
 
-```{image} /_static/figures/mpo/boltzmann_mpo.svg
+```{image} /_static/MPO/boltzmann_mpo.svg
 :scale: 12%
 :name: boltzmann_mpo
 :align: center
@@ -137,7 +141,11 @@ transfer matrices, which are already represented as MPOs. In fact, this method h
 to the famous exact solution of the two-dimensional Ising model by Onsager.
 {cite}`onsager1944crystal`.
 
-<!-- Insert image of transfer matrix -->
+```{image} /_static/MPO/transfer.svg
+:scale: 12%
+:name: transfer
+:align: center
+```
 
 In the context of tensor networks, this technique is even useful beyond exactly solvable
 cases, as efficient algorithms exist to determine the product of an MPO with an MPS in an
@@ -175,7 +183,7 @@ For example, one can resort to many types of _boundary MPS techniques_
 numerically solve these kinds of problems. In particular, they all rely on an efficient way
 of finding an (approximate) solution to the following problem:
 
-```{image} /_static/figures/alg/boundary_mps.svg
+```{image} /_static/MPO/boundary_mps.svg
 :scale: 12%
 :name: boundary_mps
 :align: center
@@ -196,7 +204,11 @@ For a local operator $O_i$, this can again be written as a tensor network, where
 Kronecker tensor at a vertex is replaced with a tensor measuring the operator, and then
 absorbing the remaining edge tensors:
 
-<!-- Insert image of expectation value -->
+```{image} /_static/MPO/expectation_value.svg
+:scale: 12%
+:name: expectation_value
+:align: center
+```
 
 For example, in the case of the magnetisation $O = \sigma_z$, the tensor $M$ can be
 explicitly constructed as follows:
@@ -213,7 +225,11 @@ right part, replacing them by their fixed-point tensors, which are commonly call
 _environments_ $G_L$ and $G_R$, respectively. The final resulting network is then just a
 local network, which can be contracted efficiently.
 
-<!-- Insert image of expectation value with environments -->
+```{image} /_static/MPO/expectation_value2.svg
+:scale: 12%
+:name: expectation_value
+:align: center
+```
 
 ```{note}
 This process of sequentally reducing the dimensionality of the network can even be further
