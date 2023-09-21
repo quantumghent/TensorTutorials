@@ -55,7 +55,8 @@ In the case of MPS, we can parametrize the state $\ket{\Psi(t)}$ by a set of tim
 where $\hat{P}_{T\ket{\Psi(A)}}$ is the operator that projects the state onto the tangent space. As a consequence the time-evolving state will never leave the MPS manifold and parametrization in terms of $A(t)$ makes sense. One can in principle work out the above equation on the level of the $A$ matrices and try to solve the above equation. This gives a complicated set of (non-linear) equations that can be solved by one's favourite finite difference scheme, but requires the inversion of matrices with small singular values (and thus numerical instabilities) {cite}`haegeman2011time`, {cite}`HaegemanTDVP`. Instead, it turns out that a natural and inversion free way of solving this equation is possible if we use the gauge freedom of MPS.
 
 For a finite MPS, one can show that in the mixed gauge the action of the projection operator onto $\hat{H}\ket{\Psi(A)}$ is given by {cite}`vanderstraeten2019tangentspace`
-```{image} /_static/figures/timeev/TDVPProjector.png
+```{image} /_static/TimeEvolution/TDVPProjector.svg
+:scale: 12%
 :name: TDVPProjector
 :align: center
 ```
@@ -133,7 +134,8 @@ Perhaps the most natural way to perform the time evolution would be to write the
 \exp(-\tau\hat{H}) = \hat{1} + \tau\hat{H} + \frac{\tau^2}{2}\hat{H}^2 + \mathcal{O}(\tau^3)
 ```
 The MPO approximation of the time evolution operator then boils down to implementing powers of $\hat{H}$ in an efficient (i.e. with the lowest possible MPO bond dimension) and size-extensive way {cite}`vandamme2023efficient`. For example, for a MPO Hamiltonian of the form
-```{image} /_static/figures/timeev/MPOHam.png
+```{image} /_static/TimeEvolution/MPOHam.svg
+:scale: 12%
 :name: MPOHam
 :align: center
 ```
@@ -144,7 +146,8 @@ which corresponds to the Hamiltonian
 ```
 The first order approximation of $U=\exp(-\tau\hat{H})$ is given in MPO form by
 
-```{image} /_static/figures/timeev/TimeMPO_1stOrder.png
+```{image} /_static/TimeEvolution/TimeMPO_1stOrder.svg
+:scale: 12%
 :name: FirstOrder
 :align: center
 ```
@@ -158,7 +161,8 @@ as desired.
 
 The trick for generating the first order approximation involves removing the third "level" from the MPO form of H and multiplying with the appropriate factor of τ. This can be visualised as follows
 
-```{image} /_static/figures/timeev/FirstOrderTrick.png
+```{image} /_static/TimeEvolution/FirstOrderTrick.svg
+:scale: 12%
 :name: FirstOrderTrick
 :align: center
 ```
@@ -194,18 +198,21 @@ which gives the ground state up to an irrelevant phase factor.
 
 It is possible to use time evolution methods to construct thermal density operators i.e. $\rho = \frac{1}{Z}e^{-\beta \hat{H}}$ with $\beta=1/T$ and $Z$ a normalization constant. The idea here is to write $\rho$ as an MPO
 
-```{image} /_static/figures/timeev/DensityMatrix.png
+```{image} /_static/TimeEvolution/DensityMatrix.svg
+:scale: 12%
 :name: DensityMatrix
 :align: center
 ```
 with the constraint that 
-```{image} /_static/figures/timeev/Mconstraint.png
+```{image} /_static/TimeEvolution/Mconstraint.svg
+:scale: 12%
 :name: Mconstraint
 :align: center
 ```
 Here the triangles represent an isometry that fuses the two legs together into a bigger leg. This particular form ensures that $\rho$ is a positive semi-definite operator and thus physical {cite}`FiniteTemperature`. Note that for $d_k=1$ we obtain the density matrix of a pure state. We can represent $\rho$ as the density matrix of pure state (i.e. a MPS) by introducing ancillas $\{\ket{a_k}\}$ so that
 
-```{image} /_static/figures/timeev/AncillaMPS.png
+```{image} /_static/TimeEvolution/AncillaMPS.svg
+:scale: 12%
 :name: AncillaMPS
 :align: center
 ```
@@ -263,7 +270,7 @@ Et_tmpo   = real(expectation_value(Ψt,Ht)[1]);
 ```
 We see that $<σᶻ(t)>$ for both methods after one timestep are reasonably close, but that the energy (density) is (more) conserved for the tdvp method.
 If we were to do the time evolution for many timesteps and for different orders of time evolution MPO we would end up with the following plot
-```{image} /_static/figures/timeev/TimeEvolution.svg
+```{image} /_static/TimeEvolution/TimeEvolution.svg
 :name: TimeResults
 :align: center
 ```
@@ -283,7 +290,7 @@ Eafter   = real(expectation_value(Ψ,H,Ψenv)[1]);
 Eafter < Ebefore
 ```
 If we were to do this for many iterations the energy of the evolved state eventually reach that of the ground state as shown below.
-```{image} /_static/figures/timeev/ImagTimeEvolution.svg
-:name: TimeResults
+```{image} /_static/TimeEvolution/ImagTimeEvolution.svg
+:name: ImagTimeResults
 :align: center
 ```
