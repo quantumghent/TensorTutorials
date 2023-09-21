@@ -1,0 +1,693 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7. Matrix Product States &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-MatrixProductStates/MatrixProductStates';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/MatrixProductStates.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. Infinite Matrix Product States" href="InfiniteMPS.html" />
+    <link rel="prev" title="6. Tensor Network States" href="TensorNetworkStates.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Matrix Product States"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Matrix Product States" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/2-MatrixProductStates/MatrixProductStates.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=2-MatrixProductStates/MatrixProductStates>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-matrix-product-state">7.1. A Matrix Product State</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entanglement-in-mps">7.2. Entanglement in MPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gauge-freedom">7.3. Gauge Freedom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-values">7.4. Expectation Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-functions">7.5. Correlation Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-mpskit-finitemps">7.6. Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.FiniteMPS</span></code></a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Matrix Product States</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="matrix-product-states">
+<h1><span class="section-number">7. </span>Matrix Product States<a class="headerlink" href="#matrix-product-states" title="Permalink to this heading">#</a></h1>
+<p>Having introduced tensor network states in general in the previous section, we now turn to
+the specific case of a single spatial dimension. In this setting we will discuss matrix
+product states and their properties.</p>
+<div class="section" id="a-matrix-product-state">
+<h2><span class="section-number">7.1. </span>A Matrix Product State<a class="headerlink" href="#a-matrix-product-state" title="Permalink to this heading">#</a></h2>
+<p>We work in the same setting as the section on
+<a class="reference internal" href="TensorNetworkStates.html#tensor-network-states"><span class="std std-ref">tensor network states</span></a>, where now our physical spins of local
+physical dimension <span class="math notranslate nohighlight">\(d\)</span> are laid out on a linear chain with <span class="math notranslate nohighlight">\(N\)</span> sites. As before, we can
+decompose the full tensor of coefficients <span class="math notranslate nohighlight">\(C\)</span> of a given quantum state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} C_{s_1,s_2,...,s_N}\ket{s_1,s_2,...,s_N}.\]</div>
+<p>into a network of local tensors by consecutive SVDs, where each time we only keep some
+suitable number of singular values <span class="math notranslate nohighlight">\(D_i\)</span> for every cut. For the case of <span class="math notranslate nohighlight">\(N=4\)</span> we can
+explicitly carry out this full procedure in the following way:</p>
+<a class="reference internal image-reference" href="../_images/svd1.svg" id="svd"><img alt="../_images/svd1.svg" class="align-center" height="224" id="svd" src="../_images/svd1.svg" width="478" /></a>
+<p>Absorbing the bond tensors <span class="math notranslate nohighlight">\(\lambda^{(i)}\)</span> into the neighboring site tensor we end up with a
+<em>matrix product state</em> (MPS),</p>
+<a class="reference internal image-reference" href="../_images/fmps.svg" id="fmps"><img alt="../_images/fmps.svg" class="align-center" height="46" id="fmps" src="../_images/fmps.svg" width="408" /></a>
+<p>Once again, the horizontal edges connecting the different site tensors are called <em>virtual
+bonds</em> and the dimension <span class="math notranslate nohighlight">\(D_i\)</span> of these bonds is called the <em>bond dimension</em>. This bond
+dimension controls the precision of our low-rank approximation, where in the limit of
+increasing bond dimension an MPS can approximate any quantum state to arbitrary precision.
+However, in accordance with our <a class="reference internal" href="TensorNetworkStates.html#area-laws"><span class="std std-ref">previous discussion</span></a> we expect to be able to
+describe low-energy states of local Hamiltonians using a maximal bond dimension <span class="math notranslate nohighlight">\(D\)</span> that
+scales with the boundary of the system, which in one dimension is just <em>constant in the
+system size</em>.</p>
+<p>To see where the ‘matrix product’ in the name comes from, we can write out such a state in a
+more explicit form as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} \sum_{k,l,...,z\in{0,D-1}} A^{(1)}_{s_1,k}A^{(2)}_{k,s_2,l}...A^{(N)}_{z,s_2,l} \ket{s_1,s_2,...,s_N}\]</div>
+<p>Interpreting the <span class="math notranslate nohighlight">\(A_{s_i}^{(i)}\)</span> as <span class="math notranslate nohighlight">\(D \times D\)</span> matrices, we indeed recognize that the
+corresponding coefficient in the computational basis is given by their matrix product. This
+becomes even more explicit if we consider periodic boundary conditions <span class="math notranslate nohighlight">\(N \sim 1\)</span>, where we
+can write a corresponding MPS</p>
+<a class="reference internal image-reference" href="../_images/pfmps.svg" id="pfmps"><img alt="../_images/pfmps.svg" class="align-center" height="61" id="pfmps" src="../_images/pfmps.svg" width="437" /></a>
+<p>as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} {\rm Tr} \left[A^{(1)}_{s_1}A^{(2)}_{s_2}...A^{(N)}_{s_N}\right] \ket{s_1,s_2,...,s_N}.\]</div>
+<p>This class of states can be used as a variational anzatz to for example perform
+<a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html#time-evolution"><span class="std std-ref">time evolution</span></a> or <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html#fixed-point-algorithms"><span class="std std-ref">find ground states</span></a> within the
+manifold of MPS of a given bond dimension <span class="math notranslate nohighlight">\(D\)</span>. Before moving on to MPS algorithms, we first
+summarize some of the key properties that make these states so easy to work with.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, one could introduce MPS as a so-called <em>projected entangled-pair state</em>
+(PEPS) in the following way. Consider again our chain of length <span class="math notranslate nohighlight">\(N\)</span>, where we now place two
+ancillary spins of dimension <span class="math notranslate nohighlight">\(D\)</span> on every site. We then maximally entangle each of these
+ancillary spins with the corresponding spin on the neighboring site, resulting in a chain of
+entangled pairs of the form <span class="math notranslate nohighlight">\(\ket{\phi}=\sum_{j=0}^{d-1}\ket{j,j}\)</span>. Finally, we project the
+two spins at each site onto the local physical Hilbert space of dimension <span class="math notranslate nohighlight">\(d\)</span>, resulting in
+a state</p>
+<a class="reference internal image-reference" href="../_images/peps.svg" id="id1"><img alt="../_images/peps.svg" class="align-center" height="84" id="id1" src="../_images/peps.svg" width="781" /></a>
+<p>If we write the projectors <span class="math notranslate nohighlight">\(\mathcal P^{(i)}: \mathbb {C}^D \otimes \mathbb{C}^D \rightarrow
+\mathbb{C}^d\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{P}^{(i)} = \sum_{s_i,\alpha,\beta}A_{k, s_i, l}^{(i)}\ket{s_i}\bra{kl},\]</div>
+<p>you should be able to see that the resulting state is precisely an MPS with tensors
+<span class="math notranslate nohighlight">\(A^{(i)}\)</span>. This construction originates from ideas in quantum information theory
+regarding entanglement and teleportation. While it may seem a bit involved, this
+construction has a very natural generalization to two and more spatial dimensions,
+where it has been put to extensive use.</p>
+</div>
+</div>
+<div class="section" id="entanglement-in-mps">
+<h2><span class="section-number">7.2. </span>Entanglement in MPS<a class="headerlink" href="#entanglement-in-mps" title="Permalink to this heading">#</a></h2>
+<p>As a first property we study the entanglement structure of an MPS. Consider an MPS with a
+fixed bond dimension <span class="math notranslate nohighlight">\(D\)</span>. We can choose any bond of the MPS to make a bipartition of the
+system, where all sites to the left of the bond belong to one subsystem and all sites to the
+right of the bond belong to the other subsystem. Performing an SVD across this bond,
+just as we have done in our initial construction, gives us a corresponding set of singular
+values <span class="math notranslate nohighlight">\(s_i\)</span>. As we have seen <a class="reference internal" href="../1-Introduction/QuantumManyBody.html#entanglement"><span class="std std-ref">before</span></a>, the squares of these singular values
+are the Schmidt coefficients of the bipartition, and make up the <em>entanglement spectrum</em> of
+the MPS. The entanglement spectrum of a given low-energy state encodes many interesting
+properties of the corresponding system, and can for example be used to recognize symmetries
+and detect phase transitions.</p>
+<p>The same Schmidt coefficients can be used to compute the bipartite entanglement entropy
+across the cut as</p>
+<div class="math notranslate nohighlight">
+\[S = -\sum_i s_i^2 \log(s_i^2).\]</div>
+<p>For one-dimensional states which obey an area law, the maximum entropy across a cut is
+bounded by a constant. Again we see that by increasing the bond dimension sufficiently, we
+will always be able to saturate this value of <span class="math notranslate nohighlight">\(S\)</span>, confirming our previous statement that
+MPS faithfully capture these states. Furthermore, even for states that do not satisfy an
+area law, such as critical states, carefully relating entanglement properties such as the
+entanglement entropy to the correlation length (which are then both controlled by the bond
+dimension) allows to derive many key properties of the critical system.</p>
+</div>
+<div class="section" id="gauge-freedom">
+<h2><span class="section-number">7.3. </span>Gauge Freedom<a class="headerlink" href="#gauge-freedom" title="Permalink to this heading">#</a></h2>
+<p>Not all MPS describe different physical states. One can perform a set of transformations on
+an MPS to change the local tensors, but that leave the physical state unchanged. These
+transformations are called <em>gauge transformations</em>. The freedom to choose a particular MPS
+representation when describing a given physical state is also called a <em>gauge freedom</em>. The
+gauge transformations that leave an MPS invariant are given by basis transforms on the
+virtual level. Given such a basis transform <span class="math notranslate nohighlight">\(M\)</span> as a <span class="math notranslate nohighlight">\(D\times D\)</span> invertible matrix, it is
+easy to see that the following procedure relates two different MPS which encode the same
+physical state,</p>
+<a class="reference internal image-reference" href="../_images/gauge.svg" id="gauge"><img alt="../_images/gauge.svg" class="align-center" height="170" id="gauge" src="../_images/gauge.svg" width="743" /></a>
+<p>where the <span class="math notranslate nohighlight">\(B^{(i)}\)</span> tensors are obtained by absorbing <span class="math notranslate nohighlight">\(M^{-1}\)</span> and <span class="math notranslate nohighlight">\(M\)</span> on the left and right
+virtual index of <span class="math notranslate nohighlight">\(A^{(i)}\)</span> respectively.</p>
+<p>Since a physical state can be described by many different MPS by virtue of the gauge
+freedom, one can wonder if the same state can be described by two MPS that are not related
+by a gauge transform. This question is answered by the <em>fundamental theorem of MPS</em>, which
+states that any two translationally invariant MPS are equal if and only if their tensors are
+related by a gauge transform. So the gauge freedom is the only freedom we have in describing
+a physical state by an MPS.</p>
+<p>From a more practical point of view, this gauge freedom is exploited in various algorithms
+by making use of so-called <em>canonical forms</em>. One common canonical form for example is the
+<em>left-canonical form</em>, where we gauge transform a given MPS tensor <span class="math notranslate nohighlight">\(A\)</span> to a different tenor
+<span class="math notranslate nohighlight">\(A_L\)</span> which satisfies the condition <span class="math notranslate nohighlight">\(\sum_{s_i=0}^{d-1}(A_L)^\dagger_{s_i}(A_L)_{s_i} = \mathbb
+1_{D\times D}\)</span>, or in pictures,</p>
+<a class="reference internal image-reference" href="../_images/leftOrth2.svg" id="leftorth"><img alt="../_images/leftOrth2.svg" class="align-center" height="122" id="leftorth" src="../_images/leftOrth2.svg" width="153" /></a>
+<p>A similar form can be imposed to obtain the <em>right-canonical form</em> in a finite MPS, we can
+bring the tensors in left- or right canonical form as we wish by factorizing them into
+appropriate isometries using the <a class="reference internal" href="../1-Introduction/TensorNetworks.html#factorizations"><span class="std std-ref">QR or polar decomposition</span></a>. This moving of
+the gauge center has proved essential in finite MPS algorithms, as we will see
+<a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html#fixed-point-algorithms"><span class="std std-ref">later</span></a>.</p>
+</div>
+<div class="section" id="expectation-values">
+<h2><span class="section-number">7.4. </span>Expectation Values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h2>
+<p>Another key feature of MPS is that expectation values of local operators can be computed
+efficiently. Consider an operator <span class="math notranslate nohighlight">\(O_i\)</span> acting on site <span class="math notranslate nohighlight">\(i\)</span> of a state given by an MPS
+<span class="math notranslate nohighlight">\(\ket{\psi[A]}\)</span>. To calculate this expectation value we introduce the object</p>
+<a class="reference internal image-reference" href="../_images/transfer.svg" id="transfer"><img alt="../_images/transfer.svg" class="align-center" height="122" id="transfer" src="../_images/transfer.svg" width="293" /></a>
+<p>which we will call the <span class="math notranslate nohighlight">\(O\)</span>-transfer matrix. In the case of <span class="math notranslate nohighlight">\(O=\mathbb 1\)</span> we just call it the
+transfer matrix. For a finite MPS with periodic boundary conditions, this can be written
+succinctly as</p>
+<div class="math notranslate nohighlight">
+\[\braket{\psi|O_i|\psi} = Tr\left(\mathbb{E}^{i}\mathbb{E}_O\mathbb{E}^{N-i-1}\right).\]</div>
+<p>This quantity can be evaluated
+<a class="reference internal" href="../1-Introduction/TensorNetworks.html#contraction-order"><span class="std std-ref">efficiently by contracting the corresponding diagram from end to end</span></a>.</p>
+</div>
+<div class="section" id="correlation-functions">
+<h2><span class="section-number">7.5. </span>Correlation Functions<a class="headerlink" href="#correlation-functions" title="Permalink to this heading">#</a></h2>
+<p>The method to calculate expectation values can be easily generalized to calculate two-point
+correlation functions of an MPS. Consider two operators <span class="math notranslate nohighlight">\(O_i\)</span> and <span class="math notranslate nohighlight">\(Q_j\)</span> each acting on
+respectively site <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. The correlator between these two operators is denoted by
+<span class="math notranslate nohighlight">\(\braket{\psi|O_i O_j|\psi}\)</span>, and corresponds to the contraction</p>
+<a class="reference internal image-reference" href="../_images/corrFunc1.svg" id="corrfunc"><img alt="../_images/corrFunc1.svg" class="align-center" height="122" id="corrfunc" src="../_images/corrFunc1.svg" width="658" /></a>
+<p>Adopting the transfer matrix notation this becomes</p>
+<div class="math notranslate nohighlight">
+\[\braket{\psi|O_i O_j|\psi} = {\rm Tr}\left(\mathbb{E}^{i}\mathbb{E}_O\mathbb{E}^{j-i-1}\mathbb{E}_O\mathbb{E}^{N-j-1}\right).\]</div>
+<p>The dependence of the correlator on <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, for large separations between the two, is
+dominated by the factor <span class="math notranslate nohighlight">\(\mathbb{E}\)</span>, taken to some large power. This operator is in fact a
+completely positive map (CP map), and one can always normalize the state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> such
+that the dominant eigenvalue of <span class="math notranslate nohighlight">\(\mathbb{E}\)</span> is 1 and the others lie within the unit disk.
+Making use of the spectral decomposition, we can show that the exponential dependence on the
+eigenvalues corresponds to an exponential decay in the correlation functions, meaning that
+an MPS always has exponentially decaying correlations. We will return to this point in more
+detail when <span class="xref myst">considering infinite systems in the next section</span>.</p>
+</div>
+<div class="section" id="code-example-mpskit-finitemps">
+<h2><span class="section-number">7.6. </span>Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.FiniteMPS</span></code><a class="headerlink" href="#code-example-mpskit-finitemps" title="Permalink to this heading">#</a></h2>
+<p>To be added.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./2-MatrixProductStates"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/QuantumManyBody.html">
+   1. Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Software.html">
+   2. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/LinearAlgebra.html">
+   3. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/TensorNetworks.html">
+   4. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Symmetries.html">
+   5. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworkStates.html">
+   6. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   7. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="InfiniteMPS.html">
+   8. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Algorithms.html">
+   9. A Simple Tensor Network Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MatrixProductOperators.html">
+   10. Matrix Product Operators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Applications.html">
+   11. Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/FixedpointAlgorithms.html">
+   12. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-Algorithms/TimeEvolutionAlgorithms.html">
+   13. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   14. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-MatrixProductStates/MatrixProductStates.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/MatrixProductStates.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/2-MatrixProductStates/MatrixProductStates.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-MatrixProductStates/MatrixProductStates.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "2-MatrixProductStates/MatrixProductStates";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/2-MatrixProductStates/MatrixProductStates.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>
