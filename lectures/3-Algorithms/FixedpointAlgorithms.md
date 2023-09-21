@@ -18,11 +18,17 @@ In this section we introduce two algorithms for approximating the ground state o
     \min_{\ket{\psi}\in D} \frac{\braket{\psi|H|\psi}}{\braket{\psi|\psi}},
 ```
 over a restricted class of states $D$. For simplicity, we will assume the Hamiltonian under consideration has an MPO representation of the form 
-```{image} /_static/figures/fpalg/mpoHam.svg
+```{image} /_static/FixedpointAlgorithms/mpoHam.svg
+:scale: 12%
 :name: mpoHam
 :align: center
 ```
-which can encode interactions of arbitrary range as discussed in the previous section.
+which can encode interactions of arbitrary range as discussed in the previous section. In this formulation, approximating the ground state of $H$ is equivalent to finding the MPS fixed point the MPO Hamiltonian corresponding to the eigenvalue $\Lambda$ with the smallest real part,
+```{image} /_static/FixedpointAlgorithms/fixedpoint.svg
+:scale: 12%
+:name: mpoHam
+:align: center
+```
 
 In the algorithms discussed below we optimize over matrix product states of a fixed finite bond dimension. In the first algorithm known as DMRG (density matrix renormalization group) the states we consider are finite MPS, whereas the second algorithm VUMPS (variational uniform matrix product state algorithm), as the name suggests, optimizes over uniform MPS. Hence, VUMPS enables direct optimization in the thermodynamic limit, without breaking translation invariance.
 
@@ -35,14 +41,16 @@ Starting from a random MPS ansatz, DMRG tries to approximate the ground state by
 
 Let us consider a random ansatz, by taking random tensors $\{A_1,A_2,...,A_L\}$, $L$ being the number of sites. Fixing all tensors but the one at site $i$, the local tensor $A_i$ is updated according to
 
-```{image} /_static/figures/fpalg/localUpdate.svg
+```{image} /_static/FixedpointAlgorithms/localUpdate.svg
+:scale: 12%
 :name: localUpdate
 :align: center
 ```
 
 Though seemingly daunting we can turn this problem in a simple eigenvalue problem by making full use of the mixed gauge. By bringing all tensors on the right of $A_i$ in the right canonical form and those to the left in left canonical form the denominator simply becomes $\braket{A_i|A_i}$ and the update reduces to
 
-```{image} /_static/figures/fpalg/localUpdate2.svg
+```{image} /_static/FixedpointAlgorithms/localUpdate2.svg
+:scale: 12%
 :name: localUpdate2
 :align: center
 ```
@@ -50,7 +58,8 @@ Though seemingly daunting we can turn this problem in a simple eigenvalue proble
 
 Here the *effective Hamiltonian* $\mathcal H_i$, defined as
 
-```{image} /_static/figures/fpalg/effHam.svg
+```{image} /_static/FixedpointAlgorithms/effHam.svg
+:scale: 12%
 :name: effHam
 :align: center
 ```
@@ -72,13 +81,14 @@ Let us consider 16 lattice sites, bond dimension 12, open boundary conditions an
 ```{code-cell} julia
 using TensorKit, MPSKit, MPSKitModels
 
+d = 2 # Physical dimension
 L = 16 # Length spin chain
 D = 12 # Bond dimension
 
 H = transverse_field_ising()
 
 algorithm = DMRG(); # Summon DMRG
-Ψ = FiniteMPS(L, ℂ^2, ℂ^D) # Random MPS ansatz with bond dimension D
+Ψ = FiniteMPS(L, ℂ^d, ℂ^D) # Random MPS ansatz with bond dimension D
 Ψ₀,_ = find_groundstate(Ψ, H, algorithm);
 ```
 
@@ -86,22 +96,25 @@ algorithm = DMRG(); # Summon DMRG
 
 As mentioned above, VUMPS optimizes uniform MPS directly in the thermodynamic limit. Since the total energy becomes unbounded in this limit, our objective should be to rather minimize the energy density. When working in the mixed gauge, this minimization problem can be represented diagrammatically as
 
-```{image} /_static/figures/fpalg/energyOpt.svg
+```{image} /_static/FixedpointAlgorithms/energyOpt.svg
+:scale: 12%
 :name: energyOpt
 :align: center
 ```
 
 where we have introduced the left- and right fixed points $F_L$ and $F_R$ defined as
 
-```{image} /_static/figures/fpalg/env.svg
+```{image} /_static/FixedpointAlgorithms/env.svg
+:scale: 12%
 :name: env
 :align: center
 ```
 
 which obey the normalization condition
 
-```{image} /_static/figures/fpalg/envNorm.svg
-:name: env
+```{image} /_static/FixedpointAlgorithms/envNorm.svg
+:scale: 12%
+:name: envNorm
 :align: center
 ```
 
@@ -117,12 +130,14 @@ A detailed derivation that these equations characterize the variational minimum 
 
 In these equations the effective Hamiltonians $H_{A_C}$ and $H_{C}$ acting on $A_C$ and $C$ respectively are given by is given by
 
-```{image} /_static/figures/fpalg/H_AC.svg
+```{image} /_static/FixedpointAlgorithms/H_AC.svg
+:scale: 12%
 :name: H_AC
 :align: center
 ```
 
-```{image} /_static/figures/fpalg/H_C.svg
+```{image} /_static/FixedpointAlgorithms/H_C.svg
+:scale: 12%
 :name: H_C
 :align: center
 ```
