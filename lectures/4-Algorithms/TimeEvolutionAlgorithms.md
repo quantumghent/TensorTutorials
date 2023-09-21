@@ -66,22 +66,22 @@ The projector action consists of two sums, one where each term acts on the $A_C$
 ```
 This type of ODE can be solved by a splitting method {cite}`Lubich_2015` i.e. we solve $\frac{d}{dt} Y = A(Y)$ and $\frac{d}{dt} Y = B(Y)$ seperately and then combine the two results to obtain an approximate solution to {eq}`SplittingODE`. Applying this idea to {eq}`TDVPeq` we thus need to solve equations of the form
 ```{math}
-\frac{d}{dt} \ket{\Psi(A)} = -i \hat{H}_{eff}^{A_C}[ A_C(n)]
+\frac{d}{dt} \ket{\Psi(A)} = -i \hat{H}_{\text{eff}}^{A_C}[ A_C(n)]
 ```
 and 
 ```{math}
-\frac{d}{dt} \ket{\Psi(A)}= i \hat{H}_{eff}^{C}[ C(n)]
+\frac{d}{dt} \ket{\Psi(A)}= i \hat{H}_{\text{eff}}^{C}[ C(n)]
 ```
 These can be further simplified by noting that we can put all the time dependence inside one tensor, which we choose to be either $A_C(n)$ or $C(n)$. It is then sufficient to solve
 ```{math}
 :label: ACdot
-\dot{A}_C(n) = -i \hat{H}_{eff}^{A_C}[ A_C(n)]
+\dot{A}_C(n) = -i \hat{H}_{\text{eff}}^{A_C}[ A_C(n)]
 ```
 and 
 
 ```{math}
 :label: Cdot
-\dot{C}(n) = i \hat{H}_{eff}^{C}[ C(n)]
+\dot{C}(n) = i \hat{H}_{\text{eff}}^{C}[ C(n)]
 ```
 for each site $n$ seperately. These can be integrated exactly to give
 
@@ -224,77 +224,66 @@ Below is some code on how MPSKit and MPSKitModels can be used out-of-the-box to 
 ```{code-cell} julia
 using TensorKit,MPSKit,MPSKitModels
 using Plots
+```
 
+
+```{code-cell} julia
 H₀ = transverse_field_ising(;J=1.0,g=0.0);
 
-#Create a MPS with physical bond dimension d=2 and virtual D=50 and optimize it
-Ψ = InfiniteMPS([2],[50]);
-(gs,envs,_) = find_groundstate(Ψ,H₀,VUMPS(;verbose=false));
+#Create a random MPS with physical bond dimension d=2 and virtual D=10 and optimize it
+Ψ = InfiniteMPS([2],[10]);
+(gs,envs)    = find_groundstate(Ψ,H₀,VUMPS(;verbose=false));
 
 #Let's check some expectation values
-sz_gs = expectation_value(gs,σᶻ()) # we have found the |↑↑...↑> or |↓↓...↓> state
-E_gs  = expectation_value(gs,H₀,envs)
+sz_gs     = expectation_value(gs,σᶻ()) # we have found the |↑↑...↑> or |↓↓...↓> state
+E_gs      = expectation_value(gs,H₀,envs)
 
 # time evolution Hamiltonian
-Ht  = transverse_field_ising(;J=1.0,g=0.25);
+Ht        = transverse_field_ising(;J=1.0,g=0.25);
+Ebefore   = real(expectation_value(gs,Ht)[1])
+dt        = 0.1
 
-dt = 0.1
-Nsteps = 20
-ts = dt .* 1:Nsteps
-
-#Do the time evolution with tdvp
-sz_tdvp = zeros(Nsteps);
-let Ψt=gs,envs=environments(gs,Ht),alg=TDVP()
-  for n in 1:Nsteps
-    (Ψt,envs) = timestep(Ψt,Ht,dt,alg,envs);
-    sz_tdvp[n] = real(expectation_value(Ψt,σᶻ())[1])
-  end
-end
+# Let's do one time step with TDVP
+alg       = TDVP();
+envs      = environments(gs,Ht);
+(Ψt,envs) = timestep(gs,Ht,dt,alg,envs);
+szt_tdvp  = real(expectation_value(Ψt,σᶻ())[1]);
+Et_tdvp   = real(expectation_value(Ψt,Ht,envs)[1]);
 
 # let's make a first order time evolution mpo out of Ht
-Ht_mpo = make_time_mpo(Ht, dt, TaylorCluster{1}());
+Ht_mpo    = make_time_mpo(Ht, dt, TaylorCluster{1}());
 
-sz_tmpo = zeros(Nsteps);
-let Ψt=gs
-  for n in 1:Nsteps
-    Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
-    sz_tmpo[n] = real(expectation_value(Ψt,σᶻ())[1])
-  end
-end
+(Ψt,_) = approximate(gs, (Ht_mpo, gs), VUMPS(; verbose=false));
+szt_tmpo  = real(expectation_value(Ψt,σᶻ())[1]);
+Et_tmpo   = real(expectation_value(Ψt,Ht)[1]);
 
-# let's make a 2nd order time evolution mpo out of Ht
-Ht_mpo = make_time_mpo(Ht, dt, TaylorCluster{2}());
-
-sz_tmpo2 = zeros(Nsteps);
-let Ψt=gs
-  for n in 1:Nsteps
-    Ψt,_ = approximate(Ψt, (Ht_mpo, Ψt), VUMPS(; verbose=false));
-    sz_tmpo2[n] = real(expectation_value(Ψt,σᶻ())[1])
-  end
-end
-
-# Compare the different methods
-a = plot(xlabel="t",ylabel="<σᶻ(t)>");
-plot!(a,ts,sz_tdvp,label="TDVP",c=:black);
-scatter!(a,ts,sz_tmpo,label="tmpo 1st");
-scatter!(a,ts,sz_tmpo2,label="tmpo 2nd")
+@show szt_tdvp-szt_tmpo
+@show Ebefore-Et_tmpo
+@show Ebefore-Et_tdvp;
 ```
+We see that $<σᶻ(t)>$ for both methods after one timestep are reasonably close, but that the energy (density) is (more) conserved for the tdvp method.
+If we were to do the time evolution for many timesteps and for different orders of time evolution MPO we would end up with the following plot
+```{image} /_static/figures/timeev/TimeEvolution.svg
+:name: TimeResults
+:align: center
+```
+We clearly see that increasing the order of the time evolution mpo improves the result.
 
 ```{code-cell} julia
 # We can also find the groundstate using imaginary time evolution
-H    = transverse_field_ising(;J=1.0,g=0.35);
+H        = transverse_field_ising(;J=1.0,g=0.35);
 
-Ψ    = InfiniteMPS([2],[50]); #random MPS
-Ψenv = environments(Ψ,H) ;
-dt = 0.1;
-Es = zeros(50);
-Es[1] = real(expectation_value(Ψ,H,envs)[1]);
-for n in 2:50
-    (Ψ,Ψenv) = timestep(Ψ,H,-1im*dt,TDVP(),Ψenv)
-    Es[n] = real(expectation_value(Ψ,H,Ψenv)[1])
-end
+# Here we will do 1 iteration and see that the energy has dropped
+Ψ        = InfiniteMPS([2],[10]);
+Ψenv     = environments(Ψ,H) ;
+Ebefore  = real(expectation_value(Ψ,H,envs)[1]);
+(Ψ,Ψenv) = timestep(Ψ,H,-1im*dt,TDVP(),Ψenv);
+Eafter   = real(expectation_value(Ψ,H,Ψenv)[1]);
 
-b = plot(xlabel="iter",ylabel="<H>");
-hline!([-1.030867019],label="Exact solution")
-scatter!(b,Es,label="")
+Eafter < Ebefore
+```
+If we were to do this for many iterations the energy of the evolved state eventually reach that of the ground state as shown below.
+```{image} /_static/figures/timeev/ImagTimeEvolution.svg
+:name: TimeResults
+:align: center
 ```
