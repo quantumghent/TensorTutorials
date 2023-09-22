@@ -60,7 +60,14 @@ For a finite MPS, one can show that in the mixed gauge the action of the project
 :name: TDVPProjector
 :align: center
 ```
-The projector action consists of two sums, one where each term acts on the $A_C$ on site $n$ and the other on the bond tensor $C$ to the right of it. As a result {eq}`TDVPeq` now resembles an ODE of the form
+The projector action consists of two sums, one where an effective Hamiltonian $\hat{H}_{\text{eff}}^{A_C}$ acts on the $A_C$ on site $n$ and one where $(\hat{H}_{\text{eff}}^{C})$ acts on the bond tensor $C$ to the right of it. The effective Hamiltonias are given by
+```{image} /_static/TimeEvolution/Heffs.svg
+:scale: 12%
+:name: Heffs
+:align: center
+```
+
+Thanks to the decomposition of $\hat{P}_{T\ket{\Psi(A)}} \hat{H}\ket{\Psi(A)}$ {eq}`TDVPeq` now resembles an ODE of the form
 ```{math}
 :label: SplittingODE
 \frac{d}{dt} Y = A(Y) + B(Y)
