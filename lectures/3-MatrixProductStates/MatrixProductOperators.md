@@ -10,7 +10,7 @@ kernelspec:
   name: julia-1.9
 ---
 
-# Matrix Product Operators
+# Matrix Product Operators and Applications
 
 If Matrix Product States are a tensor network way of representing quantum states in one
 dimensions, we can similarly use tensor networks to represent the operators that act on
@@ -67,7 +67,7 @@ it as a product of exponentials, which can be reduced to the following network:
 
 ```{image} /_static/MPO/partition_function_1.svg
 :scale: 12%
-:name: partfunc
+:name: partfunc1
 :align: center
 ```
 
@@ -227,7 +227,7 @@ local network, which can be contracted efficiently.
 
 ```{image} /_static/MPO/expectation_value2.svg
 :scale: 12%
-:name: expectation_value
+:name: expectation_value2
 :align: center
 ```
 

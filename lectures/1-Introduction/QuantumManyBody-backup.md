@@ -11,7 +11,7 @@ kernelspec:
 ---
 
 (many_body_intro)=
- # Quantum Many-Body Physics
+# Quantum Many-Body Physics
 
 ## Quantum Mechanics and its Postulates
 
@@ -236,7 +236,6 @@ complicated. Typically, we want to build only an effective quantum description o
 at the level of fundamental particles and the standard model (which is also only an
 effective model valid up to some energy scale).
 
-(many_body)=
 ## The Hilbert Space of Many-Body Physics
 
 All of the previous axioms remain valid for a composite system consisting of several quantum
@@ -940,7 +939,6 @@ thus proportional to the volume of the system.
 Depending on the context, the interpretation and meaning of the Von Neumann entropy can
 differ, as we discuss below.
 
-(entanglement)=
 ### From Tensor Products to Mixed States and Entanglement
 
 Consider a bipartite system composed of two subsystems $A$ and $B$, with thus $\mathbb{H} =
@@ -1071,7 +1069,6 @@ $s_i$, or rather their squares $p_i = (s_i)^2$ are referred to as **Schmidt coef
 together make up the **entanglement spectrum**. The entanglement entropy is then given by
 
 ```{math}
-:label: entanglement_entropy
 S = - \sum_{i} p_i \log(p_i)
 ```
 
@@ -1183,7 +1180,6 @@ especially in the high energy physics literature, i.e. in the context of quantum
 theory, holography and quantum gravity.
 ```
 
-(zero_temp)=
 ### Quantum Many-Body Physics at Zero Temperature
 
 As quantum effects are most pronounced at zero temperature, we typically assume to be

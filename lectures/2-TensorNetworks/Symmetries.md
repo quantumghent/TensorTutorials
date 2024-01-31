@@ -10,6 +10,7 @@ kernelspec:
   name: julia-1.9
 ---
 
+(symmetries)=
 # Symmetries in Quantum Many-Body Physics
 
 The goal of this section is to give a very gentle introduction to the concept of symmetries

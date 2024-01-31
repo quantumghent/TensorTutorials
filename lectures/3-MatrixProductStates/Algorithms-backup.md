@@ -179,7 +179,7 @@ where the sum runs over all possible configurations of the spins $s_i$.
 In either setting, the partition function can be rewritten as the contraction of a tensor
 network, which for example in two dimensions looks something like
 
-```{image} /_static/figures/alg/partition_function.svg
+```{image} /_static/MPO/partition_function.svg
 :scale: 12%
 :name: partfunc
 :align: center
@@ -258,7 +258,7 @@ One way to do this is by relying on the *first order Suzuki-Trotter decompositio
 states that for any two Hermitian operators $ A $ and $ B $, and any real $\Delta t$,
 
 ```{math}
-:label: trotter_first
+<!-- :label: trotter_first -->
 e^{(A + B) \Delta t} = e^{A \Delta t} e^{B \Delta t} + \mathcal O(\Delta t^2).
 ```
 
@@ -290,7 +290,7 @@ common. Given this observation, it is natural to split the Hamiltonian into an '
 'odd' part,
 
 ```{math} 
-:label: hamsplit
+<!-- :label: hamsplit -->
 H_e = \sum_n h_{(2n, 2n+1)}, \qquad H_o = \sum_n h_{(2n+1, 2n+2)}.
 ```
 

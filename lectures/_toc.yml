@@ -4,28 +4,38 @@
 format: jb-book
 root: intro
 parts:
-- caption: Introduction
+- caption: Preliminaries
   numbered: true
   chapters:
-  - file: 1-Introduction/QuantumManyBody
-  - file: 1-Introduction/Software
-  - file: 1-Introduction/LinearAlgebra
-  - file: 1-Introduction/TensorNetworks
-  - file: 1-Introduction/Symmetries
+  - file: 0-Preliminaries/Software
+  - file: 0-Preliminaries/Resources
+- caption: Introduction to Quantum Many-Body Physics
+  numbered: true
+  chapters:
+  - file: 1-Introduction/QuantumMechanics
+  - file: 1-Introduction/ManyBody
+  - file: 1-Introduction/FockSpace
+  - file: 1-Introduction/Observables
+  - file: 1-Introduction/QuantumToClassical
+- caption: Tensors and Tensor Networks
+  numbered: true
+  chapters:
+  - file: 2-TensorNetworks/LinearAlgebra
+  - file: 2-TensorNetworks/TensorNetworks
+  - file: 2-TensorNetworks/TensorNetworkStates
+  - file: 2-TensorNetworks/Symmetries
 - caption: Matrix Product States
   numbered: true
   chapters:
-  - file: 2-MatrixProductStates/TensorNetworkStates
-  - file: 2-MatrixProductStates/MatrixProductStates
-  - file: 2-MatrixProductStates/InfiniteMPS
-  - file: 2-MatrixProductStates/Algorithms
-  - file: 2-MatrixProductStates/MatrixProductOperators
-  - file: 2-MatrixProductStates/Applications
+  - file: 3-MatrixProductStates/MatrixProductStates
+  - file: 3-MatrixProductStates/InfiniteMPS
+  - file: 3-MatrixProductStates/Algorithms
+  - file: 3-MatrixProductStates/MatrixProductOperators
 - caption: Tensor Network Algorithms
   numbered: true
   chapters:
-  - file: 3-Algorithms/FixedpointAlgorithms
-  - file: 3-Algorithms/TimeEvolutionAlgorithms
+  - file: 4-Algorithms/FixedpointAlgorithms
+  - file: 4-Algorithms/TimeEvolutionAlgorithms
 - caption: Other
   numbered: true
   chapters:

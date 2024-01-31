@@ -80,7 +80,7 @@ the contraction of a square network to end up with a *tensor network state* of t
 
 ```{figure} ../_static/TensorNetworkStates/tn_state.svg
 :scale: 12%
-:name: full_state
+:name: tn_state
 :align: center
 ```
 
