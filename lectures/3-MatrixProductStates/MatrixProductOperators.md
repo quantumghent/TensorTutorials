@@ -13,7 +13,7 @@ kernelspec:
 # Matrix Product Operators and Applications
 
 If Matrix Product States are a tensor network way of representing quantum states in one
-dimensions, we can similarly use tensor networks to represent the operators that act on
+dimension, we can similarly use tensor networks to represent the operators that act on
 these states. Matrix Product Operators (MPOs) form a structured and convenient description
 of such operators, that can capture most (if not all) relevant operators. Additionally, they
 also form a natural way of representing the transfer matrix of a 2D statistical mechanical

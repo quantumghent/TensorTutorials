@@ -21,7 +21,7 @@ generically valid and not restricted to the description of a single particle. Qu
 theory also follows these postulates and is thus not a generalisation of quantum mechanics,
 but rather a specific case of it. These postulates characterise the mathematical model by
 which quantum mechanics describes physical systems, and more specifically how it represents
-states, observables, measurements and dynamics. We briefly reiterate this postulates and
+states, observables, measurements and dynamics. We briefly reiterate these postulates and
 base our discussion on the wonderfull lecture notes "Quantum Information and Computation" by
 John Preskill.
 
@@ -41,7 +41,7 @@ A Hilbert space is a metric complete inner product space. Let us unpack this def
 
     for all $a, b \in \mathbb{C}$ and all $\ket{\psi_1}, \ket{\psi_2} \in \mathbb{H}$.
 
-2.  $\mathbb{H}$ has an inner product, which maps to vecors $\ket{\psi}$ and $\ket{\varphi}$
+2.  $\mathbb{H}$ has an inner product, which maps two vectors $\ket{\psi}$ and $\ket{\varphi}$
     onto a scalar $\braket{\varphi|\psi} \in \mathbb{C}$ with the properties of
     * Linearity: $\bra{\varphi} ( a \ket{\psi_1} + b \ket{\psi_2}) = a \braket{ \varphi | \psi_1} + b \braket{ \varphi | \psi_2}$
     * Skew-symmetry: $\braket{ \varphi | \psi} = \braket{ \psi | \varphi}^\ast$
