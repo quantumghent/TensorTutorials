@@ -257,8 +257,8 @@ in what order the pairwise operations should be carried out. Thus, in the same s
 with a minor modification, the [NCON](https://arxiv.org/abs/1402.0939) notation was
 introduced. In this notation, the indices of a tensor are assigned integers, and pairwise
 operations happen in increasing order. Similarly, negative integers are assigned to open
-legs, which determine their resulting position. For example, the diagram from
-{image}`network` can be written as:
+legs, which determine their resulting position. For example, the [diagram above](network)
+can be written as:
 
 ```{code-cell} julia
 B = rand(2, 2, 2, 2)
@@ -427,23 +427,24 @@ U, S, V = tsvd(A, partition...)
 ### Polar decomposition
 
 The [polar decomposition](https://en.wikipedia.org/wiki/Polar_decomposition) of a square
-matrix $A$ is a factorization of the form $A = UP$, where $U$ is a unitary matrix and $P$ is
+matrix $A$ is a factorization of the form $A = UP$, where $U$ is a semi-unitary matrix and $P$ is
 a positive semi-definite Hermitian matrix. It can be interpreted as decomposing a linear
 transformation into a rotation/reflection $U$, combined with a scaling $P$. The polar
 decomposition is unique for all matrices that are full rank.
 
 ```{image} /_static/TensorNetworks/polar.svg
 :scale: 12%
-:name: svd
+:name: polar
 :align: center
 ```
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
 partition = ((1, 2), (3, 4, 5))
-Q, P = leftorth(A, partition....; alg=Polar())
+Q, P = leftorth(A, partition...; alg=Polar())
 @test permute(A, partition) ≈ Q * P
-@test Q' * Q ≈ id(domain(Q))
+@test Q * Q' ≈ id(codomain(Q))
+@test (Q * Q')^2 ≈ (Q * Q')
 ```
 
 ### QR Decomposition
@@ -497,10 +498,10 @@ corresponding to zero singular values.
 
 ```{code-cell} julia
 A = TensorMap(randn, ComplexF64, S1, S2)
-partition = ((1, 2), (3, 4, 5))
+partition = ((1, 2, 3), (4, 5))
 N = leftnull(A, partition...)
-@test norm(N' * permute(A, partition)) ≈ 0
-@test N * N' ≈ id(codomain(N))
+@test norm(N' * permute(A, partition)) ≈ 0 atol=1e-14
+@test N' * N ≈ id(domain(N))
 ```
 
 ## Conclusion

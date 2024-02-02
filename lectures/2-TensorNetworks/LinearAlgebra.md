@@ -10,6 +10,7 @@ kernelspec:
   name: julia-1.9
 ---
 
+(linear_algebra)=
 # (Multi-) Linear Algebra
 
 ```{contents} Contents
