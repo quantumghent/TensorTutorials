@@ -21,7 +21,7 @@ turns out that quantum mechanics forces us to distinguish two cases.
 ## Distinguisable Particles and Tensor Products
 
 Consider a quantum system composed out of two subsystems, which we call $A$ and $B$,
-sometimes referred to as Alice and Bob in quantum information context. These can themselves
+sometimes referred to as Alice and Bob in quantum information contexts. These can themselves
 already be many-body systems. Suppose we know the Hilbert space $\mathbb{H}^A$ in which to
 describe states of subsystem $A$ when considered as an isolated system on itself, and
 analoguously for $\mathbb{H}^B$. Now consider both systems together, but where they do not

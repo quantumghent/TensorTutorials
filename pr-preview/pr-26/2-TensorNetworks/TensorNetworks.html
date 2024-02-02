@@ -499,8 +499,8 @@ can be written as:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 2.57894  2.48234
- 2.70424  2.393
+ 5.9969   5.38682
+ 2.90386  2.45194
 </pre></div>
 </div>
 </div>
@@ -551,8 +551,8 @@ compilation time, and in other words only needs to be computed once.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×2 Matrix{Float64}:
- 2.57894  2.48234
- 2.70424  2.393
+ 5.9969   5.38682
+ 2.90386  2.45194
 </pre></div>
 </div>
 </div>
@@ -626,7 +626,7 @@ any rectangular matrix <span class="math notranslate nohighlight">\(A\)</span>. 
 <span class="math notranslate nohighlight">\(A = U \Sigma V^\dagger\)</span> where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> are isometric matrices
 (<span class="math notranslate nohighlight">\(U^\dagger U = V^\dagger V = \mathbb{1}\)</span>), and <span class="math notranslate nohighlight">\(\Sigma\)</span> is a diagonal matrix of singular
 values. The SVD is typically used to find low-rank approximations for matrices, and it was
-shown <span id="id5">[<a class="reference internal" href="../References.html#id23" title="Carl Eckart and Gale Young. The approximation of one matrix by another of lower rank. Psychometrika, 1(3):211–218, September 1936. doi:10.1007/BF02288367.">Eckart and Young, 1936</a>]</span> that the best rank-<span class="math notranslate nohighlight">\(k\)</span> approximation is given by the
+shown <span id="id5">[<a class="reference internal" href="../References.html#id23" title="Carl Eckart and Gale Young. The approximation of one matrix by another of lower rank. Psychometrika, 1(3):211–218, Sep 1936. doi:10.1007/BF02288367.">Eckart and Young, 1936</a>]</span> that the best rank-<span class="math notranslate nohighlight">\(k\)</span> approximation is given by the
 SVD, where <span class="math notranslate nohighlight">\(\Sigma\)</span> is truncated to the first (largest) <span class="math notranslate nohighlight">\(k\)</span> singular values.</p>
 <p>Again, a tensorial version is defined by first grouping indices to form a matrix, and then
 applying the SVD to that matrix.</p>
