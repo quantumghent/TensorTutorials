@@ -1,0 +1,756 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. Quantum Mechanics and its Postulates &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1-Introduction/QuantumMechanics';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/1-Introduction/QuantumMechanics.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. The Hilbert Space of Many-Body Physics" href="ManyBody.html" />
+    <link rel="prev" title="2. Useful Resources" href="../0-Preliminaries/Resources.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Quantum Mechanics and its Postulates"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Quantum Mechanics and its Postulates" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/1-Introduction/QuantumMechanics.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=1-Introduction/QuantumMechanics>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-1-states">3.1. <strong>Postulate 1: States</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-2-observables">3.2. <strong>Postulate 2: Observables</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-3-measurements-expectation-values-and-collapse">3.3. <strong>Postulate 3: Measurements, Expectation Values and Collapse</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postulate-4-dynamics">3.4. <strong>Postulate 4: Dynamics</strong></a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Quantum Mechanics and its Postulates</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="quantum-mechanics-and-its-postulates">
+<span id="quantum-mechanics"></span><h1><span class="section-number">3. </span>Quantum Mechanics and its Postulates<a class="headerlink" href="#quantum-mechanics-and-its-postulates" title="Permalink to this heading">#</a></h1>
+<p>While the energy levels of the hydrogen atom played an important role in the historical
+development of quantum mechanics, it became almost immediately clear that the true challenge
+is in applying the laws of quantum mechanics to systems with many interacting particles or
+fields. Note that the formalism of quantum mechanics, and in particular its postulates, are
+generically valid and not restricted to the description of a single particle. Quantum field
+theory also follows these postulates and is thus not a generalisation of quantum mechanics,
+but rather a specific case of it. These postulates characterise the mathematical model by
+which quantum mechanics describes physical systems, and more specifically how it represents
+states, observables, measurements and dynamics. We briefly reiterate these postulates and
+base our discussion on the wonderfull lecture notes “Quantum Information and Computation” by
+John Preskill.</p>
+<div class="section" id="postulate-1-states">
+<h2><span class="section-number">3.1. </span><strong>Postulate 1: States</strong><a class="headerlink" href="#postulate-1-states" title="Permalink to this heading">#</a></h2>
+<p>The state of an isolated quantum system is associated to a ray of vectors in a complex
+Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>.</p>
+<p>A Hilbert space is a metric complete inner product space. Let us unpack this definition:</p>
+<ol class="arabic">
+<li><p><span class="math notranslate nohighlight">\(\mathbb{H}\)</span> is a vector space in this case over the complex numbers. We will denote
+elements of this vector space with Dirac’s ket notation <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>. In particular, we
+can build linear combinations</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = a \ket{\psi_1} + b \ket{\psi_2}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(a, b \in \mathbb{C}\)</span> and all <span class="math notranslate nohighlight">\(\ket{\psi_1}, \ket{\psi_2} \in \mathbb{H}\)</span>.</p>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\mathbb{H}\)</span> has an inner product, which maps two vectors <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> and <span class="math notranslate nohighlight">\(\ket{\varphi}\)</span>
+onto a scalar <span class="math notranslate nohighlight">\(\braket{\varphi|\psi} \in \mathbb{C}\)</span> with the properties of</p>
+<ul class="simple">
+<li><p>Linearity: <span class="math notranslate nohighlight">\(\bra{\varphi} ( a \ket{\psi_1} + b \ket{\psi_2}) = a \braket{ \varphi | \psi_1} + b \braket{ \varphi | \psi_2}\)</span></p></li>
+<li><p>Skew-symmetry: <span class="math notranslate nohighlight">\(\braket{ \varphi | \psi} = \braket{ \psi | \varphi}^\ast\)</span></p>
+<ul>
+<li><p>Positivity: <span class="math notranslate nohighlight">\(\braket{ \psi | \psi} \geq 0\)</span> with equality only if <span class="math notranslate nohighlight">\(\ket{\psi} = 0\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>This last property enables us to define a norm <span class="math notranslate nohighlight">\(\lVert \psi \rVert = \lVert \ket{\psi}
+ \rVert = \sqrt{\braket{\psi|\psi}}\)</span>, which satisfies known properties such as <span class="math notranslate nohighlight">\(\lVert \psi
+ \rVert = 0 \Leftrightarrow \ket{\psi} = 0\)</span> <span class="math notranslate nohighlight">\(\lVert a \ket{\psi} \rVert = \vert a\vert
+ \lVert \psi \rVert\)</span> and the triangle inequality <span class="math notranslate nohighlight">\(\lVert \ket{\varphi} + \ket{\psi} \rVert
+ \leq \lVert \varphi \rVert + \lVert \psi \rVert\)</span>.</p>
+<ol class="arabic" start="3">
+<li><p>The final property of metric completeness is a technical requirement that is only
+relevant in infinite-dimensional Hilbert spaces. Firstly, a metric is a notation of
+distance between the elements in <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>, which is provided by the norm of the
+difference, i.e. <span class="math notranslate nohighlight">\(d(\varphi, \psi) = \lVert \varphi - \psi \rVert\)</span>.</p>
+<p>Completeness of the metric is a specific property that guarantees that certain sequences
+of vectors are guaranteed to have a limit value that also exists in <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>. This
+is necessary to make sense of e.g. Fourier series.</p>
+</li>
+</ol>
+<p>The state of a quantum system is associated to a ray of vectors, which is the
+one-dimensional space <span class="math notranslate nohighlight">\(\{ a \ket{\psi} , \forall a \in \mathbb{C}\}\)</span> spanned by a single
+(nonzero) vector <span class="math notranslate nohighlight">\(\ket{\psi} \in \mathbb{H}\)</span>. We will describe the state of the system using
+a single representative <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> of this ray, which we typically choose such that
+<span class="math notranslate nohighlight">\(\braket{ \psi | \psi} = 1\)</span>. However, this does not fix the representative completely, as we
+can still add arbitrary phases <span class="math notranslate nohighlight">\(\exp(\mathrm{i}\alpha)\)</span>, i.e. <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> and
+<span class="math notranslate nohighlight">\(\mathrm{e}^{\mathrm{i}\alpha} \ket{\psi}\)</span> describe the same state.</p>
+<p>The best known Hilbert space from your courses on single-particle quantum mechanics is
+probably <span class="math notranslate nohighlight">\(L^2(\mathbb{R}^n)\)</span>, the Hilbert space for a single quantum particle moving in the
+<span class="math notranslate nohighlight">\(n\)</span>-dimensional coordinate space <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> (typically <span class="math notranslate nohighlight">\(n=1,2,3\)</span>). This Hilbert space
+corresponds to the space of all square-integrable functions <span class="math notranslate nohighlight">\(\psi:\mathbb{R}^d \to
+\mathbb{C}: x \mapsto \psi(x)\)</span> and the inner product is given by</p>
+<div class="math notranslate nohighlight">
+\[\braket{\varphi | \psi} = \int_{\mathbb{R}^n} \varphi(x)^\ast \psi(x)\,\mathrm{d} x\]</div>
+<p>However, this is already a complicated Hilbert space from a technical perspective. Hilbert
+spaces can also be finite-dimensional, i.e. <span class="math notranslate nohighlight">\(\mathbb{C}^d\)</span>, the space of column vectors of
+length <span class="math notranslate nohighlight">\(d\)</span>, with the standard Euclidean inner product</p>
+<div class="math notranslate nohighlight">
+\[\braket{\varphi | \psi} = \sum_{i=1}^d \varphi_i^\ast \psi_i\]</div>
+<p>These Hilbert spaces will be very important in our discussion. The simplest nontrivial case
+corresponds to <span class="math notranslate nohighlight">\(d=2\)</span> and the associated quantum system is known under various names. It is
+often referred to as a qubit in the context of quantum information theory. There are various
+ways in which qubits can be physically realised. Another common example of a two-dimensional
+Hilbert space is for describing the spin degree of freedom of an electron, or another
+particle with spin quantum number 1/2. Such a reduced description (forgetting about the
+position) is possible if the electron is localised in space, for example when it is strongly
+bound to an atom.</p>
+<p>If we do want to describe a particle that moves in space, we might also consider it to exist
+only at discrete positions in space, i.e. on a lattice. For example, on a one-dimensional
+lattice (a.k.a. a chain) with <span class="math notranslate nohighlight">\(L\)</span> sites, the Hilbert space would also correspond to
+<span class="math notranslate nohighlight">\(\mathbb{H} = \mathbb{C}^L\)</span> and the standard basis vectors <span class="math notranslate nohighlight">\(\vert j \rangle, j=1,\dots,L\)</span>
+correspond to the state of the system if the particle is exactly localised on site <span class="math notranslate nohighlight">\(j\)</span>. We
+can also consider infinitely large lattices, e.g. the one-dimensional chain where there is a
+site associated with every <span class="math notranslate nohighlight">\(j \in \mathbb{Z}\)</span> (or the n-dimensional hypercubic lattice
+<span class="math notranslate nohighlight">\(\mathbb{Z}^n\)</span>). The resulting Hilbert space is then spanned by the states <span class="math notranslate nohighlight">\(\vert j \rangle\)</span>
+for all <span class="math notranslate nohighlight">\(j \in \mathbb{Z}\)</span>, and is thus infinite-dimensional but with a straightforward
+countably infinite basis.</p>
+<p>Of course, our goal is to find the Hilbert space of a many body system. We return to this
+question below and devote a complete section to it.</p>
+</div>
+<div class="section" id="postulate-2-observables">
+<h2><span class="section-number">3.2. </span><strong>Postulate 2: Observables</strong><a class="headerlink" href="#postulate-2-observables" title="Permalink to this heading">#</a></h2>
+<p>Physical observables of the system correspond to self-adjoint (a.k.a. Hermitian) linear
+operators on the Hilbert space <span class="math notranslate nohighlight">\(\mathbb{H}\)</span>.</p>
+<p>An operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> on <span class="math notranslate nohighlight">\(\mathbb{H}\)</span> is a linear map <span class="math notranslate nohighlight">\(\hat{A}:\mathbb{H} \to \mathbb{H}\)</span>,
+i.e. a map from vectors to vectors that satisfies</p>
+<div class="math notranslate nohighlight">
+\[\hat{A}( a \ket{\varphi} + b \lvert \psi \rangle) = a \hat{A}(\ket{\varphi}) + b
+\hat{A}(\ket{\psi})\]</div>
+<p>The adjoint of an operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> is a new operator <span class="math notranslate nohighlight">\(\hat{A}^\dagger\)</span> that is constructed
+such that</p>
+<div class="math notranslate nohighlight">
+\[\bra{\varphi} \hat{A} \psi \rangle = \langle \hat{A}^\dagger \varphi \ket{\psi}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\ket{\varphi}, \ket{\psi} \in \mathbb{H}\)</span> and where <span class="math notranslate nohighlight">\(\vert \hat{A}\psi \rangle =
+\hat{A} \ket{\psi}\)</span>. This definition requires that <span class="math notranslate nohighlight">\((a_1 \hat{A}_1 + a_2 \hat{A}_2)^\dagger
+= a_1^\ast \hat{A}_1^\dagger + a_2^\ast \hat{A}_2^\dagger\)</span> and <span class="math notranslate nohighlight">\((\hat{A}_1
+\hat{A}_2)^\dagger = \hat{A}_2^\dagger \hat{A}_1^\dagger\)</span>.</p>
+<p>A self-adjoint operator is an operator such that <span class="math notranslate nohighlight">\(\hat{A}^\dagger = \hat{A}\)</span> or thus</p>
+<div class="math notranslate nohighlight">
+\[\braket{\varphi | \hat{A} \psi } = \braket{ \hat{A}^\dagger \varphi | \psi}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\ket{\varphi}, \ket{\psi} \in \mathbb{H}\)</span>. Linear combinations of self-adjoint
+operators with real coefficients are self-adjoint. The composition of two self-adjoint
+linear operators <span class="math notranslate nohighlight">\(\hat{A}_1 \hat{A}_2\)</span> is self-adjoint if and only if</p>
+<div class="math notranslate nohighlight">
+\[\left[ \hat{A}_1 , \hat{A}_2 \right] = \hat{A}_1 \hat{A}_2 - \hat{A}_2 \hat{A}_1 = 0,\]</div>
+<p>i.e. if the operators also commute. Self-adjoint operators have real eigenvalues, and
+eigenvectors associated to distinct eigenvalues are orthogonal. In a finite-dimensional
+Hilbert space, self-adjoint operators admit a spectral decomposition</p>
+<div class="math notranslate nohighlight">
+\[\hat{A} = \sum_{n} \lambda_n \hat{P}_n\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{P}_n\)</span> is the spectral projector onto the eigenspace associated with <span class="math notranslate nohighlight">\(\lambda_n\)</span>.
+The spectral projectors satisfy <span class="math notranslate nohighlight">\(\hat{P}_n \hat{P}_m = \delta_{n,m} \hat{P}_n\)</span>,
+<span class="math notranslate nohighlight">\(\hat{P}_n^\dagger = \hat{P}_n\)</span> and <span class="math notranslate nohighlight">\(\sum_{n} \hat{P}_n = \mathbb{1}\)</span>, the identity
+operator. If <span class="math notranslate nohighlight">\(\lambda_n\)</span> has one-dimensional eigenspace spanned by the eigenvector
+<span class="math notranslate nohighlight">\(\vert\phi_n\rangle\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[\hat{P}_n = \frac{\vert \phi_n \rangle \langle \phi_n \vert}{\langle \phi_n \vert \phi_n \rangle}\]</div>
+<p>where the denominator can be omitted if the eigenvector is normalised.</p>
+<p>In the language of matrices, these properties can be rephrased as follows: With respect to
+an orthonormal basis choice, self-adjoint operators are represented as hermitian matrices.
+Such matrices can be diagonalised by a unitary transformation, or thus, we can construct a
+complete basis consisting of eigenvectors. With respect to this basis, the self-adjoint
+operator is represented by a diagonal matrix with real values on the diagonal.</p>
+</div>
+<div class="section" id="postulate-3-measurements-expectation-values-and-collapse">
+<h2><span class="section-number">3.3. </span><strong>Postulate 3: Measurements, Expectation Values and Collapse</strong><a class="headerlink" href="#postulate-3-measurements-expectation-values-and-collapse" title="Permalink to this heading">#</a></h2>
+<p>Given an observable to which we associate the operator <span class="math notranslate nohighlight">\(\hat{A}\)</span>, we now need to prescribe
+the result of measuring this observable with respect to a system that is in a state
+<span class="math notranslate nohighlight">\(\ket{\psi}\)</span>. The most compact way of describing the result is by stating that, the
+expectation value <span class="math notranslate nohighlight">\(\braket{\hat{A}}\)</span> (= the mean value of the measurement when averaging
+over an ensemble of identical copies of the system) is given by</p>
+<div class="math notranslate nohighlight">
+\[\braket{\hat{A}} = \frac{\braket{\psi \vert \hat{A} \vert \psi}}{\braket{\psi \vert \psi}}\]</div>
+<p>By exploiting the fact that this also prescribes the expectation value of all higher moments
+<span class="math notranslate nohighlight">\(\braket{\hat{A}^k}\)</span>, this determines the full probability distribution of the measurement
+outcome, and yields the more familiar result: The only possible measurement outcomes are
+given by the eigenvalues <span class="math notranslate nohighlight">\(\lambda_n\)</span> of <span class="math notranslate nohighlight">\(\hat{A}\)</span>, and for a system in state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>
+(now assumed normalized), the probability of obtaining <span class="math notranslate nohighlight">\(\lambda_n\)</span> is given by <span class="math notranslate nohighlight">\(p_n =
+\braket{\psi \vert \hat{P}_n \vert \psi}\)</span> with <span class="math notranslate nohighlight">\(\hat{P}_n\)</span> the spectral projector from
+above. In the case that <span class="math notranslate nohighlight">\(\lambda_n\)</span> has a single (linearly independent) eigenvector
+<span class="math notranslate nohighlight">\(\ket{\phi_n}\)</span> (also assumed normalised), this amounts to <span class="math notranslate nohighlight">\(p_n = \vert
+\braket{\phi_n|\psi}\vert^2\)</span>.</p>
+<p>There is a second part to the measurement postulate, which states that, if the measurement
+is immediately repeated (without intermediate dynamics, as described by the next postulate),
+then the same measurement outcome is obtained. Because the measurement outcome with respect
+to the initial state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> is probabilistic and can yield different results, this
+requires that after the first measurement, the state changes is changed. This is the
+well-known <strong>collapse</strong> of the wave function. More specifically, if a measurement of
+observable <span class="math notranslate nohighlight">\(\hat{A}\)</span> is performed in a system with state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> and the measurement
+value <span class="math notranslate nohighlight">\(\lambda_n\)</span> is obtained, then the state of the system changes to</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} \longrightarrow \frac{\hat{P}_n \ket{\psi}}{\lVert \hat{P}_n \ket{\psi}\rVert}.\]</div>
+<p>Note that the denominator cannot vanish, as otherwise the probability of having obtained
+measurement outcome <span class="math notranslate nohighlight">\(\lambda_n\)</span> would have been zero in the first place.</p>
+</div>
+<div class="section" id="postulate-4-dynamics">
+<h2><span class="section-number">3.4. </span><strong>Postulate 4: Dynamics</strong><a class="headerlink" href="#postulate-4-dynamics" title="Permalink to this heading">#</a></h2>
+<p>During time intervals without measurements, the state of an isolated quantum system evolves
+unitarily according to the (first order linear) differential equation</p>
+<div class="math notranslate nohighlight">
+\[\frac{\mathrm{d}\ }{\mathrm{d} t} \ket{\psi(t)} = - \mathrm{i} \hat{H}(t) \ket{\psi(t)}\]</div>
+<p>known as the Schr”{o}dinger equation, where <span class="math notranslate nohighlight">\(\hat{H}(t)\)</span> is the Hamiltonian of the system,
+which may itself be time-dependent. In the case of a time-independent Hamiltonian, we can
+define the evolution operator</p>
+<div class="math notranslate nohighlight">
+\[U(t, t') = \exp\left(-\mathrm{i}(t-t')\hat{H}\right)\]</div>
+<p>which relates states at different times via <span class="math notranslate nohighlight">\(\ket{\psi(t)} = \hat{U}(t, t') \ket{\psi(t')}\)</span>
+and is clearly a unitary operator. Clearly, we need to know the Hamiltonian of a system in
+order to even start thinking about modelling its quantum properties. We will always assume
+that the Hamiltonian is given. In practice, however, the situation can be much more
+complicated. Typically, we want to build only an effective quantum description of the system
+(e.g. only the electrons, only certain electrons, <span class="math notranslate nohighlight">\(\ldots\)</span>) and not start all the way down
+at the level of fundamental particles and the standard model (which is also only an
+effective model valid up to some energy scale).</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./1-Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preliminaries
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0-Preliminaries/Software.html">
+   1. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0-Preliminaries/Resources.html">
+   2. Useful Resources
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to Quantum Many-Body Physics
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   3. Quantum Mechanics and its Postulates
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ManyBody.html">
+   4. The Hilbert Space of Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FockSpace.html">
+   5. Fock Space and Second Quantisation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Observables.html">
+   6. Interesting States and Observables in Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="QuantumToClassical.html">
+   7. Quantum-to-Classical Mapping
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensors and Tensor Networks
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-TensorNetworks/LinearAlgebra.html">
+   8. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-TensorNetworks/TensorNetworks.html">
+   9. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-TensorNetworks/TensorNetworkStates.html">
+   10. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2-TensorNetworks/Symmetries.html">
+   11. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
+   12. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
+   13. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
+   14. A Simple Tensor Network Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
+   15. Matrix Product Operators and Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
+   16. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/TimeEvolutionAlgorithms.html">
+   17. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   18. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/1-Introduction/QuantumMechanics.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/QuantumMechanics.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/1-Introduction/QuantumMechanics.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/1-Introduction/QuantumMechanics.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "1-Introduction/QuantumMechanics";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/1-Introduction/QuantumMechanics.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>

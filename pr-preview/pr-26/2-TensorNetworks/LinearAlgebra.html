@@ -1,0 +1,861 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8. (Multi-) Linear Algebra &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-TensorNetworks/LinearAlgebra';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/2-TensorNetworks/LinearAlgebra.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9. Tensor Network Theory" href="TensorNetworks.html" />
+    <link rel="prev" title="7. Quantum-to-Classical Mapping" href="../1-Introduction/QuantumToClassical.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="(Multi-) Linear Algebra"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="(Multi-) Linear Algebra" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/2-TensorNetworks/LinearAlgebra.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=2-TensorNetworks/LinearAlgebra>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">8.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors-and-matrices">8.2. Vectors and Matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensors-and-tensor-products">8.3. Tensors and Tensor Products</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensors-and-multi-linear-maps">8.4. Tensors and Multi-Linear Maps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">8.5. Conclusion</a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">(Multi-) Linear Algebra</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="multi-linear-algebra">
+<span id="linear-algebra"></span><h1><a class="toc-backref" href="#id1"><span class="section-number">8. </span>(Multi-) Linear Algebra</a><a class="headerlink" href="#multi-linear-algebra" title="Permalink to this heading">#</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#multi-linear-algebra" id="id1">(Multi-) Linear Algebra</a></p>
+<ul>
+<li><p><a class="reference internal" href="#overview" id="id2">Overview</a></p></li>
+<li><p><a class="reference internal" href="#vectors-and-matrices" id="id3">Vectors and Matrices</a></p></li>
+<li><p><a class="reference internal" href="#tensors-and-tensor-products" id="id4">Tensors and Tensor Products</a></p></li>
+<li><p><a class="reference internal" href="#tensors-and-multi-linear-maps" id="id5">Tensors and Multi-Linear Maps</a></p></li>
+<li><p><a class="reference internal" href="#conclusion" id="id6">Conclusion</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">8.1. </span>Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>This lecture covers some basic linear algebra concepts and operations, that will serve as
+foundation for most of what follows. The goal is to provide some intuitive understanding of
+the concepts, without insisting on too much mathematical rigour. The most important goal is
+to introduce and define the concept of a tensor, without resorting to the usual mathematical
+definition, which is not very intuitive.</p>
+<p>Simultaneously, the lecture also showcases some of the features of
+<a class="reference external" href="https://github.com/Jutho/TensorKit.jl">TensorKit.jl</a>, a Julia package that is extremely
+well-suited for the demonstration of the concepts that are discussed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">TensorKit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before discussing tensor networks, it is necessary to understand what tensors are.
+Furthermore, before really understanding tensors, it is instructive to reiterate some basic
+concepts of linear algebra for the case of vectors and matrices, which are nothing but
+specific cases of tensors. In fact, many of the concepts and ideas that are introduced and
+discussed are defined in terms of thinking of tensors as vectors or matrices.</p>
+<p>In what follows, vectors and matrices will be thought of from the viewpoint of computers,
+where they are represented using regular one- and two-dimensional arrays of either real or
+complex numbers. Nevertheless, much of the discussion can be readily generalized to
+arbitrary vector spaces and linear maps.</p>
+</div>
+<div class="section" id="vectors-and-matrices">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">8.2. </span>Vectors and Matrices</a><a class="headerlink" href="#vectors-and-matrices" title="Permalink to this heading">#</a></h2>
+<p>In general, a vector is an object in a vector space, which can be described by a list of
+numbers that correspond to the components of the vector in some basis. For example, a vector
+in a two-dimensional space is in its most general form described by
+<span class="math notranslate nohighlight">\(\vec{v} = \left[v_1, v_2\right]^T\)</span>.</p>
+<p>As a reminder, the defining properties of vector spaces make sure that the following
+operations are well-defined:</p>
+<ul class="simple">
+<li><p>Vectors can be added together, i.e. <span class="math notranslate nohighlight">\(\vec{v} + \vec{w}\)</span> is a vector.</p></li>
+<li><p>Vectors can be multiplied by scalars, i.e. <span class="math notranslate nohighlight">\(\alpha \vec{v}\)</span> is a vector.</p></li>
+<li><p>These operations behave as expected, i.e. there is a notion of associativity, commutativity, and distributivity.</p></li>
+</ul>
+<p>Given two such vector spaces (not necessarily distinct) it is possible to define a linear
+map between them, which is just a function that preserves the vector space structure. In
+other words, a linear map <span class="math notranslate nohighlight">\(A \colon V \rightarrow W\)</span> maps vectors from one vector space <span class="math notranslate nohighlight">\(V\)</span>
+to another vector space <span class="math notranslate nohighlight">\(W\)</span>. Because of the structure of vector spaces, and the requirement
+of linearity, such a map is completely determined by its action on the basis vectors of <span class="math notranslate nohighlight">\(V\)</span>.
+This leads in a very natural way to the notion of a matrix by considering the following
+construction, where <span class="math notranslate nohighlight">\(v_i\)</span> are the components of <span class="math notranslate nohighlight">\(\vec{v}\)</span> and <span class="math notranslate nohighlight">\(w_i\)</span> are the components of
+<span class="math notranslate nohighlight">\(\vec{w}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-linear-map">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-eq-linear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{array}{rcl}
+A &amp; : &amp; V \rightarrow W\\
+  &amp;   &amp; \vec{v} ↦ A(\vec{v}) \equiv \sum_j A_{ij} v_j = w_i \equiv \vec{w}
+\end{array}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(A_{ij}\)</span> are the components of the matrix <span class="math notranslate nohighlight">\(A\)</span> in these bases. In other words, the
+abstract notion of a linear map between vector spaces can be represented by a concrete
+matrix, and the action of the map is the usual matrix product.</p>
+<p>In particular, it is instructive to think of the columns of the matrix <span class="math notranslate nohighlight">\(A\)</span> as labelling the
+components of the input vector space, also called <em>domain</em>, while the rows label the
+component of the output vector space, or <em>codomain</em>.</p>
+<p>In the context of Julia, we can create vector spaces, vectors and matrices through a syntax
+that follows this very closely:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span><span class="w">             </span><span class="c"># type as \bbC&lt;TAB&gt; </span>
+<span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ComplexSpace</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="c"># equivalent to ℂ^3</span>
+
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">V</span><span class="p">)</span><span class="w"> </span><span class="c"># ← as \leftarrow&lt;TAB&gt;</span>
+<span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Tensor</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">)</span>
+<span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span>
+
+<span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For linear maps, both notations <span class="math notranslate nohighlight">\(V \rightarrow W\)</span> and <span class="math notranslate nohighlight">\(W \leftarrow V\)</span> are used to denote
+their codomain and domain. The choice of notation is mostly a matter of taste, as left to
+right might seem more conventional for a language that reads from left to right, while right
+to left is more natural when considering the mathematical usage, where matrices typically
+act on vectors from left to right. In TensorKit, both notations are supported through the
+<code class="docutils literal notranslate"><span class="pre">→</span></code> and <code class="docutils literal notranslate"><span class="pre">←</span></code> operators, and a Unicode-less version is also available, which defaults to <code class="docutils literal notranslate"><span class="pre">←</span></code>.
+Thus, the following are all equivalent:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">→</span><span class="w"> </span><span class="n">W</span><span class="p">)</span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">V</span><span class="p">)</span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tensors-and-tensor-products">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">8.3. </span>Tensors and Tensor Products</a><a class="headerlink" href="#tensors-and-tensor-products" title="Permalink to this heading">#</a></h2>
+<p>Using the same logic as above, it is possible to generalize the notion of a linear map by
+making use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Tensor_product">tensor product</a>, which is
+nothing but an operation that can combine two vector spaces <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(W\)</span> into a new vector
+space <span class="math notranslate nohighlight">\(V \otimes W\)</span>. The tensor product is defined in such a way that the combination of
+vectors from the original vector spaces preserves a natural notion of linearity, i.e. the
+following equality holds for all vectors <span class="math notranslate nohighlight">\(v \in V\)</span>, <span class="math notranslate nohighlight">\(w \in W\)</span>, and scalars <span class="math notranslate nohighlight">\(\lambda\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tensor-product">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-eq-tensor-product" title="Permalink to this equation">#</a></span>\[(\lambda v) \otimes w = v \otimes (\lambda w) = \lambda (v \otimes w)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">λ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">()</span>
+<span class="p">(</span><span class="n">λ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="p">(</span><span class="n">λ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">λ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<p>This new vector space can be equipped with a canonical basis, which is constructed by taking
+the tensor product of the basis vectors of the original vector spaces. For example, if <span class="math notranslate nohighlight">\(V\)</span>
+and <span class="math notranslate nohighlight">\(W\)</span> are two-dimensional vector spaces with basis vectors <span class="math notranslate nohighlight">\(v_i\)</span> and <span class="math notranslate nohighlight">\(w_j\)</span>, respectively,
+then the basis vectors of <span class="math notranslate nohighlight">\(V \otimes W\)</span> are given by <span class="math notranslate nohighlight">\(v_i \otimes w_j\)</span>. In other words, the
+vectors in <span class="math notranslate nohighlight">\(V \otimes W\)</span> are linear combinations of all combinations of the basis vectors of
+<span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(W\)</span>.</p>
+<p>When considering how to represent a vector in this new vector space, it can be written as a
+list of numbers that correspond to the components of the vector in that basis. For example,
+a vector in <span class="math notranslate nohighlight">\(V \otimes W\)</span> is described by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tensor-basis">
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-eq-tensor-basis" title="Permalink to this equation">#</a></span>\[t = \sum_{i_1,i_2} t_{i_1i_2} (v_{i_1} \otimes w_{i_2})\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Tensor</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">W</span><span class="p">)</span>
+<span class="n">t</span><span class="p">[]</span><span class="w"> </span><span class="c"># shorthand for extracting the multi-dimensional array of components</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×3 StridedViews.StridedView{Float64, 2, Matrix{Float64}, typeof(identity)}:
+ 0.822807  0.800583  0.482543
+ 0.647186  0.515866  0.381174
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, the tentative name <span class="math notranslate nohighlight">\(t\)</span> was used to denote that this is in fact a tensor, where
+<span class="math notranslate nohighlight">\(t_{i_1i_2}\)</span> are the components of that tensor <span class="math notranslate nohighlight">\(t\)</span> in the basis <span class="math notranslate nohighlight">\(v_{i_1} \otimes w_{i_2}\)</span>.
+Because of the induced structure of the tensor product, it is more natural and very common
+to express this object not just as a list of numbers, but by reshaping that list into a
+matrix. In this case, the components of the <span class="math notranslate nohighlight">\(i_1\)</span>-th row correspond to basis vectors that
+are built from <span class="math notranslate nohighlight">\(v_{i_1}\)</span>, and similarly the <span class="math notranslate nohighlight">\(i_2\)</span>-th column corresponds to basis vectors
+that are built from <span class="math notranslate nohighlight">\(w_{i_2}\)</span>.</p>
+<p>As the tensor product can be generalized to more than two vector spaces, this finally leads
+to the general definition of a tensor as an element of the vector space that is built up
+from the tensor product of an arbitrary number of vector spaces. Additionally, the
+components of these objects are then naturally laid out in a multi-dimensional array, which
+is then by a slight misuse of terminology also called a tensor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The reshaping operation of components from a list of numbers into a multi-dimensional array
+is a mapping between linear indices <span class="math notranslate nohighlight">\(I\)</span> and Cartesian indices <span class="math notranslate nohighlight">\(i_1, i_2, \cdots,
+i_N\)</span>. This is a very common and useful trick which allows reinterpreting tensors as vectors,
+or vice versa.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="kt">LinearIndices</span><span class="p">((</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×3 LinearIndices{2, Tuple{UnitRange{Int64}, UnitRange{Int64}}}:
+ 1  3  5
+ 2  4  6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">collect</span><span class="p">(</span><span class="kt">CartesianIndices</span><span class="p">((</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">3</span><span class="p">)))</span><span class="w"> </span><span class="c"># collect to force printing</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×3 Matrix{CartesianIndex{2}}:
+ CartesianIndex(1, 1)  CartesianIndex(1, 2)  CartesianIndex(1, 3)
+ CartesianIndex(2, 1)  CartesianIndex(2, 2)  CartesianIndex(2, 3)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tensors-and-multi-linear-maps">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">8.4. </span>Tensors and Multi-Linear Maps</a><a class="headerlink" href="#tensors-and-multi-linear-maps" title="Permalink to this heading">#</a></h2>
+<p>Due to the fact that the tensor product of vector spaces is a vector space in of itself, it
+is again possible to define linear maps between such vector spaces. Keeping in mind the
+definition of a linear map from <a class="reference internal" href="#equation-eq-linear-map">(8.1)</a>, the columns now label components of the
+input vector space, while the rows label components of the output vector space. Now however,
+the components of the input and output vector spaces are themselves comprised of a
+combination of basis vectors from the original vector spaces. If a linear order of these
+combinations can be established, the linear map can again be represented by a matrix:</p>
+<div class="math notranslate nohighlight" id="equation-eq-multilinear-map">
+<span class="eqno">(8.4)<a class="headerlink" href="#equation-eq-multilinear-map" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{array}{rcl}
+A &amp; : &amp; W_1 \otimes W_2 \otimes \cdots \otimes W_M \leftarrow 
+        V_1 \otimes V_2 \otimes \cdots \otimes V_N \\
+  &amp;   &amp; v_1 \otimes v_2 \otimes \cdots \otimes v_N \mapsto 
+        A(v_1 \otimes v_2 \otimes \cdots \otimes v_N) \\
+  &amp;   &amp; = \sum_{j_1, j_2, \cdots, j_N} A_{i_1, i_2, \cdots, i_M; j_1, j_2, \cdots, j_N}
+          v_{1, j_1} \otimes v_{2, j_2} \otimes \cdots \otimes v_{N, j_N} \\
+  &amp;   &amp; = \sum_{J} A_{I;J} v_J \\
+  &amp;   &amp; = w_1 \otimes w_2 \otimes \cdots \otimes w_M \\
+\end{array}\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">V1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span>
+<span class="n">V2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span>
+<span class="n">W1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span>
+<span class="n">W2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ℂ</span><span class="o">^</span><span class="mi">2</span>
+
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W1</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">W2</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">V1</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">V2</span><span class="p">)</span>
+<span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Tensor</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">V1</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">V2</span><span class="p">)</span>
+<span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span>
+<span class="n">w</span><span class="p">[]</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape</span><span class="p">(</span><span class="n">A</span><span class="p">[],</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">[],</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<p>The attentive reader might have already noted that the definition of a linear map as a
+matrix strongly resembles the definition of a vector in a tensor product vector space. This
+is not a coincidence, and in fact the two can easily be identified by considering the
+following identification (isomorphism):</p>
+<div class="math notranslate nohighlight" id="equation-eq-tensor-isomorphism">
+<span class="eqno">(8.5)<a class="headerlink" href="#equation-eq-tensor-isomorphism" title="Permalink to this equation">#</a></span>\[(W \leftarrow V) \cong (W \otimes V^*) \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorMap</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="n">←</span><span class="w"> </span><span class="n">V</span><span class="p">)</span>
+<span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Tensor</span><span class="p">(</span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">⊗</span><span class="w"> </span><span class="n">V</span><span class="o">&#39;</span><span class="p">)</span>
+<span class="n">space</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">space</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For finite-dimensional real or complex vector spaces without additional structure, this
+isomorphism is <em>trivial</em> and is just the reshaping operation of the components of a vector
+into a matrix. However, note that this is a choice, which is not unique, and already differs
+for
+<a class="reference external" href="https://en.wikipedia.org/wiki/Row-_and_column-major_order">row- and column-major order</a>. In
+a more general setting, the identification between <span class="math notranslate nohighlight">\(V \otimes W^*\)</span> and <span class="math notranslate nohighlight">\(V \leftarrow W\)</span> is
+not an equivalence but an isomorphism. This means that it is still possible to relate one
+object to the other, but the operation is not necessarily trivial.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">8.5. </span>Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>The entire discussion can be summarized and leads to the following equivalent definitions of
+a tensor:</p>
+<ul class="simple">
+<li><p>A tensor is an element of a tensor product of vector spaces, which can be represented as a multi-dimensional array of numbers that indicate the components along the constituent basis vectors. Thus, a tensor is <em>vector-like</em>.</p></li>
+<li><p>A tensor is a multi-linear map between vector spaces, which can be represented as a matrix that represents the action of the map on the basis vectors of the input vector space. Thus, a tensor is <em>matrix-like</em>.</p></li>
+</ul>
+<p>The equivalence of these two definitions leads to the lifting of many important facets of
+linear algebra to the multi-linear setting.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./2-TensorNetworks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preliminaries
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0-Preliminaries/Software.html">
+   1. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0-Preliminaries/Resources.html">
+   2. Useful Resources
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to Quantum Many-Body Physics
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/QuantumMechanics.html">
+   3. Quantum Mechanics and its Postulates
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/ManyBody.html">
+   4. The Hilbert Space of Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/FockSpace.html">
+   5. Fock Space and Second Quantisation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Observables.html">
+   6. Interesting States and Observables in Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/QuantumToClassical.html">
+   7. Quantum-to-Classical Mapping
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensors and Tensor Networks
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   8. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworks.html">
+   9. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworkStates.html">
+   10. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Symmetries.html">
+   11. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
+   12. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
+   13. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
+   14. A Simple Tensor Network Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
+   15. Matrix Product Operators and Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
+   16. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/TimeEvolutionAlgorithms.html">
+   17. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   18. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-TensorNetworks/LinearAlgebra.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-TensorNetworks/LinearAlgebra.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/2-TensorNetworks/LinearAlgebra.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-TensorNetworks/LinearAlgebra.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "2-TensorNetworks/LinearAlgebra";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/2-TensorNetworks/LinearAlgebra.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>

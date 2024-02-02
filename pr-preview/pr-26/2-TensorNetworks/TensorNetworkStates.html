@@ -1,0 +1,682 @@
+
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" data-theme="light 
+">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10. Tensor Network States &#8212; TensorTutorials</title>
+    
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light 
+";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/quantumghent-book-theme.ef2ef6c3e8da75e1e736fb5fce08cde6.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3PCWRLGWND"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-3PCWRLGWND');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmax": "arg\\,max", "argmin": "arg\\,min"}, "packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-TensorNetworks/TensorNetworkStates';</script>
+    <link rel="canonical" href="https://quantumghent.github.io/TensorTutorials/2-TensorNetworks/TensorNetworkStates.html" />
+    <link rel="shortcut icon" href="../_static/lectures-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11. Symmetries in Quantum Many-Body Physics" href="Symmetries.html" />
+    <link rel="prev" title="9. Tensor Network Theory" href="TensorNetworks.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort" />
+<meta name="keywords" content="Julia, Tensor Networks, Quantum Many-Body Physics, Statistical Mechanics" />
+<meta name="description" content=This website presents a set of lectures on Tensor Network methods />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Tensor Network States"/>
+<meta name="twitter:description" content="This website presents a set of lectures on Tensor Network methods">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Tensor Network States" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://quantumghent.github.io/TensorTutorials/2-TensorNetworks/TensorNetworkStates.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="This website presents a set of lectures on Tensor Network methods" />
+<meta property="og:site_name" content="TensorTutorials" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=2-TensorNetworks/TensorNetworkStates>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-states-as-tensor-networks">10.1. Quantum States as Tensor Networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#area-laws-and-tensor-network-states">10.2. Area Laws and Tensor Network States</a></li>
+</ul>
+                            <p class="logo">
+                                
+                                    
+                                    <a href=https://quantumghent.github.io/><img src="../_static/logo.png" class="logo" alt="logo"></a>
+                                    
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="../intro.html">TensorTutorials</a></p>
+
+                        <p class="qe-page__header-subheading">Tensor Network States</p>
+
+                    </div>
+
+                    <p class="qe-page__header-authors">Jacob Bridgeman, Lander Burgelman, Lukas Devos, Jutho Haegeman, Daan Maertens, Bram Vancraeynest-De Cuiper and Kevin Vervoort</p>
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <div class="tex2jax_ignore mathjax_ignore section" id="tensor-network-states">
+<span id="id1"></span><h1><span class="section-number">10. </span>Tensor Network States<a class="headerlink" href="#tensor-network-states" title="Permalink to this heading">#</a></h1>
+<p>After our introduction on <span class="xref myst">quantum many body systems</span> and
+<a class="reference internal" href="TensorNetworks.html#tensor-networks"><span class="std std-ref">tensor networks</span></a>, we move on to considering how tensor networks can
+characterize many-body systems. We start with a constructive approach to approximating an
+arbitrary quantum state by a <em>tensor network state</em>. We then qualify in what settings such a
+representation is efficient, and introduce several classes of tensor network states used in
+different settings. We end this section by broadly commenting on how efficient manipulations
+of tensor network states can be used to simulate quantum systems.</p>
+<div class="section" id="quantum-states-as-tensor-networks">
+<h2><span class="section-number">10.1. </span>Quantum States as Tensor Networks<a class="headerlink" href="#quantum-states-as-tensor-networks" title="Permalink to this heading">#</a></h2>
+<p>Consider a quantum many body system which consists of physical spins with a local Hilbert
+space <span class="math notranslate nohighlight">\( \mathbb H_i = \mathbb C^d \)</span> of dimension <span class="math notranslate nohighlight">\( d \)</span>, which we will call the <em>physical
+dimension</em>, are located at every site <span class="math notranslate nohighlight">\( i \)</span> of some lattice <span class="math notranslate nohighlight">\( \Lambda \)</span>. This gives rise to
+a total Hilbert space of the system <span class="math notranslate nohighlight">\( \mathbb H = \bigotimes_{i = 1}^{N} \mathbb H_i =
+\left( \mathbb C^d \right)^{\otimes N}\)</span> where <span class="math notranslate nohighlight">\( N = |\Lambda| \)</span> is the total number of sites
+in the lattice. A general quantum state in this <a class="reference internal" href="../1-Introduction/ManyBody.html#many-body"><span class="std std-ref">many-body Hilbert space</span></a> can be
+represented in terms a set of <span class="math notranslate nohighlight">\(d^N\)</span> complex coefficients <span class="math notranslate nohighlight">\(C_{s_1,s_2,...,s_N} \in \mathbb
+C\)</span>, where <span class="math notranslate nohighlight">\(s_i\in \{0,...,d-1\}\)</span>, with respect to the computational basis as</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi} = \sum_{s_1,s_2,...,s_N} C_{s_1,s_2,...,s_N}\ket{s_1,s_2,...,s_N}.\]</div>
+<p>The exponential increase in the number of coefficients with the system size means that it is
+entirely impossible to store the full state vector of a quantum system of any reasonable
+size in this way. For example, a system of <span class="math notranslate nohighlight">\(N=100\)</span> spins with <span class="math notranslate nohighlight">\(d=2\)</span> has <span class="math notranslate nohighlight">\(2^{100} \approx
+10^{30}\)</span> coefficients, which is far more than the number of atoms in the universe.</p>
+<p>Instead of directly storing this full state vector, we can alternatively parametrize it as a
+tensor network. Consider for example the case <span class="math notranslate nohighlight">\(N=4\)</span>. We can then represent the state vector
+as a tensor <span class="math notranslate nohighlight">\(C_{s_1,s_2,s_3,s_4}\)</span> with four indices, where each index corresponds to a
+physical spin. The full state is then recovered as</p>
+<div class="figure align-center" id="full-state">
+<a class="reference internal image-reference" href="../_images/full_state.svg"><img alt="../_images/full_state.svg" height="65" src="../_images/full_state.svg" width="370" /></a>
+</div>
+<p>We can now split the full tensor <span class="math notranslate nohighlight">\(C\)</span> into separate components by consecutively applying the
+SVD between pairs of physical indices. For example, splitting out the first index we can
+rewrite <span class="math notranslate nohighlight">\(C\)</span> as</p>
+<div class="figure align-center" id="svd1">
+<a class="reference internal image-reference" href="../_images/svd1.svg"><img alt="../_images/svd1.svg" height="76" src="../_images/svd1.svg" width="362" /></a>
+</div>
+<p>In this expression we can interpret <span class="math notranslate nohighlight">\(L^{(1)}\)</span> a a <span class="math notranslate nohighlight">\(d \times D\)</span> matrix, <span class="math notranslate nohighlight">\(\lambda^{(1)}\)</span> as a
+<span class="math notranslate nohighlight">\(D \times D\)</span> matrix and <span class="math notranslate nohighlight">\(R^{(1)}\)</span> as a <span class="math notranslate nohighlight">\(D\)</span> by <span class="math notranslate nohighlight">\(d^{N-1}\)</span> matrix. The horizontal edge in this
+diagram is called a <em>virtual bond</em> and the dimension <span class="math notranslate nohighlight">\(D\)</span> of this bond is called the <em>bond
+dimension</em>. The bond dimension is a measure of the entanglement in the state, and in this
+case encodes the amount of entanglement between the first site and the rest of the system.
+So far we have not actually done anything significant, since this decomposition of <span class="math notranslate nohighlight">\(C\)</span>
+actually increased the total number of required coefficients, instead of reducing it. The
+key point is that we can reduce the number of parameters by <em>truncating</em> <span class="math notranslate nohighlight">\(\lambda^{(1)}\)</span> to
+only keep the <span class="math notranslate nohighlight">\(D\)</span> largest singular values. This results in a <em>low rank approximation</em> of the
+original state, where the quality of the approximation is controlled by the chosen final
+bond dimension <span class="math notranslate nohighlight">\(D\)</span>.</p>
+<p>By repeatedly applying this procedure, grouping and splitting indices in the resulting
+diagrams and absorbing the bond tensors <span class="math notranslate nohighlight">\(\lambda^{(i)}\)</span> into the site tensors we can
+decompose <span class="math notranslate nohighlight">\(C\)</span> into a tensor network of any geometry. For example, we can approximate <span class="math notranslate nohighlight">\(C\)</span> as
+the contraction of a square network to end up with a <em>tensor network state</em> of the form</p>
+<div class="figure align-center" id="tn-state">
+<a class="reference internal image-reference" href="../_images/tn_state.svg"><img alt="../_images/tn_state.svg" height="117" src="../_images/tn_state.svg" width="374" /></a>
+</div>
+<p>In words, this expression means that for every basis state <span class="math notranslate nohighlight">\( \ket{s_1,s_2,s_3,s_4} \)</span> its
+corresponding coefficient in the superposition is obtained by indexing all of the <em>physical
+legs</em> pointing downward according to the corresponding physical basis state and contracting
+the resulting network.</p>
+<p>We can therefore parametrize an arbitrary quantum state in terms of a set of local tensors
+<span class="math notranslate nohighlight">\(A^{(i)}\)</span>, where each of these tensors encodes a number of parameters that is polynomial in
+its physical dimension <span class="math notranslate nohighlight">\(d\)</span> and bond dimensions <span class="math notranslate nohighlight">\(D\)</span> (which can in principle be different for
+every virtual bond). For a general quantum state however, a good tensor network state
+approximation requires a bond dimension which scales exponentially with the system size,
+meaning that we have not actually gained anything in terms of efficiency. However, it turns
+out that for many physically relevant states the bond dimension can be bounded by a constant
+independent of the system size, in which case the tensor network representation leads to an
+exponential reduction in the number of variational parameters.</p>
+</div>
+<div class="section" id="area-laws-and-tensor-network-states">
+<span id="area-laws"></span><h2><span class="section-number">10.2. </span>Area Laws and Tensor Network States<a class="headerlink" href="#area-laws-and-tensor-network-states" title="Permalink to this heading">#</a></h2>
+<p>To see why this is the case, let us study the entanglement entropy of a tensor network
+state. Consider the following two-dimensional network, where all physical indices have a
+dimension <span class="math notranslate nohighlight">\(d\)</span> and we assume all virtual bonds have the same dimension <span class="math notranslate nohighlight">\(D\)</span>,</p>
+<div class="figure align-center" id="peps">
+<a class="reference internal image-reference" href="../_images/peps.svg"><img alt="../_images/peps.svg" height="345" src="../_images/peps.svg" width="481" /></a>
+</div>
+<p>We now want to quantify the entanglement between the shaded region <span class="math notranslate nohighlight">\( \mathcal A\)</span> and the
+rest of the system for this specific state. To this end, we first recall the formula for the
+bipartite entanglement entropy Eq. <a class="reference internal" href="../1-Introduction/Observables.html#equation-entanglement-entropy">(6.1)</a>, and note that the number of
+terms in this expression is determined by the number of non-zero Schmidt coefficients, the
+latter of which is referred to as the <em>Schmidt rank</em>. Looking back now at our initial
+decomposition of the full state tensor <span class="math notranslate nohighlight">\(C\)</span> by splitting out its first index above, we see
+that the Shchmidt rank is precisely given by the bond dimension <span class="math notranslate nohighlight">\(D\)</span> across this cut. From
+this, you should be able to convince yourself that the maximal entanglement entropy across
+this cut is determined by the bond dimension as <span class="math notranslate nohighlight">\(S \sim \log(D)\)</span>. Extending this line of
+reasoning to our question of the entanglement between the region <span class="math notranslate nohighlight">\( \mathcal A\)</span> and the rest
+of the system, we see that each virtual leg connecting <span class="math notranslate nohighlight">\(\mathcal A\)</span> to the rest of the
+system can contribute a term <span class="math notranslate nohighlight">\(\log(D)\)</span> to the entanglement entropy. Therefore we arrive at</p>
+<div class="math notranslate nohighlight">
+\[S(\mathcal A) \sim \log(D) \; \partial \mathcal A,\]</div>
+<p>where <span class="math notranslate nohighlight">\( \partial \mathcal A \)</span> is the size of the boundary of <span class="math notranslate nohighlight">\(\mathcal A\)</span> (which in this
+two-dimensional case is its perimeter).</p>
+<p>Clearly, this tensor network state then naturally obeys an area law for its entanglement
+entropy. In our discussion of the
+<a class="reference internal" href="../1-Introduction/Observables.html#zero-temp"><span class="std std-ref">low temparature properties of quantum many body systems</span></a> however, we have
+already seen that low-energy states of locally interacting Hamiltonians obey exactly such an
+area law. It is this fact that tensor network states inherently encode area law entanglement
+that makes them so well suited for representing low-energy states of quantum systems. They
+can only target a tiny corner of the full exponentially large Hilbert space, but this corner
+is precisely where the most relevant physics happens. This observation has given rise to a
+large family of tensor network states which allow for an efficient parametrization of states
+with varying geometries.</p>
+<!-- TODO: figure with MPS, PEPS, tree, MERA, ... -->
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An equally important feature of tensor networks is that they, aside from providing an
+efficient parametrization of states, also allow for efficient <em>manipulations</em> of these
+states. This means that they can be used to compute interesting features of quantum systems,
+and can be optimized to target states of specific interest such as ground states and
+low-lying excitations. For all of the network geometries depicted above there exist
+corresponding algorithms that put them to efficient use, some of which will be highlighted
+in future sections of this tutorial.</p>
+</div>
+<!-- TODO: any more details on algorithms here? --></div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.9"
+        },
+        kernelOptions: {
+            name: "julia-1.9",
+            path: "./2-TensorNetworks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.9'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preliminaries
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0-Preliminaries/Software.html">
+   1. Getting Started with Numerics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0-Preliminaries/Resources.html">
+   2. Useful Resources
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to Quantum Many-Body Physics
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/QuantumMechanics.html">
+   3. Quantum Mechanics and its Postulates
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/ManyBody.html">
+   4. The Hilbert Space of Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/FockSpace.html">
+   5. Fock Space and Second Quantisation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/Observables.html">
+   6. Interesting States and Observables in Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1-Introduction/QuantumToClassical.html">
+   7. Quantum-to-Classical Mapping
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensors and Tensor Networks
+ </span>
+</p>
+<ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="LinearAlgebra.html">
+   8. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TensorNetworks.html">
+   9. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   10. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Symmetries.html">
+   11. Symmetries in Quantum Many-Body Physics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Matrix Product States
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductStates.html">
+   12. Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/InfiniteMPS.html">
+   13. Infinite Matrix Product States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/Algorithms.html">
+   14. A Simple Tensor Network Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3-MatrixProductStates/MatrixProductOperators.html">
+   15. Matrix Product Operators and Applications
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensor Network Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html">
+   16. Fixed-Point algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4-Algorithms/TimeEvolutionAlgorithms.html">
+   17. Time Evolution
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../References.html">
+   18. References
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="../intro.html"><i data-feather="home"></i></a></li>
+                    <li><a href="https://quantumghent.github.io/" title="">QuantumGroup@UGent</a></li>
+                    <li><a href="https://github.com/quantumghent/" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                    <li class="settings-button" id="settingsButton"><div data-tippy-content="Launch Notebook"><i data-feather="play-circle"></i></div></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/quantumghent/TensorTutorials//blob/main/lectures/2-TensorNetworks/TensorNetworkStates.md" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                    <option value="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-TensorNetworks/TensorNetworkStates.ipynb">Colab</option>
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="https://github.com/quantumghent/TensorTutorials.notebooks/" data-urlpath="tree/TensorTutorials.notebooks/2-TensorNetworks/TensorNetworkStates.ipynb" data-branch=main>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="https://colab.research.google.com/github/quantumghent/TensorTutorials.notebooks/blob/main/2-TensorNetworks/TensorNetworkStates.ipynb" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "2-TensorNetworks/TensorNetworkStates";
+                const repoURL = "https://github.com/quantumghent/TensorTutorials.notebooks/";
+                const urlPath = "tree/TensorTutorials.notebooks/2-TensorNetworks/TensorNetworkStates.ipynb";
+                const branch = "main"
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/jupyter/hub/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>
