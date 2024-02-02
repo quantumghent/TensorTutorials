@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light 
+<html lang="en" data-content_root="" data-theme="light 
 ">
 
   <head>
@@ -64,15 +64,15 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/quantumghent-book-theme.5e19e0a6c2e2247c14aaae6dbdd37c4f.css" />
@@ -83,9 +83,9 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -247,33 +247,77 @@ const thebe_selector_output = ".output, .cell_output"
                 <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
                     <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Introduction
+  Preliminaries
  </span>
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/QuantumManyBody.html">
-   1. Quantum Many-Body Physics
+  <a class="reference internal" href="0-Preliminaries/Software.html">
+   1. Getting Started with Numerics
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/Software.html">
-   2. Getting Started with Numerics
+  <a class="reference internal" href="0-Preliminaries/Resources.html">
+   2. Useful Resources
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to Quantum Many-Body Physics
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-Introduction/QuantumMechanics.html">
+   3. Quantum Mechanics and its Postulates
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/LinearAlgebra.html">
-   3. (Multi-) Linear Algebra
+  <a class="reference internal" href="1-Introduction/ManyBody.html">
+   4. The Hilbert Space of Many-Body Physics
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/TensorNetworks.html">
-   4. Tensor Network Theory
+  <a class="reference internal" href="1-Introduction/FockSpace.html">
+   5. Fock Space and Second Quantisation
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="1-Introduction/Symmetries.html">
-   5. Symmetries in Quantum Many-Body Physics
+  <a class="reference internal" href="1-Introduction/Observables.html">
+   6. Interesting States and Observables in Quantum Many-Body Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-Introduction/QuantumToClassical.html">
+   7. Quantum-to-Classical Mapping
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tensors and Tensor Networks
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-TensorNetworks/LinearAlgebra.html">
+   8. (Multi-) Linear Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-TensorNetworks/TensorNetworks.html">
+   9. Tensor Network Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-TensorNetworks/TensorNetworkStates.html">
+   10. Tensor Network States
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-TensorNetworks/Symmetries.html">
+   11. Symmetries in Quantum Many-Body Physics
   </a>
  </li>
 </ul>
@@ -284,33 +328,23 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="2-MatrixProductStates/TensorNetworkStates.html">
-   6. Tensor Network States
+  <a class="reference internal" href="3-MatrixProductStates/MatrixProductStates.html">
+   12. Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2-MatrixProductStates/MatrixProductStates.html">
-   7. Matrix Product States
+  <a class="reference internal" href="3-MatrixProductStates/InfiniteMPS.html">
+   13. Infinite Matrix Product States
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2-MatrixProductStates/InfiniteMPS.html">
-   8. Infinite Matrix Product States
+  <a class="reference internal" href="3-MatrixProductStates/Algorithms.html">
+   14. A Simple Tensor Network Algorithm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2-MatrixProductStates/Algorithms.html">
-   9. A Simple Tensor Network Algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2-MatrixProductStates/MatrixProductOperators.html">
-   10. Matrix Product Operators
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2-MatrixProductStates/Applications.html">
-   11. Applications
+  <a class="reference internal" href="3-MatrixProductStates/MatrixProductOperators.html">
+   15. Matrix Product Operators and Applications
   </a>
  </li>
 </ul>
@@ -321,13 +355,13 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="3-Algorithms/FixedpointAlgorithms.html">
-   12. Fixed-Point algorithms
+  <a class="reference internal" href="4-Algorithms/FixedpointAlgorithms.html">
+   16. Fixed-Point algorithms
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="3-Algorithms/TimeEvolutionAlgorithms.html">
-   13. Time Evolution
+  <a class="reference internal" href="4-Algorithms/TimeEvolutionAlgorithms.html">
+   17. Time Evolution
   </a>
  </li>
 </ul>
@@ -339,7 +373,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="References.html">
-   14. References
+   18. References
   </a>
  </li>
 </ul>
