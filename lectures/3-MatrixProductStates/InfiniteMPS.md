@@ -155,7 +155,7 @@ contraction
 :align: center
 ```
 
-(imps_corr)=
+(imps_correlation)=
 ### Correlation Functions
 
 Correlation functions are computed similarly. Let us look at

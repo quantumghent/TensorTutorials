@@ -36,6 +36,11 @@ parts:
   chapters:
   - file: 4-Algorithms/FixedpointAlgorithms
   - file: 4-Algorithms/TimeEvolutionAlgorithms
+- caption: In-Depth Tutorials
+  numbered: true
+  chapters:
+  - file: 5-Tutorials/SymmetricTensors
+  - file: 5-Tutorials/FiniteEntanglementScaling
 - caption: Other
   numbered: true
   chapters:

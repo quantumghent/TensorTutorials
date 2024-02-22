@@ -406,6 +406,7 @@ coefficients for $SU(2)$ have been computed analytically, and for low-dimensiona
 have been tabulated for example
 [here](https://pdg.lbl.gov/2018/reviews/rpp2018-rev-clebsch-gordan-coefs.pdf).
 
+(symmetric_tensors)=
 ## Symmetric Tensors
 
 In physics we are often dealing with tensors that transform according to the tensor product

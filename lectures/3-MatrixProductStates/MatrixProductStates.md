@@ -95,7 +95,7 @@ a state
 
 ```{image} /_static/FiniteMPS/peps.svg
 :scale: 12%
-:name: pfmps
+:name: peps
 :align: center
 ```
 
