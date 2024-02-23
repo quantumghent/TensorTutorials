@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="268pt" height="56pt" viewBox="0 0 268 56" version="1.1">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="267pt" height="56pt" viewBox="0 0 267 56" version="1.1">
 <defs>
 <g>
 <symbol overflow="visible" id="glyph0-0">
@@ -239,6 +239,5 @@
 <path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 266.606094 4.680094 L 266.606094 -3.116781 " transform="matrix(1,0,0,-1,-15.11,52.184)"/>
 <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 251.496094 52.960938 L 253.089844 49.773438 L 251.496094 50.96875 L 249.902344 49.773438 "/>
 <path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 274.402969 35.859781 C 283.520156 35.859781 283.520156 12.473062 274.402969 12.473062 " transform="matrix(1,0,0,-1,-15.11,52.184)"/>
-<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 265.292969 33.910156 L 267.761719 31.339844 L 265.886719 32.007812 L 264.71875 30.390625 "/>
 </g>
 </svg>

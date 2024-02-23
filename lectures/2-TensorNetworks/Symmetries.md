@@ -414,12 +414,10 @@ representation of a given group $G$. A symmetric tensor can then be understood a
 that transforms trivially under the action of $G$, or more concretely under the tensor
 product representation $X\otimes\bar Y\otimes\bar Z$:
 
-
-```
- - X_g - T - Y_g - =  - T -    for all g.
-         |              |
-        Z_g
-         |
+```{figure} ../_static/SymmetricTensors/symmtens.svg
+:scale: 12%
+:name: symmtens
+:align: center
 ```
 
 This has strong implications for the structure of the tensor $T$. Notice that we didn't

@@ -12,7 +12,7 @@ kernelspec:
 
 # A Symmetric Tensor Deep Dive: Constructing Your First Tensor Map
 
-In this tutorial, we will demonstrate how to construct specific tensor maps which are relevant to some common physical systems, with an increasing degree of complexity. We will assume the reader has gone through the tutorial sections on [tensor network theory](tensor_networks) and [symmetries in tensor networks](symmetric_tensors). In going through these examples we aim to provide a relatively gently introduction to the meaning of [symmetry sectors](https://jutho.github.io/TensorKit.jl/latest/man/sectors/#ss_sectors) and [vector spaces](https://jutho.github.io/TensorKit.jl/latest/man/sectors/#ss_rep) within the context of the [TensorKit.jl](https://jutho.github.io/TensorKit.jl/latest/), [how to initialize a `TensorMap` over a given vector space](https://jutho.github.io/TensorKit.jl/latest/man/tensors/#ss_tensor_construction) and finally how to manually set the data of a symmetric `TensorMap`. We will keep our discussion as intuitive and simple as possible, only adding as many technical details as strictly necessary to understand each example. When considering a different physical system of interest, you should then be able to adatpt these recipes and the intuition behind them to your specific problem at hand.
+In this tutorial, we will demonstrate how to construct specific `TensorMap`s which are relevant to some common physical systems, with an increasing degree of complexity. We will assume the reader has gone through the tutorial sections on [tensor network theory](tensor_networks) and [symmetries in tensor networks](symmetric_tensors). In going through these examples we aim to provide a relatively gently introduction to the meaning of [symmetry sectors](https://jutho.github.io/TensorKit.jl/latest/man/sectors/#ss_sectors) and [vector spaces](https://jutho.github.io/TensorKit.jl/latest/man/sectors/#ss_rep) within the context of [TensorKit.jl](https://jutho.github.io/TensorKit.jl/latest/), [how to initialize a `TensorMap` over a given vector space](https://jutho.github.io/TensorKit.jl/latest/man/tensors/#ss_tensor_construction) and finally how to manually set the data of a symmetric `TensorMap`. We will keep our discussion as intuitive and simple as possible, only adding as many technical details as strictly necessary to understand each example. When considering a different physical system of interest, you should then be able to adatpt these recipes and the intuition behind them to your specific problem at hand.
 
 ```{note}
 Many of these examples are already implemented in the [MPSKitModels.jl package](https://github.com/maartenvd/MPSKitModels.jl), in which case we basically provide a narrated walk-through of the corresponding code.
@@ -46,7 +46,7 @@ U = \prod_i X_i.
 
 We will circle back to the implications of this symmetry later.
 
-As a warmup we will implement the Hamiltonian {eq}`eq:isingham` in the standard by encoding the matrix elements of the single-site operators $X$ and $Z$ into a complex array, and then combine them in a suitable way to get the Hamiltonian terms. Instead of using plain Julia arrays, we will use a representation in terms of `TensorMap`s over complex vector spaces. These will essentially just be wrappers around base arrays at this point, but their construction requires some consideration of the notion . Each of the operators $X$ and $Z$ acts on a local 2-dimensional complex vector space. In the context of TensorKit.jl such a space can be represented as a `ComplexSpace(2)`, or using the convenient shorthand `ℂ^2`. A single-site Pauli operator maps from a domain physical space to a codomain physical space, and can therefore be represented as instances of a `TensorMap(..., ℂ^2 ← ℂ^2)`. The correponding data can then be filled in by hand according to the familiar Pauli matrices in the following way:
+As a warmup we will implement the Hamiltonian {eq}`eq:isingham` in the standard way by encoding the matrix elements of the single-site operators $X$ and $Z$ into aan array of complex numbers, and then combine them in a suitable way to get the Hamiltonian terms. Instead of using plain Julia arrays, we will use a representation in terms of `TensorMap`s over complex vector spaces. These will essentially just be wrappers around base arrays at this point, but their construction requires some consideration of the notion of *spaces*, which generalize the notion of `size` for arrays. Each of the operators $X$ and $Z$ acts on a local 2-dimensional complex vector space. In the context of TensorKit.jl such a space can be represented as `ComplexSpace(2)`, or using the convenient shorthand `ℂ^2`. A single-site Pauli operator maps from a domain physical space to a codomain physical space, and can therefore be represented as instances of a `TensorMap(..., ℂ^2 ← ℂ^2)`. The corresponding data can then be filled in by hand according to the familiar Pauli matrices in the following way:
 
 ```{code-cell} julia
 :tags: [hide-output]
@@ -76,7 +76,7 @@ X
 ```
 
 ```{note}
-In order to combine these local operators into a concrete Hamiltonian that can be using in [MPSKit.jl](https://github.com/maartenvd/MPSKit.jl) we can make use of the conventient `@mpoham` macro exported by [MPSKitModels.jl](https://github.com/maartenvd/MPSKitModels.jl). For an infinite translation invariant Ising chain, we can use the following piece of code which produces the Hamiltonian in an interesting-looking form (see MPSKit.jl for details on this format).
+In order to combine these local operators into a concrete Hamiltonian that can be used in [MPSKit.jl](https://github.com/maartenvd/MPSKit.jl) we can make use of the convenient `@mpoham` macro exported by [MPSKitModels.jl](https://github.com/maartenvd/MPSKitModels.jl). For an infinite translation invariant Ising chain, we can use the following piece of code which produces the Hamiltonian in an interesting-looking form (see MPSKit.jl for details on this format).
 ```
 ```{code-cell} julia
 :tags: [hide-output]
@@ -95,7 +95,7 @@ end
 
 ### The irrep basis and block sparsity
 
-Let us now return to the global $\mathbb{Z}_2$ invariance of the Hamiltonian {eq}`eq:isingham`, and consider what this implies for its local terms $ZZ$ and $X$. Representing these operators as tensor maps, the invariance of $H$ under a global $\mathbb{Z}_2$ transformation implies the following identities for the local tensors:
+Let us now return to the global $\mathbb{Z}_2$ invariance of the Hamiltonian {eq}`eq:isingham`, and consider what this implies for its local terms $ZZ$ and $X$. Representing these operators as `TensorMap`s, the invariance of $H$ under a global $\mathbb{Z}_2$ transformation implies the following identities for the local tensors:
 
 ```{figure} ../_static/SymmetricTensors/ZZX_symm.svg
 :scale: 12%
@@ -103,9 +103,9 @@ Let us now return to the global $\mathbb{Z}_2$ invariance of the Hamiltonian {eq
 :align: center
 ```
 
-Recalling the [discussion on symmetries in tensor networks](symmetric_tensors), we recognize that these identitities precisely mean that these local tensors transform trivially under a tensor product representation of $\mathbb{Z}_2$. This implies that, in an appropriate basis for the local physical vector space, our local tensors would become block-diagonal where each block is labeled by a tensor product of $\mathbb{Z}_2$ irreps. From the same discussion, we recall that the appropriate local basis transformation is precisely the one that brings the local representation $X$ into block-diagonal form. Clearly, this transformation is nothing more than the Hadamard transformation which maps the computational basis of $Z$ eigenstates $\{\ket{\uparrow}, \ket{\downarrow}\}$ to that of the $X$ eigenstates $\{\ket{+}, \ket{-}\}$ defined as $\ket{+} = \frac{\ket{\uparrow} + \ket{\downarrow}}{\sqrt{2}}$ and $\ket{-} = \frac{\ket{\uparrow} - \ket{\downarrow}}{\sqrt{2}}$. In the current context, this basis is referred to as the *irrep basis* of $\mathbb{Z}_2$, where the local basis state $\ket{+}$ corresponds to the trivial representation of $\mathbb{Z}_2$ while $\ket{-}$ corresponds to the sign representation.
+Recalling the [discussion on symmetries in tensor networks](symmetric_tensors), we recognize that these identitities precisely mean that these local tensors transform trivially under a tensor product representation of $\mathbb{Z}_2$. This implies that, in an appropriate basis for the local physical vector space, our local tensors would become block-diagonal where each so-called *matrix block* is labeled by a $\mathbb{Z}_2$ irrep. From the same discussion, we recall that the appropriate local basis transformation is precisely the one that brings the local representation $X$ into block-diagonal form. Clearly, this transformation is nothing more than the Hadamard transformation which maps the computational basis of $Z$ eigenstates $\{\ket{\uparrow}, \ket{\downarrow}\}$ to that of the $X$ eigenstates $\{\ket{+}, \ket{-}\}$ defined as $\ket{+} = \frac{\ket{\uparrow} + \ket{\downarrow}}{\sqrt{2}}$ and $\ket{-} = \frac{\ket{\uparrow} - \ket{\downarrow}}{\sqrt{2}}$. In the current context, this basis is referred to as the *irrep basis* of $\mathbb{Z}_2$, where the local basis state $\ket{+}$ corresponds to the trivial representation of $\mathbb{Z}_2$ while $\ket{-}$ corresponds to the sign representation.
 
-Next, let's make the statement the statement that 'the blocks of the local tensors are labeled by a tensor product of $\mathbb{Z}_2$ irreps' more concrete. To this end, consider the action of $ZZ$ in the irrep basis, which is given by the four nonzero matrix elements
+Next, let's make the statement that 'the matrix blocks of the local tensors are labeled by $\mathbb{Z}_2$ irreps' more concrete. To this end, consider the action of $ZZ$ in the irrep basis, which is given by the four nonzero matrix elements
 
 ```{math}
 \begin{align}
@@ -117,7 +117,7 @@ ZZ : \mathbb C^2 \otimes \mathbb C^2 &\to \mathbb C^2 \otimes \mathbb C^2 : \\
 \end{align}
 ```
 
-If we denote the trivial $\mathbb{Z}_2$ irrep by $'0'$, corresponding to a local $\ket{+}$ state, and the sign irrep by $'1'$, corresponding to a local $\ket{-}$ state, and recall that in this notation the fusion rules of $\mathbb{Z}_2$ are given by addition modulo 2, we can associate each of the above matrix elements to a so-called *fusion tree* of $\mathbb{Z}_2$ irreps with a corresponding coëfficient of 1,
+If we denote the trivial $\mathbb{Z}_2$ irrep by $'0'$, corresponding to a local $\ket{+}$ state, and the sign irrep by $'1'$, corresponding to a local $\ket{-}$ state, and recall that in this notation the fusion rules of $\mathbb{Z}_2$ are given by addition modulo 2, we can associate each of the above matrix elements to a so-called *fusion tree* of $\mathbb{Z}_2$ irreps with a corresponding coefficient of 1,
 
 ```{figure} ../_static/SymmetricTensors/Z2_fusiontrees.svg
 :scale: 12%
@@ -125,12 +125,19 @@ If we denote the trivial $\mathbb{Z}_2$ irrep by $'0'$, corresponding to a local
 :align: center
 ```
 
-This observation makes our statement very clear: each nonzero entry of $ZZ$ corresponds to a block labeled by a $\mathbb{Z}_2$ fusion tree encoding a tensor product of $\mathbb{Z}_2$ irreps, and the value of each block is just the scalar entry 1.
+From this we can observe our previous statement very clearly: the $ZZ$ operator indeed consists of two distinct two-dimensional matrix blocks, each of which are labeled by the value of the *coupled irrep* on the middle line of each fusion tree. The first block corresponds to the even coupled irrep '0', and acts within the two-dimensional subspace spanned by $\{\ket{+,+}, \ket{-,-}\}$, while the second block corresponds to the odd coupled irrep '1', and acts within the two-dimensional subspace spanned by $\{\ket{+,-}, \ket{-,+}\}$. In TensorKit.jl, this block-diagonal structure of a symmetric tensor is explicitly encoded into its representation as a `TensorMap`, where only the matrix blocks corresponding to each coupled irrep are stored.
+
+For our current purposes however, we never really need to explicitly consider these matrix blocks. Indeed, when constructing a `TensorMap` it is sufficient to set its data by manually assigning a matrix element to each [fusion tree of the form above](Z2_fusiontrees) labeled by a given tensor product of irreps. This matrix element is then automatically inserted into the appropriate matrix block. So, for the purpose of this tutorial **we will interpret a symmetric `TensorMap` simply as a list of fusion trees, to each of which corresponds a certain reduced matrix element**.
+
+```{note}
+In general, such a reduced matrix element is not necessarily a scalar, but rather an array whose size is determined by the degeneracy of the irreps in the codomain and domain of the fusion tree. For this reason, a reduced matrix element associated to a given fusion tree is also referred to as an *array block*. In the following we will use terms 'reduced matrix element', 'array block' or just 'block' interchangeably. However, it should be remembered that these are distinct from the matrix blocks in the block-diagonal decomposition of the tensor.
+```
+
 
 (fusion_trees)=
 ### Fusion trees and how to use them
 
-This underlying structure in terms of fusion trees and corresponding blocks is integral to the `TensorMap` type. Consider a generic fusion tree of the form
+This view of the underlying symmetry structure in terms of fusion trees and corresponding array blocks is a very convenient way of working with the `TensorMap` type. Consider a generic fusion tree of the form
 
 ```{figure} ../_static/SymmetricTensors/fusiontree.svg
 :scale: 12%
@@ -138,7 +145,7 @@ This underlying structure in terms of fusion trees and corresponding blocks is i
 :align: center
 ```
 
-which can be used to label a block of a `TensorMap` corresponding to a two-site operator. This object should actually be seen as a *pair of fusion trees*. The first member of the pair, related to the codomain of the tensor map, is referred to as the *splitting tree* and encodes how the *coupled charge* $c$ splits into the *uncoupled charges* $s_1$ and $s_2$. The second member of the pair, related to the domain of the tensor map, is referred to as the *fusion tree* and encodes how the uncoupled charges $f_1$ and $f_2$ fuse to the coupled charge $c$. Both the splitting and fusion tree can be represented as a [`TensorKit.FusionTree`](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.FusionTree) instance. You will find such a `FusionTree` has the following properties encoded into its fields:
+which can be used to label a block of a `TensorMap` corresponding to a two-site operator. This object should actually be seen as a *pair of fusion trees*. The first member of the pair, related to the codomain of the `TensorMap`, is referred to as the *splitting tree* and encodes how the *coupled charge* $c$ splits into the *uncoupled charges* $s_1$ and $s_2$. The second member of the pair, related to the domain of the `TensorMap`, is referred to as the *fusion tree* and encodes how the uncoupled charges $f_1$ and $f_2$ fuse to the coupled charge $c$. Both the splitting and fusion tree can be represented as a [`TensorKit.FusionTree`](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.FusionTree) instance. You will find such a `FusionTree` has the following properties encoded into its fields:
 
 - `uncoupled::NTuple{N,I}`: a list of `N` uncoupled charges of type `I<:Sector`
 - `coupled::I`: a single coupled charge of type `I<:Sector`
@@ -148,7 +155,7 @@ which can be used to label a block of a `TensorMap` corresponding to a two-site 
 
 For our current application only `uncoupled` and `coupled` are relevant, since $\mathbb{Z}_2$ irreps are self-dual and have Abelian fusion rules. We will come back to these other properties when discussion more involved applications. Given some `TensorMap`, the method `TensorKit.fusiontrees(t::TensorMap)` returns an iterator over all pairs of splitting and fusion trees that label the blocks of `t`.
 
-We can now put this into practice by directly constructing the $ZZ$ operator in the irrep basis as a $\mathbb{Z}_2$-symmetric `TensorMap`. We will do this in two steps:
+We can now put this into practice by directly constructing the $ZZ$ operator in the irrep basis as a $\mathbb{Z}_2$-symmetric `TensorMap`. We will do this in three steps:
 
 - First we construct the physical space at each site as a $\mathbb{Z}_2$-graded vector space.
 - Then we initialize an empty `TensorMap` with the correct domain and codomain vector spaces built from the previously constructed physical space.
@@ -167,18 +174,19 @@ Given this physical space, we can initialize the $ZZ$ operator as an empty `Tens
 ZZ = TensorMap(zeros, ComplexF64, V ⊗ V ← V ⊗ V)
 ```
 
-The output of this command again demonstrates the underlying structure of a symmetric tensor. We see that all 8 valid fusion trees with 2 incoming irreps and 2 outgoing irreps {ref}`of the type above <fusiontree>` are listed with their corresponding block data. Each of these blocks is an array of shape $(1, 1, 1, 1)$ since each irrep occuring in the space $V$ has degeneracy 1. Using the `fusiontrees` method and the fact that we can index a `TensorMap` using a splitting/fusion tree pair, we can now fill in the nonzero blocks of the operator by observing that the $ZZ$ operator flips the irreps of the uncoupled charges in the domain with respect to the codomain, as shown in the diagrams above. Flipping a given the `Z2Irrep`s in the codomain can be implemented by fusing them with the sign irrep `Z2Irrep(2)`, giving:
+The output of this command again demonstrates the underlying structure of a symmetric tensor. We see that all eight valid fusion trees with two incoming irreps and two outgoing irreps [of the type above](fusiontree) are listed with their corresponding block data. Each of these blocks is an array of shape $(1, 1, 1, 1)$ since each irrep occuring in the space $V$ has degeneracy 1. Using the `fusiontrees` method and the fact that we can index a `TensorMap` using a splitting/fusion tree pair, we can now fill in the nonzero blocks of the operator by observing that the $ZZ$ operator flips the irreps of the uncoupled charges in the domain with respect to the codomain, as shown in the diagrams above. Flipping a given `Z2Irrep` in the codomain can be implemented by fusing them with the sign irrep `Z2Irrep(1)`, giving:
 
 ```{code-cell} julia
+flip_charge(charge::Z2Irrep) = only(charge ⊗ Z2Irrep(1))
 for (s, f) in fusiontrees(ZZ)
-    if s.uncoupled == map(fi -> only(fi ⊗ Z2Irrep(1)), f.uncoupled)
+    if s.uncoupled == map(flip_charge, f.uncoupled)
         ZZ[s, f] .= 1
     end
 end
 ZZ
 ```
 
-Indeed, the resulting `TensorMap` exactly encodes the matrix elements of the $ZZ$ operator shown in {ref}`the diagrams above <Z2_fusiontrees>`. The $X$ operator can be constructed way. Since it is by definition diagonal in the irrep basis with blocks directly corresponding to the trivial and sign irrep, its construction is particularly simple:
+Indeed, the resulting `TensorMap` exactly encodes the matrix elements of the $ZZ$ operator shown in {ref}`the diagrams above <Z2_fusiontrees>`. The $X$ operator can be constructed in a similar way. Since it is by definition diagonal in the irrep basis with blocks directly corresponding to the trivial and sign irrep, its construction is particularly simple:
 
 ```{code-cell} julia
 X = TensorMap(zeros, ComplexF64, V ← V)
@@ -204,7 +212,7 @@ An important observation is that when explicitly imposing the $\mathbb{Z}_2$ sym
 For our next example we will consider the [Bose-Hubbard model](https://en.wikipedia.org/wiki/Bose%E2%80%93Hubbard_model), which describes interacting bosons on a lattice. The Hamiltonian of this model is given by
 ```{math}
 :label: eq:bhh
-H = -t \sum_{\langle i,j \rangle} \left( a_{i}^+ a_{j}^- + a_{i}^- a_{j}^+ \right) - \sum_i \mu N_i + \frac{U}{2} \sum_i N_i(N_i - 1).
+H = -t \sum_{\langle i,j \rangle} \left( a_{i}^+ a_{j}^- + a_{i}^- a_{j}^+ \right) - \mu \sum_i N_i + \frac{U}{2} \sum_i N_i(N_i - 1).
 ```
 This Hamiltonian is defined on the [Fock space](fock_space) associated to a chain of bosons, where the action bosonic creation, annihilation and number operators $a^+$, $a^-$ and $N = a^+ a^-$ in the local occupation number basis is given by
 ```{math}
@@ -215,7 +223,7 @@ a^- \ket{n} &= \sqrt{n} \ket{n - 1} \\
 N \ket{n} &= n \ket{n}
 \end{align}
 ```
-Their bosonic nature can be summarized by familiar the commutation relations
+Their bosonic nature can be summarized by the familiar the commutation relations
 ```{math}
 \begin{align*}
 \left[a_i^-, a_j^-\right] &= \left[a_i^+, a_j^+\right] = 0 \\
@@ -229,7 +237,7 @@ This Hamiltonian is invariant under conjugation by the global particle number op
 ```{math}
 U = \sum_i N_i
 ```
-This invariance corresponds to a $\mathrm{U}(1)$ particle number symmetry, which can again be manifestly imposed when constructing the Hamiltonian terms as tensor maps. Recall that the irreps of $\mathrm{U}(1)$ are labeled by integers, and that the fusion of two irreps is given by addition.
+This invariance corresponds to a $\mathrm{U}(1)$ particle number symmetry, which can again be manifestly imposed when constructing the Hamiltonian terms as `TensorMap`s. From the representation theory of $\mathrm{U}(1)$ we know that it's irreps are all one-dimensional and can be labeled by integers, where the fusion of two irreps is given by addition.
 
 
 ### Directly Constructing the Hamiltonian Terms
@@ -266,7 +274,7 @@ We can now initialize the $a^+ a^-$, $a^- a^+$ and $N$ operators as empty `Tenso
 :tags: [hide-output]
 a⁺a⁻ = TensorMap(zeros, ComplexF64, V ⊗ V ← V ⊗ V)
 for (s, f) in fusiontrees(a⁺a⁻)
-    if s.uncoupled[1].charge == f.uncoupled[1].charge + 1 && s.uncoupled[2].charge == f.uncoupled[2].charge - 1
+    if s.uncoupled[1] == only(f.uncoupled[1] ⊗ U1Irrep(1)) && s.uncoupled[2] == only(f.uncoupled[2] ⊗ U1Irrep(-1))
         a⁺a⁻[s, f] .= sqrt(s.uncoupled[1].charge * f.uncoupled[2].charge)
     end
 end
@@ -277,7 +285,7 @@ a⁺a⁻
 :tags: [hide-output]
 a⁻a⁺ = TensorMap(zeros, ComplexF64, V ⊗ V ← V ⊗ V)
 for (s, f) in fusiontrees(a⁻a⁺)
-    if s.uncoupled[1].charge == f.uncoupled[1].charge - 1 && s.uncoupled[2].charge == f.uncoupled[2].charge + 1
+    if s.uncoupled[1] == only(f.uncoupled[1] ⊗ U1Irrep(-1)) && s.uncoupled[2] == only(f.uncoupled[2] ⊗ U1Irrep(1))
         a⁻a⁺[s, f] .= sqrt(f.uncoupled[1].charge * s.uncoupled[2].charge)
     end
 end
@@ -288,7 +296,7 @@ a⁻a⁺
 :tags: [hide-output]
 N = TensorMap(zeros, ComplexF64, V ← V)
 for (s, f) in fusiontrees(N)
-    N[s, f] .= f.coupled.charge
+    N[s, f] .= f.uncoupled[1].charge
 end
 N
 ```
@@ -296,7 +304,7 @@ N
 
 ### Creation and Annihilation Operators as Symmetric Tensors
 
-Just as in the $\mathbb{Z}_2$ case, it is obvious that we cannot directly construct the creation and annihilation operators as instances of a `TensorMap(..., V ← V)` since they are not invariant under conjugation by the symmetry operator. However, it is possible to construct them as tensor maps using an *auxiliary vector space*, based on the following intuition. The creation operator $a^+$ violates particle number conservation by mapping the occupation number $n$ to $n + 1$. From the point of view of representation theory, this process can be thought af the *fusion* of an `U1Irrep(n)` with an `U1Irrep(1)`, naturally giving the fusion product `U1Irrep(n + 1)`. This means we can represent $a^+$ as a `TensorMap(..., V ← V ⊗ A)`, where the auxiliary vector space `A` is contains the $+1$ irrep with degeneracy 1,  `A = U1Space(1 => 1)`. Similarly, the decrease in occupation number when acting with $a^-$ can be thought of as the *splitting* of an `U1Irrep(n)` into an `U1Irrep(n - 1)` and an `U1Irrep(1)`, leading to a representation in terms of a `TensorMap(..., A ⊗ V ← V)`. Based on these observations, we can represent the matrix elements {eq}`eq:bosonopmatel` as blocks labeled by the $\mathrm{U}(1)$ fusion trees
+Just as in the $\mathbb{Z}_2$ case, it is obvious that we cannot directly construct the creation and annihilation operators as instances of a `TensorMap(..., V ← V)` since they are not invariant under conjugation by the symmetry operator. However, it is possible to construct them as `TensorMap`s using an *auxiliary vector space*, based on the following intuition. The creation operator $a^+$ violates particle number conservation by mapping the occupation number $n$ to $n + 1$. From the point of view of representation theory, this process can be thought af the *fusion* of an `U1Irrep(n)` with an `U1Irrep(1)`, naturally giving the fusion product `U1Irrep(n + 1)`. This means we can represent $a^+$ as a `TensorMap(..., V ← V ⊗ A)`, where the auxiliary vector space `A` is contains the $+1$ irrep with degeneracy 1,  `A = U1Space(1 => 1)`. Similarly, the decrease in occupation number when acting with $a^-$ can be thought of as the *splitting* of an `U1Irrep(n)` into an `U1Irrep(n - 1)` and an `U1Irrep(1)`, leading to a representation in terms of a `TensorMap(..., A ⊗ V ← V)`. Based on these observations, we can represent the matrix elements {eq}`eq:bosonopmatel` as blocks labeled by the $\mathrm{U}(1)$ fusion trees
 
 ```{figure} ../_static/SymmetricTensors/bosonops.svg
 :scale: 12%
@@ -311,7 +319,7 @@ We can then combine these operators in to get the appropriate Hamiltonian terms,
 ```
 
 ```{note}
-Although we have made a suggestive distinction between the 'left' and 'right' versions of the operators $a_L^\pm$ and $a_R^\pm$, these can actually be represented by the same tensor map due to the [bosonic braiding style](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.BraidingStyle) of $\mathrm{U}(1)$ irreps. This is no longer the case when considering fermionic systems where, as a consequence, it is much less clear how to construct symmetric Hamiltonian terms if terms of local symmetric objects.
+Although we have made a suggestive distinction between the 'left' and 'right' versions of the operators $a_L^\pm$ and $a_R^\pm$, one can actually be obtained from the other by permuting the physical and auxiliary indices of the corresponding `TensorMap`s. This permutation has no effect on the actual array blocks of the tensors due to the [bosonic braiding style](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.BraidingStyle) of $\mathrm{U}(1)$ irreps, so the left and right operators can in essence by seen as the 'same' tensors. This is no longer the case when considering fermionic systems, where permuting indices can in fact change the array blocks as we will see next. As consequence, it is much less clear how to construct two-site symmetric operators in terms of local symmetric objects.
 ```
 
 The explicit construction then looks something like
@@ -324,7 +332,7 @@ A = U1Space(1 => 1)
 :tags: [hide-output]
 a⁺ = TensorMap(zeros, ComplexF64, V ← V ⊗ A)
 for (s, f) in fusiontrees(a⁺)
-    a⁺[s, f] .= sqrt(f.coupled.charge)
+    a⁺[s, f] .= sqrt(f.uncoupled[1].charge+1)
 end
 a⁺
 ```
@@ -333,7 +341,7 @@ a⁺
 :tags: [hide-output]
 a⁻ = TensorMap(zeros, ComplexF64, A ⊗ V ← V)
 for (s, f) in fusiontrees(a⁻)
-    a⁻[s, f] .= sqrt(f.coupled.charge)
+    a⁻[s, f] .= sqrt(f.uncoupled[1].charge)
 end
 a⁻
 ```
@@ -356,7 +364,7 @@ From the construction of the Hamiltonian operators [in terms of creation and ann
 
 ## Level 3: Fermions and the Kitaev Model
 
-While we have already covered quite a lot of ground towards understanding symmetric tensors in terms of fusion trees and corresponding blocks, the symmetries considered so far have been quite basic in the sense that sectors corresponding to irreps of $\mathbb{Z}_2$ and $\mathrm{U}(1)$ have [*Abelian fusion rules*](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.FusionStyle) and [*bosonic exchange statistics*](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.BraidingStyle). This means that the fusion of two irreps always gives a single irrep as the fusion product, and that exchanging two irreps in a tensor product is trivial. In practice, this implies that for tensors with these symmetries the fusion trees are completely fixed by the uncoupled charges, which uniquely define both the inner line and the coupled charge, and that tensor indices can be permuted freely without any 'strange' side effects.
+While we have already covered quite a lot of ground towards understanding symmetric tensors in terms of fusion trees and corresponding blocks, the symmetries considered so far have been quite 'simple' in the sense that sectors corresponding to irreps of $\mathbb{Z}_2$ and $\mathrm{U}(1)$ have [*Abelian fusion rules*](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.FusionStyle) and [*bosonic exchange statistics*](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.BraidingStyle). This means that the fusion of two irreps always gives a single irrep as the fusion product, and that exchanging two irreps in a tensor product is trivial. In practice, this implies that for tensors with these symmetries the fusion trees are completely fixed by the uncoupled charges, which uniquely define both the inner line and the coupled charge, and that tensor indices can be permuted freely without any 'strange' side effects.
 
 In the following we will consider examples with fermionic and even anyonic exchange statistics, and non-Abelian fusion rules. In going through these examples it will become clear that the fusion trees labeling the blocks of a symmetric tensor imply more information than just a labeling.
 
@@ -382,7 +390,7 @@ Q = \exp \left( i \pi \sum_i N_i \right) = (-1)^{\sum_i N_i}.
 ```
 This fermion parity symmetry, which we will denote as $f\mathbb{Z}_2$, is a $\mathbb{Z}_2$-like symmetry in the sense that it has a trivial representation, which we call *even* and again denote by '0', and a sign representation which we call *odd* and denote by '1'. The fusion rules of these irreps are the same as for $\mathbb{Z}_2$. Similar to the previous case, the local symmetry operator $Q_i$ is already diagonal, so the occupation number basis coincides with the irrep basis and we don't need an additional basis transform. The important difference with a regular $\mathbb{Z}_2$ symmetry is that the irreps of $f\mathbb{Z}_2$ have fermionic braiding statistics, in the sense that exhanging two odd irreps gives rise to a minus sign.
 
-In TensorKit.jl, an $f\mathbb{Z}_2$-graded vector spaces is represented as a `Vect[FermionParity]` space, where a given $f\mathbb{Z}(2)$ irrep can be represented as a [`FermionParity`](https://jutho.github.io/TensorKit.jl/stable/lib/sectors/#TensorKit.FermionParity) sector instance. Using the simplest instance of a vector space containing a single even and odd irrep, we can already demonstrate the corresponding fermionic braiding behavior by [performing a permutation](https://jutho.github.io/TensorKit.jl/stable/lib/tensors/#TensorKit.permute-Union{Tuple{N%E2%82%82},%20Tuple{N%E2%82%81},%20Tuple{S},%20Tuple{AbstractTensorMap{S},%20Tuple{Tuple{Vararg{Int64,%20N%E2%82%81}},%20Tuple{Vararg{Int64,%20N%E2%82%82}}}}}%20where%20{S,%20N%E2%82%81,%20N%E2%82%82}) on a simple tensor map.
+In TensorKit.jl, an $f\mathbb{Z}_2$-graded vector spaces is represented as a `Vect[FermionParity]` space, where a given $f\mathbb{Z}_2$ irrep can be represented as a [`FermionParity`](https://jutho.github.io/TensorKit.jl/stable/lib/sectors/#TensorKit.FermionParity) sector instance. Using the simplest instance of a vector space containing a single even and odd irrep, we can already demonstrate the corresponding fermionic braiding behavior by [performing a permutation](https://jutho.github.io/TensorKit.jl/stable/lib/tensors/#TensorKit.permute-Union{Tuple{N%E2%82%82},%20Tuple{N%E2%82%81},%20Tuple{S},%20Tuple{AbstractTensorMap{S},%20Tuple{Tuple{Vararg{Int64,%20N%E2%82%81}},%20Tuple{Vararg{Int64,%20N%E2%82%82}}}}}%20where%20{S,%20N%E2%82%81,%20N%E2%82%82}) on a simple `TensorMap`.
 
 ```{code-cell} julia
 V = Vect[FermionParity](0 => 1, 1 => 1)
@@ -392,12 +400,12 @@ t = TensorMap(ones, ComplexF64, V ← V ⊗ V)
 ```{code-cell} julia
 permute(t, ((1,), (3, 2)))
 ```
-In other words, when exchanging the two codomain vector spaces, the block of the tensor map for which both corresponding irreps are odd picks up a minus sign, exactly as we would expect for fermionic charges.
+In other words, when exchanging the two domain vector spaces, the block of the `TensorMap` for which both corresponding irreps are odd picks up a minus sign, exactly as we would expect for fermionic charges.
 
 
 ### Constructing the Hamiltonian
 
-We can directly construct the Hamiltonian terms as symmetric tensor maps using the same procedure as before starting from their matrix elements in the occupation number basis. However, in this case we should be a bit more careful about the precise definition of the basis states in composite systems. Indeed, the tensor product structure of fermionic systems is inherently tricky to deal with, and should ideally be treated in the context of [*super vector spaces*](https://en.wikipedia.org/wiki/Super_vector_space). For two sites, we can define the following basis states on top of the fermionic vacuuum $\ket{00}$:
+We can directly construct the Hamiltonian terms as symmetric `TensorMap`s using the same procedure as before starting from their matrix elements in the occupation number basis. However, in this case we should be a bit more careful about the precise definition of the basis states in composite systems. Indeed, the tensor product structure of fermionic systems is inherently tricky to deal with, and should ideally be treated in the context of [*super vector spaces*](https://en.wikipedia.org/wiki/Super_vector_space). For two sites, we can define the following basis states on top of the fermionic vacuuum $\ket{00}$:
 ```{math}
 \begin{align*}
 \ket{01} &= c_2^+ \ket{00} \\
@@ -422,12 +430,12 @@ c_1^- c_2^+ \ket{1, 0} = c_1^- c_2^+ c_1^+ \ket{0, 0} = - c_2^+ c_1^- c_1^+ \ket
 \end{align*}
 ```
 
-Once we have these matrix elements the hard part is done, and we can naively associate these to the following $f\mathbb{Z}(2)$ fusion trees with corresponding block values,
+Once we have these matrix elements the hard part is done, and we can naively associate these to the following $f\mathbb{Z}_2$ fusion trees with corresponding block values,
 ```{figure} ../_static/SymmetricTensors/fZ2_fusiontrees.svg
 :scale: 12%
 :name: fZ2_fusiontrees
 ```
-Given this information, we can go through the same procedure again to construct $c^+ c^-$, $c^- c^+$ and $N$ operators as `TensorMap`s over $f\mathbb{Z}(2)$-graded vector spaces.
+Given this information, we can go through the same procedure again to construct $c^+ c^-$, $c^- c^+$ and $N$ operators as `TensorMap`s over $f\mathbb{Z}_2$-graded vector spaces.
 
 ```{code-cell} julia
 V = Vect[FermionParity](0 => 1, 1 => 1)
@@ -490,39 +498,39 @@ Working with fermionic systems is inherently tricky, as can already be seen from
 
 ## Level 4: Non-Abelian Symmetries and the Quantum Heisenberg Model
 
-We will now move on to systems which have more complicated *non-Abelian* symmetries. For a non-Abelian symmetry group $G$, the fact that its elements do not all commute has a profound impact on its representation theory. In particular, the irreps of such a group can be higher dimensional, and the fusion of two irreps can give rise to multiple different irreps. On the one hand this means that fusion trees of these irreps are no longer completely determined by the uncoupled charges. Indeed, in this case some of the [internal structure of the `FusionTree` type](fusion_trees) we have ignored before will become relevant (of which we will give an [example below](sun_heisenberg)). On the other hand, it follow that fusion trees of irreps now not only label blocks, but also encode a certain *nontrivial symmetry structure*. We will make this statement more precise in the following, but the fact that this is necessary is quite intuitive. If we recall our original statement that symmetric tensors consist of blocks associated to fusion trees which carry irrep labels, then for higher-dimensional irreps the corresponding fusion trees must encode some additional information that implicitly takes into account the internal structure of the representation spaces. In particular, this means that the conversion of an operator, given its matrix elements in the irrep basis, to the blocks of the corresponding symmetric tensor map is less straightforward since it requires an understanding of exactly what this implied internal structure is. Therefore, we require some more discussion before we can actually move on to an example.
+We will now move on to systems which have more complicated *non-Abelian* symmetries. For a non-Abelian symmetry group $G$, the fact that its elements do not all commute has a profound impact on its representation theory. In particular, the irreps of such a group can be higher dimensional, and the fusion of two irreps can give rise to multiple different irreps. On the one hand this means that fusion trees of these irreps are no longer completely determined by the uncoupled charges. Indeed, in this case some of the [internal structure of the `FusionTree` type](fusion_trees) we have ignored before will become relevant (of which we will give an [example below](sun_heisenberg)). On the other hand, it follows that fusion trees of irreps now not only label blocks, but also encode a certain *nontrivial symmetry structure*. We will make this statement more precise in the following, but the fact that this is necessary is quite intuitive. If we recall our original statement that symmetric tensors consist of blocks associated to fusion trees which carry irrep labels, then for higher-dimensional irreps the corresponding fusion trees must encode some additional information that implicitly takes into account the internal structure of the representation spaces. In particular, this means that the conversion of an operator, given its matrix elements in the irrep basis, to the blocks of the corresponding symmetric `TensorMap` is less straightforward since it requires an understanding of exactly what this implied internal structure is. Therefore, we require some more discussion before we can actually move on to an example.
 
-We'll start by discussing the general structure of a tensor map which is symmetric under a non-Abelian group symmetry. We then given an example based on $\mathrm{SU}(2)$, where we construct the Heisenberg Hamiltonian using two different approaches. Finally, we show how the more intuitive approach can be used to obtain an elegant generalization to the $\mathrm{SU}(N)$-symmetric case.
+We'll start by discussing the general structure of a `TensorMap` which is symmetric under a non-Abelian group symmetry. We then given an example based on $\mathrm{SU}(2)$, where we construct the Heisenberg Hamiltonian using two different approaches. Finally, we show how the more intuitive approach can be used to obtain an elegant generalization to the $\mathrm{SU}(N)$-symmetric case.
 
 
 ### Block Sparsity Revisited: The Wigner-Eckart Theorem
 
-Let us recall some basics of representation theory first. Consider a group $G$ and a corresponding representation space $V$, such that every element $g \in G$ can be realized as a unitary operator $U_g : V \to V$. Let $h$ be a tensor map whose domain and codomain is given by the tensor product of two of these representation spaces. Recall that, by definition, the statement that '$h$ is symmetric under $G$' means that
+Let us recall some basics of representation theory first. Consider a group $G$ and a corresponding representation space $V$, such that every element $g \in G$ can be realized as a unitary operator $U_g : V \to V$. Let $h$ be a `TensorMap` whose domain and codomain are given by the tensor product of two of these representation spaces. Recall that, by definition, the statement that '$h$ is symmetric under $G$' means that
 ```{figure} ../_static/SymmetricTensors/symmetric_tensor.svg
 :scale: 12%
 :name: symmetric_tensor
 ```
 for every $g \in G$. If we label the irreducible representations of $G$ by $l$, then any representation space can be decomposed into a direct sum of irreducible representations, $V = \bigoplus_l V^{(l)}$, in such a way that $U_g$ is block-diagonal where each block is labeled by a particular irrep $l$. For each irrep space $V^{(l)}$ we can define an orthonormal basis labeled as $\ket{l, m}$, where the auxiliary label $m$ can take $\text{dim}\left( V^{(l)} \right)$ different values. Since we know that tensors are multilinear maps over tensor product spaces, it is natural to consider the tensor product of representation spaces in more detail.
 
-[From the representation theory of groups](https://en.wikipedia.org/wiki/Tensor_product_of_representations#Clebsch%E2%80%93Gordan_theory), it is known that the product of two irreps can in turn be decomposed into a direct sum of irreps, $V^{(l_1)} \otimes V^{(l_2)} \cong \bigoplus_{l_3} V^{(l_3)}$. The precise nature of this decomposition, also refered to as the *Clebsch-Gordan problem*, is given by the so-called *Clebsch-Gordan coefficients*, which we will denote as $C_{l_3}^{l_1,l_2}$. This set of coefficients, which can be interpreted as a $\text{dim}\left( V^{(l_1)} \right) \times \text{dim}\left( V^{(l_2)} \right)  \times \text{dim}\left( V^{(l_3)} \right)$ array, that encodes how a basis state $\ket{l_3,m_3} \in V^{(l_3)}$ corresponding to some term in the decomposition can be written as a linear combination of basis vectors $\ket{l_1,m_1} \otimes \ket{l_2,m_2}$ of the tensor product space:
+[From the representation theory of groups](https://en.wikipedia.org/wiki/Tensor_product_of_representations#Clebsch%E2%80%93Gordan_theory), it is known that the product of two irreps can in turn be decomposed into a direct sum of irreps, $V^{(l_1)} \otimes V^{(l_2)} \cong \bigoplus_{k} V^{(k)}$. The precise nature of this decomposition, also refered to as the *Clebsch-Gordan problem*, is given by the so-called *Clebsch-Gordan coefficients*, which we will denote as $C^{k}_{l_1,l_2}$. This set of coefficients, which can be interpreted as a $\text{dim}\left( V^{(l_1)} \right) \times \text{dim}\left( V^{(l_2)} \right)  \times \text{dim}\left( V^{(l_3)} \right)$ array, that encodes how a basis state $\ket{k,n} \in V^{(k)}$ corresponding to some term in the direct sum can be decomposed into a linear combination of basis vectors $\ket{l_1,m_1} \otimes \ket{l_2,m_2}$ of the tensor product space:
 ```{math}
-\ket{l_3,m_3} = \sum_{m_1, m_2} \left( C_{l_3}^{l_1,l_2} \right)_{m_3}^{m_1, m_2} \ket{l_1,m_1} \otimes \ket{l_2,m_2}.
+\ket{k,n} = \sum_{m_1, m_2} \left( C^{l_3}_{l_1,l_2} \right)^{n}_{m_1, m_2} \ket{l_1,m_1} \otimes \ket{l_2,m_2}.
 ```
-These recoupling coefficients turn out to be essential to the structure of symmetric tensors, which can be best understood in the context of the [Wigner-Eckart theorem](https://en.wikipedia.org/wiki/Wigner%E2%80%93Eckart_theorem). This theorem implies that for any [tensor map $h$ that is symmetric under $G$](symmetric_tensor), its matrix elements in the tensor product irrep basis are given by the product of Clebsch-Gordan coefficients which characterize the coupling of the basis states in the domain and codomain, and a so-called *reduced matrix element* which only depends on the irrep labels. Concretely, the matrix element $\bra{l_1,m_1} \otimes \bra{l_2,m_2} h \ket{l_3,m_3} \otimes \ket{l_4,m_4}$ is given by
+These recoupling coefficients turn out to be essential to the structure of symmetric tensors, which can be best understood in the context of the [Wigner-Eckart theorem](https://en.wikipedia.org/wiki/Wigner%E2%80%93Eckart_theorem). This theorem implies that for any [`TensorMap` $h$ that is symmetric under $G$](symmetric_tensor), its matrix elements in the tensor product irrep basis are given by the product of Clebsch-Gordan coefficients which characterize the coupling of the basis states in the domain and codomain, and a so-called *reduced matrix element* which only depends on the irrep labels. Concretely, the matrix element $\bra{l_1,m_1} \otimes \bra{l_2,m_2} h \ket{l_3,m_3} \otimes \ket{l_4,m_4}$ is given by
 ```{figure} ../_static/SymmetricTensors/wignereckart.svg
 :scale: 12%
 :name: wignereckart
 ```
-Here, the sum runs over all possible irreps $k$ in the fusion product $l_3 \otimes l_4$ and over all basis states $\ket{k,n}$ of $V^{(k)}$. The reduced matrix elements $h_{\text{red}}$ are independent of the basis state labels and only depend on the irrep labels themselves. Each reduced matrix element should be interpreted as corresponding to an irrep fusion tree,
+Here, the sum runs over all possible irreps $k$ in the fusion product $l_3 \otimes l_4$ and over all basis states $\ket{k,n}$ of $V^{(k)}$. The reduced matrix elements $h_{\text{red}}$ are independent of the basis state labels and only depend on the irrep labels themselves. Each reduced matrix element should be interpreted as being labeled by an irrep fusion tree,
 ```{figure} ../_static/SymmetricTensors/anotherfusiontree.svg
 :scale: 12%
 :name: anotherfusiontree
 ```
-The Clebsch-Gordan coefficients $C_{k}^{l_3,l_4}$ and conjugate coefficients $C^{\dagger k}_{l_1,l_2}$ encode the coupling of the domain basis states $\ket{l_3,m_3} \otimes \ket{l_4,m_4}$ to the coupled basis state $\ket{k,n}$ and the splitting of the coupled basis state to the codomain basis states $\ket{l_1,m_1} \otimes \ket{l_2,m_2}$ respectively.
+The fusion tree itself in turn implies the Clebsch-Gordan coefficients $C^{k}_{l_1,l_2}$ and conjugate coefficients ${C^{\dagger}}_{k}^{l_1,l_2}$ encode the splitting (decomposition) of the coupled basis state $\ket{k,n}$ to the codomain basis states $\ket{l_1,m_1} \otimes \ket{l_2,m_2}$ and the coupling of the domain basis states $\ket{l_3,m_3} \otimes \ket{l_4,m_4}$ to the coupled basis state $\ket{k,n}$ respectively.
 
-Since the Wigner-Eckart theorem demands that this structure in terms of Clebsch-Gordan coefficients is necessary to ensure that the corresponding is symmetric, it is precisely this structure that is inherently encoded into the fusion tree part of a symmetric tensor map. In particular, **the block value associated to each fusion tree in a symmetric tensor is precisely the reduced matrix element in the Clebsch-Gordan decomposition**.
+The Wigner-Eckart theorem dictates that this structure in terms of Clebsch-Gordan coefficients is necessary to ensure that the corresponding is symmetric. It is precisely this structure that is inherently encoded into the fusion tree part of a symmetric `TensorMap`. In particular, **the array block value associated to each fusion tree in a symmetric tensor is precisely the reduced matrix element in the Clebsch-Gordan decomposition**.
 
-As a small demonstration of this fact, we can make a simple $\mathrm{SU}(2)$-symmetric tensor with trivial block values and verify that its implied symmetry structure exactly corresponds to the expected Clebsch-Gordan coefficient. In TensorKit.jl, a $\mathrm{SU}(2)$-graded vector space is represented as an [`SU2Space`](https://jutho.github.io/TensorKit.jl/latest/lib/spaces/#TensorKit.SU2Space), where a given $\mathrm{SU}(2)$ irrep can be represented as an [`SU2Irrep`](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.SU2Irrep) instance of integer or halfinteger spin as encoded in its `j` field. If we construct a tensor map whose symmetry structure corresponds to the coupling of two spin-$\frac{1}{2}$ irreps to a spin-$1$ irrep, we can then convert it to a plain array and compare it to the $\mathrm{SU}(2)$ Clebsch-Gordan coefficients exported by the [WignerSymbols.jl package](https://github.com/Jutho/WignerSymbols.jl).
+As a small demonstration of this fact, we can make a simple $\mathrm{SU}(2)$-symmetric tensor with trivial block values and verify that its implied symmetry structure exactly corresponds to the expected Clebsch-Gordan coefficient. In TensorKit.jl, a $\mathrm{SU}(2)$-graded vector space is represented as an [`SU2Space`](https://jutho.github.io/TensorKit.jl/latest/lib/spaces/#TensorKit.SU2Space), where a given $\mathrm{SU}(2)$ irrep can be represented as an [`SU2Irrep`](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.SU2Irrep) instance of integer or halfinteger spin as encoded in its `j` field. If we construct a `TensorMap` whose symmetry structure corresponds to the coupling of two spin-$\frac{1}{2}$ irreps to a spin-$1$ irrep, we can then convert it to a plain array and compare it to the $\mathrm{SU}(2)$ Clebsch-Gordan coefficients exported by the [WignerSymbols.jl package](https://github.com/Jutho/WignerSymbols.jl).
 
 ```{code-cell} julia
 V1 = SU2Space(1 => 1)
@@ -544,7 +552,7 @@ for i1 in 1:dim(V1), i2 in 1:dim(V2), i3 in 1:dim(V2)
 end
 ```
 
-Based on this discussion, we can quantify the aforementioned 'difficulties' in the inverse operation of what we just demonstrated, namely converting a given operator to a symmetric tensor map given only its matrix elements in the irrep basis. Indeed, it is now clear that this precisely requires isolating the reduced matrix elements introduced above. Given the matrix elements of the operator in the irreep basis, this can in general be done by solving the system of equations implied by the [Clebsch-Gordan decomposition](wignereckart). A simpler way to achieve the same thing is to make use of the fact that the [Clebsch-Gordan tensors form a complete orthonormal basis](https://en.wikipedia.org/wiki/Clebsch%E2%80%93Gordan_coefficients#Orthogonality_relations) on the coupled space. Indeed, by projecting out the appropriate Clebsch-Gordan coefficients and using their orthogonality relations, we can construct a diagonal operator on each coupled irrep space $V^{(k)}$. Each of these diagonal operators is proportional to the identity, where the proportionality factor is precisely the reduced matrix element associated to the corresponding irrep fusion tree.
+Based on this discussion, we can quantify the aforementioned 'difficulties' in the inverse operation of what we just demonstrated, namely converting a given operator to a symmetric `TensorMap` given only its matrix elements in the irrep basis. Indeed, it is now clear that this precisely requires isolating the reduced matrix elements introduced above. Given the matrix elements of the operator in the irrep basis, this can in general be done by solving the system of equations implied by the [Clebsch-Gordan decomposition](wignereckart). A simpler way to achieve the same thing is to make use of the fact that the [Clebsch-Gordan tensors form a complete orthonormal basis](https://en.wikipedia.org/wiki/Clebsch%E2%80%93Gordan_coefficients#Orthogonality_relations) on the coupled space. Indeed, by projecting out the appropriate Clebsch-Gordan coefficients and using their orthogonality relations, we can construct a diagonal operator on each coupled irrep space $V^{(k)}$. Each of these diagonal operators is proportional to the identity, where the proportionality factor is precisely the reduced matrix element associated to the corresponding irrep fusion tree.
 ```{figure} ../_static/SymmetricTensors/none2symm.svg
 :scale: 12%
 :name: none2symm
@@ -555,13 +563,11 @@ This procedure works for any group symmetry, and all we need are matrix elements
 
 ### The 'Generic' Approach to the Spin-1 Heisenberg Model: Wigner-Eckart in Action
 
-Define full array, divide out Clebsch-Gordan coefficients, separate out block value corresponding to each fusion tree.
-
 Consider the spin-1 Heisenberg model with Hamiltonian
 ```{math}
 H = J \sum_{\langle i,j \rangle} \vec{S}_i \cdot \vec{S}_j
 ```
-where $\vec{S} = (S^x, S^y, S^z)$ are the spin operators. The physical Hilbert space at each site is the three-dimensional spin-1 irrep of $\mathrm{SU}(2)$. Each two-site exchange operator $\vec{S}_i \cdot \vec{S}_j$ in the sum commutes with a global transformation $g \in \mathrm{SU}(2)$, so that it satisfies the [above symmetry condition](symmetric_tensor). Therefore, we can represent it as an $\mathrm{SU}(2)$-symmetric tensor map, as long as we can isolate its reduced matrix elements.
+where $\vec{S} = (S^x, S^y, S^z)$ are the spin operators. The physical Hilbert space at each site is the three-dimensional spin-1 irrep of $\mathrm{SU}(2)$. Each two-site exchange operator $\vec{S}_i \cdot \vec{S}_j$ in the sum commutes with a global transformation $g \in \mathrm{SU}(2)$, so that it satisfies the [above symmetry condition](symmetric_tensor). Therefore, we can represent it as an $\mathrm{SU}(2)$-symmetric `TensorMap`, as long as we can isolate its reduced matrix elements.
 
 In order to apply the above procedure, we first require the matrix elements in the irrep basis. These can be constructed as a $3 \times 3 \times 3 \times 3$ array `SS` using the [familiar representation of the $\mathrm{SU}(2)$ generators in the spin-1 representation](https://en.wikipedia.org/wiki/Spin_(physics)#Higher_spins), with respect to the $\{\ket{1,-1}, \ket{1,0}, \ket{1,1}\}$ basis.
 ```{code-cell} julia
@@ -586,11 +592,11 @@ function get_reduced_element(k)
     # project out diagonal matrix on coupled irrep space
     @tensor reduced_matrix[-1; -2] := CG[1 2; -1] * SS_arr[1 2; 3 4] * conj(CG[3 4; -2])
 
-    # check that it is proportianal to the identity and return diagonal element
-    @assert norm(reduced_matrix - diagm(diag(reduced_matrix))) < 1e-12
-    @assert norm(diag(reduced_matrix) .- diag(reduced_matrix)[1]) < 1e-12
+    # check that it is proportianal to the identity
+    @assert isapprox(reduced_matrix, reduced_matrix[1, 1] * I; atol=1e-12)
 
-    return diag(reduced_matrix)[1]
+    # return the proportionality factor
+    return reduced_matrix[1, 1]
 end
 ```
 If we use this to compute the reduced matrix elements for $k = 0, 1, 2$,
@@ -625,7 +631,7 @@ we can read off the entries
     1,1
 \end{smallmatrix} = 1, \quad
 ```
-These can then be used to construct the symmetric tensor map representing the exchange interaction:
+These can then be used to construct the symmetric `TensorMap` representing the exchange interaction:
 ```{code-cell} julia
 V = SU2Space(1 => 1)
 SS = TensorMap(zeros, ComplexF64, V ⊗ V ← V ⊗ V)
@@ -653,7 +659,7 @@ It then follows from Eq. {eq}`eq:casimir_decomp` that the reduced matrix element
 :scale: 12%
 :name: SU2_fusiontrees
 ```
-This gives us all we need to directly construct the exchange interaction as a symmetric tensor map,
+This gives us all we need to directly construct the exchange interaction as a symmetric `TensorMap`,
 ```{code-cell} julia
 V = SU2Space(1 => 1)
 SS = TensorMap(zeros, ComplexF64, V ⊗ V ← V ⊗ V)
@@ -675,16 +681,23 @@ This last construction for the exchange interaction immediatly generalizes to an
 (sun_heisenberg)=
 ### $\mathrm{SU}(N)$ generalization
 
-We end this subsection with some comments on the generalization of the above discussion to $\mathrm{SU}(N)$. As foreshadowed above, the irreps of $\mathrm{SU}(N)$ in general have an even more complicated structure. In particular, they can admit so-called *fusion multiplicities*, where the fusion of two irreps can not just have multiple distinct outcomes, but they can even fuse to a given irrep in mutliple inequivalent ways. We can demonstrate this behavior for the adjoint representation of $\mathrm{SU}(3)$. For this we can use the the [SUNRepresentations.jl](https://github.com/maartenvd/SUNRepresentations.jl/tree/master) package which provides an interface for working with irreps of $\mathrm{SU}(N)$ and their Clebsch-Gordan coefficients. A particular representation is represented by an `SUNIrrep{N}` which can be used with TensorKit.jl. The adjoint representation of $\mathrm{SU}(3)$ is given by
+We end this subsection with some comments on the generalization of the above discussion to $\mathrm{SU}(N)$. As foreshadowed above, the irreps of $\mathrm{SU}(N)$ in general have an even more complicated structure. In particular, they can admit so-called *fusion multiplicities*, where the fusion of two irreps can not just have multiple distinct outcomes, but they can even fuse to a given irrep in mutliple inequivalent ways. We can demonstrate this behavior for the adjoint representation of $\mathrm{SU}(3)$. For this we can use the the [SUNRepresentations.jl](https://github.com/maartenvd/SUNRepresentations.jl/tree/master) package which provides an interface for working with irreps of $\mathrm{SU}(N)$ and their Clebsch-Gordan coefficients. A particular representation is represented by an `SUNIrrep{N}` which can be used with TensorKit.jl. The eight-dimensional adjoint representation of $\mathrm{SU}(3)$ is given by
 ```{code-cell} julia
-:tags: [hide-output]
-l = SUNIrrep((2, 1, 0))
+:tags: [remove-cell]
+SUNRepresentations.display_mode("dimension")
+```
+```{code-cell} julia
+l = SU3Irrep("8")
 ```
 If we look at the possible outcomes of fusing two adjoint irreps, we find the by now familiar non-Abelian fusion behavior,
 ```{code-cell} julia
 collect(l ⊗ l)
 ```
-However, this particular fusion has multiplicities, since the adjoint irrep can actually fuse to itself in two distinct ways. Indeed, we can use the [`Nsymbol`](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.Nsymbol) method from TensorKit.jl to inspect the number of times `l` appears in the fusion product `l ⊗ l`, 
+However, this particular fusion has multiplicities, since the adjoint irrep can actually fuse to itself in two distinct ways. The full decomposition of this fusion product is given by
+```{math}
+\mathbf{8} \otimes \mathbf{8} = \mathbf{1} \oplus \mathbf{3} \oplus 2 \cdot \mathbf{8} \oplus \mathbf{10} \oplus \mathbf{\overline{10}} \oplus \mathbf{27}
+```
+This fusion multiplicity can be detected by using [`Nsymbol`](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.Nsymbol) method from TensorKit.jl to inspect the number of times `l` appears in the fusion product `l ⊗ l`, 
 ```{code-cell} julia
 Nsymbol(l, l, l)
 ```
@@ -694,7 +707,7 @@ Given the generators $T^k$ of $\mathrm{SU}(N)$, we can define a generalized Heis
 ```{math}
 H = J \sum_{\langle i,j \rangle} \vec{T}_i \cdot \vec{T}_j
 ```
-For a particular choice of physical irrep, the exchange interaction can again be constructed as a symmetric tensor map by first rewriting it as 
+For a particular choice of physical irrep, the exchange interaction can again be constructed as a symmetric `TensorMap` by first rewriting it as 
 ```{math}
 \vec{T}_i \cdot \vec{T}_j = \frac{1}{2} \left( \left( \vec{T}_i + \vec{T}_j \right)^2 - \vec{T}_i^2 - \vec{T}_j^2 \right).
 ```
@@ -707,7 +720,7 @@ commutes with all $\mathrm{SU}(N)$ generators, meaning it has a well defined eig
 :scale: 12%
 :name: SUN_fusiontrees
 ```
-Using these to directly construct the corresponding symmetric tensor map is much simpler than going through the explicit projection procedure using Clebsch-Gordan coefficients.
+Using these to directly construct the corresponding symmetric `TensorMap` is much simpler than going through the explicit projection procedure using Clebsch-Gordan coefficients.
 
 For the particular example of $\mathrm{SU}(3)$, the generators are given by $T^k = \frac{1}{2} \lambda^k$ , where $\lambda^k$ are the [Gell-Mann matrices](https://en.wikipedia.org/wiki/Clebsch%E2%80%93Gordan_coefficients_for_SU(3)#Generators_of_the_Lie_algebra). Each irrep can be labeled as $l = D(p,q)$ where $p$ and $q$ are refered to as the *Dynkin labels*. The eigenvalue of the quadratic Casimir for a given irrep is given by [Freudenthal's formula](https://en.wikipedia.org/wiki/Weyl_character_formula#Freudenthal's_formula),
 ```{math}
@@ -721,9 +734,9 @@ function casimir(l::SUNIrrep)
     return (p^2 + q^2 + 3 * p + 3 * q + p * q) / 3
 end
 ```
-If we use the adjoint representation of $\mathrm{SU}(3)$ as physical space, the Heisenberg exchage interaction can then be constructed as
+If we use the adjoint representation of $\mathrm{SU}(3)$ as physical space, the Heisenberg exchange interaction can then be constructed as
 ```{code-cell} julia
-V = Vect[SUNIrrep{3}](SUNIrrep((2, 1, 0)) => 1)
+V = Vect[SUNIrrep{3}](SU3Irrep("8") => 1)
 TT = TensorMap(zeros, ComplexF64, V ⊗ V ← V ⊗ V)
 for (s, f) in fusiontrees(TT)
     l3 = f.uncoupled[1]
@@ -761,7 +774,7 @@ Even just writing down an explicit expression for this interaction on such a con
 ```{math}
 H = \sum_{\langle i,j \rangle} h_{ij}
 ```
-which favors neighboring anyons fusing to the vacuum can be constructed as a tensor map on the product space of two Fibonacci-graded physical spaces
+which favors neighboring anyons fusing to the vacuum can be constructed as a `TensorMap` on the product space of two Fibonacci-graded physical spaces
 ```{code-cell} julia
 :tags: [hide-output]
 V = Vect[FibonacciAnyon](:τ => 1)
@@ -785,9 +798,8 @@ In the previous section we have stressed the role of Clebsch-Gordan coefficients
 ```
 
 
-## Closing Remarks
+## To Be Added
 
-TODO
-
-- Mention something about product symmetries.
-- Anything else?
+- Add section on product symmetries and how to work with them.
+    - Use the Hubbard model with $f\mathbb{Z}_2 \boxtimes \mathrm{U}(1) \boxtimes \mathrm{SU}(2)$ as an example.
+- Add a section on classical $O(N)$ models to illustrate the ('Fourier') transformation from the group element to the irrep basis for continuous symmetries.
