@@ -1791,9 +1791,9 @@ not invariant under conjugation by the symmetry operator. However, it is possibl
 construct them as <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>s using an <em>auxiliary vector space</em>, based on the following
 intuition. The creation operator <span class="math notranslate nohighlight">\(a^+\)</span> violates particle number conservation by mapping the
 occupation number <span class="math notranslate nohighlight">\(n\)</span> to <span class="math notranslate nohighlight">\(n + 1\)</span>. From the point of view of representation theory, this
-process can be thought af the <em>fusion</em> of an <code class="docutils literal notranslate"><span class="pre">U1Irrep(n)</span></code> with an <code class="docutils literal notranslate"><span class="pre">U1Irrep(1)</span></code>, naturally
+process can be thought of as the <em>fusion</em> of an <code class="docutils literal notranslate"><span class="pre">U1Irrep(n)</span></code> with an <code class="docutils literal notranslate"><span class="pre">U1Irrep(1)</span></code>, naturally
 giving the fusion product <code class="docutils literal notranslate"><span class="pre">U1Irrep(n</span> <span class="pre">+</span> <span class="pre">1)</span></code>. This means we can represent <span class="math notranslate nohighlight">\(a^+\)</span> as a
-<code class="docutils literal notranslate"><span class="pre">TensorMap(...,</span> <span class="pre">V</span> <span class="pre">←</span> <span class="pre">V</span> <span class="pre">⊗</span> <span class="pre">A)</span></code>, where the auxiliary vector space <code class="docutils literal notranslate"><span class="pre">A</span></code> is contains the <span class="math notranslate nohighlight">\(+1\)</span> irrep
+<code class="docutils literal notranslate"><span class="pre">TensorMap(...,</span> <span class="pre">V</span> <span class="pre">←</span> <span class="pre">V</span> <span class="pre">⊗</span> <span class="pre">A)</span></code>, where the auxiliary vector space <code class="docutils literal notranslate"><span class="pre">A</span></code> contains the <span class="math notranslate nohighlight">\(+1\)</span> irrep
 with degeneracy 1, <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">U1Space(1</span> <span class="pre">=&gt;</span> <span class="pre">1)</span></code>. Similarly, the decrease in occupation number when
 acting with <span class="math notranslate nohighlight">\(a^-\)</span> can be thought of as the <em>splitting</em> of an <code class="docutils literal notranslate"><span class="pre">U1Irrep(n)</span></code> into an
 <code class="docutils literal notranslate"><span class="pre">U1Irrep(n</span> <span class="pre">-</span> <span class="pre">1)</span></code> and an <code class="docutils literal notranslate"><span class="pre">U1Irrep(1)</span></code>, leading to a representation in terms of a
@@ -1802,7 +1802,7 @@ elements <a class="reference internal" href="#equation-eq-bosonopmatel">(18.4)</
 <div class="figure align-default" id="bosonops">
 <a class="reference internal image-reference" href="../_images/bosonops.svg"><img alt="../_images/bosonops.svg" height="105" src="../_images/bosonops.svg" width="768" /></a>
 </div>
-<p>We can then combine these operators in to get the appropriate Hamiltonian terms,</p>
+<p>We can then combine these operators to get the appropriate Hamiltonian terms,</p>
 <div class="figure align-default" id="bosonham">
 <a class="reference internal image-reference" href="../_images/bosonham.svg"><img alt="../_images/bosonham.svg" height="107" src="../_images/bosonham.svg" width="512" /></a>
 </div>
@@ -1813,9 +1813,9 @@ the operators <span class="math notranslate nohighlight">\(a_L^\pm\)</span> and 
 permuting the physical and auxiliary indices of the corresponding <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>s. This
 permutation has no effect on the actual array blocks of the tensors due to the
 <a class="reference external" href="https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.BraidingStyle">bosonic braiding style</a>
-of <span class="math notranslate nohighlight">\(\mathrm{U}(1)\)</span> irreps, so the left and right operators can in essence by seen as the
+of <span class="math notranslate nohighlight">\(\mathrm{U}(1)\)</span> irreps, so the left and right operators can in essence be seen as the
 ‘same’ tensors. This is no longer the case when considering fermionic systems, where
-permuting indices can in fact change the array blocks as we will see next. As consequence,
+permuting indices can in fact change the array blocks as we will see next. As a consequence,
 it is much less clear how to construct two-site symmetric operators in terms of local
 symmetric objects.</p>
 </div>
@@ -1913,9 +1913,9 @@ symmetric objects.</p>
 <span class="nd">@tensor</span><span class="w"> </span><span class="n">a⁻a⁺_bis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">a⁻</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a⁺</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
 <span class="nd">@tensor</span><span class="w"> </span><span class="n">N_bis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">a⁺</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a⁻</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 
-<span class="nd">@test</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">a⁺a⁻_bis</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a⁺a⁻</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-14</span>
-<span class="nd">@test</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">a⁻a⁺_bis</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a⁻a⁺</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-14</span>
-<span class="nd">@test</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">N_bis</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-14</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">a⁺a⁻_bis</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">a⁺a⁻</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-14</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">a⁻a⁺_bis</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">a⁻a⁺</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-14</span>
+<span class="nd">@test</span><span class="w"> </span><span class="n">N_bis</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-14</span>
 </pre></div>
 </div>
 </div>
@@ -1950,7 +1950,7 @@ and
 This means that the fusion of two irreps always gives a single irrep as the fusion product,
 and that exchanging two irreps in a tensor product is trivial. In practice, this implies
 that for tensors with these symmetries the fusion trees are completely fixed by the
-uncoupled charges, which uniquely define both the inner line and the coupled charge, and
+uncoupled charges, which uniquely define both the inner lines and the coupled charge, and
 that tensor indices can be permuted freely without any ‘strange’ side effects.</p>
 <p>In the following we will consider examples with fermionic and even anyonic exchange
 statistics, and non-Abelian fusion rules. In going through these examples it will become
@@ -1971,10 +1971,10 @@ relations</p>
 \left\{c_i^-, c_j^-\right\} &amp;= \left\{c_i^+, c_j^+\right\} = 0 \\
 \left\{c_i^-, c_j^+\right\} &amp;= \delta_{ij} .\\
 \end{align*}\end{split}\]</div>
-<p>These commutation relations justify the choice of the relative minus sign in the hopping and
-pairing terms. Indeed, since fermionic operators on different sites always anticommute,
-these relative minus signs are needed to ensure that the Hamiltonian is Hermitian, since
-<span class="math notranslate nohighlight">\(\left( c_i^+ c_j^- \right)^\dagger = c_j^+ c_i^- = - c_i^- c_j^+\)</span> and <span class="math notranslate nohighlight">\(\left( c_i^+ c_j^+
+<p>These relations justify the choice of the relative minus sign in the hopping and pairing
+terms. Indeed, since fermionic operators on different sites always anticommute, these
+relative minus signs are needed to ensure that the Hamiltonian is Hermitian, since <span class="math notranslate nohighlight">\(\left(
+c_i^+ c_j^- \right)^\dagger = c_j^+ c_i^- = - c_i^- c_j^+\)</span> and <span class="math notranslate nohighlight">\(\left( c_i^+ c_j^+
 \right)^\dagger = c_j^- c_i^- = - c_i^- c_j^-\)</span>. The anticommutation relations also naturally
 restrict the local occupation number to be 0 or 1, leading to a well-defined notion of
 <em>fermion-parity</em>. The local fermion-parity operator is related to the fermion number
@@ -2389,8 +2389,8 @@ the coupled basis state <span class="math notranslate nohighlight">\(\ket{k,n}\)
 \ket{l_2,m_2}\)</span> and the coupling of the domain basis states <span class="math notranslate nohighlight">\(\ket{l_3,m_3} \otimes
 \ket{l_4,m_4}\)</span> to the coupled basis state <span class="math notranslate nohighlight">\(\ket{k,n}\)</span> respectively.</p>
 <p>The Wigner-Eckart theorem dictates that this structure in terms of Clebsch-Gordan
-coefficients is necessary to ensure that the corresponding is symmetric. It is precisely
-this structure that is inherently encoded into the fusion tree part of a symmetric
+coefficients is necessary to ensure that the corresponding tensor is symmetric. It is
+precisely this structure that is inherently encoded into the fusion tree part of a symmetric
 <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>. In particular, <strong>the array block value associated to each fusion tree in a
 symmetric tensor is precisely the reduced matrix element in the Clebsch-Gordan
 decomposition</strong>.</p>
@@ -2484,11 +2484,12 @@ associated to the corresponding irrep fusion tree.</p>
 operator in the irrep basis and the Clebsch-Gordan coefficients. In the following we
 demonstrate this explicit procedure for the particular example of <span class="math notranslate nohighlight">\(G = \mathrm{SU}(2)\)</span>.
 However, it should be noted that for general groups the Clebsch-Gordan coefficients may not
-be as easy to compute (if it is even known how). In addition, the procedure for manually
-projecting out the reduced matrix elements requires being particularly careful about the
-correspondence between the basis states used to define the original matrix elements and
-those implied by the Clebsch-Gordan coefficients. Therefore, it is often easier to directly
-construct the symmetric tensor based on some representation theory, as we will see below.</p>
+be as easy to compute (in general, no closed formulas exist). In addition, the procedure for
+manually projecting out the reduced matrix elements requires being particularly careful
+about the correspondence between the basis states used to define the original matrix
+elements and those implied by the Clebsch-Gordan coefficients. Therefore, it is often easier
+to directly construct the symmetric tensor based on some representation theory, as we will
+see below.</p>
 </div>
 <div class="section" id="the-generic-approach-to-the-spin-1-heisenberg-model-wigner-eckart-in-action">
 <h3><span class="section-number">18.5.2. </span>The ‘Generic’ Approach to the Spin-1 Heisenberg Model: Wigner-Eckart in Action<a class="headerlink" href="#the-generic-approach-to-the-spin-1-heisenberg-model-wigner-eckart-in-action" title="Permalink to this heading">#</a></h3>
@@ -2713,7 +2714,7 @@ refered to as the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Representation_theory_of_SU(2)#The_Casimir_element"><em>quadratic Casimir</em></a>,
 commutes with all generators. By
 <a class="reference external" href="https://en.wikipedia.org/wiki/Schur%27s_lemma">Schur’s lemma</a>, it must then act
-proportional to the identity on every irrep, where the corresponding eigenvalue is
+proportionally to the identity on every irrep, where the corresponding eigenvalue is
 determined by the spin irrep label. In particular, we have for each irrep <span class="math notranslate nohighlight">\(l\)</span></p>
 <div class="math notranslate nohighlight">
 \[\vec{S}^2 \ket{l,m} = l(l+1) \ket{l,m}.\]</div>
@@ -2768,8 +2769,8 @@ the physical spin. All we need is to fill in the appropriate values for the unco
 <p>We end this subsection with some comments on the generalization of the above discussion to
 <span class="math notranslate nohighlight">\(\mathrm{SU}(N)\)</span>. As foreshadowed above, the irreps of <span class="math notranslate nohighlight">\(\mathrm{SU}(N)\)</span> in general have an
 even more complicated structure. In particular, they can admit so-called <em>fusion
-multiplicities</em>, where the fusion of two irreps can not just have multiple distinct
-outcomes, but they can even fuse to a given irrep in mutliple inequivalent ways. We can
+multiplicities</em>, where the fusion of two irreps can have not only multiple distinct
+outcomes, but they can even fuse to a given irrep in multiple inequivalent ways. We can
 demonstrate this behavior for the adjoint representation of <span class="math notranslate nohighlight">\(\mathrm{SU}(3)\)</span>. For this we
 can use the the
 <a class="reference external" href="https://github.com/maartenvd/SUNRepresentations.jl/tree/master">SUNRepresentations.jl</a>
@@ -2862,7 +2863,7 @@ labels</em>. The eigenvalue of the quadratic Casimir for a given irrep is given 
 <p>Using SUNRepresentations.jl, we can compute the Casimir as</p>
 <div class="cell tag_hide-output docutils container">
 <div class="cell_input above-output-prompt docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">casimir</span><span class="p">(</span><span class="n">l</span><span class="o">::</span><span class="kt">SUNIrrep</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">casimir</span><span class="p">(</span><span class="n">l</span><span class="o">::</span><span class="kt">SU3Irrep</span><span class="p">)</span>
 <span class="w">    </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dynkin_label</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">3</span>
 <span class="k">end</span>
@@ -2965,12 +2966,12 @@ Casimir in each irrep.</p>
 <div class="section" id="level-5-anyonic-symmetries-and-the-golden-chain">
 <h2><span class="section-number">18.6. </span>Level 5: Anyonic Symmetries and the Golden Chain<a class="headerlink" href="#level-5-anyonic-symmetries-and-the-golden-chain" title="Permalink to this heading">#</a></h2>
 <p>While we have focussed exclusively on group-like symmetries in our discussion so far, the
-framework of symmetric actually extends beyond groups to so-called
+framework of symmetric tensors actually extends beyond groups to so-called
 <a class="reference external" href="https://jutho.github.io/TensorKit.jl/stable/man/sectors/#ss_representationtheory"><em>categorical symmetries</em></a>.
 These are quite exotic symmetries characterized in terms of
 <a class="reference external" href="https://jutho.github.io/TensorKit.jl/stable/man/categories/#ss_topologicalfusion">the topological data of a unitary fusion category</a>.
 While the precise details of all the terms in these statements fall beyond the scope of this
-tutorial, we can give a simple example of a Hamiltonion model with a categorical symmetry
+tutorial, we can give a simple example of a Hamiltonian model with a categorical symmetry
 called <a class="reference external" href="https://arxiv.org/abs/cond-mat/0612341">the golden chain</a>.</p>
 <p>This is a one-dimensional system defined as a spin chain, where each physical ‘spin’
 corresponds to a so-called <a class="reference external" href="https://arxiv.org/abs/0902.3275">Fibonacci anyon</a>. There are two
@@ -2980,8 +2981,8 @@ such Fibonacci anyons, which we will denote as <span class="math notranslate noh
 <p>The Hilbert space of a chain of Fibonacci anyons is not a regular tensor product space, but
 rather a <em>constrained Hilbert space</em> where the only allowed basis states are labeled by
 valid Fibonacci fusion configurations. In the golden chain model, we define a
-nearest-neighbor Hamiltonian on this Hilbert space by imposing an energy penalty when any
-two neighboring anyons fuse to a <span class="math notranslate nohighlight">\(\tau\)</span> anyon.</p>
+nearest-neighbor Hamiltonian on this Hilbert space by imposing an energy penalty when two
+neighboring anyons fuse to a <span class="math notranslate nohighlight">\(\tau\)</span> anyon.</p>
 <p>Even just writing down an explicit expression for this interaction on such a constrained
 Hilbert space is not entirely straightforward. However, using the framework of symmetric
 tensors it can actually be explicitly constructed in a very straightforward way. Indeed,

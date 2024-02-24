@@ -464,9 +464,9 @@ not invariant under conjugation by the symmetry operator. However, it is possibl
 construct them as `TensorMap`s using an *auxiliary vector space*, based on the following
 intuition. The creation operator $a^+$ violates particle number conservation by mapping the
 occupation number $n$ to $n + 1$. From the point of view of representation theory, this
-process can be thought af the *fusion* of an `U1Irrep(n)` with an `U1Irrep(1)`, naturally
+process can be thought of as the *fusion* of an `U1Irrep(n)` with an `U1Irrep(1)`, naturally
 giving the fusion product `U1Irrep(n + 1)`. This means we can represent $a^+$ as a
-`TensorMap(..., V ← V ⊗ A)`, where the auxiliary vector space `A` is contains the $+1$ irrep
+`TensorMap(..., V ← V ⊗ A)`, where the auxiliary vector space `A` contains the $+1$ irrep
 with degeneracy 1, `A = U1Space(1 => 1)`. Similarly, the decrease in occupation number when
 acting with $a^-$ can be thought of as the *splitting* of an `U1Irrep(n)` into an
 `U1Irrep(n - 1)` and an `U1Irrep(1)`, leading to a representation in terms of a
@@ -478,7 +478,7 @@ elements {eq}`eq:bosonopmatel` as blocks labeled by the $\mathrm{U}(1)$ fusion t
 :name: bosonops
 ```
 
-We can then combine these operators in to get the appropriate Hamiltonian terms,
+We can then combine these operators to get the appropriate Hamiltonian terms,
 
 ```{figure} ../_static/SymmetricTensors/bosonham.svg
 :scale: 12%
@@ -491,9 +491,9 @@ the operators $a_L^\pm$ and $a_R^\pm$, one can actually be obtained from the oth
 permuting the physical and auxiliary indices of the corresponding `TensorMap`s. This
 permutation has no effect on the actual array blocks of the tensors due to the
 [bosonic braiding style](https://jutho.github.io/TensorKit.jl/latest/lib/sectors/#TensorKit.BraidingStyle)
-of $\mathrm{U}(1)$ irreps, so the left and right operators can in essence by seen as the
+of $\mathrm{U}(1)$ irreps, so the left and right operators can in essence be seen as the
 'same' tensors. This is no longer the case when considering fermionic systems, where
-permuting indices can in fact change the array blocks as we will see next. As consequence,
+permuting indices can in fact change the array blocks as we will see next. As a consequence,
 it is much less clear how to construct two-site symmetric operators in terms of local
 symmetric objects.
 ```
@@ -528,9 +528,9 @@ It is then simple to check that this is indeed what we expect.
 @tensor a⁻a⁺_bis[-1 -2; -3 -4] := a⁻[1 -1; -3] * a⁺[-2; -4 1]
 @tensor N_bis[-1 ; -2] := a⁺[-1; 1 2] * a⁻[2 1; -2]
 
-@test norm(a⁺a⁻_bis - a⁺a⁻) ≈ 0 atol=1e-14
-@test norm(a⁻a⁺_bis - a⁻a⁺) ≈ 0 atol=1e-14
-@test norm(N_bis - N) ≈ 0 atol=1e-14
+@test a⁺a⁻_bis ≈ a⁺a⁻ atol=1e-14
+@test a⁻a⁺_bis ≈ a⁻a⁺ atol=1e-14
+@test N_bis ≈ N atol=1e-14
 ```
 
 ```{note}
@@ -557,7 +557,7 @@ and
 This means that the fusion of two irreps always gives a single irrep as the fusion product,
 and that exchanging two irreps in a tensor product is trivial. In practice, this implies
 that for tensors with these symmetries the fusion trees are completely fixed by the
-uncoupled charges, which uniquely define both the inner line and the coupled charge, and
+uncoupled charges, which uniquely define both the inner lines and the coupled charge, and
 that tensor indices can be permuted freely without any 'strange' side effects.
 
 In the following we will consider examples with fermionic and even anyonic exchange
@@ -584,10 +584,10 @@ relations
 \left\{c_i^-, c_j^+\right\} &= \delta_{ij} .\\
 \end{align*}
 ```
-These commutation relations justify the choice of the relative minus sign in the hopping and
-pairing terms. Indeed, since fermionic operators on different sites always anticommute,
-these relative minus signs are needed to ensure that the Hamiltonian is Hermitian, since
-$\left( c_i^+ c_j^- \right)^\dagger = c_j^+ c_i^- = - c_i^- c_j^+$ and $\left( c_i^+ c_j^+
+These relations justify the choice of the relative minus sign in the hopping and pairing
+terms. Indeed, since fermionic operators on different sites always anticommute, these
+relative minus signs are needed to ensure that the Hamiltonian is Hermitian, since $\left(
+c_i^+ c_j^- \right)^\dagger = c_j^+ c_i^- = - c_i^- c_j^+$ and $\left( c_i^+ c_j^+
 \right)^\dagger = c_j^- c_i^- = - c_i^- c_j^-$. The anticommutation relations also naturally
 restrict the local occupation number to be 0 or 1, leading to a well-defined notion of
 *fermion-parity*. The local fermion-parity operator is related to the fermion number
@@ -831,8 +831,8 @@ the coupled basis state $\ket{k,n}$ to the codomain basis states $\ket{l_1,m_1} 
 \ket{l_4,m_4}$ to the coupled basis state $\ket{k,n}$ respectively.
 
 The Wigner-Eckart theorem dictates that this structure in terms of Clebsch-Gordan
-coefficients is necessary to ensure that the corresponding is symmetric. It is precisely
-this structure that is inherently encoded into the fusion tree part of a symmetric
+coefficients is necessary to ensure that the corresponding tensor is symmetric. It is
+precisely this structure that is inherently encoded into the fusion tree part of a symmetric
 `TensorMap`. In particular, **the array block value associated to each fusion tree in a
 symmetric tensor is precisely the reduced matrix element in the Clebsch-Gordan
 decomposition**.
@@ -898,11 +898,12 @@ This procedure works for any group symmetry, and all we need are matrix elements
 operator in the irrep basis and the Clebsch-Gordan coefficients. In the following we
 demonstrate this explicit procedure for the particular example of $G = \mathrm{SU}(2)$.
 However, it should be noted that for general groups the Clebsch-Gordan coefficients may not
-be as easy to compute (if it is even known how). In addition, the procedure for manually
-projecting out the reduced matrix elements requires being particularly careful about the
-correspondence between the basis states used to define the original matrix elements and
-those implied by the Clebsch-Gordan coefficients. Therefore, it is often easier to directly
-construct the symmetric tensor based on some representation theory, as we will see below.
+be as easy to compute (in general, no closed formulas exist). In addition, the procedure for
+manually projecting out the reduced matrix elements requires being particularly careful
+about the correspondence between the basis states used to define the original matrix
+elements and those implied by the Clebsch-Gordan coefficients. Therefore, it is often easier
+to directly construct the symmetric tensor based on some representation theory, as we will
+see below.
 
 
 ### The 'Generic' Approach to the Spin-1 Heisenberg Model: Wigner-Eckart in Action
@@ -1018,7 +1019,7 @@ refered to as the
 [*quadratic Casimir*](https://en.wikipedia.org/wiki/Representation_theory_of_SU(2)#The_Casimir_element),
 commutes with all generators. By
 [Schur's lemma](https://en.wikipedia.org/wiki/Schur%27s_lemma), it must then act
-proportional to the identity on every irrep, where the corresponding eigenvalue is
+proportionally to the identity on every irrep, where the corresponding eigenvalue is
 determined by the spin irrep label. In particular, we have for each irrep $l$
 ```{math}
 \vec{S}^2 \ket{l,m} = l(l+1) \ket{l,m}.
@@ -1059,8 +1060,8 @@ $l_1$, $l_2$, $l_3$ and $l_4$.
 We end this subsection with some comments on the generalization of the above discussion to
 $\mathrm{SU}(N)$. As foreshadowed above, the irreps of $\mathrm{SU}(N)$ in general have an
 even more complicated structure. In particular, they can admit so-called *fusion
-multiplicities*, where the fusion of two irreps can not just have multiple distinct
-outcomes, but they can even fuse to a given irrep in mutliple inequivalent ways. We can
+multiplicities*, where the fusion of two irreps can have not only multiple distinct
+outcomes, but they can even fuse to a given irrep in multiple inequivalent ways. We can
 demonstrate this behavior for the adjoint representation of $\mathrm{SU}(3)$. For this we
 can use the the
 [SUNRepresentations.jl](https://github.com/maartenvd/SUNRepresentations.jl/tree/master)
@@ -1133,7 +1134,7 @@ C_1(D(p,q)) = \frac{1}{3} (p^2 + q^2 + 3p + 3q + pq).
 Using SUNRepresentations.jl, we can compute the Casimir as
 ```{code-cell} julia
 :tags: [hide-output]
-function casimir(l::SUNIrrep)
+function casimir(l::SU3Irrep)
     p, q = dynkin_label(l)
     return (p^2 + q^2 + 3 * p + 3 * q + p * q) / 3
 end
@@ -1171,12 +1172,12 @@ Casimir in each irrep.
 ## Level 5: Anyonic Symmetries and the Golden Chain
 
 While we have focussed exclusively on group-like symmetries in our discussion so far, the
-framework of symmetric actually extends beyond groups to so-called
+framework of symmetric tensors actually extends beyond groups to so-called
 [*categorical symmetries*](https://jutho.github.io/TensorKit.jl/stable/man/sectors/#ss_representationtheory).
 These are quite exotic symmetries characterized in terms of
 [the topological data of a unitary fusion category](https://jutho.github.io/TensorKit.jl/stable/man/categories/#ss_topologicalfusion).
 While the precise details of all the terms in these statements fall beyond the scope of this
-tutorial, we can give a simple example of a Hamiltonion model with a categorical symmetry
+tutorial, we can give a simple example of a Hamiltonian model with a categorical symmetry
 called [the golden chain](https://arxiv.org/abs/cond-mat/0612341).
 
 This is a one-dimensional system defined as a spin chain, where each physical 'spin'
@@ -1188,8 +1189,8 @@ such Fibonacci anyons, which we will denote as $1$ and $\tau$. They obey the fus
 The Hilbert space of a chain of Fibonacci anyons is not a regular tensor product space, but
 rather a *constrained Hilbert space* where the only allowed basis states are labeled by
 valid Fibonacci fusion configurations. In the golden chain model, we define a
-nearest-neighbor Hamiltonian on this Hilbert space by imposing an energy penalty when any
-two neighboring anyons fuse to a $\tau$ anyon.
+nearest-neighbor Hamiltonian on this Hilbert space by imposing an energy penalty when two
+neighboring anyons fuse to a $\tau$ anyon.
 
 Even just writing down an explicit expression for this interaction on such a constrained
 Hilbert space is not entirely straightforward. However, using the framework of symmetric
