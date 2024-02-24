@@ -14,4 +14,4 @@ kernelspec:
 
 Tutorial on finite entanglement scaling with uniform MPS, using [MPSKit.jl](https://github.com/maartenvd/MPSKit.jl).
 
-*Comming soon*.
+*Coming soon*.
