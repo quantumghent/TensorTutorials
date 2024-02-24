@@ -13,7 +13,7 @@ kernelspec:
 (tensor_network_states)=
 # Tensor Network States
 
-After our introduction on [quantum many body systems](many_body_intro) and
+After our introduction on [quantum many body systems](many_body) and
 [tensor networks](tensor_networks), we move on to considering how tensor networks can
 characterize many-body systems. We start with a constructive approach to approximating an
 arbitrary quantum state by a *tensor network state*. We then qualify in what settings such a

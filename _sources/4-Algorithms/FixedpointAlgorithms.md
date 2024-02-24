@@ -26,7 +26,7 @@ over a restricted class of states $D$. For simplicity, we will assume the Hamilt
 which can encode interactions of arbitrary range as discussed in the previous section. In this formulation, approximating the ground state of $H$ is equivalent to finding the MPS fixed point the MPO Hamiltonian corresponding to the eigenvalue $\Lambda$ with the smallest real part,
 ```{image} /_static/FixedpointAlgorithms/fixedpoint.svg
 :scale: 12%
-:name: mpoHam
+:name: fixedpoint
 :align: center
 ```
 

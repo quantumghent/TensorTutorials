@@ -263,7 +263,7 @@ can write a corresponding MPS</p>
 <div class="math notranslate nohighlight">
 \[\ket{\psi} = \sum_{s_1,s_2,...,s_N} {\rm Tr} \left[A^{(1)}_{s_1}A^{(2)}_{s_2}...A^{(N)}_{s_N}\right] \ket{s_1,s_2,...,s_N}.\]</div>
 <p>This class of states can be used as a variational anzatz to for example perform
-<span class="xref myst">time evolution</span> or <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html#fixed-point-algorithms"><span class="std std-ref">find ground states</span></a> within the
+<a class="reference internal" href="../4-Algorithms/TimeEvolutionAlgorithms.html#time-evolution"><span class="std std-ref">time evolution</span></a> or <a class="reference internal" href="../4-Algorithms/FixedpointAlgorithms.html#fixed-point-algorithms"><span class="std std-ref">find ground states</span></a> within the
 manifold of MPS of a given bond dimension <span class="math notranslate nohighlight">\(D\)</span>. Before moving on to MPS algorithms, we first
 summarize some of the key properties that make these states so easy to work with.</p>
 <div class="admonition note">
@@ -275,7 +275,7 @@ ancillary spins with the corresponding spin on the neighboring site, resulting i
 entangled pairs of the form <span class="math notranslate nohighlight">\(\ket{\phi}=\sum_{j=0}^{d-1}\ket{j,j}\)</span>. Finally, we project the
 two spins at each site onto the local physical Hilbert space of dimension <span class="math notranslate nohighlight">\(d\)</span>, resulting in
 a state</p>
-<a class="reference internal image-reference" href="../_images/peps1.svg" id="id1"><img alt="../_images/peps1.svg" class="align-center" height="84" id="id1" src="../_images/peps1.svg" width="781" /></a>
+<a class="reference internal image-reference" href="../_images/peps1.svg" id="peps"><img alt="../_images/peps1.svg" class="align-center" height="84" id="peps" src="../_images/peps1.svg" width="781" /></a>
 <p>If we write the projectors <span class="math notranslate nohighlight">\(\mathcal P^{(i)}: \mathbb {C}^D \otimes \mathbb{C}^D \rightarrow
 \mathbb{C}^d\)</span> as</p>
 <div class="math notranslate nohighlight">
@@ -373,7 +373,7 @@ that the dominant eigenvalue of <span class="math notranslate nohighlight">\(\ma
 Making use of the spectral decomposition, we can show that the exponential dependence on the
 eigenvalues corresponds to an exponential decay in the correlation functions, meaning that
 an MPS always has exponentially decaying correlations. We will return to this point in more
-detail when <span class="xref myst">considering infinite systems in the next section</span>.</p>
+detail when <a class="reference internal" href="InfiniteMPS.html#imps-correlation"><span class="std std-ref">considering infinite systems in the next section</span></a>.</p>
 </div>
 <div class="section" id="code-example-mpskit-finitemps">
 <h2><span class="section-number">12.6. </span>Code Example: <code class="docutils literal notranslate"><span class="pre">MPSKit.FiniteMPS</span></code><a class="headerlink" href="#code-example-mpskit-finitemps" title="Permalink to this heading">#</a></h2>
@@ -552,13 +552,30 @@ detail when <span class="xref myst">considering infinite systems in the next sec
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  In-Depth Tutorials
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5-Tutorials/SymmetricTensors.html">
+   18. A Symmetric Tensor Deep Dive: Constructing Your First Tensor Map
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5-Tutorials/FiniteEntanglementScaling.html">
+   19. Finite Entanglement Scaling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   Other
  </span>
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   18. References
+   20. References
   </a>
  </li>
 </ul>

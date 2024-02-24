@@ -178,8 +178,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vumps">16.2. VUMPS</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">16.2.1. Algorithm</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">16.2.2. Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">16.2.1. Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">16.2.2. Example</a></li>
 </ul>
 </li>
 </ul>
@@ -234,9 +234,9 @@ const thebe_selector_output = ".output, .cell_output"
 <p>over a restricted class of states <span class="math notranslate nohighlight">\(D\)</span>. For simplicity, we will assume the Hamiltonian under consideration has an MPO representation of the form</p>
 <a class="reference internal image-reference" href="../_images/mpoHam.svg" id="mpoham"><img alt="../_images/mpoHam.svg" class="align-center" height="61" id="mpoham" src="../_images/mpoHam.svg" width="380" /></a>
 <p>which can encode interactions of arbitrary range as discussed in the previous section. In this formulation, approximating the ground state of <span class="math notranslate nohighlight">\(H\)</span> is equivalent to finding the MPS fixed point the MPO Hamiltonian corresponding to the eigenvalue <span class="math notranslate nohighlight">\(\Lambda\)</span> with the smallest real part,</p>
-<a class="reference internal image-reference" href="../_images/fixedpoint.svg" id="id2"><img alt="../_images/fixedpoint.svg" class="align-center" height="161" id="id2" src="../_images/fixedpoint.svg" width="443" /></a>
+<a class="reference internal image-reference" href="../_images/fixedpoint.svg" id="fixedpoint"><img alt="../_images/fixedpoint.svg" class="align-center" height="161" id="fixedpoint" src="../_images/fixedpoint.svg" width="443" /></a>
 <p>In the algorithms discussed below we optimize over matrix product states of a fixed finite bond dimension. In the first algorithm known as DMRG (density matrix renormalization group) the states we consider are finite MPS, whereas the second algorithm VUMPS (variational uniform matrix product state algorithm), as the name suggests, optimizes over uniform MPS. Hence, VUMPS enables direct optimization in the thermodynamic limit, without breaking translation invariance.</p>
-<p>Our exposition of DMRG closes follows the one in <span id="id3">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">Bridgeman and Chubb, 2017</a>]</span>, and that of VUMPS closely follows the excellent set of lecture notes <span id="id4">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">Vanderstraeten <em>et al.</em>, 2019</a>]</span>.</p>
+<p>Our exposition of DMRG closes follows the one in <span id="id2">[<a class="reference internal" href="../References.html#id6" title="Jacob C Bridgeman and Christopher T Chubb. Hand-waving and interpretive dance: an introductory course on tensor networks. Journal of Physics A: Mathematical and Theoretical, 50(22):223001, 2017. arXiv:1603.03039, doi:10.1088/1751-8121/aa6dc3.">Bridgeman and Chubb, 2017</a>]</span>, and that of VUMPS closely follows the excellent set of lecture notes <span id="id3">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">Vanderstraeten <em>et al.</em>, 2019</a>]</span>.</p>
 <div class="section" id="dmrg">
 <h2><span class="section-number">16.1. </span>DMRG<a class="headerlink" href="#dmrg" title="Permalink to this heading">#</a></h2>
 <p>Starting from a random MPS ansatz, DMRG tries to approximate the ground state by sequentially optimizing over all the MPS tensors one by one and sweeping through the chain, until convergence is reached. Let us discuss this algorithm in a bit more detail step by step.</p>
@@ -374,13 +374,13 @@ const thebe_selector_output = ".output, .cell_output"
 \[\begin{split}    A_C' = H_{A_C}(A_C), \\
     C' = H_C(C), \\
     A_C = A_LC = CA_R.\end{split}\]</div>
-<p>A detailed derivation that these equations characterize the variational minimum in the manifold of uniform MPS is beyond the scope of these notes, but see <span id="id5">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">Vanderstraeten <em>et al.</em>, 2019</a>]</span>.</p>
+<p>A detailed derivation that these equations characterize the variational minimum in the manifold of uniform MPS is beyond the scope of these notes, but see <span id="id4">[<a class="reference internal" href="../References.html#id4" title="Laurens Vanderstraeten, Jutho Haegeman, and Frank Verstraete. Tangent-space methods for uniform matrix product states. SciPost Physics Lecture Notes, pages 007, 2019. arXiv:1810.07006, doi:10.21468/SciPostPhysLectNotes.7.">Vanderstraeten <em>et al.</em>, 2019</a>]</span>.</p>
 <p>In these equations the effective Hamiltonians <span class="math notranslate nohighlight">\(H_{A_C}\)</span> and <span class="math notranslate nohighlight">\(H_{C}\)</span> acting on <span class="math notranslate nohighlight">\(A_C\)</span> and <span class="math notranslate nohighlight">\(C\)</span> respectively are given by is given by</p>
 <a class="reference internal image-reference" href="../_images/H_AC.svg" id="h-ac"><img alt="../_images/H_AC.svg" class="align-center" height="182" id="h-ac" src="../_images/H_AC.svg" width="316" /></a>
 <a class="reference internal image-reference" href="../_images/H_C.svg" id="h-c"><img alt="../_images/H_C.svg" class="align-center" height="167" id="h-c" src="../_images/H_C.svg" width="314" /></a>
 <p>The last equation then simply states that <span class="math notranslate nohighlight">\(C\)</span> intertwines the left - and right-orthonormal form of the tensor <span class="math notranslate nohighlight">\(A\)</span>.</p>
-<div class="section" id="id6">
-<h3><span class="section-number">16.2.1. </span>Algorithm<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<div class="section" id="id5">
+<h3><span class="section-number">16.2.1. </span>Algorithm<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>Let us now explain step-by-step how VUMPS finds an approximate solution to the fixed-point equations in an iterative way.</p>
 <ol class="arabic">
 <li><p>We initialize the algorithm with the random guess <span class="math notranslate nohighlight">\(\{A_L, A_R,C\}\)</span>, and chose a tolerance <span class="math notranslate nohighlight">\(\eta\)</span>.</p></li>
@@ -408,8 +408,8 @@ const thebe_selector_output = ".output, .cell_output"
 \[\begin{split}    \tilde A_C = U^l_{A_C}P^l_{A_C},\qquad \tilde C = U^l_CP^l_C,\\
     \tilde A^r_C = P^r_{A_C}U^r_{A_C},\qquad \tilde C = P^r_CU^r_C.\end{split}\]</div>
 </div>
-<div class="section" id="id7">
-<h3><span class="section-number">16.2.2. </span>Example<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<div class="section" id="id6">
+<h3><span class="section-number">16.2.2. </span>Example<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p>Let us demonstrate the algorithm using MPSKit by estimating the ground state energy density of the spin 1 XXX model. The VUMPS algorithm is called in the same way as we called DMRG. We initialize a random initial MPS with bond dimension 12 and physical dimension 3 (because the spin 1 representation of SU(2) is <span class="math notranslate nohighlight">\(2\cdot1+1=3\)</span>-dimensional). Obviously we don’t have to specify a system size because we work directly in the thermodynamic limit.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -588,7 +588,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in <span id="id8">[<a class="reference internal" href="../References.html#id5" title="Jutho Haegeman, J Ignacio Cirac, Tobias J Osborne, Iztok Pižorn, Henri Verschelde, and Frank Verstraete. Time-dependent variational principle for quantum lattices. Physical Review Letters, 107(7):070601, 2011. arXiv:1103.0936, doi:10.1103/PhysRevLett.107.070601.">Haegeman <em>et al.</em>, 2011</a>]</span>. As you can see, even with such a small bond dimension we can easily approximate the ground state energy up to 3 decimals.</p>
+<p>The value we obtain here is to be compared with the quasi-exact value -1.401 484 038 971 2(2) obtained in <span id="id7">[<a class="reference internal" href="../References.html#id5" title="Jutho Haegeman, J Ignacio Cirac, Tobias J Osborne, Iztok Pižorn, Henri Verschelde, and Frank Verstraete. Time-dependent variational principle for quantum lattices. Physical Review Letters, 107(7):070601, 2011. arXiv:1103.0936, doi:10.1103/PhysRevLett.107.070601.">Haegeman <em>et al.</em>, 2011</a>]</span>. As you can see, even with such a small bond dimension we can easily approximate the ground state energy up to 3 decimals.</p>
 </div>
 </div>
 </div>
@@ -764,13 +764,30 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  In-Depth Tutorials
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5-Tutorials/SymmetricTensors.html">
+   18. A Symmetric Tensor Deep Dive: Constructing Your First Tensor Map
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5-Tutorials/FiniteEntanglementScaling.html">
+   19. Finite Entanglement Scaling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   Other
  </span>
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   18. References
+   20. References
   </a>
  </li>
 </ul>

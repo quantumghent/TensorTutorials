@@ -587,16 +587,13 @@ have been tabulated for example
 </div>
 </div>
 <div class="section" id="symmetric-tensors">
-<h2><span class="section-number">11.3. </span>Symmetric Tensors<a class="headerlink" href="#symmetric-tensors" title="Permalink to this heading">#</a></h2>
+<span id="id4"></span><h2><span class="section-number">11.3. </span>Symmetric Tensors<a class="headerlink" href="#symmetric-tensors" title="Permalink to this heading">#</a></h2>
 <p>In physics we are often dealing with tensors that transform according to the tensor product
 representation of a given group <span class="math notranslate nohighlight">\(G\)</span>. A symmetric tensor can then be understood as a tensor
 that transforms trivially under the action of <span class="math notranslate nohighlight">\(G\)</span>, or more concretely under the tensor
 product representation <span class="math notranslate nohighlight">\(X\otimes\bar Y\otimes\bar Z\)</span>:</p>
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">X_g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y_g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">-</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">g</span><span class="o">.</span>
-<span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span>
-<span class="w">        </span><span class="n">Z_g</span>
-<span class="w">         </span><span class="o">|</span>
-</pre></div>
+<div class="figure align-center" id="symmtens">
+<a class="reference internal image-reference" href="../_images/symmtens.svg"><img alt="../_images/symmtens.svg" height="92" src="../_images/symmtens.svg" width="345" /></a>
 </div>
 <p>This has strong implications for the structure of the tensor <span class="math notranslate nohighlight">\(T\)</span>. Notice that we didn’t
 assume the representations <span class="math notranslate nohighlight">\(X,Y\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> to be irreducible. As we argued above, an
@@ -751,7 +748,7 @@ categorical symmetries. These symmetries are beyond the scope of these notes. Th
 categorical symmetries are not described by groups but by more general and intricate
 algebraic structures called fusion categories, of which (finite) groups and their
 representations are specific examples. For an example of how spin chains with categorical
-symmetries can be constructed, see for example <span id="id4">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">Feiguin <em>et al.</em>, 2007</a>]</span>. TensorKit
+symmetries can be constructed, see for example <span id="id5">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">Feiguin <em>et al.</em>, 2007</a>]</span>. TensorKit
 allows for an efficient construction and storage of tensors which are symmetric with
 respect to these more general kind of symmetries.</p></li>
 </ul>
@@ -929,13 +926,30 @@ respect to these more general kind of symmetries.</p></li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  In-Depth Tutorials
+ </span>
+</p>
+<ul class="nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5-Tutorials/SymmetricTensors.html">
+   18. A Symmetric Tensor Deep Dive: Constructing Your First Tensor Map
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5-Tutorials/FiniteEntanglementScaling.html">
+   19. Finite Entanglement Scaling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   Other
  </span>
 </p>
 <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../References.html">
-   18. References
+   20. References
   </a>
  </li>
 </ul>
