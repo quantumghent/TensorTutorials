@@ -406,6 +406,7 @@ coefficients for $SU(2)$ have been computed analytically, and for low-dimensiona
 have been tabulated for example
 [here](https://pdg.lbl.gov/2018/reviews/rpp2018-rev-clebsch-gordan-coefs.pdf).
 
+(symmetric_tensors)=
 ## Symmetric Tensors
 
 In physics we are often dealing with tensors that transform according to the tensor product
@@ -413,12 +414,10 @@ representation of a given group $G$. A symmetric tensor can then be understood a
 that transforms trivially under the action of $G$, or more concretely under the tensor
 product representation $X\otimes\bar Y\otimes\bar Z$:
 
-
-```
- - X_g - T - Y_g - =  - T -    for all g.
-         |              |
-        Z_g
-         |
+```{figure} ../_static/SymmetricTensors/symmtens.svg
+:scale: 12%
+:name: symmtens
+:align: center
 ```
 
 This has strong implications for the structure of the tensor $T$. Notice that we didn't
