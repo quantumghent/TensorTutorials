@@ -176,27 +176,48 @@ ZZ : \mathbb C^2 \otimes \mathbb C^2 &\to \mathbb C^2 \otimes \mathbb C^2 : \\
 \end{align}
 ```
 
-If we denote the trivial $\mathbb{Z}_2$ irrep by $'0'$, corresponding to a local $\ket{+}$
-state, and the sign irrep by $'1'$, corresponding to a local $\ket{-}$ state, and recall
-that in this notation the fusion rules of $\mathbb{Z}_2$ are given by addition modulo 2, we
-can associate each of the above matrix elements to a so-called *fusion tree* of
-$\mathbb{Z}_2$ irreps with a corresponding coefficient of 1,
-
+We will denote the trivial $\mathbb{Z}_2$ irrep by $'0'$, corresponding to a local $\ket{+}$
+state, and the sign irrep by $'1'$, corresponding to a local $\ket{-}$ state. Given this
+identification, we can naturally associate the tensor product of basis vectors in the irrep
+basis to the tensor product of the corresponding $\mathbb{Z}_2$ irreps. One of the key
+questions of the [representation theory of groups](representation_theory) is how the tensor
+product of two irreps can always be decomposed into a direct sum of irreps. This
+decomposition is encoded in what are often called the
+[*fusion rules*](https://en.wikipedia.org/wiki/Fusion_rules),
+```{math}
+a \otimes b \cong \bigoplus_c N_c^{ab} c,
+```
+where $N_{ab}^c$ encodes the number of times the irrep $c$ occurs in the tensor product of
+irreps $a$ and $b$. These fusion rules are called *Abelian* if the tensor product of any two
+irreps corresponds to exactly one irrep. This is the case for the $\mathbb{Z}_2$ irreps,
+whose fusion rules are given by addition modulo 2,
+```{math}
+0 \otimes 0 \cong 0, \quad 0 \otimes 1 \cong 1, \quad 1 \otimes 0 \cong 1, \quad 1 \otimes 1 \cong 0.
+```
+We will return to the implications of *non-Abelian* fusion rules [later](non_abelian).
+Having introduced this notion of 'fusing' irreps, we can now associate associate a
+well-defined *coupled irrep* to each of the four two-site basis states, which is given by
+the tensor product of the two *uncoupled irreps* associated to each individual site. From
+the matrix elements of $ZZ$ given above, we clearly see that this operator only maps between
+states in the domain and codomain that have the same coupled irrep. This means that we can
+associate each of these matrix elements to a so-called *fusion tree* of $\mathbb{Z}_2$
+irreps with a corresponding coefficient of 1,
 ```{figure} ../_static/SymmetricTensors/Z2_fusiontrees.svg
 :scale: 12%
 :name: Z2_fusiontrees
 :align: center
 ```
-
-From this we can observe our previous statement very clearly: the $ZZ$ operator indeed
-consists of two distinct two-dimensional matrix blocks, each of which are labeled by the
-value of the *coupled irrep* on the middle line of each fusion tree. The first block
-corresponds to the even coupled irrep '0', and acts within the two-dimensional subspace
-spanned by $\{\ket{+,+}, \ket{-,-}\}$, while the second block corresponds to the odd coupled
-irrep '1', and acts within the two-dimensional subspace spanned by $\{\ket{+,-},
-\ket{-,+}\}$. In TensorKit.jl, this block-diagonal structure of a symmetric tensor is
-explicitly encoded into its representation as a `TensorMap`, where only the matrix blocks
-corresponding to each coupled irrep are stored.
+This diagram should be read from top to bottom, where it represents the fusion of the two
+uncoupled irreps in the domain to the coupled irrep on the middle line, and the splitting of
+this coupled irrep to the uncoupled irreps in the codomain. From this our previous statement
+becomes very clear: the $ZZ$ operator indeed consists of two distinct two-dimensional
+matrix blocks, each of which are labeled by the value of the *coupled irrep* on the middle
+line of each fusion tree. The first block corresponds to the even coupled irrep '0', and
+acts within the two-dimensional subspace spanned by $\{\ket{+,+}, \ket{-,-}\}$, while the
+second block corresponds to the odd coupled irrep '1', and acts within the two-dimensional
+subspace spanned by $\{\ket{+,-}, \ket{-,+}\}$. In TensorKit.jl, this block-diagonal
+structure of a symmetric tensor is explicitly encoded into its representation as a
+`TensorMap`, where only the matrix blocks corresponding to each coupled irrep are stored.
 
 For our current purposes however, we never really need to explicitly consider these matrix
 blocks. Indeed, when constructing a `TensorMap` it is sufficient to set its data by manually
@@ -373,7 +394,11 @@ U = \sum_i N_i
 This invariance corresponds to a $\mathrm{U}(1)$ particle number symmetry, which can again
 be manifestly imposed when constructing the Hamiltonian terms as `TensorMap`s. From the
 representation theory of $\mathrm{U}(1)$ we know that it's irreps are all one-dimensional
-and can be labeled by integers, where the fusion of two irreps is given by addition.
+and can be labeled by integers $n$ where the tensor product of two irreps is corresponds to
+addition of these labels, giving the Abelian fusion rules
+```{math}
+n_1 \otimes n_2 \cong (n_1 + n_2).
+```
 
 
 ### Directly Constructing the Hamiltonian Terms
@@ -591,7 +616,7 @@ c_i^+ c_j^- \right)^\dagger = c_j^+ c_i^- = - c_i^- c_j^+$ and $\left( c_i^+ c_j
 \right)^\dagger = c_j^- c_i^- = - c_i^- c_j^-$. The anticommutation relations also naturally
 restrict the local occupation number to be 0 or 1, leading to a well-defined notion of
 *fermion-parity*. The local fermion-parity operator is related to the fermion number
-operator as $Q_i = (-1)^{n_i}$, and is diagonal in the occupation number basis. The
+operator as $Q_i = (-1)^{N_i}$, and is diagonal in the occupation number basis. The
 Hamiltonian {eq}`eq:kitaev` is invariant under conjugation by the global fermion-parity
 operator, $Q H Q^\dagger = H$, where
 ```{math}
@@ -639,19 +664,19 @@ is inherently tricky to deal with, and should ideally be treated in the context 
 can define the following basis states on top of the fermionic vacuuum $\ket{00}$:
 ```{math}
 \begin{align*}
-\ket{01} &= c_2^+ \ket{00} \\
-\ket{10} &= c_1^+ \ket{00} \\
-\ket{11} &= c_1^+ c_2^+ \ket{00} \\
+\ket{01} &= c_2^+ \ket{00}, \\
+\ket{10} &= c_1^+ \ket{00}, \\
+\ket{11} &= c_1^+ c_2^+ \ket{00}. \\
 \end{align*}
 ```
 This definition in combination with the anticommutation relations above give rise to the
 nonzero matrix elements
 ```{math}
 \begin{align*}
-c_1^+ c_2^- \ket{0, 1} &= \ket{1, 0} \\
-c_1^- c_2^+ \ket{1, 0} &= - \ket{0, 1} \\
-c_1^+ c_2^+ \ket{0, 0} &= \ket{1, 1} \\
-c_1^- c_2^- \ket{1, 1} &= - \ket{0, 0} \\
+c_1^+ c_2^- \ket{0, 1} &= \ket{1, 0}, \\
+c_1^- c_2^+ \ket{1, 0} &= - \ket{0, 1}, \\
+c_1^+ c_2^+ \ket{0, 0} &= \ket{1, 1}, \\
+c_1^- c_2^- \ket{1, 1} &= - \ket{0, 0}, \\
 N \ket{n} &= n \ket{n}.
 \end{align*}
 ```
@@ -664,8 +689,9 @@ c_1^- c_2^+ \ket{1, 0} = c_1^- c_2^+ c_1^+ \ket{0, 0} = - c_2^+ c_1^- c_1^+ \ket
 \end{align*}
 ```
 
-Once we have these matrix elements the hard part is done, and we can naively associate these
-to the following $f\mathbb{Z}_2$ fusion trees with corresponding block values,
+Once we have these matrix elements the hard part is done, and we can straightforwardly
+associate these to the following $f\mathbb{Z}_2$ fusion trees with corresponding block
+values,
 ```{figure} ../_static/SymmetricTensors/fZ2_fusiontrees.svg
 :scale: 12%
 :name: fZ2_fusiontrees
@@ -740,6 +766,7 @@ fermionic symmetries, but it is not something we will do here.
 ```
 
 
+(non_abelian)=
 ## Level 4: Non-Abelian Symmetries and the Quantum Heisenberg Model
 
 We will now move on to systems which have more complicated *non-Abelian* symmetries. For a
@@ -795,12 +822,12 @@ irreps, $V^{(l_1)} \otimes V^{(l_2)} \cong \bigoplus_{k} V^{(k)}$. The precise n
 this decomposition, also refered to as the *Clebsch-Gordan problem*, is given by the
 so-called *Clebsch-Gordan coefficients*, which we will denote as $C^{k}_{l_1,l_2}$. This set
 of coefficients, which can be interpreted as a $\text{dim}\left( V^{(l_1)} \right) \times
-\text{dim}\left( V^{(l_2)} \right) \times \text{dim}\left( V^{(l_3)} \right)$ array, that
+\text{dim}\left( V^{(l_2)} \right) \times \text{dim}\left( V^{(k)} \right)$ array, that
 encodes how a basis state $\ket{k,n} \in V^{(k)}$ corresponding to some term in the direct
 sum can be decomposed into a linear combination of basis vectors $\ket{l_1,m_1} \otimes
 \ket{l_2,m_2}$ of the tensor product space:
 ```{math}
-\ket{k,n} = \sum_{m_1, m_2} \left( C^{l_3}_{l_1,l_2} \right)^{n}_{m_1, m_2} \ket{l_1,m_1} \otimes \ket{l_2,m_2}.
+\ket{k,n} = \sum_{m_1, m_2} \left( C^{k}_{l_1,l_2} \right)^{n}_{m_1, m_2} \ket{l_1,m_1} \otimes \ket{l_2,m_2}.
 ```
 These recoupling coefficients turn out to be essential to the structure of symmetric
 tensors, which can be best understood in the context of the
@@ -839,7 +866,15 @@ decomposition**.
 
 As a small demonstration of this fact, we can make a simple $\mathrm{SU}(2)$-symmetric
 tensor with trivial block values and verify that its implied symmetry structure exactly
-corresponds to the expected Clebsch-Gordan coefficient. In TensorKit.jl, a
+corresponds to the expected Clebsch-Gordan coefficient. First, we [recall](su2_irreps) that
+the irreps of $\mathrm{SU}(2)$ can be labeled by a halfinteger *spin* that takes values $l =
+0, \frac{1}{2}, 1, \frac{3}{2}, ...$, and where the dimension of the spin-$l$ representation
+is equal to $2l + 1$. The fusion rules of $\mathrm{SU}(2)$ are given by
+```{math}
+l_1 \otimes l_2 \cong \bigoplus_{k=|l_1-l_2|}^{l_1+l_2}s.
+```
+These are clearly non-Abelian since multiple terms appear on the right hand side, for
+example $\frac{1}{2} \otimes \frac{1}{2} \cong 0 \oplus 1$. In TensorKit.jl, a
 $\mathrm{SU}(2)$-graded vector space is represented as an
 [`SU2Space`](https://jutho.github.io/TensorKit.jl/latest/lib/spaces/#TensorKit.SU2Space),
 where a given $\mathrm{SU}(2)$ irrep can be represented as an
@@ -859,7 +894,7 @@ t = TensorMap(ones, ComplexF64, V1 ← V2 ⊗ V2)
 ```{code-cell} julia
 ta = convert(Array, t)
 ```
-The conversion gives us a $3 \times 3 \times 2$ array, which exactly corresponds to the size
+The conversion gives us a $3 \times 2 \times 2$ array, which exactly corresponds to the size
 of the $C_{1}^{\frac{1}{2},\frac{1}{2}}$ Clebsch-Gordan array. In order to explicitly
 compare whether the entries match we need to know the ordering of basis states assumed by
 TensorKit.jl when converting the tensor to its matrix elements in the irrep basis. For
@@ -950,7 +985,7 @@ function get_reduced_element(k)
     # project out diagonal matrix on coupled irrep space
     @tensor reduced_matrix[-1; -2] := CG[1 2; -1] * SS_arr[1 2; 3 4] * conj(CG[3 4; -2])
 
-    # check that it is proportianal to the identity
+    # check that it is proportional to the identity
     @assert isapprox(reduced_matrix, reduced_matrix[1, 1] * I; atol=1e-12)
 
     # return the proportionality factor
@@ -1108,9 +1143,9 @@ as a symmetric `TensorMap` by first rewriting it as
 ```{math}
 \vec{T}_i \cdot \vec{T}_j = \frac{1}{2} \left( \left( \vec{T}_i + \vec{T}_j \right)^2 - \vec{T}_i^2 - \vec{T}_j^2 \right).
 ```
-For any $N$, the quadratic Casimir
+For any $N$, the [quadratic Casimir](https://en.wikipedia.org/wiki/Casimir_element#Quadratic_Casimir_element)
 ```{math}
-C_1 = \sum_k T^k T^k
+\Omega = \sum_k T^k T^k
 ```
 commutes with all $\mathrm{SU}(N)$ generators, meaning it has a well defined eigenvalue in
 each irrep. This observation then immediately given the reduced matrix elements of the
@@ -1129,7 +1164,7 @@ Each irrep can be labeled as $l = D(p,q)$ where $p$ and $q$ are refered to as th
 labels*. The eigenvalue of the quadratic Casimir for a given irrep is given by
 [Freudenthal's formula](https://en.wikipedia.org/wiki/Weyl_character_formula#Freudenthal's_formula),
 ```{math}
-C_1(D(p,q)) = \frac{1}{3} (p^2 + q^2 + 3p + 3q + pq).
+\Omega(D(p,q)) = \frac{1}{3} (p^2 + q^2 + 3p + 3q + pq).
 ```
 Using SUNRepresentations.jl, we can compute the Casimir as
 ```{code-cell} julia
