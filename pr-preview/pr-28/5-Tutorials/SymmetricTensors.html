@@ -292,7 +292,7 @@ H\)</span> where the symmetry transformation <span class="math notranslate nohig
 <span class="eqno">(18.2)<a class="headerlink" href="#equation-eq-z2gen" title="Permalink to this equation">#</a></span>\[U = \prod_i X_i.\]</div>
 <p>We will circle back to the implications of this symmetry later.</p>
 <p>As a warmup we will implement the Hamiltonian <a class="reference internal" href="#equation-eq-isingham">(18.1)</a> in the standard way by
-encoding the matrix elements of the single-site operators <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> into aan array of
+encoding the matrix elements of the single-site operators <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> into an array of
 complex numbers, and then combine them in a suitable way to get the Hamiltonian terms.
 Instead of using plain Julia arrays, we will use a representation in terms of <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>s
 over complex vector spaces. These will essentially just be wrappers around base arrays at
@@ -504,9 +504,10 @@ basis of <span class="math notranslate nohighlight">\(Z\)</span> eigenstates <sp
 eigenstates <span class="math notranslate nohighlight">\(\{\ket{+}, \ket{-}\}\)</span> defined as <span class="math notranslate nohighlight">\(\ket{+} = \frac{\ket{\uparrow} +
 \ket{\downarrow}}{\sqrt{2}}\)</span> and <span class="math notranslate nohighlight">\(\ket{-} = \frac{\ket{\uparrow} -
 \ket{\downarrow}}{\sqrt{2}}\)</span>. In the current context, this basis is referred to as the
-<em>irrep basis</em> of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>, where the local basis state <span class="math notranslate nohighlight">\(\ket{+}\)</span> corresponds to the
-trivial representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> while <span class="math notranslate nohighlight">\(\ket{-}\)</span> corresponds to the sign
-representation.</p>
+<em>irrep basis</em> of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>, since each basis state corresponds to a one-dimensional
+irreducible representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>. Indeed, the local symmetry transformation <span class="math notranslate nohighlight">\(X\)</span>
+acts trivially on the state <span class="math notranslate nohighlight">\(\ket{+}\)</span>, corresponding to the <em>trivial irrep</em>, and yields a
+minus sign when acting on <span class="math notranslate nohighlight">\(\ket{-}\)</span>, corresponding to the <em>sign irrep</em>.</p>
 <p>Next, let’s make the statement that ‘the matrix blocks of the local tensors are labeled by
 <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps’ more concrete. To this end, consider the action of <span class="math notranslate nohighlight">\(ZZ\)</span> in the irrep
 basis, which is given by the four nonzero matrix elements</p>
@@ -530,18 +531,25 @@ encoded in what are often called the
 \[a \otimes b \cong \bigoplus_c N_c^{ab} c,\]</div>
 <p>where <span class="math notranslate nohighlight">\(N_{ab}^c\)</span> encodes the number of times the irrep <span class="math notranslate nohighlight">\(c\)</span> occurs in the tensor product of
 irreps <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. These fusion rules are called <em>Abelian</em> if the tensor product of any two
-irreps corresponds to exactly one irrep. This is the case for the <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps,
-whose fusion rules are given by addition modulo 2,</p>
+irreps corresponds to exactly one irrep. We will return to the implications of <em>non-Abelian</em>
+fusion rules <a class="reference internal" href="#non-abelian"><span class="std std-ref">later</span></a>. For the case of the <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps, the fusion
+rules are Abelian, and are given by addition modulo 2,</p>
 <div class="math notranslate nohighlight">
 \[0 \otimes 0 \cong 0, \quad 0 \otimes 1 \cong 1, \quad 1 \otimes 0 \cong 1, \quad 1 \otimes 1 \cong 0.\]</div>
-<p>We will return to the implications of <em>non-Abelian</em> fusion rules <a class="reference internal" href="#non-abelian"><span class="std std-ref">later</span></a>.
-Having introduced this notion of ‘fusing’ irreps, we can now associate associate a
-well-defined <em>coupled irrep</em> to each of the four two-site basis states, which is given by
-the tensor product of the two <em>uncoupled irreps</em> associated to each individual site. From
-the matrix elements of <span class="math notranslate nohighlight">\(ZZ\)</span> given above, we clearly see that this operator only maps between
-states in the domain and codomain that have the same coupled irrep. This means that we can
-associate each of these matrix elements to a so-called <em>fusion tree</em> of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>
-irreps with a corresponding coefficient of 1,</p>
+<p>To see how these fusion rules arise, we can consider the action of the symmetry
+transformation <span class="math notranslate nohighlight">\(XX\)</span> on the possible two-site basis states, each of which corresponds to a
+tensor product of representations. We can see that <span class="math notranslate nohighlight">\(XX\)</span> acts trivially on both <span class="math notranslate nohighlight">\(\ket{+}
+\otimes \ket{+}\)</span> and <span class="math notranslate nohighlight">\(\ket{-} \otimes \ket{-}\)</span> meaning these transform under the trivial
+representation, which gives the first and last entries of the fusion rules. Similarly, <span class="math notranslate nohighlight">\(XX\)</span>
+acts with a minus sign on both <span class="math notranslate nohighlight">\(\ket{+} \otimes \ket{-}\)</span> and <span class="math notranslate nohighlight">\(\ket{-} \otimes \ket{+}\)</span>,
+meaning these transform under the sign representation, which gives the second and third
+entries of the fusion rules. Having introduced this notion of ‘fusing’ irreps, we can now
+associate associate a well-defined <em>coupled irrep</em> to each of the four two-site basis
+states, which is given by the tensor product of the two <em>uncoupled irreps</em> associated to
+each individual site. From the matrix elements of <span class="math notranslate nohighlight">\(ZZ\)</span> given above, we clearly see that this
+operator only maps between states in the domain and codomain that have the same coupled
+irrep. This means that we can associate each of these matrix elements to a so-called <em>fusion
+tree</em> of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps with a corresponding coefficient of 1,</p>
 <div class="figure align-center" id="z2-fusiontrees">
 <a class="reference internal image-reference" href="../_images/Z2_fusiontrees.svg"><img alt="../_images/Z2_fusiontrees.svg" height="130" src="../_images/Z2_fusiontrees.svg" width="393" /></a>
 </div>
