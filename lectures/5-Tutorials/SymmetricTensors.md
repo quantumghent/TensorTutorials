@@ -181,8 +181,8 @@ state, and the sign irrep by $'1'$, corresponding to a local $\ket{-}$ state. Gi
 identification, we can naturally associate the tensor product of basis vectors in the irrep
 basis to the tensor product of the corresponding $\mathbb{Z}_2$ irreps. One of the key
 questions of the [representation theory of groups](representation_theory) is how the tensor
-product of two irreps can always be decomposed into a direct sum of irreps. This
-decomposition is encoded in what are often called the
+product of two irreps can be decomposed into a direct sum of irreps. This decomposition is
+encoded in what are often called the
 [*fusion rules*](https://en.wikipedia.org/wiki/Fusion_rules),
 ```{math}
 a \otimes b \cong \bigoplus_c N_c^{ab} c,
