@@ -253,6 +253,7 @@ keep an H symmetry, and the ground state degeneracy is $|G|/|H|$.
   ```
   Similarly, one defines $SO(N),N\geq 2$. Note that only $SO(2)$ is abelian.
 
+(representation_theory)=
 ### Representation Theory
 
 In the above examples, we were dealing with the question which symmetry transformations
@@ -385,6 +386,7 @@ representation theory which is due to Schur.
 representation of a group G, $X_gY=YX_g$ $\forall g\in G$, then $Y$ is proportional to the
 identity matrix.
 
+(su2_irreps)=
 #### Example
 
 The answer to the questions posed above is very well understood for the case of $SU(2)$. You
