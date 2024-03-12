@@ -184,7 +184,7 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-theory">11.2.2. Representation Theory</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">11.2.2.1. Definition</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">11.2.2.1.1. Examples</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">11.2.2.1.1. Examples</a></li>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-conjugate-representation-tensor-product-and-direct-sum-representation">11.2.2.2. Complex Conjugate Representation, Tensor Product and Direct Sum Representation</a></li>
@@ -192,7 +192,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#example">11.2.2.3.1. Example</a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">11.2.2.4. Example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#su2-irreps">11.2.2.4. Example</a></li>
 </ul>
 </li>
 </ul>
@@ -461,7 +461,7 @@ orthogonal matrices with unit determinant:</p>
 </div>
 </div>
 <div class="section" id="representation-theory">
-<h3><span class="section-number">11.2.2. </span>Representation Theory<a class="headerlink" href="#representation-theory" title="Permalink to this heading">#</a></h3>
+<span id="id2"></span><h3><span class="section-number">11.2.2. </span>Representation Theory<a class="headerlink" href="#representation-theory" title="Permalink to this heading">#</a></h3>
 <p>In the above examples, we were dealing with the question which symmetry transformations
 leave the Hamiltonian (and in the absence of symmetry breaking also the ground states)
 invariant. These symmetry representations were implemented (represented) by invertible
@@ -484,8 +484,8 @@ multiplication rule of <span class="math notranslate nohighlight">\(G\)</span>:<
 \[X_gX_h = X_{gh}\]</div>
 <p>Note that the identity is always mapped to the identity matrix!</p>
 <p>We call the dimension of the matrices <span class="math notranslate nohighlight">\(X_g\)</span> the dimension of the representation.</p>
-<div class="section" id="id2">
-<h5><span class="section-number">11.2.2.1.1. </span>Examples<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h5>
+<div class="section" id="id3">
+<h5><span class="section-number">11.2.2.1.1. </span>Examples<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h5>
 <ul class="simple">
 <li><p>Every group can be trivially represented by mapping every group element to the ‘matrix’
 (1). Obviously, this representation is one-dimensional and is called the trivial
@@ -568,8 +568,8 @@ representation of a group G, <span class="math notranslate nohighlight">\(X_gY=Y
 identity matrix.</p>
 </div>
 </div>
-<div class="section" id="id3">
-<h4><span class="section-number">11.2.2.4. </span>Example<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<div class="section" id="su2-irreps">
+<span id="id4"></span><h4><span class="section-number">11.2.2.4. </span>Example<a class="headerlink" href="#su2-irreps" title="Permalink to this heading">#</a></h4>
 <p>The answer to the questions posed above is very well understood for the case of <span class="math notranslate nohighlight">\(SU(2)\)</span>. You
 probably know the answer from a previous course on quantum mechanics.</p>
 <p>The irreps of <span class="math notranslate nohighlight">\(SU(2)\)</span> can be labeled by its spin, let us call it <span class="math notranslate nohighlight">\(s\)</span>, that takes values
@@ -587,7 +587,7 @@ have been tabulated for example
 </div>
 </div>
 <div class="section" id="symmetric-tensors">
-<span id="id4"></span><h2><span class="section-number">11.3. </span>Symmetric Tensors<a class="headerlink" href="#symmetric-tensors" title="Permalink to this heading">#</a></h2>
+<span id="id5"></span><h2><span class="section-number">11.3. </span>Symmetric Tensors<a class="headerlink" href="#symmetric-tensors" title="Permalink to this heading">#</a></h2>
 <p>In physics we are often dealing with tensors that transform according to the tensor product
 representation of a given group <span class="math notranslate nohighlight">\(G\)</span>. A symmetric tensor can then be understood as a tensor
 that transforms trivially under the action of <span class="math notranslate nohighlight">\(G\)</span>, or more concretely under the tensor
@@ -665,7 +665,7 @@ we would write</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorMap(Rep[SU₂](1=&gt;1) ← (Rep[SU₂](1/2=&gt;1) ⊗ Rep[SU₂](1/2=&gt;1))):
 * Data for fusiontree FusionTree{Irrep[SU₂]}((1,), 1, (false,), ()) ← FusionTree{Irrep[SU₂]}((1/2, 1/2), 1, (false, false), ()):
 [:, :, 1] =
- 6.9060353016965e-310
+ 0.0
 </pre></div>
 </div>
 </div>
@@ -684,7 +684,7 @@ and codomain are as expected:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1 =&gt; [6.90604e-310;;]
+  1 =&gt; [0.0;;]
 </pre></div>
 </div>
 </div>
@@ -715,7 +715,7 @@ cannot fuse to a third spin 1/2. Finally let us consider a tensor with with more
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorKit.SortedVectorDict{SU2Irrep, Matrix{Float64}} with 1 entry:
-  1/2 =&gt; [5.0e-324 6.94276e-310; 1.0e-323 6.94276e-310]
+  1/2 =&gt; [2.122e-313 8.48798e-314; 2.54639e-313 8.48798e-314]
 </pre></div>
 </div>
 </div>
@@ -748,7 +748,7 @@ categorical symmetries. These symmetries are beyond the scope of these notes. Th
 categorical symmetries are not described by groups but by more general and intricate
 algebraic structures called fusion categories, of which (finite) groups and their
 representations are specific examples. For an example of how spin chains with categorical
-symmetries can be constructed, see for example <span id="id5">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">Feiguin <em>et al.</em>, 2007</a>]</span>. TensorKit
+symmetries can be constructed, see for example <span id="id6">[<a class="reference internal" href="../References.html#id7" title="Adrian Feiguin, Simon Trebst, Andreas WW Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang, and Michael H Freedman. Interacting anyons in topological quantum liquids: the golden chain. Physical Review Letters, 98(16):160409, 2007. arXiv:cond-mat/0612341, doi:10.1103/PhysRevLett.98.160409.">Feiguin <em>et al.</em>, 2007</a>]</span>. TensorKit
 allows for an efficient construction and storage of tensors which are symmetric with
 respect to these more general kind of symmetries.</p></li>
 </ul>

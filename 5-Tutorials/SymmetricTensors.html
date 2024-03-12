@@ -275,17 +275,6 @@ basically provide a narrated walk-through of the corresponding code.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling TensorKit [07d1fe3e-3e46-537d-9eac-e9e13d0d4cec]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling MPSKitModels [ca635005-6f8c-4cd1-b51d-8491250ef2ab]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">[ Info: </span>Precompiling SUNRepresentations [1a50b95c-7aac-476d-a9ce-2bfc675fc617]
-</pre></div>
-</div>
-</div>
 </div>
 <div class="section" id="level-0-the-1-dimensional-ising-model">
 <h2><span class="section-number">18.1. </span>Level 0: The 1-Dimensional Ising Model<a class="headerlink" href="#level-0-the-1-dimensional-ising-model" title="Permalink to this heading">#</a></h2>
@@ -303,7 +292,7 @@ H\)</span> where the symmetry transformation <span class="math notranslate nohig
 <span class="eqno">(18.2)<a class="headerlink" href="#equation-eq-z2gen" title="Permalink to this equation">#</a></span>\[U = \prod_i X_i.\]</div>
 <p>We will circle back to the implications of this symmetry later.</p>
 <p>As a warmup we will implement the Hamiltonian <a class="reference internal" href="#equation-eq-isingham">(18.1)</a> in the standard way by
-encoding the matrix elements of the single-site operators <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> into aan array of
+encoding the matrix elements of the single-site operators <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> into an array of
 complex numbers, and then combine them in a suitable way to get the Hamiltonian terms.
 Instead of using plain Julia arrays, we will use a representation in terms of <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>s
 over complex vector spaces. These will essentially just be wrappers around base arrays at
@@ -515,9 +504,10 @@ basis of <span class="math notranslate nohighlight">\(Z\)</span> eigenstates <sp
 eigenstates <span class="math notranslate nohighlight">\(\{\ket{+}, \ket{-}\}\)</span> defined as <span class="math notranslate nohighlight">\(\ket{+} = \frac{\ket{\uparrow} +
 \ket{\downarrow}}{\sqrt{2}}\)</span> and <span class="math notranslate nohighlight">\(\ket{-} = \frac{\ket{\uparrow} -
 \ket{\downarrow}}{\sqrt{2}}\)</span>. In the current context, this basis is referred to as the
-<em>irrep basis</em> of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>, where the local basis state <span class="math notranslate nohighlight">\(\ket{+}\)</span> corresponds to the
-trivial representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> while <span class="math notranslate nohighlight">\(\ket{-}\)</span> corresponds to the sign
-representation.</p>
+<em>irrep basis</em> of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>, since each basis state corresponds to a one-dimensional
+irreducible representation of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>. Indeed, the local symmetry transformation <span class="math notranslate nohighlight">\(X\)</span>
+acts trivially on the state <span class="math notranslate nohighlight">\(\ket{+}\)</span>, corresponding to the <em>trivial irrep</em>, and yields a
+minus sign when acting on <span class="math notranslate nohighlight">\(\ket{-}\)</span>, corresponding to the <em>sign irrep</em>.</p>
 <p>Next, let’s make the statement that ‘the matrix blocks of the local tensors are labeled by
 <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps’ more concrete. To this end, consider the action of <span class="math notranslate nohighlight">\(ZZ\)</span> in the irrep
 basis, which is given by the four nonzero matrix elements</p>
@@ -529,23 +519,51 @@ ZZ : \mathbb C^2 \otimes \mathbb C^2 &amp;\to \mathbb C^2 \otimes \mathbb C^2 : 
 \ket{-} \otimes \ket{+} &amp;\mapsto \ket{+} \otimes \ket{-},  \\
 \ket{-} \otimes \ket{-} &amp;\mapsto \ket{+} \otimes \ket{+}.
 \end{align}\end{split}\]</div>
-<p>If we denote the trivial <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irrep by <span class="math notranslate nohighlight">\('0'\)</span>, corresponding to a local <span class="math notranslate nohighlight">\(\ket{+}\)</span>
-state, and the sign irrep by <span class="math notranslate nohighlight">\('1'\)</span>, corresponding to a local <span class="math notranslate nohighlight">\(\ket{-}\)</span> state, and recall
-that in this notation the fusion rules of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> are given by addition modulo 2, we
-can associate each of the above matrix elements to a so-called <em>fusion tree</em> of
-<span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps with a corresponding coefficient of 1,</p>
+<p>We will denote the trivial <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irrep by <span class="math notranslate nohighlight">\('0'\)</span>, corresponding to a local <span class="math notranslate nohighlight">\(\ket{+}\)</span>
+state, and the sign irrep by <span class="math notranslate nohighlight">\('1'\)</span>, corresponding to a local <span class="math notranslate nohighlight">\(\ket{-}\)</span> state. Given this
+identification, we can naturally associate the tensor product of basis vectors in the irrep
+basis to the tensor product of the corresponding <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps. One of the key
+questions of the <a class="reference internal" href="../2-TensorNetworks/Symmetries.html#representation-theory"><span class="std std-ref">representation theory of groups</span></a> is how the tensor
+product of two irreps can be decomposed into a direct sum of irreps. This decomposition is
+encoded in what are often called the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Fusion_rules"><em>fusion rules</em></a>,</p>
+<div class="math notranslate nohighlight">
+\[a \otimes b \cong \bigoplus_c N_c^{ab} c,\]</div>
+<p>where <span class="math notranslate nohighlight">\(N_{ab}^c\)</span> encodes the number of times the irrep <span class="math notranslate nohighlight">\(c\)</span> occurs in the tensor product of
+irreps <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. These fusion rules are called <em>Abelian</em> if the tensor product of any two
+irreps corresponds to exactly one irrep. We will return to the implications of <em>non-Abelian</em>
+fusion rules <a class="reference internal" href="#non-abelian"><span class="std std-ref">later</span></a>. For the case of the <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps, the fusion
+rules are Abelian, and are given by addition modulo 2,</p>
+<div class="math notranslate nohighlight">
+\[0 \otimes 0 \cong 0, \quad 0 \otimes 1 \cong 1, \quad 1 \otimes 0 \cong 1, \quad 1 \otimes 1 \cong 0.\]</div>
+<p>To see how these fusion rules arise, we can consider the action of the symmetry
+transformation <span class="math notranslate nohighlight">\(XX\)</span> on the possible two-site basis states, each of which corresponds to a
+tensor product of representations. We can see that <span class="math notranslate nohighlight">\(XX\)</span> acts trivially on both <span class="math notranslate nohighlight">\(\ket{+}
+\otimes \ket{+}\)</span> and <span class="math notranslate nohighlight">\(\ket{-} \otimes \ket{-}\)</span> meaning these transform under the trivial
+representation, which gives the first and last entries of the fusion rules. Similarly, <span class="math notranslate nohighlight">\(XX\)</span>
+acts with a minus sign on both <span class="math notranslate nohighlight">\(\ket{+} \otimes \ket{-}\)</span> and <span class="math notranslate nohighlight">\(\ket{-} \otimes \ket{+}\)</span>,
+meaning these transform under the sign representation, which gives the second and third
+entries of the fusion rules. Having introduced this notion of ‘fusing’ irreps, we can now
+associate associate a well-defined <em>coupled irrep</em> to each of the four two-site basis
+states, which is given by the tensor product of the two <em>uncoupled irreps</em> associated to
+each individual site. From the matrix elements of <span class="math notranslate nohighlight">\(ZZ\)</span> given above, we clearly see that this
+operator only maps between states in the domain and codomain that have the same coupled
+irrep. This means that we can associate each of these matrix elements to a so-called <em>fusion
+tree</em> of <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> irreps with a corresponding coefficient of 1,</p>
 <div class="figure align-center" id="z2-fusiontrees">
 <a class="reference internal image-reference" href="../_images/Z2_fusiontrees.svg"><img alt="../_images/Z2_fusiontrees.svg" height="130" src="../_images/Z2_fusiontrees.svg" width="393" /></a>
 </div>
-<p>From this we can observe our previous statement very clearly: the <span class="math notranslate nohighlight">\(ZZ\)</span> operator indeed
-consists of two distinct two-dimensional matrix blocks, each of which are labeled by the
-value of the <em>coupled irrep</em> on the middle line of each fusion tree. The first block
-corresponds to the even coupled irrep ‘0’, and acts within the two-dimensional subspace
-spanned by <span class="math notranslate nohighlight">\(\{\ket{+,+}, \ket{-,-}\}\)</span>, while the second block corresponds to the odd coupled
-irrep ‘1’, and acts within the two-dimensional subspace spanned by <span class="math notranslate nohighlight">\(\{\ket{+,-},
-\ket{-,+}\}\)</span>. In TensorKit.jl, this block-diagonal structure of a symmetric tensor is
-explicitly encoded into its representation as a <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>, where only the matrix blocks
-corresponding to each coupled irrep are stored.</p>
+<p>This diagram should be read from top to bottom, where it represents the fusion of the two
+uncoupled irreps in the domain to the coupled irrep on the middle line, and the splitting of
+this coupled irrep to the uncoupled irreps in the codomain. From this our previous statement
+becomes very clear: the <span class="math notranslate nohighlight">\(ZZ\)</span> operator indeed consists of two distinct two-dimensional
+matrix blocks, each of which are labeled by the value of the <em>coupled irrep</em> on the middle
+line of each fusion tree. The first block corresponds to the even coupled irrep ‘0’, and
+acts within the two-dimensional subspace spanned by <span class="math notranslate nohighlight">\(\{\ket{+,+}, \ket{-,-}\}\)</span>, while the
+second block corresponds to the odd coupled irrep ‘1’, and acts within the two-dimensional
+subspace spanned by <span class="math notranslate nohighlight">\(\{\ket{+,-}, \ket{-,+}\}\)</span>. In TensorKit.jl, this block-diagonal
+structure of a symmetric tensor is explicitly encoded into its representation as a
+<code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>, where only the matrix blocks corresponding to each coupled irrep are stored.</p>
 <p>For our current purposes however, we never really need to explicitly consider these matrix
 blocks. Indeed, when constructing a <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code> it is sufficient to set its data by manually
 assigning a matrix element to each <a class="reference internal" href="#z2-fusiontrees"><span class="std std-ref">fusion tree of the form above</span></a> labeled
@@ -787,7 +805,10 @@ U^\dagger = H\)</span>, where</p>
 <p>This invariance corresponds to a <span class="math notranslate nohighlight">\(\mathrm{U}(1)\)</span> particle number symmetry, which can again
 be manifestly imposed when constructing the Hamiltonian terms as <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code>s. From the
 representation theory of <span class="math notranslate nohighlight">\(\mathrm{U}(1)\)</span> we know that it’s irreps are all one-dimensional
-and can be labeled by integers, where the fusion of two irreps is given by addition.</p>
+and can be labeled by integers <span class="math notranslate nohighlight">\(n\)</span> where the tensor product of two irreps is corresponds to
+addition of these labels, giving the Abelian fusion rules</p>
+<div class="math notranslate nohighlight">
+\[n_1 \otimes n_2 \cong (n_1 + n_2).\]</div>
 <div class="section" id="directly-constructing-the-hamiltonian-terms">
 <h3><span class="section-number">18.3.1. </span>Directly Constructing the Hamiltonian Terms<a class="headerlink" href="#directly-constructing-the-hamiltonian-terms" title="Permalink to this heading">#</a></h3>
 <p>We recall from our discussion on the <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> symmetric Ising model that, in order to
@@ -1989,7 +2010,7 @@ c_i^+ c_j^- \right)^\dagger = c_j^+ c_i^- = - c_i^- c_j^+\)</span> and <span cla
 \right)^\dagger = c_j^- c_i^- = - c_i^- c_j^-\)</span>. The anticommutation relations also naturally
 restrict the local occupation number to be 0 or 1, leading to a well-defined notion of
 <em>fermion-parity</em>. The local fermion-parity operator is related to the fermion number
-operator as <span class="math notranslate nohighlight">\(Q_i = (-1)^{n_i}\)</span>, and is diagonal in the occupation number basis. The
+operator as <span class="math notranslate nohighlight">\(Q_i = (-1)^{N_i}\)</span>, and is diagonal in the occupation number basis. The
 Hamiltonian <a class="reference internal" href="#equation-eq-kitaev">(18.5)</a> is invariant under conjugation by the global fermion-parity
 operator, <span class="math notranslate nohighlight">\(Q H Q^\dagger = H\)</span>, where</p>
 <div class="math notranslate nohighlight">
@@ -2074,18 +2095,18 @@ is inherently tricky to deal with, and should ideally be treated in the context 
 can define the following basis states on top of the fermionic vacuuum <span class="math notranslate nohighlight">\(\ket{00}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
-\ket{01} &amp;= c_2^+ \ket{00} \\
-\ket{10} &amp;= c_1^+ \ket{00} \\
-\ket{11} &amp;= c_1^+ c_2^+ \ket{00} \\
+\ket{01} &amp;= c_2^+ \ket{00}, \\
+\ket{10} &amp;= c_1^+ \ket{00}, \\
+\ket{11} &amp;= c_1^+ c_2^+ \ket{00}. \\
 \end{align*}\end{split}\]</div>
 <p>This definition in combination with the anticommutation relations above give rise to the
 nonzero matrix elements</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
-c_1^+ c_2^- \ket{0, 1} &amp;= \ket{1, 0} \\
-c_1^- c_2^+ \ket{1, 0} &amp;= - \ket{0, 1} \\
-c_1^+ c_2^+ \ket{0, 0} &amp;= \ket{1, 1} \\
-c_1^- c_2^- \ket{1, 1} &amp;= - \ket{0, 0} \\
+c_1^+ c_2^- \ket{0, 1} &amp;= \ket{1, 0}, \\
+c_1^- c_2^+ \ket{1, 0} &amp;= - \ket{0, 1}, \\
+c_1^+ c_2^+ \ket{0, 0} &amp;= \ket{1, 1}, \\
+c_1^- c_2^- \ket{1, 1} &amp;= - \ket{0, 0}, \\
 N \ket{n} &amp;= n \ket{n}.
 \end{align*}\end{split}\]</div>
 <p>While the signs in these expressions may seem a little unintuitive at first sight, they are
@@ -2095,8 +2116,9 @@ matrix element of <span class="math notranslate nohighlight">\(c_1^- c_2^+\)</sp
 \[\begin{split}\begin{align*}
 c_1^- c_2^+ \ket{1, 0} = c_1^- c_2^+ c_1^+ \ket{0, 0} = - c_2^+ c_1^- c_1^+ \ket{0, 0} = - c_2^+ (\mathbb{1} - c_1^+ c_1^-) \ket{0, 0} = - c_2^+ \ket{0, 0} = - \ket{0, 1}. \\
 \end{align*}\end{split}\]</div>
-<p>Once we have these matrix elements the hard part is done, and we can naively associate these
-to the following <span class="math notranslate nohighlight">\(f\mathbb{Z}_2\)</span> fusion trees with corresponding block values,</p>
+<p>Once we have these matrix elements the hard part is done, and we can straightforwardly
+associate these to the following <span class="math notranslate nohighlight">\(f\mathbb{Z}_2\)</span> fusion trees with corresponding block
+values,</p>
 <div class="figure align-default" id="fz2-fusiontrees">
 <a class="reference internal image-reference" href="../_images/fZ2_fusiontrees.svg"><img alt="../_images/fZ2_fusiontrees.svg" height="130" src="../_images/fZ2_fusiontrees.svg" width="915" /></a>
 </div>
@@ -2319,7 +2341,7 @@ fermionic symmetries, but it is not something we will do here.</p>
 </div>
 </div>
 <div class="section" id="level-4-non-abelian-symmetries-and-the-quantum-heisenberg-model">
-<h2><span class="section-number">18.5. </span>Level 4: Non-Abelian Symmetries and the Quantum Heisenberg Model<a class="headerlink" href="#level-4-non-abelian-symmetries-and-the-quantum-heisenberg-model" title="Permalink to this heading">#</a></h2>
+<span id="non-abelian"></span><h2><span class="section-number">18.5. </span>Level 4: Non-Abelian Symmetries and the Quantum Heisenberg Model<a class="headerlink" href="#level-4-non-abelian-symmetries-and-the-quantum-heisenberg-model" title="Permalink to this heading">#</a></h2>
 <p>We will now move on to systems which have more complicated <em>non-Abelian</em> symmetries. For a
 non-Abelian symmetry group <span class="math notranslate nohighlight">\(G\)</span>, the fact that its elements do not all commute has a profound
 impact on its representation theory. In particular, the irreps of such a group can be higher
@@ -2368,12 +2390,12 @@ irreps, <span class="math notranslate nohighlight">\(V^{(l_1)} \otimes V^{(l_2)}
 this decomposition, also refered to as the <em>Clebsch-Gordan problem</em>, is given by the
 so-called <em>Clebsch-Gordan coefficients</em>, which we will denote as <span class="math notranslate nohighlight">\(C^{k}_{l_1,l_2}\)</span>. This set
 of coefficients, which can be interpreted as a <span class="math notranslate nohighlight">\(\text{dim}\left( V^{(l_1)} \right) \times
-\text{dim}\left( V^{(l_2)} \right) \times \text{dim}\left( V^{(l_3)} \right)\)</span> array, that
+\text{dim}\left( V^{(l_2)} \right) \times \text{dim}\left( V^{(k)} \right)\)</span> array, that
 encodes how a basis state <span class="math notranslate nohighlight">\(\ket{k,n} \in V^{(k)}\)</span> corresponding to some term in the direct
 sum can be decomposed into a linear combination of basis vectors <span class="math notranslate nohighlight">\(\ket{l_1,m_1} \otimes
 \ket{l_2,m_2}\)</span> of the tensor product space:</p>
 <div class="math notranslate nohighlight">
-\[\ket{k,n} = \sum_{m_1, m_2} \left( C^{l_3}_{l_1,l_2} \right)^{n}_{m_1, m_2} \ket{l_1,m_1} \otimes \ket{l_2,m_2}.\]</div>
+\[\ket{k,n} = \sum_{m_1, m_2} \left( C^{k}_{l_1,l_2} \right)^{n}_{m_1, m_2} \ket{l_1,m_1} \otimes \ket{l_2,m_2}.\]</div>
 <p>These recoupling coefficients turn out to be essential to the structure of symmetric
 tensors, which can be best understood in the context of the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Wigner%E2%80%93Eckart_theorem">Wigner-Eckart theorem</a>. This
@@ -2407,7 +2429,14 @@ symmetric tensor is precisely the reduced matrix element in the Clebsch-Gordan
 decomposition</strong>.</p>
 <p>As a small demonstration of this fact, we can make a simple <span class="math notranslate nohighlight">\(\mathrm{SU}(2)\)</span>-symmetric
 tensor with trivial block values and verify that its implied symmetry structure exactly
-corresponds to the expected Clebsch-Gordan coefficient. In TensorKit.jl, a
+corresponds to the expected Clebsch-Gordan coefficient. First, we <a class="reference internal" href="../2-TensorNetworks/Symmetries.html#su2-irreps"><span class="std std-ref">recall</span></a> that
+the irreps of <span class="math notranslate nohighlight">\(\mathrm{SU}(2)\)</span> can be labeled by a halfinteger <em>spin</em> that takes values <span class="math notranslate nohighlight">\(l =
+0, \frac{1}{2}, 1, \frac{3}{2}, ...\)</span>, and where the dimension of the spin-<span class="math notranslate nohighlight">\(l\)</span> representation
+is equal to <span class="math notranslate nohighlight">\(2l + 1\)</span>. The fusion rules of <span class="math notranslate nohighlight">\(\mathrm{SU}(2)\)</span> are given by</p>
+<div class="math notranslate nohighlight">
+\[l_1 \otimes l_2 \cong \bigoplus_{k=|l_1-l_2|}^{l_1+l_2}s.\]</div>
+<p>These are clearly non-Abelian since multiple terms appear on the right hand side, for
+example <span class="math notranslate nohighlight">\(\frac{1}{2} \otimes \frac{1}{2} \cong 0 \oplus 1\)</span>. In TensorKit.jl, a
 <span class="math notranslate nohighlight">\(\mathrm{SU}(2)\)</span>-graded vector space is represented as an
 <a class="reference external" href="https://jutho.github.io/TensorKit.jl/latest/lib/spaces/#TensorKit.SU2Space"><code class="docutils literal notranslate"><span class="pre">SU2Space</span></code></a>,
 where a given <span class="math notranslate nohighlight">\(\mathrm{SU}(2)\)</span> irrep can be represented as an
@@ -2455,7 +2484,7 @@ irreps to a spin-<span class="math notranslate nohighlight">\(1\)</span> irrep, 
 </div>
 </div>
 </div>
-<p>The conversion gives us a <span class="math notranslate nohighlight">\(3 \times 3 \times 2\)</span> array, which exactly corresponds to the size
+<p>The conversion gives us a <span class="math notranslate nohighlight">\(3 \times 2 \times 2\)</span> array, which exactly corresponds to the size
 of the <span class="math notranslate nohighlight">\(C_{1}^{\frac{1}{2},\frac{1}{2}}\)</span> Clebsch-Gordan array. In order to explicitly
 compare whether the entries match we need to know the ordering of basis states assumed by
 TensorKit.jl when converting the tensor to its matrix elements in the irrep basis. For
@@ -2601,7 +2630,7 @@ implemented in the following way:</p>
 <span class="w">    </span><span class="c"># project out diagonal matrix on coupled irrep space</span>
 <span class="w">    </span><span class="nd">@tensor</span><span class="w"> </span><span class="n">reduced_matrix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">CG</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SS_arr</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">conj</span><span class="p">(</span><span class="n">CG</span><span class="p">[</span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
 
-<span class="w">    </span><span class="c"># check that it is proportianal to the identity</span>
+<span class="w">    </span><span class="c"># check that it is proportional to the identity</span>
 <span class="w">    </span><span class="nd">@assert</span><span class="w"> </span><span class="n">isapprox</span><span class="p">(</span><span class="n">reduced_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">reduced_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">;</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">)</span>
 
 <span class="w">    </span><span class="c"># return the proportionality factor</span>
@@ -2852,14 +2881,14 @@ using a similar exchange interaction, giving the Hamiltonian</p>
 as a symmetric <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code> by first rewriting it as</p>
 <div class="math notranslate nohighlight">
 \[\vec{T}_i \cdot \vec{T}_j = \frac{1}{2} \left( \left( \vec{T}_i + \vec{T}_j \right)^2 - \vec{T}_i^2 - \vec{T}_j^2 \right).\]</div>
-<p>For any <span class="math notranslate nohighlight">\(N\)</span>, the quadratic Casimir</p>
+<p>For any <span class="math notranslate nohighlight">\(N\)</span>, the <a class="reference external" href="https://en.wikipedia.org/wiki/Casimir_element#Quadratic_Casimir_element">quadratic Casimir</a></p>
 <div class="math notranslate nohighlight">
-\[C_1 = \sum_k T^k T^k\]</div>
+\[\Omega = \sum_k T^k T^k\]</div>
 <p>commutes with all <span class="math notranslate nohighlight">\(\mathrm{SU}(N)\)</span> generators, meaning it has a well defined eigenvalue in
 each irrep. This observation then immediately given the reduced matrix elements of the
 exchange interaction as</p>
 <div class="figure align-default" id="sun-fusiontrees">
-<a class="reference internal image-reference" href="../_images/SUN_fusiontrees.svg"><img alt="../_images/SUN_fusiontrees.svg" height="134" src="../_images/SUN_fusiontrees.svg" width="380" /></a>
+<a class="reference internal image-reference" href="../_images/SUN_fusiontrees.svg"><img alt="../_images/SUN_fusiontrees.svg" height="134" src="../_images/SUN_fusiontrees.svg" width="366" /></a>
 </div>
 <p>Using these to directly construct the corresponding symmetric <code class="docutils literal notranslate"><span class="pre">TensorMap</span></code> is much simpler
 than going through the explicit projection procedure using Clebsch-Gordan coefficients.</p>
@@ -2870,7 +2899,7 @@ Each irrep can be labeled as <span class="math notranslate nohighlight">\(l = D(
 labels</em>. The eigenvalue of the quadratic Casimir for a given irrep is given by
 <a class="reference external" href="https://en.wikipedia.org/wiki/Weyl_character_formula#Freudenthal's_formula">Freudenthal’s formula</a>,</p>
 <div class="math notranslate nohighlight">
-\[C_1(D(p,q)) = \frac{1}{3} (p^2 + q^2 + 3p + 3q + pq).\]</div>
+\[\Omega(D(p,q)) = \frac{1}{3} (p^2 + q^2 + 3p + 3q + pq).\]</div>
 <p>Using SUNRepresentations.jl, we can compute the Casimir as</p>
 <div class="cell tag_hide-output docutils container">
 <div class="cell_input above-output-prompt docutils container">
