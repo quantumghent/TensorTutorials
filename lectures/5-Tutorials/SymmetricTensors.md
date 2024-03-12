@@ -69,7 +69,7 @@ U = \prod_i X_i.
 We will circle back to the implications of this symmetry later.
 
 As a warmup we will implement the Hamiltonian {eq}`eq:isingham` in the standard way by
-encoding the matrix elements of the single-site operators $X$ and $Z$ into aan array of
+encoding the matrix elements of the single-site operators $X$ and $Z$ into an array of
 complex numbers, and then combine them in a suitable way to get the Hamiltonian terms.
 Instead of using plain Julia arrays, we will use a representation in terms of `TensorMap`s
 over complex vector spaces. These will essentially just be wrappers around base arrays at
@@ -158,9 +158,10 @@ basis of $Z$ eigenstates $\{\ket{\uparrow}, \ket{\downarrow}\}$ to that of the $
 eigenstates $\{\ket{+}, \ket{-}\}$ defined as $\ket{+} = \frac{\ket{\uparrow} +
 \ket{\downarrow}}{\sqrt{2}}$ and $\ket{-} = \frac{\ket{\uparrow} -
 \ket{\downarrow}}{\sqrt{2}}$. In the current context, this basis is referred to as the
-*irrep basis* of $\mathbb{Z}_2$, where the local basis state $\ket{+}$ corresponds to the
-trivial representation of $\mathbb{Z}_2$ while $\ket{-}$ corresponds to the sign
-representation.
+*irrep basis* of $\mathbb{Z}_2$, since each basis state corresponds to a one-dimensional
+irreducible representation of $\mathbb{Z}_2$. Indeed, the local symmetry transformation $X$
+acts trivially on the state $\ket{+}$, corresponding to the *trivial irrep*, and yields a
+minus sign when acting on $\ket{-}$, corresponding to the *sign irrep*.
 
 Next, let's make the statement that 'the matrix blocks of the local tensors are labeled by
 $\mathbb{Z}_2$ irreps' more concrete. To this end, consider the action of $ZZ$ in the irrep
@@ -189,19 +190,26 @@ a \otimes b \cong \bigoplus_c N_c^{ab} c,
 ```
 where $N_{ab}^c$ encodes the number of times the irrep $c$ occurs in the tensor product of
 irreps $a$ and $b$. These fusion rules are called *Abelian* if the tensor product of any two
-irreps corresponds to exactly one irrep. This is the case for the $\mathbb{Z}_2$ irreps,
-whose fusion rules are given by addition modulo 2,
+irreps corresponds to exactly one irrep. We will return to the implications of *non-Abelian*
+fusion rules [later](non_abelian). For the case of the $\mathbb{Z}_2$ irreps, the fusion
+rules are Abelian, and are given by addition modulo 2,
 ```{math}
 0 \otimes 0 \cong 0, \quad 0 \otimes 1 \cong 1, \quad 1 \otimes 0 \cong 1, \quad 1 \otimes 1 \cong 0.
 ```
-We will return to the implications of *non-Abelian* fusion rules [later](non_abelian).
-Having introduced this notion of 'fusing' irreps, we can now associate associate a
-well-defined *coupled irrep* to each of the four two-site basis states, which is given by
-the tensor product of the two *uncoupled irreps* associated to each individual site. From
-the matrix elements of $ZZ$ given above, we clearly see that this operator only maps between
-states in the domain and codomain that have the same coupled irrep. This means that we can
-associate each of these matrix elements to a so-called *fusion tree* of $\mathbb{Z}_2$
-irreps with a corresponding coefficient of 1,
+To see how these fusion rules arise, we can consider the action of the symmetry
+transformation $XX$ on the possible two-site basis states, each of which corresponds to a
+tensor product of representations. We can see that $XX$ acts trivially on both $\ket{+}
+\otimes \ket{+}$ and $\ket{-} \otimes \ket{-}$ meaning these transform under the trivial
+representation, which gives the first and last entries of the fusion rules. Similarly, $XX$
+acts with a minus sign on both $\ket{+} \otimes \ket{-}$ and $\ket{-} \otimes \ket{+}$,
+meaning these transform under the sign representation, which gives the second and third
+entries of the fusion rules. Having introduced this notion of 'fusing' irreps, we can now
+associate associate a well-defined *coupled irrep* to each of the four two-site basis
+states, which is given by the tensor product of the two *uncoupled irreps* associated to
+each individual site. From the matrix elements of $ZZ$ given above, we clearly see that this
+operator only maps between states in the domain and codomain that have the same coupled
+irrep. This means that we can associate each of these matrix elements to a so-called *fusion
+tree* of $\mathbb{Z}_2$ irreps with a corresponding coefficient of 1,
 ```{figure} ../_static/SymmetricTensors/Z2_fusiontrees.svg
 :scale: 12%
 :name: Z2_fusiontrees
