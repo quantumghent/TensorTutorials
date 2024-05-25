@@ -194,7 +194,7 @@ time dealing with critical states. The correlation length $\xi$ is determined by
 largest eigenvalue of the transfer matrix $\lambda_1$ as
 
 ```{math}
-\xi = -\frac{1}{\log|\lambda_\mathrm{max}|}.
+\xi = -\frac{1}{\log|\lambda_{1}|}.
 ```
 
 ```{note}
