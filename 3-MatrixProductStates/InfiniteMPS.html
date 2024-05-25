@@ -354,7 +354,7 @@ decaying part. This expression implies that connected correlation functions of a
 time dealing with critical states. The correlation length <span class="math notranslate nohighlight">\(\xi\)</span> is determined by the second
 largest eigenvalue of the transfer matrix <span class="math notranslate nohighlight">\(\lambda_1\)</span> as</p>
 <div class="math notranslate nohighlight">
-\[\xi = -\frac{1}{\log|\lambda_\mathrm{max}|}.\]</div>
+\[\xi = -\frac{1}{\log|\lambda_{1}|}.\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The subleading eigenvalues of the transfer matrix typically also have a physical meaning,
@@ -505,8 +505,8 @@ tensors <span class="math notranslate nohighlight">\(A_C\)</span> and <span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0
-norm(mps.AC[1]) = 1.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>norm(mps) = 1.0000000000000002
+norm(mps.AC[1]) = 1.0000000000000002
 norm(mps.CR[1]) = 1.0
 </pre></div>
 </div>
@@ -543,7 +543,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element Vector{ComplexF64}:
- -1.0820376395760443 + 0.04389083786812073im
+ -1.2389355854733874 - 0.10352095070374498im
 </pre></div>
 </div>
 </div>
@@ -556,7 +556,7 @@ evaluating the corresponding tensor network diagrams using the
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.45985392727226926
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.49884041326571316
 </pre></div>
 </div>
 </div>

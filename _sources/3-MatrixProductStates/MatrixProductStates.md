@@ -103,7 +103,7 @@ If we write the projectors $\mathcal P^{(i)}: \mathbb {C}^D \otimes \mathbb{C}^D
 \mathbb{C}^d$ as
 
 ```{math}
-\mathcal{P}^{(i)} = \sum_{s_i,\alpha,\beta}A_{k, s_i, l}^{(i)}\ket{s_i}\bra{kl},
+\mathcal{P}^{(i)} = \sum_{s_i,k,l}A_{k, s_i, l}^{(i)}\ket{s_i}\bra{kl},
 ```
 
 you should be able to see that the resulting state is precisely an MPS with tensors
