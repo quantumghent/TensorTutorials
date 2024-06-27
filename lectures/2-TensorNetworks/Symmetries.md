@@ -134,7 +134,7 @@ Let us consider another non-trivial example to illustrate the implications of th
 Recall the spins $s$ XXZ Heisenberg model whose Hamiltonian reads
 
 ```{math}
-H = -J\sum_i S^x_iS^x_{i+1}+S^y_iS^y_{i+1}+\Delta S^z_iS^z_{i+1}.
+H = -J\sum_i \left(S^x_iS^x_{i+1}+S^y_iS^y_{i+1}+\Delta S^z_iS^z_{i+1}\right).
 ```
 
 The spin operators are $2s + 1$-dimensional and satisfy the $\mathfrak{su}(2)$ commutation
